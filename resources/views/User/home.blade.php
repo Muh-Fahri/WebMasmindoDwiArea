@@ -4,6 +4,20 @@
 @section('konten')
     <main>
         <section>
+            <button id="backToTop"
+                style="position: fixed;
+                bottom: 100px;
+                left: 50px;
+                z-index: 9999;
+                background-color: #00492f00;
+                border: none;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 10%;
+                opacity: 1;
+                transition: opacity 0.5s ease;">
+                <i class="bi bi-arrow-up-circle-fill iconArrow-hover"></i>
+            </button>
             <div id="carouselExampleIndicators" class="carousel carousel-fade" data-bs-ride="carousel">
                 <nav>
                     <div class="carousel-indicators">
@@ -56,103 +70,145 @@
                 </div>
             </div>
         </section>
-        {{-- <section class="bg-proyek pt-5 text-white"> --}}
         <section>
-            <div class="container fade-in p-0 m-0">
-                <div class="row" style="min-height: 100%;">
+            <div class="container-fluid fade-in p-0 m-0">
+                <div class="row" style="min-height: 100vh;">
                     <!-- KIRI -->
-                    <aside class="col d-flex flex-column justify-content-center align-items-center text-white"
-                        style="background-color: #B6812C; min-height: 100%;">
-                        <div id="carouselExampleIndicator" class="carousel slide" style="width: 20rem;"
-                            data-bs-ride="carousel">
-                            <!-- Indicators -->
-                            <div class="carousel-indicators">
-                                <button type="button" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="0"
-                                    class="active" aria-current="true" aria-label="Slide 1"></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="1"
-                                    aria-label="Slide 2"></button>
-                                <button type="button" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="2"
-                                    aria-label="Slide 3"></button>
-                            </div>
-
-                            <!-- Images -->
-                            <div class="carousel-inner rounded shadow" style="height: 60vh; overflow: hidden;">
-                                <div class="carousel-item active">
-                                    <img src="{{ asset('img/mediakit-2.jpg') }}" class="d-block w-100 h-100"
-                                        style="object-fit: cover;" alt="Gambar 1">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="{{ asset('img/pexels-canvastudio-3194518.jpg') }}" class="d-block w-100 h-100"
-                                        style="object-fit: cover;" alt="Gambar 2">
-                                </div>
-                                <div class="carousel-item">
-                                    <img src="{{ asset('img/pexels-kevin-ku-92347-577585.jpg') }}"
-                                        class="d-block w-100 h-100" style="object-fit: cover;" alt="Gambar 3">
-                                </div>
-                            </div>
-                        </div>
+                    <aside class="col-md-5 p-0" style="min-height: 100vh;">
+                        <img src="{{ asset('web/Group 13.png') }}" alt="Gambar 1"
+                            style="width: 100%; height: 100vh; object-fit: cover;">
                     </aside>
-
-                    <!-- KANAN -->
-                    <article class="col p-5 fade-in d-flex flex-column justify-content-center">
-                        <h3 style="color: #b6812c;">Sekilas Perusahaan</h3>
-                        <p style="color: rgba(0, 0, 0, 0.61);">PT Masmindo Dwi Area (MDA) berdedikasi untuk menjadi produsen
-                            emas
-                            Indonesia berikutnya melalui pengembangan Proyek Awak Mas. Proyek Awak Mas berlokasi di
-                            Kecamatan
-                            Latimojong, Kabupaten Luwu, Sulawesi Selatan. Dengan berpegang pada nilai-nilai ACTIVE
-                            [ketangkasan
-                            (agility), kepedulian (caring), kerja sama (teamwork), integritas (integrity), visioner
-                            (visionary),
-                            dan
-                            keunggulan (excellence)], Masmindo berkomitmen untuk beroperasi dengan menerapkan kaidah-kaidah
-                            penambangan yang baik (good mining practices), termasuk melaksanakan tanggung jawab sosial dan
-                            lingkungan, serta memberikan manfaat sebesar-besarnya kepada para pemangku kepentingan, terutama
-                            masyarakat lingkar tambang.</p>
-                        <h5 class="mt-5" style="color:#b6812cbb;">Learn More about</h5>
+                    <article class="col-md-6 px-5 py-4 fade-in d-flex flex-column justify-content-center">
+                        <h3 style="color: #D19701;">Sekilas Perusahaan</h3>
+                        <p style="color: rgba(0, 0, 0, 0.61);text-align:justify">
+                            PT Masmindo Dwi Area (MDA) berdedikasi untuk menjadi produsen emas Indonesia berikutnya melalui
+                            pengembangan Proyek Awak Mas. Proyek Awak Mas berlokasi di Kecamatan Latimojong, Kabupaten Luwu,
+                            Sulawesi Selatan. Dengan berpegang pada nilai-nilai ACTIVE [ketangkasan (agility), kepedulian
+                            (caring), kerja sama (teamwork), integritas (integrity), visioner (visionary), dan keunggulan
+                            (excellence)], Masmindo berkomitmen untuk beroperasi dengan menerapkan kaidah-kaidah penambangan
+                            yang baik (good mining practices), termasuk melaksanakan tanggung jawab sosial dan lingkungan,
+                            serta memberikan manfaat sebesar-besarnya kepada para pemangku kepentingan, terutama masyarakat
+                            lingkar tambang.
+                        </p>
                         <a href="#" style="text-decoration: none;">
-                            <h4 style="color: #b6812cbb;">Our Project</h4>
+                            <h4 class="hover-sel">Selengkapnya <i class="bi bi-arrow-right-circle-fill"></i>
+                            </h4>
                         </a>
                     </article>
                 </div>
             </div>
+
         </section>
         <div class="video-container fade-in">
             <video autoplay loop muted playsinline>
                 <source src="{{ asset('video/masmindo.mp4') }}" type="video/mp4">
             </video>
-            <div class="overlay">
-                <div class="fade-in">
-                    <h1 style="font-family: sans-serif;font-size:100px">Gold With Integrity<br></h1>
-                    <div class="row">
-                        <div class="col-auto d-flex">
-                            <a href=""
-                                class="btn btn-sm fw-bold d-flex align-items-center text-white align-self-start"
-                                style="text-decoration: none;gap:5px;">
-                                <h5>See Our Project</h5>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                                </svg>
-                            </a>
+            <section>
+                <div class="overlay">
+                    <div class="fade-in">
+                        <h1 style="font-family: sans-serif;font-size:100px;color:#F9F8F3" class="fw-bold">Gold With
+                            Integrity<br></h1>
+                        <div class="row">
+                            <div class="col-auto d-flex">
+                                <a href=""
+                                    class="btn btn-sm fw-bold d-flex align-items-center text-white align-self-start"
+                                    style="text-decoration: none;gap:5px;">
+                                    <h5 class="vid-white-gold">See Our Project <i class="bi bi-arrow-right"></i></h5>
+                                </a>
+                            </div>
+                            <div class="col d-flex">
+                                <a href=""
+                                    class="btn btn-sm fw-bold d-flex align-items-center text-white align-self-start"
+                                    style="text-decoration: none;gap:5px;">
+                                    <h5 class="vid-white-gold">See Our Media <i class="bi bi-arrow-right"></i></h5>
+                                </a>
+                            </div>
                         </div>
-                        <div class="col d-flex">
-                            <a href=""
-                                class="btn btn-sm fw-bold d-flex align-items-center text-white align-self-start"
-                                style="text-decoration: none;gap:5px;">
-                                <h5>See Our Media</h5>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20"
-                                    fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
-                                    <path
-                                        d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z" />
-                                </svg>
-                            </a>
+                    </div>
+                </div>
+        </div>
+        </section>
+        <section>
+            <div class="nilai-nilai" data-aos="fade-right">
+                <div class="container-fluid justify-content-center m-0 p-0">
+                    <div class="row p-5">
+                        <div class="col">
+                            <img style="filter:drop-shadow(10px 5px 5px rgba(0, 0, 0, 0.336))" class="w-100"
+                                src="{{ asset('web/ActiveGreen.png') }}" alt="" data-aos="fade-right""
+                                data-aos-duration="1000" data-aos-delay="100" />
+                        </div>
+                        <div class="col justify-content-end">
+                            <h1 style="color:#D19701" class="fw-bold" data-aos="zoom-out">Nilai-Nilai</h3>
+                                <br>
+                                <p style="text-align:justify;color:#B6812C" data-aos="zoom-out">Di Masmindo, kami percaya
+                                    bahwa
+                                    keberhasilan
+                                    bukan hanya soal hasil akhir,
+                                    tetapi juga
+                                    tentang nilai-nilai yang membentuk setiap langkah kami. Dengan semangat ACTIVE —
+                                    Agility,
+                                    Caring, Teamwork, Integrity, Visionary, dan Excellence — kami melangkah maju untuk
+                                    membangun
+                                    masa depan yang berkelanjutan, berintegritas, dan membawa manfaat bagi semua.</p>
+                                <div class="row">
+                                    <div class="col">
+                                        <a class="btn btn-sm link-hover" href="">
+                                            Baca Selengkapnya <i class="bi bi-arrow-right-circle-fill"></i>
+                                        </a>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                    <div class="logo-active" style="background-color: #b6812c">
+                        <div class="row p-5">
+                            <div class="row gap-5 justify-content-center" data-aos="zoom-out">
+                                <div class="col-1 align-content-center">
+                                    <img class="w-50 img-hover-zoom"
+                                        src="{{ asset('svg/6ac71660-1650-4dce-93b8-879e29869732-removebg-preview.png') }}"
+                                        alt="">
+                                </div>
+                                <div class="col-1 align-content-center">
+                                    <img class="w-50 img-hover-zoom"
+                                        src="{{ asset('svg/b25b2872-b48e-41f3-8c12-2fd4ba4b7ec4-removebg-preview.png') }}"
+                                        alt="">
+                                </div>
+                                <div class="col-1 align-content-center">
+                                    <img class="w-50 img-hover-zoom"
+                                        src="{{ asset('svg/386c8c65-c746-4816-9a8f-f8849c732eb6-removebg-preview.png') }}"
+                                        alt="">
+                                </div>
+                                <div class="col-1 align-content-center">
+                                    <img class="w-50 img-hover-zoom"
+                                        src="{{ asset('svg/1585228a-48b1-4212-85ce-52ac171f8ca8-removebg-preview.png') }}"
+                                        alt="">
+                                </div>
+                                <div class="col-1 align-content-center">
+                                    <img class="w-50 img-hover-zoom"
+                                        src="{{ asset('svg/2ed1f0ba-7c0f-4907-87c8-4e7c0e4038a1-removebg-preview.png') }}"
+                                        alt="">
+                                </div>
+                                <div class="col-1 align-content-center">
+                                    <img class="w-50 img-hover-zoom"
+                                        src="{{ asset('svg/0c8d274e-33d4-496d-bfa4-c68f142a3530-removebg-preview.png') }}"
+                                        alt="">
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+        </section>
+        <section>
+            <div class="bgImg-home-bottom">
+                <div class="container">
+                    <div class="row">
+                        <div class="col">'
+                            <h1>Hello world</h1>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
     </main>
     @include('footter')
 @endsection

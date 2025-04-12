@@ -137,10 +137,39 @@ updatePesanBadge();
 setInterval(updatePesanBadge, 5000);
 
 function scrollGallery(direction) {
-    const container = document.getElementById('galleryScroll');
+    const gallery = document.getElementById('galleryScroll');
     const scrollAmount = 300;
-    container.scrollBy({
-        left: direction === 'left' ? -scrollAmount : scrollAmount,
-        behavior: 'smooth'
-    });
+
+    if (direction === 'left') {
+        gallery.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+        gallery.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
 }
+
+const backToTop = document.getElementById("backToTop");
+let scrollTimer;
+
+// Sembunyikan tombol di awal
+backToTop.style.opacity = 0;
+
+window.addEventListener("scroll", () => {
+    // Tampilkan tombol pas mulai scroll
+    backToTop.style.opacity = 0;
+
+    // Hapus timer lama (kalau masih ada)
+    clearTimeout(scrollTimer);
+
+    // Set timer untuk munculkan tombol setelah scroll berhenti (300ms)
+    scrollTimer = setTimeout(() => {
+        backToTop.style.opacity = 1;
+    }, 300);
+});
+
+// Scroll ke atas saat tombol diklik
+backToTop.addEventListener("click", () => {
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+});

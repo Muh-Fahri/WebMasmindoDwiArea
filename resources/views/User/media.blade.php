@@ -2,11 +2,6 @@
 @extends('layout')
 
 @section('konten')
-    {{-- <div class="bg-news w-100" style="background: linear-gradient(to right, #b6812c8e,#b6812c00,url({{ asset('berita/' . $banner->img_banner) }});height: 70vh; object-fit: cover; background-position: center;">
-        <img class="w-100" style="height: 70vh; object-fit: cover; background-position: center;"
-            src="{{ asset('berita/' . $banner->img_banner) }}" alt="">
-    </div> --}}
-
     <div class="container-fluid mt-3 mb-5">
         <div class="row mb-5">
             <div class="col-lg-8 col-md-12">

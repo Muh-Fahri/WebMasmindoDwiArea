@@ -1,104 +1,172 @@
 @extends('layout')
 @include('navbar')
 @section('konten')
-    <div class="container" id="proyekAwakMas">
+    <div class="container">
+        <button id="backToTop"
+            style="position: fixed;
+                bottom: 100px;
+                left: 50px;
+                z-index: 9999;
+                background-color:#a7965f00;
+                border: none;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 10%;
+                opacity: 1;
+                transition: opacity 0.5s ease;">
+            <i class="bi bi-arrow-up-circle-fill iconArrow-hover"></i>
+        </button>
         <div class="fade-in">
             <div class="row">
                 <div class="col">
-                    <h1 class="fw-bold mt-5" style="color: #e8c56b">Awak Mas Gold Project</h1>
-                    <div class="under-line-proyek"></div>
-                    <p class="mt-5">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus nisi nulla
-                        quasi
-                        iure, sit
-                        consequatur nemo cumque esse facilis porro rerum delectus dolorem minus, minima asperiores
-                        consequuntur
-                        nobis quaerat pariatur.</p>
-                    <img style="width:25rem" src="{{ asset('img/download (3).png') }}" alt="">
+                    <h1 class="fw-medium mt-5" style="color: #A7965F">Awak Mas Gold Project</h1>
+
+                    <p class="mt-5 text-secondary">Awak Mas Gold Project adalah sebuah proyek tambang emas
+                        yang terletak di wilayah
+                        Latimojong, Kabupaten Luwu, Sulawesi Selatan. Proyek ini dijalankan oleh PT Masmindo Dwi Area, yang
+                        merupakan anak perusahaan dari PT Indika Energy Tbk, salah satu perusahaan yang brgerak di bidang
+                        energi dan memiliki portofolio bisnis yang luas, termasuk dalam pertambangan, termasuk Proyek Awak
+                        Mas yang dikelola oleh Masmindo. Lokasi tambang ini berada di daerah pegunungan yang kaya akan
+                        kandungan
+                        logam mulia, terutama emas, dan telah menjadi fokus pengembangan untuk dijadikan salah satu sumber
+                        emas terbesar di kawasan timur Indonesia. </p>
+
+                    <p class="text-secondary"> Proyek ini tidak hanya bertujuan untuk mengeksplorasi dan menambang emas,
+                        tetapi juga dijalankan
+                        dengan pendekatan yang berkelanjutan dan bertanggung jawab. Dalam pelaksanaannya, Awak Mas Gold
+                        Project memperhatikan aspek lingkungan dan sosial di sekitar wilayah operasi. PT Masmindo
+                        berkomitmen untuk tetap menjaga keseimbangan antara kegiatan industri dan kelestarian alam, serta
+                        memberikan kontribusi nyata bagi masyarakat lokal melalui berbagai program pemberdayaan.</p>
+
+                    <p class="text-secondary"> Seiring berjalannya waktu, proyek ini diharapkan dapat mendorong pertumbuhan
+                        ekonomi daerah dan
+                        nasional, menciptakan lapangan kerja, serta memberikan dampak positif bagi pembangunan infrastruktur
+                        di daerah terpencil. Awak Mas Gold Project bukan hanya sekadar kegiatan penambangan, melainkan
+                        bagian dari upaya besar untuk membawa kemajuan yang berkelanjutan, inklusif, dan bermanfaat bagi
+                        semua pihak yang terlibat.</p>
                 </div>
+                <aside class="col-md-6 p-5" data-aos="fade-left">
+                    <img class="w-100 h-75" src="{{ asset('img/download (3).png') }}" alt="">
+                </aside>
             </div>
-        </div>
-        <div class="row mt-5 mb-5">
-            <div class="fade-in">
-                <div class="row">
-                    <div class="col">
-                        <h3 style="color: #b6812c">Galeri</h3>
-                        <div class="underLine-galeri"></div>
+            <div class="row d-flex flex-row p-5" data-aos="fade-right" style="background-color: #F9F8F3">
+                <div class="col">
+                    <div class="card-auto position-relative w-100 h-100">
+                        <img class="w-100 w-100" style="object-fit: cover;display: block;"
+                            src="{{ asset('web/Masmindo.jpg') }}" alt="">
+                        <div class="card-body position-absolute bottom-0 start-0 end-0"
+                            style="background-color:#a7965fad; color: white; padding: 0.5rem;">
+                            <h6 class="card-title mb-0">Judul Kartu</h6>
+                            <p class="card-text small mb-0">Deskripsi singkat.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="col mt-5 position-relative">
-                    <!-- Tombol kiri -->
-                    <button class="scroll-btn position-absolute top-50 start-0 translate-middle-y z-3"
-                        onclick="scrollGallery('left')" style="margin-left: -10px;">
-                        <i class="fas fa-chevron-left"></i>
-                    </button>
-
-                    <!-- Galeri scroll -->
-                    <div id="galleryScroll" class="scrolling-wrapper bg-light rounded">
-                        @foreach ($galeri as $item)
-                            <div class="card flex-shrink-0" style="width: 250px;">
-                                <div class="bg-image"
-                                    style="background: url('{{ asset('img/' . $item->image_galeri) }}');
-                                        background-size: cover;
-                                        background-position: center;
-                                        height: 180px;
-                                        border-top-left-radius: .5rem;
-                                        border-top-right-radius: .5rem;">
-                                </div>
-                                <div class="card-body text-center">
-                                    <h6 class="card-title">{{ $item->nama_kegiatan }}</h6>
-                                    <p class="card-text text-muted small">{{ $item->deskrip_kegiatan }}</p>
-                                </div>
-                            </div>
-                        @endforeach
+                <div class="col">
+                    <div class="card-auto position-relative w-100 h-100">
+                        <img class="w-100 h-100" style="object-fit: cover; display: block;"
+                            src="{{ asset('web/CampAwakMasJPEG.jpg') }}" alt="">
+                        <div class="card-body position-absolute bottom-0 start-0 end-0"
+                            style="background-color: #a7965fad; color: white; padding: 0.5rem;">
+                            <h6 class="card-title mb-0">Judul Kartu</h6>
+                            <p class="card-text small mb-0">Deskripsi singkat.</p>
+                        </div>
                     </div>
-
-                    <!-- Tombol kanan -->
-                    <button class="scroll-btn position-absolute top-50 end-0 translate-middle-y z-3"
-                        onclick="scrollGallery('right')" style="margin-right: -10px;">
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
                 </div>
-            </div>
-            <div class="fade-in">
-                <div class="row">
-                    <div class="col">
-                        <h1 class="fw-bold mt-5" style="color: #e8c56b">Video</h1>
-                        <div class="under-line-proyek"></div>
-                        <div class="row">
-                            <div class="col">
-                                <div id="videoCarousel" class="carousel carousel-fade mt-5"
-                                    style="width: 800px; height: 450px;">
-                                    <div class="carousel-inner" style="width: 100%; height: 100%;">
-                                        @foreach ($videos as $index => $video)
-                                            <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                                <iframe style="width: 100%; height: 100%;"
-                                                    src="{{ str_replace('watch?v=', 'embed/', $video->link_video) }}"
-                                                    frameborder="0" title="Youtube Video Frame {{ $index + 1 }}"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                    allowfullscreen>
-                                                </iframe>
-                                            </div>
-                                        @endforeach
-                                    </div>
-
-                                    <!-- Indicators -->
-                                    <div class="carousel-indicators">
-                                        @foreach ($videos as $index => $video)
-                                            <button type="button" data-bs-target="#videoCarousel"
-                                                data-bs-slide-to="{{ $index }}"
-                                                class="{{ $index == 0 ? 'active' : '' }}"
-                                                aria-label="Video {{ $index + 1 }}">
-                                            </button>
-                                        @endforeach
-                                    </div>
-                                </div>
-
-                            </div>
+                <div class="col">
+                    <div class="card-auto position-relative w-100 h-100">
+                        <img class="h-100 w-100" style="object-fit: cover; display: block;"
+                            src="{{ asset('web/8b6e7bcd-8f8b-4714-8653-d7a7d7a1a6cd.jpg') }}" alt="">
+                        <div class="card-body position-absolute bottom-0 start-0 end-0"
+                            style="background-color:#a7965fad; color: white; padding: 0.5rem;">
+                            <h6 class="card-title mb-0">Judul Kartu</h6>
+                            <p class="card-text small mb-0">Deskripsi singkat.</p>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </div>
+    <div class="row mt-5 mb-5">
+        <div class="col mt-5 position-relative">
+
+            <!-- Tombol kiri -->
+            <button style="background-color:  #A7965F"
+                class="scroll-btn p-4 position-absolute top-50 start-0 translate-middle-y z-3"
+                onclick="scrollGallery('left')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+
+            <!-- Galeri scroll -->
+            <div class="rounded pt-5 pb-5" style="background-color: #F9F8F3;">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="text-center fw-medium" style="color: #A7965F">Galeri Kami</h3>
+                    </div>
+                </div>
+                <div id="galleryScroll" class="scrolling-wrapper">
+                    @foreach ($galeri as $item)
+                        <div class="card shadow m-3 flex-shrink-0" data-aos="fade-left" style="width: 30%;">
+                            <div class="bg-image d-flex flex-column justify-content-end"
+                                style="background: url('{{ asset('img/' . $item->image_galeri) }}');
+                                        background-size: cover;
+                                        background-position: center;
+                                        height: 35vh;">
+                                <div class="card-body" style="background-color: #a7965fc4; max-height: 20%; padding: 1rem;">
+                                    <h6 class="card-title text-white">{{ $item->nama_kegiatan }}</h6>
+                                    <p class="card-text text-muted small text-white">{{ $item->deskrip_kegiatan }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <!-- Tombol kanan -->
+            <button style="background-color: #A7965F"
+                class="scroll-btn p-4 position-absolute top-50 end-0 translate-middle-y z-3"
+                onclick="scrollGallery('right')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+        <div class="fade-in">
+            <div class="row">
+                <div class="col">
+                    <h1 class="fw-bold mt-5" style="color: #e8c56b">Video</h1>
+                    <div class="under-line-proyek"></div>
+                    <div class="row">
+                        <div class="col">
+                            <div id="videoCarousel" class="carousel carousel-fade mt-5"
+                                style="width: 800px; height: 450px;">
+                                <div class="carousel-inner" style="width: 100%; height: 100%;">
+                                    @foreach ($videos as $index => $video)
+                                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
+                                            <iframe style="width: 100%; height: 100%;"
+                                                src="{{ str_replace('watch?v=', 'embed/', $video->link_video) }}"
+                                                frameborder="0" title="Youtube Video Frame {{ $index + 1 }}"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                                allowfullscreen>
+                                            </iframe>
+                                        </div>
+                                    @endforeach
+                                </div>
+
+                                <!-- Indicators -->
+                                <div class="carousel-indicators">
+                                    @foreach ($videos as $index => $video)
+                                        <button type="button" data-bs-target="#videoCarousel"
+                                            data-bs-slide-to="{{ $index }}"
+                                            class="{{ $index == 0 ? 'active' : '' }}"
+                                            aria-label="Video {{ $index + 1 }}">
+                                        </button>
+                                    @endforeach
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     @include('footter')
 @endsection

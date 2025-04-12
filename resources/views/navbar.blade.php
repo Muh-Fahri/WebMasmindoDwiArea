@@ -1,4 +1,4 @@
-<div class="shadow-lg">
+<div id="navbar" class="fixed top-0 w-full z-50 bg-white shadow transition-all ease-in-out duration-700">
     <div class="w-100 bg-atas-nav py-2" style="background-color: #E8C56B;">
         <div class="container d-flex justify-content-between">
             <a class="navbar-brand" href="{{ route('user.home') }}"><img style="width: 8em"
@@ -92,16 +92,6 @@
                                         </li>
                                     </ul>
                                 </li>
-                                {{-- <li class="nav-item dropdown">
-                                    <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                      Departemen
-                                    </a>
-                                    <ul class="dropdown-menu border-0" style="background-color:rgba(255, 255, 255, 0.514)">
-                                      <li><a class="dropdown-item fw-bold" style="color: #B6812C" href="#">ICT</a></li>
-                                      <li><a class="dropdown-item fw-bold" style="color: #B6812C" href="#">Site Services</a></li>
-                                      <li><a class="dropdown-item fw-bold" style="color: #B6812C" href="#">OHS</a></li>
-                                    </ul>
-                                </li> --}}
                             </ul>
                         </div>
                     </div>

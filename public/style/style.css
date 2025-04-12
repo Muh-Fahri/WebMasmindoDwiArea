@@ -1,7 +1,14 @@
 * {
     margin: 0px;
     padding: 0px;
+    font-family: sans-serif;
 }
+
+body {
+    overflow-x: hidden;
+}
+
+
 
 .menu-navbar .nav-link {
     color: #b6812c8e;
@@ -290,4 +297,71 @@
     background-color: #755400;
     width: 10%;
     height: 5px;
+}
+
+.img-hover-zoom {
+    transition: transform 0.3s ease-in-out;
+}
+
+.img-hover-zoom:hover {
+    transform: scale(1.1);
+}
+
+#backToTop:hover {
+    background-color: #915f1b;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#backToTop:hover {
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.iconArrow-hover {
+    font-size: 50px;
+    color: #A7965F;
+    transition: color 0.3s ease;
+}
+
+.iconArrow-hover:hover {
+    color: #FFEE6D !important;
+}
+
+.link-hover {
+    color: #b6812c !important;
+    /* warna awal */
+    transition: color 0.3s ease;
+    text-decoration: none;
+}
+
+.link-hover:hover {
+    color: #ffdf8f !important;
+    /* warna saat hover */
+}
+
+.bgImg-home-bottom {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url("/web/cb39cb73-7f24-4419-800b-afcd1e5ccb9c.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.hover-sel {
+    color: #b6812cbb;
+    transition: color 0.7s ease;
+}
+
+.hover-sel:hover {
+    color: #E8C56B;
+}
+
+.vid-white-gold {
+    color: white;
+    transition: color 0.3s ease-in-out;
+}
+
+.vid-white-gold:hover {
+    color: #ffdf8f;
 }
