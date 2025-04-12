@@ -19,7 +19,8 @@
         <div class="fade-in">
             <div class="row">
                 <div class="col">
-                    <h1 class="fw-medium mt-5" style="color: #A7965F">Awak Mas Gold Project</h1>
+                    <h1 class="awakmas-text mt-5">Awak Mas Gold Project</h1>
+                    <div class="ud-project"></div>
 
                     <p class="mt-5 text-secondary">Awak Mas Gold Project adalah sebuah proyek tambang emas
                         yang terletak di wilayah
@@ -127,44 +128,62 @@
                 <i class="fas fa-chevron-right"></i>
             </button>
         </div>
-        <div class="fade-in">
-            <div class="row">
-                <div class="col">
-                    <h1 class="fw-bold mt-5" style="color: #e8c56b">Video</h1>
-                    <div class="under-line-proyek"></div>
-                    <div class="row">
-                        <div class="col">
-                            <div id="videoCarousel" class="carousel carousel-fade mt-5"
-                                style="width: 800px; height: 450px;">
-                                <div class="carousel-inner" style="width: 100%; height: 100%;">
-                                    @foreach ($videos as $index => $video)
-                                        <div class="carousel-item {{ $index == 0 ? 'active' : '' }}">
-                                            <iframe style="width: 100%; height: 100%;"
-                                                src="{{ str_replace('watch?v=', 'embed/', $video->link_video) }}"
-                                                frameborder="0" title="Youtube Video Frame {{ $index + 1 }}"
-                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                                allowfullscreen>
-                                            </iframe>
-                                        </div>
-                                    @endforeach
-                                </div>
-
-                                <!-- Indicators -->
-                                <div class="carousel-indicators">
-                                    @foreach ($videos as $index => $video)
-                                        <button type="button" data-bs-target="#videoCarousel"
-                                            data-bs-slide-to="{{ $index }}"
-                                            class="{{ $index == 0 ? 'active' : '' }}"
-                                            aria-label="Video {{ $index + 1 }}">
-                                        </button>
-                                    @endforeach
-                                </div>
-                            </div>
-
-                        </div>
+        <div class="container-fluid">
+            <div class="bg-galeri-video"
+                style="background: linear-gradient(to right, #FFDF8F, #ffdf8fdc, #000000b0, #00000062),
+                       url('{{ asset('web/IMG-20230606-WA0031.jpg') }}');
+                       background-size: cover;
+                       background-position: top center;
+                       height: 70vh;
+                       display: flex;
+                       align-items: center;">
+                <div class="row w-100 m-0 d-flex">
+                    <div class="col-md-5 p-5">
+                        <h3 class="gal-text" data-aos="fade-right">Menelusuri Jejak Kami dalam
+                            Mengelola Potensi Alam
+                            dengan Tanggung Jawab
+                            dan Inovasi.</h3>
+                        <br>
+                        <p data-aos="fade-left" class="text-white">Galeri Masmindo Dwi Area, tempat di mana kami membagikan
+                            dokumentasi visual
+                            dari perjalanan kami
+                            dalam mengelola tambang emas Awak Mas. Dari kegiatan eksplorasi, pembangunan infrastruktur,
+                            hingga program pengembangan masyarakat, semua kami rangkum sebagai wujud transparansi dan
+                            dedikasi kami terhadap pertambangan berkelanjutan.</p>
                     </div>
                 </div>
             </div>
+        </div>
+        <div class="position-relative rounded pt-5 pb-5" style="background-color: #F9F8F3;">
+            <button style="background-color: #A7965F"
+                class="scroll-btn p-4 position-absolute top-50 start-0 translate-middle-y z-3"
+                onclick="scrollVideo('left')">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="rounded pt-5 pb-5" style="background-color: #F9F8F3;">
+                <div class="row">
+                    <div class="col">
+                        <h3 class="text-center fw-medium" style="color: #A7965F">Video Kegiatan</h3>
+                    </div>
+                </div>
+                <div data-aos="fade-right" data-aos-offset="300" data-aos-easing="ease-in-sine" id="videoScroll"
+                    class="scrolling-wrapper d-flex overflow-auto" style="scroll-behavior: smooth;">
+                    @foreach ($videos as $video)
+                        <div class="m-3 flex-shrink-0" style="width: 800px; height: 450px;">
+                            <iframe style="width: 100%; height: 100%;"
+                                src="{{ str_replace('watch?v=', 'embed/', $video->link_video) }}" frameborder="0"
+                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                allowfullscreen>
+                            </iframe>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+            <button style="background-color: #A7965F"
+                class="scroll-btn p-4 position-absolute top-50 end-0 translate-middle-y z-3"
+                onclick="scrollVideo('right')">
+                <i class="fas fa-chevron-right"></i>
+            </button>
         </div>
     </div>
 

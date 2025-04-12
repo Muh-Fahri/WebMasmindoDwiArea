@@ -130,10 +130,8 @@ function updatePesanBadge() {
         });
 }
 
-// Jalankan saat halaman terbuka
 updatePesanBadge();
 
-// Update setiap 5 detik
 setInterval(updatePesanBadge, 5000);
 
 function scrollGallery(direction) {
@@ -150,26 +148,32 @@ function scrollGallery(direction) {
 const backToTop = document.getElementById("backToTop");
 let scrollTimer;
 
-// Sembunyikan tombol di awal
 backToTop.style.opacity = 0;
 
 window.addEventListener("scroll", () => {
-    // Tampilkan tombol pas mulai scroll
     backToTop.style.opacity = 0;
 
-    // Hapus timer lama (kalau masih ada)
     clearTimeout(scrollTimer);
 
-    // Set timer untuk munculkan tombol setelah scroll berhenti (300ms)
     scrollTimer = setTimeout(() => {
         backToTop.style.opacity = 1;
     }, 300);
 });
 
-// Scroll ke atas saat tombol diklik
 backToTop.addEventListener("click", () => {
     window.scrollTo({
         top: 0,
         behavior: "smooth"
     });
 });
+
+function scrollVideo(direction) {
+    const scrollContainer = document.getElementById('videoScroll');
+    const scrollAmount = 850;
+
+    if (direction === 'left') {
+        scrollContainer.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+        scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+}
