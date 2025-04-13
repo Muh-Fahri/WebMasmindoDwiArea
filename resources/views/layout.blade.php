@@ -12,12 +12,27 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
     <link href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
     <title>PT. Masmindo Dwi Area</title>
 </head>
 
 <body>
-
+    <button id="backToTop"
+        style="position: fixed;
+                bottom: 100px;
+                left: 50px;
+                z-index: 9999;
+                background-color: #00492f00;
+                border: none;
+                color: white;
+                padding: 10px 15px;
+                border-radius: 10%;
+                opacity: 1;
+                transition: opacity 0.5s ease;">
+        <i class="bi bi-arrow-up-circle-fill iconArrow-hover"></i>
+    </button>
     @yield('konten')
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('script/script.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/admin-lte@3.2/dist/js/adminlte.min.js"></script>

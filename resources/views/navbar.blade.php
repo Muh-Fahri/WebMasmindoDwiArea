@@ -1,4 +1,5 @@
-<div id="navbar" class="fixed top-0 w-full z-50 bg-white shadow transition-all ease-in-out duration-700">
+<div id="navbar" style="z-index: 1000;"
+    class="fixed top-0 w-full z-50 bg-white shadow transition-all ease-in-out duration-700">
     <div class="w-100 bg-atas-nav py-2" style="background-color: #E8C56B;">
         <div class="container d-flex justify-content-between">
             <a class="navbar-brand" href="{{ route('user.home') }}"><img style="width: 8em"
@@ -64,9 +65,6 @@
                                         <li><a class="dropdown-item {{ Request::is('user/sekilas') ? 'active-bg' : '' }} fw-bold"
                                                 style="color: #B6812C" href="{{ route('user.sekilas') }}">Sekilas
                                                 Perusahaan</a></li>
-                                        <li><a class="dropdown-item {{ Request::is('user/visiMisiNilai') ? 'active-bg' : '' }} fw-bold"
-                                                style="color: #B6812C" href="{{ route('user.visiMisiNilai') }}">Visi,
-                                                Misi, Nilai-nilai</a></li>
                                         <li><a class="dropdown-item {{ Request::is('user/manajemen') ? 'active-bg' : '' }} fw-bold"
                                                 style="color: #B6812C"
                                                 href="{{ route('user.manajemen') }}">Manajemen</a></li>

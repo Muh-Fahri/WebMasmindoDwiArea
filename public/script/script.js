@@ -177,3 +177,45 @@ function scrollVideo(direction) {
         scrollContainer.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
 }
+
+// // Inisialisasi peta (fokus tengah di Sulawesi Selatan)
+// var map = L.map('map').setView([-3.5, 120.2], 7);
+
+// // Tambahkan layer peta
+// L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { //ganti dark_all
+//     attribution: '&copy; <a href="https://carto.com/">CartoDB</a>',
+//     subdomains: 'abcd',
+//     maxZoom: 19
+// }).addTo(map);
+
+// // Marker-marker lokasi
+// var jakarta = L.circleMarker([-6.2000, 106.8167]).addTo(map)
+//     .bindPopup('<b>Kantor Pusat Masmindo</b><br>Jakarta');
+
+// var belopa = L.circleMarker([-3.3520, 120.2450]).addTo(map)
+//     .bindPopup('<b>Kantor Regional</b><br>Belopa');
+
+// var ranteballa = L.circleMarker([-3.3608, 120.1219]).addTo(map)
+//     .bindPopup('<b>Site Office</b><br>Rante Balla');
+
+// var awakmas = L.circleMarker([-3.3630, 120.1110], {
+//     color: 'gold',
+//     fillColor: '#FFD700',
+//     fillOpacity: 0.8,
+//     radius: 10
+// }).addTo(map).bindPopup('<b>Awak Mas Project</b><br>Lokasi tambang utama');
+
+// // Legenda
+// var legend = L.control({ position: 'bottomright' });
+
+// legend.onAdd = function (map) {
+//     var div = L.DomUtil.create('div', 'legend');
+//     div.innerHTML += "<h4>Awakmas Gold Project</h4>";
+//     // div.innerHTML += '<i style="background: black"></i> Kantor Pusat (Jakarta)<br>';
+//     // div.innerHTML += '<i style="background: blue"></i> Kantor Regional (Belopa)<br>';
+//     // div.innerHTML += '<i style="background: green"></i> Site Office (Rante Balla)<br>';
+//     // div.innerHTML += '<i style="background: gold"></i> Awak Mas Project (Tambang)<br>';
+//     return div;
+// };
+
+// legend.addTo(map);

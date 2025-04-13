@@ -342,8 +342,7 @@ body {
 }
 
 .bgImg-home-bottom {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
-        url("/web/cb39cb73-7f24-4419-800b-afcd1e5ccb9c.jpg");
+    background: url("/web/ACTIVEBG.png");
     background-size: cover;
     background-position: center;
     height: 100vh;
@@ -371,7 +370,7 @@ body {
     width: 50%;
     height: 3px;
     background-color: #A7965F;
-    transition: color 0.5s ease-in-out;
+    transition: color 0.5s ease;
 }
 
 
@@ -390,4 +389,97 @@ body {
 
 .gal-text {
     color: #F9F8F3;
+}
+
+.galeri-card-body {
+    background-color: #A7965Fc4 !important;
+    max-height: 20%;
+    padding: 1rem;
+    color: white;
+    /* warna awal teks */
+    transition: background-color 0.5s ease, color 0.5s ease;
+}
+
+.galeri-card-body:hover {
+    background-color: #ffee6d !important;
+    color: black !important;
+}
+
+.galeri-card-body:hover p,
+.galeri-card-body:hover h6 {
+    color: #696969 !important;
+    transition: color 0.5s ease;
+}
+
+#map {
+    height: 600px;
+    width: 100%;
+}
+
+.legend {
+    background: white;
+    line-height: 18px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.legend i {
+    width: 18px;
+    height: 18px;
+    float: left;
+    margin-right: 8px;
+    opacity: 0.9;
+}
+
+.visi-text-hd {
+    color: #B6812C;
+    transition: color 0.3s ease-in-out;
+}
+
+.visi-text-hd:hover {
+    color: #FFEE6D;
+}
+
+.misi-text-hd {
+    color: #B6812C;
+    transition: color 0.3s ease-in-out;
+}
+
+.misi-text-hd:hover {
+    color: #FFEE6D;
+}
+
+.text-tentang-masmindo {
+    color: #B6812C;
+    transition: color 0.3s ease-in-out;
+}
+
+.text-tentang-masmindo:hover {
+    color: #FFDF8F;
+}
+
+.ud-tentang-masmindo {
+    width: 20%;
+    height: 3px;
+    background-color: #B6812C;
+}
+
+.text-misi p {
+    font-size: 15px;
+    margin: 0px;
+}
+
+.text-visi p {
+    font-size: 15px;
+}
+
+.teks-masmindo-aksi {
+    color: #B6812C;
+    transition: color 0.3s ease-in-out;
+}
+
+.teks-masmindo-aksi:hover {
+    color: #FFDF8F;
 }

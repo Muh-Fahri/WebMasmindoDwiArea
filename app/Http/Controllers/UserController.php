@@ -24,10 +24,6 @@ class UserController extends Controller
     {
         return view('User.sekilasPerusahaan');
     }
-    function visi()
-    {
-        return view('User.visiMisiNilai');
-    }
 
     function manajemen()
     {

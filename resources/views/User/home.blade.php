@@ -1,24 +1,9 @@
 @extends('layout')
 @include('navbar')
-
 @section('konten')
     <main>
         <section>
-            <button id="backToTop"
-                style="position: fixed;
-                bottom: 100px;
-                left: 50px;
-                z-index: 9999;
-                background-color: #00492f00;
-                border: none;
-                color: white;
-                padding: 10px 15px;
-                border-radius: 10%;
-                opacity: 1;
-                transition: opacity 0.5s ease;">
-                <i class="bi bi-arrow-up-circle-fill iconArrow-hover"></i>
-            </button>
-            <div id="carouselExampleIndicators" class="carousel carousel-fade" data-bs-ride="carousel">
+            <div data-aos="fade-left" id="carouselExampleIndicators" class="carousel carousel-fade" data-bs-ride="carousel">
                 <nav>
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active"
@@ -35,8 +20,9 @@
                             <div class="row d-flex align-items-center min-vh-100">
                                 <div class="col">
                                     <header class="fade-in" style="max-width: 60%">
-                                        <h1 style="font-family: sans-serif">Raising up with the communities</h1>
-                                        <p>We are developing & operating the Awak Mas Gold Project under a
+                                        <h1 class="fw-bold" style="font-family: sans-serif">Raising up with the communities
+                                        </h1>
+                                        <p class="fw-medium">We are developing & operating the Awak Mas Gold Project under a
                                             sustainable business model for the benefit of all stakeholders.</p>
                                     </header>
                                 </div>
@@ -48,8 +34,10 @@
                             <div class="row d-flex align-items-center min-vh-100">
                                 <div class="col">
                                     <article class="fade-in" style="max-width: 60%">
-                                        <h1 style="font-family: sans-serif">Produsen Emas di Indonesia Berikutnya</h1>
-                                        <p>MDA menjadi penambang emas berikutnya yang disegani di Indonesia</p>
+                                        <h1 class="fw-bold" style="font-family: sans-serif">Produsen Emas di Indonesia
+                                            Berikutnya</h1>
+                                        <p class="fw-medium">MDA menjadi penambang emas berikutnya yang disegani di
+                                            Indonesia</p>
                                     </article>
                                 </div>
                             </div>
@@ -60,8 +48,10 @@
                             <div class="row d-flex align-items-center min-vh-100">
                                 <div class="col">
                                     <article class="fade-in" style="max-width: 60%">
-                                        <h1 style="font-family: sans-serif">We are nurturing the next generation</h1>
-                                        <p>MDA is contributing to a better economic prosperity for Indonesia</p>
+                                        <h1 class="fw-bold" style="font-family: sans-serif">We are nurturing the next
+                                            generation</h1>
+                                        <p class="fw-medium">MDA is contributing to a better economic prosperity for
+                                            Indonesia</p>
                                     </article>
                                 </div>
                             </div>
@@ -80,7 +70,7 @@
                     </aside>
                     <article class="col-md-6 px-5 py-4 fade-in d-flex flex-column justify-content-center">
                         <h3 style="color: #D19701;">Sekilas Perusahaan</h3>
-                        <p style="color: rgba(0, 0, 0, 0.61);text-align:justify">
+                        <p class="fw-medium" style="color: rgba(0, 0, 0, 0.61);text-align:justify">
                             PT Masmindo Dwi Area (MDA) berdedikasi untuk menjadi produsen emas Indonesia berikutnya melalui
                             pengembangan Proyek Awak Mas. Proyek Awak Mas berlokasi di Kecamatan Latimojong, Kabupaten Luwu,
                             Sulawesi Selatan. Dengan berpegang pada nilai-nilai ACTIVE [ketangkasan (agility), kepedulian
@@ -129,7 +119,7 @@
         </div>
         </section>
         <section>
-            <div class="nilai-nilai" data-aos="fade-right">
+            <div class="nilai-nilai" style="background-color: #F9F8F3" data-aos="fade-right">
                 <div class="container-fluid justify-content-center m-0 p-0">
                     <div class="row p-5">
                         <div class="col">
@@ -140,7 +130,8 @@
                         <div class="col justify-content-end">
                             <h1 style="color:#D19701" class="fw-bold" data-aos="zoom-out">Nilai-Nilai</h3>
                                 <br>
-                                <p style="text-align:justify;color:#B6812C" data-aos="zoom-out">Di Masmindo, kami percaya
+                                <p class="fw-medium" style="text-align:justify;color:#B6812C" data-aos="zoom-out">Di
+                                    Masmindo, kami percaya
                                     bahwa
                                     keberhasilan
                                     bukan hanya soal hasil akhir,
@@ -152,44 +143,36 @@
                                     masa depan yang berkelanjutan, berintegritas, dan membawa manfaat bagi semua.</p>
                                 <div class="row">
                                     <div class="col">
-                                        <a class="btn btn-sm link-hover" href="">
+                                        <a class="btn fw-medium btn-sm link-hover" href="">
                                             Baca Selengkapnya <i class="bi bi-arrow-right-circle-fill"></i>
                                         </a>
                                     </div>
                                 </div>
                         </div>
                     </div>
-                    <div class="logo-active" style="background-color: #b6812c">
+                    <div class="logo-active" style="background-color: #FFDF8F">
                         <div class="row p-5">
                             <div class="row gap-5 justify-content-center" data-aos="zoom-out">
                                 <div class="col-1 align-content-center">
-                                    <img class="w-50 img-hover-zoom"
-                                        src="{{ asset('svg/6ac71660-1650-4dce-93b8-879e29869732-removebg-preview.png') }}"
+                                    <img class="w-50 img-hover-zoom" src="{{ asset('svg/agility.png') }}" alt="">
+                                </div>
+                                <div class="col-1 align-content-center">
+                                    <img class="w-50 img-hover-zoom" src="{{ asset('svg/caring.png') }}" alt="">
+                                </div>
+                                <div class="col-1 align-content-center">
+                                    <img class="w-50 img-hover-zoom" src="{{ asset('svg/teamwork.png') }}"
                                         alt="">
                                 </div>
                                 <div class="col-1 align-content-center">
-                                    <img class="w-50 img-hover-zoom"
-                                        src="{{ asset('svg/b25b2872-b48e-41f3-8c12-2fd4ba4b7ec4-removebg-preview.png') }}"
+                                    <img class="w-50 img-hover-zoom" src="{{ asset('svg/integrity.png') }}"
                                         alt="">
                                 </div>
                                 <div class="col-1 align-content-center">
-                                    <img class="w-50 img-hover-zoom"
-                                        src="{{ asset('svg/386c8c65-c746-4816-9a8f-f8849c732eb6-removebg-preview.png') }}"
+                                    <img class="w-50 img-hover-zoom" src="{{ asset('svg/visonary.png') }}"
                                         alt="">
                                 </div>
                                 <div class="col-1 align-content-center">
-                                    <img class="w-50 img-hover-zoom"
-                                        src="{{ asset('svg/1585228a-48b1-4212-85ce-52ac171f8ca8-removebg-preview.png') }}"
-                                        alt="">
-                                </div>
-                                <div class="col-1 align-content-center">
-                                    <img class="w-50 img-hover-zoom"
-                                        src="{{ asset('svg/2ed1f0ba-7c0f-4907-87c8-4e7c0e4038a1-removebg-preview.png') }}"
-                                        alt="">
-                                </div>
-                                <div class="col-1 align-content-center">
-                                    <img class="w-50 img-hover-zoom"
-                                        src="{{ asset('svg/0c8d274e-33d4-496d-bfa4-c68f142a3530-removebg-preview.png') }}"
+                                    <img class="w-50 img-hover-zoom" src="{{ asset('svg/excelent.png') }}"
                                         alt="">
                                 </div>
                             </div>
@@ -198,7 +181,7 @@
                     </div>
                 </div>
         </section>
-        <section>
+        {{-- <section>
             <div class="bgImg-home-bottom">
                 <div class="container">
                     <div class="row">
@@ -208,7 +191,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> --}}
     </main>
     @include('footter')
 @endsection
