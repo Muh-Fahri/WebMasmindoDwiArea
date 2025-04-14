@@ -447,7 +447,7 @@ class AdminController extends Controller
         Pesan::where('status_baca', false)->update(['status_baca' => true]);
 
         $pesan = Pesan::all();
-        $belumBaca = 0; // Karena semua sudah dianggap dibaca
+        $belumBaca = 0;
 
         return view('Admin.pesan', compact('pesan', 'belumBaca'));
     }

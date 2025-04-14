@@ -367,9 +367,9 @@ body {
 }
 
 .ud-project {
-    width: 50%;
+    width: 30%;
     height: 3px;
-    background-color: #A7965F;
+    background-color: #F9F8F3;
     transition: color 0.5s ease;
 }
 
@@ -379,7 +379,8 @@ body {
 }
 
 .awakmas-text {
-    color: #A7965F;
+    color: #F9F8F3;
+    font-size: 50px;
     transition: color 0.3s ease-in-out;
 }
 
@@ -411,27 +412,6 @@ body {
     transition: color 0.5s ease;
 }
 
-#map {
-    height: 600px;
-    width: 100%;
-}
-
-.legend {
-    background: white;
-    line-height: 18px;
-    padding: 10px;
-    font-size: 14px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-}
-
-.legend i {
-    width: 18px;
-    height: 18px;
-    float: left;
-    margin-right: 8px;
-    opacity: 0.9;
-}
 
 .visi-text-hd {
     color: #B6812C;
@@ -482,4 +462,16 @@ body {
 
 .teks-masmindo-aksi:hover {
     color: #FFDF8F;
+}
+
+.text-project {
+    font-size: 15px;
+    color: #F9F8F3;
+}
+
+.bg-mas-project {
+    background: linear-gradient(to right, #A99866, #a99866bb, #00000070, #00000070), url("/web/CampAwakMasJPEG.jpg");
+    height: 80vh;
+    background-size: cover;
+    background-position: center;
 }

@@ -1,75 +1,65 @@
 @extends('layout')
 @include('navbar')
 @section('konten')
-    <div class="container">
-        <div class="fade-in">
-            <div class="row">
-                <div class="col">
-                    <h1 class="awakmas-text mt-5">Awak Mas Gold Project</h1>
-                    <div class="ud-project"></div>
+    <section>
+        <div data-aos="fade-right" class="bg-mas-project">
+            <div class="container-fluid">
+                <div class="fade-in">
+                    <div class="row align-items-center" style="min-height: 100vh;">
+                        <div class="col p-5">
+                            <div class="d-flex flex-column justify-content-center align-items-start" style="height: 100%;">
+                                <h1 class="awakmas-text fw-medium">Awak Mas Gold Project</h1>
+                                <a href="" class="fw-medium btn text-white">Baca Selengkapnya <i
+                                        class="bi bi-arrow-right-circle-fill"></i></a>
 
-                    <p class="mt-5 fw-medium text-secondary">Awak Mas Gold Project adalah sebuah proyek tambang emas
-                        yang terletak di wilayah
-                        Latimojong, Kabupaten Luwu, Sulawesi Selatan. Proyek ini dijalankan oleh PT Masmindo Dwi Area, yang
-                        merupakan anak perusahaan dari PT Indika Energy Tbk, salah satu perusahaan yang brgerak di bidang
-                        energi dan memiliki portofolio bisnis yang luas, termasuk dalam pertambangan, termasuk Proyek Awak
-                        Mas yang dikelola oleh Masmindo. Lokasi tambang ini berada di daerah pegunungan yang kaya akan
-                        kandungan
-                        logam mulia, terutama emas, dan telah menjadi fokus pengembangan untuk dijadikan salah satu sumber
-                        emas terbesar di kawasan timur Indonesia. </p>
+                                <!-- Paragraf lainnya bisa dimasukkan kembali di sini jika dibutuhkan -->
+                            </div>
+                        </div>
+                        <div class="col-5">
+                            <img class="w-75 h-75" src="{{ asset('logo/LogoMasmindo.png') }}" alt=""
+                                style="filter:drop-shadow(10px 5px 5px rgba(0, 0, 0, 0.548))">
+                        </div>
 
-                    <p class="text-secondary fw-medium"> Proyek ini tidak hanya bertujuan untuk mengeksplorasi dan menambang
-                        emas,
-                        tetapi juga dijalankan
-                        dengan pendekatan yang berkelanjutan dan bertanggung jawab. Dalam pelaksanaannya, Awak Mas Gold
-                        Project memperhatikan aspek lingkungan dan sosial di sekitar wilayah operasi. PT Masmindo
-                        berkomitmen untuk tetap menjaga keseimbangan antara kegiatan industri dan kelestarian alam, serta
-                        memberikan kontribusi nyata bagi masyarakat lokal melalui berbagai program pemberdayaan.</p>
-
-                    <p class="text-secondary fw-medium"> Seiring berjalannya waktu, proyek ini diharapkan dapat mendorong
-                        pertumbuhan
-                        ekonomi daerah dan
-                        nasional, menciptakan lapangan kerja, serta memberikan dampak positif bagi pembangunan infrastruktur
-                        di daerah terpencil. Awak Mas Gold Project bukan hanya sekadar kegiatan penambangan, melainkan
-                        bagian dari upaya besar untuk membawa kemajuan yang berkelanjutan, inklusif, dan bermanfaat bagi
-                        semua pihak yang terlibat.</p>
+                        {{-- <aside class="col align-content-center p-5" data-aos="fade-left">
+                            <img class="w-100 h-75" src="{{ asset('web/MapImg.png') }}" alt="">
+                        </aside> --}}
+                    </div>
                 </div>
-                <aside class="col-md-6 p-5" data-aos="fade-left">
-                    <img class="w-100 h-75" src="{{ asset('img/download (3).png') }}" alt="">
-                </aside>
             </div>
-            <div class="row d-flex flex-row p-5" data-aos="fade-right" style="background-color: #F9F8F3">
-                <div class="col">
-                    <div class="card-auto position-relative w-100 h-100">
-                        <img class="w-100 w-100" style="object-fit: cover;display: block;"
-                            src="{{ asset('web/Masmindo.jpg') }}" alt="">
-                        <div class="card-body position-absolute bottom-0 start-0 end-0"
-                            style="background-color:#a7965fad; color: white; padding: 0.5rem;">
-                            <h6 class="card-title mb-0">Judul Kartu</h6>
-                            <p class="card-text small mb-0">Deskripsi singkat.</p>
-                        </div>
+        </div>
+    </section>
+    <div class="container p-5">
+        <div class="row d-flex flex-row p-5" data-aos="fade-right" style="background-color: #F9F8F3">
+            <div class="col">
+                <div class="card-auto position-relative w-100 h-100">
+                    <img class="w-100 w-100" style="object-fit: cover;display: block;" src="{{ asset('web/Masmindo.jpg') }}"
+                        alt="">
+                    <div class="card-body position-absolute bottom-0 start-0 end-0"
+                        style="background-color:#a7965fad; color: white; padding: 0.5rem;">
+                        <h6 class="card-title mb-0">Judul Kartu</h6>
+                        <p class="card-text small mb-0">Deskripsi singkat.</p>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card-auto position-relative w-100 h-100">
-                        <img class="w-100 h-100" style="object-fit: cover; display: block;"
-                            src="{{ asset('web/CampAwakMasJPEG.jpg') }}" alt="">
-                        <div class="card-body position-absolute bottom-0 start-0 end-0"
-                            style="background-color: #a7965fad; color: white; padding: 0.5rem;">
-                            <h6 class="card-title mb-0">Judul Kartu</h6>
-                            <p class="card-text small mb-0">Deskripsi singkat.</p>
-                        </div>
+            </div>
+            <div class="col">
+                <div class="card-auto position-relative w-100 h-100">
+                    <img class="w-100 h-100" style="object-fit: cover; display: block;"
+                        src="{{ asset('web/CampAwakMasJPEG.jpg') }}" alt="">
+                    <div class="card-body position-absolute bottom-0 start-0 end-0"
+                        style="background-color: #a7965fad; color: white; padding: 0.5rem;">
+                        <h6 class="card-title mb-0">Judul Kartu</h6>
+                        <p class="card-text small mb-0">Deskripsi singkat.</p>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="card-auto position-relative w-100 h-100">
-                        <img class="h-100 w-100" style="object-fit: cover; display: block;"
-                            src="{{ asset('web/8b6e7bcd-8f8b-4714-8653-d7a7d7a1a6cd.jpg') }}" alt="">
-                        <div class="card-body position-absolute bottom-0 start-0 end-0"
-                            style="background-color:#a7965fad; color: white; padding: 0.5rem;">
-                            <h6 class="card-title mb-0">Judul Kartu</h6>
-                            <p class="card-text small mb-0">Deskripsi singkat.</p>
-                        </div>
+            </div>
+            <div class="col">
+                <div class="card-auto position-relative w-100 h-100">
+                    <img class="h-100 w-100" style="object-fit: cover; display: block;"
+                        src="{{ asset('web/8b6e7bcd-8f8b-4714-8653-d7a7d7a1a6cd.jpg') }}" alt="">
+                    <div class="card-body position-absolute bottom-0 start-0 end-0"
+                        style="background-color:#a7965fad; color: white; padding: 0.5rem;">
+                        <h6 class="card-title mb-0">Judul Kartu</h6>
+                        <p class="card-text small mb-0">Deskripsi singkat.</p>
                     </div>
                 </div>
             </div>

@@ -3,7 +3,7 @@
     <div class="w-100 bg-atas-nav py-2" style="background-color: #E8C56B;">
         <div class="container d-flex justify-content-between">
             <a class="navbar-brand" href="{{ route('user.home') }}"><img style="width: 8em"
-                    src="{{ asset('logo/logo-mda-white.png') }}" alt=""></a>
+                    src="{{ asset('logo/LogoBg.png') }}" alt=""></a>
             <ul class="text-white navbar-nav fw-bolder d-flex flex-row align-items-center">
                 <li class="nav-item mx-3">
                     <a class="nav-link d-flex align-items-center text-white" style="gap:5px" href="#">

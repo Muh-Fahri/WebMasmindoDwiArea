@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-auto m-5">
                     <a href="">
-                        <img class="logo-footter" src="{{ asset('logo/logo-mda-white.png') }}" alt="">
+                        <img class="logo-footter" src="{{ asset('logo/LogoBg.png') }}" alt="">
                     </a>
                 </div>
                 <div class="col-auto">
@@ -14,7 +14,8 @@
                             <a href="{{ url('https://www.instagram.com/masmindodwiarea/') }}">
                                 <img src="{{ asset('logo/instagram (2).png') }}" style="width:2rem" alt="">
                             </a>
-                            <a href="{{ url('https://www.linkedin.com/company/pt-masmindo-dwi-area/posts/?feedView=all') }}">
+                            <a
+                                href="{{ url('https://www.linkedin.com/company/pt-masmindo-dwi-area/posts/?feedView=all') }}">
                                 <img src="{{ asset('logo/linkedin.png') }}" style="width:2rem" alt="">
                             </a>
 
@@ -59,7 +60,7 @@
                             <a href="">
                                 <p>Profesional</p>
                             </a>
-                            <a href="" >
+                            <a href="">
                                 <p class="mb-5">Students & Garaduates</p>
                             </a>
 
