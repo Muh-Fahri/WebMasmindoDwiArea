@@ -22,10 +22,8 @@
                                 MENCIPTAKAN MASA DEPAN PERTAMBANGAN YANG LEBIH BAIK.</p>
                         </div>
                     </div>
-                    <a href="#nilaiInti">
-                        <button class="btn btn-lg text-white btn-outline-light fw-medium rounded-0 btn-sm">LIHAT
-                            SELANJUTNYA</button>
-                    </a>
+                    <a class="btn rounded-0 fw-bold nav-btn" href="#nilaiInti">LIHAT SELANJUTNYA <i
+                            class="bi bi-arrow-down"></i></a>
                 </div>
             </div>
         </section>
@@ -49,7 +47,7 @@
                         </p>
                         <div class="row">
                             <div class="col">
-                                <a href="" class="btn  btn-outline-light rounded-0">Selengkapnya</a>
+                                <a href="" class="btn nav-btn fw-medium rounded-0">Selengkapnya</a>
                             </div>
                         </div>
                         <div data-aos="fade-down" class="row pt-4">
