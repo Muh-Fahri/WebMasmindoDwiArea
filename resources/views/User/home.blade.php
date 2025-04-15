@@ -52,7 +52,7 @@
                                 <a href="" class="btn  btn-outline-light rounded-0">Selengkapnya</a>
                             </div>
                         </div>
-                        <div class="row pt-4">
+                        <div data-aos="fade-down" class="row pt-4">
                             <div class="col-md-4 mb-3">
                                 <div class="card shadow-sm card-nilaiNilai rounded-0 h-100">
                                     <div class="card-body p-3" style="min-height: 250px;">
@@ -160,40 +160,108 @@
             </div>
         </section>
         <section>
-            <div class="video-container fade-in">
-                <video autoplay loop muted playsinline>
-                    <source src="{{ asset('video/masmindo.mp4') }}" type="video/mp4">
-                </video>
-                <section>
-                    <div class="overlay">
-                        <div class="fade-in">
-                            <h1 style="font-family: sans-serif;font-size:100px;color:#F9F8F3" class="fw-bold">Gold With
-                                Integrity<br></h1>
-                            <div class="row">
-                                <div class="col-auto d-flex">
-                                    <a href=""
-                                        class="btn btn-sm fw-bold d-flex align-items-center text-white align-self-start"
-                                        style="text-decoration: none;gap:5px;">
-                                        <h5 class="vid-white-gold">See Our Project <i class="bi bi-arrow-right"></i></h5>
-                                    </a>
-                                </div>
-                                <div class="col d-flex">
-                                    <a href=""
-                                        class="btn btn-sm fw-bold d-flex align-items-center text-white align-self-start"
-                                        style="text-decoration: none;gap:5px;">
-                                        <h5 class="vid-white-gold">See Our Media <i class="bi bi-arrow-right"></i></h5>
-                                    </a>
+            <div class="bg-mepo d-flex align-items-center">
+                <div class="container">
+                    <div class="row justify-content-center text-center text-md-start">
+                        <div class="col-12 col-md-10 col-lg-8">
+                            <div class="fade-in">
+                                <h1 class="fw-bold display-4 display-md-2 display-lg-1 text-light mb-3">
+                                    Gold With Integrity
+                                </h1>
+                                <p class="fw-medium text-white lead">
+                                    Menerapkan praktik pertambangan terbaik demi hasil maksimal yang bertanggung jawab.
+                                </p>
+                                <div class="row justify-content-center g-2 mt-3">
+                                    <div class="col-auto">
+                                        <a href=""
+                                            class="btn rounded-0 btn-outline-light fw-bold d-flex align-items-center gap-2">
+                                            See Our Project <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
+                                    <div class="col-auto">
+                                        <a href=""
+                                            class="btn rounded-0 btn-outline-light fw-bold d-flex align-items-center gap-2">
+                                            See Our Media <i class="bi bi-arrow-right"></i>
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+        </section>
+
+        <section>
+            <div class="container-fluid m-0 p-0">
+                <div class="row">
+                    <div class="col m-0 p-0">
+                        {{-- awak mas gold project --}}
+                        <div class="bg-goldProject d-flex justify-content-center align-items-center">
+                            <div class="row">
+                                <div data-aos="fade-right" class="col-7">
+                                    <h1 class="fw-bold" style="color: #A99866;font-size:40px">AWAK MAS GOLD PROJECT</h1>
+                                    <p class="text-white fw-medium small">Lorem ipsum dolor sit amet consectetur
+                                        adipisicing
+                                        elit.
+                                        Sequi, maxime!</p>
+                                    <a class="btn nav-btn btn-sm rounded-0 fw-bold" href="">SELENGKAPNYA</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col m-0 p-0">
+                        <div class="bg-goldProjectR d-flex justify-content-center align-items-center">
+                            <div class="row">
+                                <div data-aos="fade-left" class="col-7 text-end">
+                                    <h1 class="fw-bold" style="color: #A99866;font-size:40px">AWAK MAS GOLD PROJECT</h1>
+                                    <p class="text-white fw-medium small">Lorem ipsum dolor sit amet consectetur
+                                        adipisicing
+                                        elit.
+                                        Sequi, maxime!</p>
+                                    <a class="btn btn-sm rounded-0 nav-btn fw-bold" href="">SELENGKAPNYA</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </section>
         <section>
-            {{-- Awak mas gold project --}}
-        </section>
-        <section>
-            {{-- karir --}}
+            <div class="container-fluid m-0 p-0">
+                <div class="row">
+                    <div class="col">
+                        <div style="height: 500px; display: flex; align-items: center;">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col">
+                                        <h1>KARIR</h1>
+                                        <p>
+                                            Bersama Masmindo, Anda tidak hanya membangun karier — Anda menjadi bagian dari
+                                            sebuah
+                                            misi besar: mengembangkan potensi sumber daya alam Indonesia secara bertanggung
+                                            jawab dan
+                                            berkelanjutan.
+                                            Kami percaya bahwa sumber daya manusia adalah aset paling berharga. Oleh karena
+                                            itu, kami
+                                            menciptakan lingkungan kerja yang aman, inklusif, dan penuh peluang untuk tumbuh
+                                            dan
+                                            berkembang.
+                                            Mari bergabung dengan tim profesional yang berdedikasi, dan bersama-sama kita
+                                            wujudkan masa depan emas Indonesia.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <aside class="col-3">
+                        <img class="h-100 w-100" src="{{ asset('template/406bd29d-45fa-48c6-8a43-ad8feb2f77a9.jpg') }}"
+                            alt="">
+                    </aside>
+                </div>
+            </div>
         </section>
     </main>
     @include('footter')
