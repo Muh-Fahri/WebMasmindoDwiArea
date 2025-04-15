@@ -17,7 +17,7 @@
                         </div>
                         <div class="col-5">
                             <img class="w-75 h-75" src="{{ asset('logo/LogoMasmindo.png') }}" alt=""
-                                style="filter:drop-shadow(10px 5px 5px rgba(0, 0, 0, 0.548))">
+                                style="filter:drop-shadow(10px 5px 5px rgba(0, 0, 0, 0.267))">
                         </div>
 
                         {{-- <aside class="col align-content-center p-5" data-aos="fade-left">

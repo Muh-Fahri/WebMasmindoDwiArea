@@ -15,33 +15,113 @@ body {
     color: #b6812c8e;
 }
 
-.navbar-brand img {
-    filter: drop-shadow(2px 5px 5px rgba(0, 0, 0, 0.281));
-}
-
-
-
-.bg-carousel {
-    background: linear-gradient(to right, #B6812C, #b6812c8e, #f8f8f800),
-        url('/web/b3d5781d-7993-489c-aedb-1b110a81f4e1.jpg');
+.bg-home {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.925), rgba(0, 0, 0, 0.671), rgba(0, 0, 0, 0.534)),
+        url("/template/nicolas-j-leclercq-ojK5ADTY4so-unsplash\ \(1\).webp");
     height: 100vh;
+    width: 100%;
+    background-position: center;
     background-size: cover;
 }
 
-.bg-carousel2 {
-    background: linear-gradient(to right, #B6812C, #b6812c8e, #ffffff00),
-        url('/web/a29d224a-7bd2-465f-889e-25d00e55b066.jpg');
-    height: 100vh;
-    background-size: cover;
+.text-bg-home {
+    font-size: 70px;
 }
 
-.bg-carousel3 {
-    background: linear-gradient(to right, #B6812C, #b6812c8e, #ffffff00),
-        url('/web/b8f6fc22-9df0-4cf4-ae46-ed62bd40d38e.jpg');
-    height: 100vh;
-    background-size: cover;
+#navbar {
+    transition: top 0.3s;
 }
 
+.navbar-hidden {
+    top: -100px !important;
+    /* sembunyikan navbar ke atas */
+}
+
+.logo-shine-wrapper {
+    position: relative;
+    display: inline-block;
+}
+
+.logo-shine {
+    display: block;
+    width: 100%;
+    height: auto;
+    position: relative;
+    z-index: 1;
+}
+
+.logo-shine-wrapper::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, transparent 0%, rgba(255, 255, 255, 0.4) 50%, transparent 100%);
+    z-index: 2;
+    animation: shine 2.5s ease-in-out 0.5s forwards, hide-shine 0s linear 3s forwards;
+    pointer-events: none;
+    mix-blend-mode: screen;
+    opacity: 1;
+}
+
+@keyframes shine {
+    0% {
+        left: -100%;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes hide-shine {
+    to {
+        opacity: 0;
+    }
+}
+
+
+.custom-img {
+    background-image: linear-gradient(to bottom, rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.582)),
+        url('/template/omid-roshan-lHI9NA4U7hg-unsplash.jpg');
+    background-size: cover;
+    height: 100vh;
+    background-position: center;
+}
+
+
+.bg-iconCard {
+    background-color: #FFEE6D;
+    width: 40px;
+    height: 40px;
+}
+
+.card-nilaiNilai {
+    color: white;
+    background-color: #fff;
+    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
+}
+
+.card-nilaiNilai:hover {
+    color: #A99866;
+    background-color: #A99866;
+    transform: translateY(-10px);
+}
+
+.card-nilaiNilai:hover .bg-iconCard {
+    background-color: #F9F8F3;
+}
+
+.card-nilaiNilai h4,
+.card-nilaiNilai p {
+    color: #6E6E6E;
+}
+
+.card-nilaiNilai:hover h4,
+.card-nilaiNilai:hover p {
+    color: white;
+}
 
 .under-line {
     background-color: #E8C56B;
@@ -57,7 +137,6 @@ body {
 
 .logo-footter {
     width: 15rem;
-    filter: drop-shadow(1px 5px 5px rgba(0, 0, 0, 0.404));
 }
 
 .menu-foot-first h3 {
@@ -120,7 +199,7 @@ body {
     width: 100%;
     height: 100vh;
     object-fit: cover;
-    /* Agar video memenuhi layar */
+
 }
 
 .overlay {

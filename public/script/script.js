@@ -178,44 +178,39 @@ function scrollVideo(direction) {
     }
 }
 
-// // Inisialisasi peta (fokus tengah di Sulawesi Selatan)
-// var map = L.map('map').setView([-3.5, 120.2], 7);
+function scrollBerita(direction) {
+    const scrollContainer = document.getElementById('beritaScroll');
+    const scrollAmount = 400;
 
-// // Tambahkan layer peta
-// L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', { //ganti dark_all
-//     attribution: '&copy; <a href="https://carto.com/">CartoDB</a>',
-//     subdomains: 'abcd',
-//     maxZoom: 19
-// }).addTo(map);
+    if (direction === 'left') {
+        scrollContainer.scrollLeft -= scrollAmount;
+    } else {
+        scrollContainer.scrollLeft += scrollAmount;
+    }
+}
 
-// // Marker-marker lokasi
-// var jakarta = L.circleMarker([-6.2000, 106.8167]).addTo(map)
-//     .bindPopup('<b>Kantor Pusat Masmindo</b><br>Jakarta');
+document.addEventListener("DOMContentLoaded", function () {
+    const modal = new bootstrap.Modal(document.getElementById('modalBerita'));
+    modal.show();
 
-// var belopa = L.circleMarker([-3.3520, 120.2450]).addTo(map)
-//     .bindPopup('<b>Kantor Regional</b><br>Belopa');
+    // Sembunyikan setelah 3 detik
+    // setTimeout(() => {
+    //     modal.hide();
+    // }, 3000);
+});
+let lastScrollTop = 0;
+const navbar = document.getElementById("navbar");
 
-// var ranteballa = L.circleMarker([-3.3608, 120.1219]).addTo(map)
-//     .bindPopup('<b>Site Office</b><br>Rante Balla');
+window.addEventListener("scroll", function () {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
 
-// var awakmas = L.circleMarker([-3.3630, 120.1110], {
-//     color: 'gold',
-//     fillColor: '#FFD700',
-//     fillOpacity: 0.8,
-//     radius: 10
-// }).addTo(map).bindPopup('<b>Awak Mas Project</b><br>Lokasi tambang utama');
+    if (scrollTop > lastScrollTop) {
+        // Scroll ke bawah → sembunyikan navbar
+        navbar.classList.add("navbar-hidden");
+    } else {
+        // Scroll ke atas → tampilkan navbar
+        navbar.classList.remove("navbar-hidden");
+    }
 
-// // Legenda
-// var legend = L.control({ position: 'bottomright' });
-
-// legend.onAdd = function (map) {
-//     var div = L.DomUtil.create('div', 'legend');
-//     div.innerHTML += "<h4>Awakmas Gold Project</h4>";
-//     // div.innerHTML += '<i style="background: black"></i> Kantor Pusat (Jakarta)<br>';
-//     // div.innerHTML += '<i style="background: blue"></i> Kantor Regional (Belopa)<br>';
-//     // div.innerHTML += '<i style="background: green"></i> Site Office (Rante Balla)<br>';
-//     // div.innerHTML += '<i style="background: gold"></i> Awak Mas Project (Tambang)<br>';
-//     return div;
-// };
-
-// legend.addTo(map);
+    lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // cegah scrollTop negatif
+});
