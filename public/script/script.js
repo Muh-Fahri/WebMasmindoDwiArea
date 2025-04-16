@@ -214,3 +214,31 @@ window.addEventListener("scroll", function () {
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // cegah scrollTop negatif
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+    if (!localStorage.getItem("toastShown")) {
+        const toastEl = document.getElementById("sahamToast");
+        const toast = new bootstrap.Toast(toastEl);
+        toast.show();
+        localStorage.setItem("toastShown", "true");
+        // localStorage.removeItem("toastShown");
+    }
+
+
+});
+
+const toastEl = document.getElementById('sahamToast');
+const bsToast = new bootstrap.Toast(toastEl, {
+    autohide: true,
+    delay: 10000,
+});
+
+// Tampilkan toast saat halaman dimuat
+window.addEventListener('load', () => {
+    bsToast.show();
+});
+
+// Tambahkan efek keluar sebelum toast menghilang
+toastEl.addEventListener('hide.bs.toast', function () {
+    toastEl.classList.add('fade-out');
+});

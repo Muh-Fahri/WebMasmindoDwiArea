@@ -22,6 +22,7 @@ Route::get('/user/media', [UserController::class, 'media'])->name('user.media');
 Route::get('/user/media/selengkapnya/{id}', [UserController::class, 'tampilSelengkapnya'])->name('user.selengkapnya');
 Route::get('/user/kontak', [UserController::class, 'tampilKontak'])->name('user.kontak');
 Route::post('/user/kontak/kirim', [UserController::class, 'kirimPesan'])->name('user.kirimPesan');
+Route::get('/testing', [UserController::class, 'testing'])->name('user.testinghlaman');
 
 //admin
 Route::middleware('admin')->group(function () {

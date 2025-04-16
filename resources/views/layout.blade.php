@@ -17,8 +17,10 @@
 </head>
 
 <body>
-    <button id="backToTop"
-        style="position: fixed;
+
+    <div class="container-fluid m-0 p-0">
+        <button id="backToTop"
+            style="position: fixed;
                 bottom: 100px;
                 left: 50px;
                 z-index: 9999;
@@ -29,9 +31,10 @@
                 border-radius: 10%;
                 opacity: 1;
                 transition: opacity 0.5s ease;">
-        <i class="bi bi-arrow-up-circle-fill iconArrow-hover"></i>
-    </button>
-    @yield('konten')
+            <i class="bi bi-arrow-up-circle-fill iconArrow-hover"></i>
+        </button>
+        @yield('konten')
+    </div>
     <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="{{ asset('script/script.js') }}"></script>

@@ -98,4 +98,9 @@ class UserController extends Controller
         // dd($kontak);
         return redirect()->back()->with('terkirim', 'Berhasil mengirim pesan');
     }
+
+    function testing()
+    {
+        return view('User.testing');
+    }
 }
