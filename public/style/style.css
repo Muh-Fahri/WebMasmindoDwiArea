@@ -15,7 +15,7 @@
 
 
 .menu-navbar .nav-link {
-    color: #b6812c8e;
+    color: #FFDF8F;
 }
 
 #navbar {
@@ -105,39 +105,13 @@
 .nav-btn-karir {
     outline: solid #A99866 2px;
     color: #A99866 !important;
-    transition: color 0.3s ease-in-out, outline 0.3s ease-in-out;
+    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+        outline 0.3s cubic-bezier(0.4, 0, 0.2, 1),
 }
 
-.scroll-btn {
-    background-color: #b6812c;
-    border: none;
-    color: white;
-    border-radius: 50%;
-    width: 35px;
-    height: 35px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
-    transition: background-color 0.3s;
-}
-
-.scroll-btn:hover {
-    background-color: #a06e23;
-}
-
-
-.scrolling-wrapper {
-    overflow-x: auto;
-    display: flex;
-    flex-wrap: nowrap;
-    gap: 1rem;
-    scroll-behavior: smooth;
-    padding: 1rem 2rem;
-}
-
-.scrolling-wrapper::-webkit-scrollbar {
-    display: none;
+.nav-btn-karir:hover {
+    outline: solid #6E6E6E 2px;
+    color: #6E6E6E !important;
 }
 
 .scrolling-wrapper {
@@ -167,8 +141,18 @@
 }
 
 .nav-link.active {
-    color: #755400 !important;
-    border-radius: 5px;
+    background-color: #A99866;
+    color: white !important;
+    border-radius: 0px 0px 0px 20px;
+}
+
+.bg-portofolio {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.644), rgba(0, 0, 0, 0.644)),
+        url("/template/omid-roshan-lHI9NA4U7hg-unsplash.jpg");
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 

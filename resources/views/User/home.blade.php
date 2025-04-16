@@ -1,49 +1,54 @@
 @extends('layout')
 @section('konten')
     @include('navbar')
-    <div class="container-fluid m-0 p-0">
-        <div class="bg-home" style="min-height: 100vh;">
-            <div class="container h-100">
-                <div class="row h-100 justify-content-center align-items-center">
-                    <div data-aos="zoom-in-up" class="col text-center">
-                        <p class="text-white fw-medium">SELAMAT DATANG DI WEBSITE</p>
-                        <div class="row justify-content-center">
-                            <div class="col-10">
-                                <img class="w-100 h-100" src="{{ asset('logo/LogoMasmindo.webp') }}" alt="">
+    <section>
+        <div class="container-fluid m-0 p-0">
+            <div class="bg-home" style="min-height: 100vh;">
+                <div class="container h-100">
+                    <div class="row h-100 justify-content-center align-items-center">
+                        <div data-aos="zoom-in-up" class="col text-center">
+                            <p class="text-white fw-medium">SELAMAT DATANG DI WEBSITE</p>
+                            <div class="row justify-content-center">
+                                <div class="col-10">
+                                    <img class="w-100 h-100" src="{{ asset('logo/LogoMasmindo.webp') }}" alt="">
+                                </div>
                             </div>
+                            <p class="text-white fw-medium">SELAMAT DATANG DI WEB MASMINDO, TEMPAT DIMANA KOMITMEN INOVASI
+                                DAN
+                                KEBERLANJUTAN
+                                MENCIPTAKAN MASA DEPAN PERTAMBANGAN YANG LEBIH BAIK.</p>
+                            <p class="text-white fw-medium m-0">MEMBER OF</p>
+                            <p class="text-white fw-bold">PT. INDIKA ENERGY</p>
+                            <a href="#nilaiNilai" class="btn btn-lg fw-bold nav-btn rounded-0">VIEW MORE <i
+                                    class="fa-solid fa-angles-down fa-beat"></i></a>
                         </div>
-                        <p class="text-white fw-medium">SELAMAT DATANG DI WEB MASMINDO, TEMPAT DIMANA KOMITMEN INOVASI DAN
-                            KEBERLANJUTAN
-                            MENCIPTAKAN MASA DEPAN PERTAMBANGAN YANG LEBIH BAIK.</p>
-                        <p class="text-white fw-medium">MEMBER OF INDIKA ENERGY</p>
-                        <a href="" class="btn btn-sm fw-bold nav-btn rounded-0">VIEW MORE <i
-                                class="fa-solid fa-angles-down fa-beat"></i></a>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-
-    <section style="background-color: #736B52">
+    </section>
+    <section id="nilaiNilai" style="background-color: #736B52">
         <div class="container-fluid fade-in" id="nilaiInti">
             <div class="row justify-content-start align-items-center">
                 <aside class=" col-lg-4 p-0">
                     <div class="custom-img"></div>
                 </aside>
                 <div class="col-lg-6 p-5">
-                    <h1 class="fw-bold text-white">NILAI - NILAI INTI</h1>
-                    <p class="fw-medium text-white">
-                        Di Masmindo, kami percaya bahwa keberhasilan proyek tidak hanya ditentukan oleh hasil akhir,
-                        tetapi juga oleh nilai-nilai yang menjadi dasar setiap langkah kami.
-                        Nilai-nilai ini membentuk budaya kerja, memandu setiap keputusan, dan memperkuat komitmen
-                        kami
-                        untuk menjalankan operasional secara profesional, bertanggung jawab, dan berkelanjutan.
-                        Melalui prinsip-prinsip inilah, kami membangun kepercayaan, menjaga integritas, dan terus
-                        tumbuh
-                        bersama masyarakat serta pemangku kepentingan.
-                    </p>
+                    <div data-aos="fade-right">
+                        <h1 class="fw-bold text-white">NILAI - NILAI INTI</h1>
+                        <p class="fw-medium text-white">
+                            Di Masmindo, kami percaya bahwa keberhasilan proyek tidak hanya ditentukan oleh hasil akhir,
+                            tetapi juga oleh nilai-nilai yang menjadi dasar setiap langkah kami.
+                            Nilai-nilai ini membentuk budaya kerja, memandu setiap keputusan, dan memperkuat komitmen
+                            kami
+                            untuk menjalankan operasional secara profesional, bertanggung jawab, dan berkelanjutan.
+                            Melalui prinsip-prinsip inilah, kami membangun kepercayaan, menjaga integritas, dan terus
+                            tumbuh
+                            bersama masyarakat serta pemangku kepentingan.
+                        </p>
+                    </div>
                     <div class="row">
-                        <div class="col">
+                        <div class="col" data-aos="fade-right">
                             <a href="" class="btn nav-btn btn-outline-light fw-medium rounded-0">Selengkapnya <i
                                     class="fa-solid fa-arrow-right"></i></a>
                         </div>
@@ -165,14 +170,12 @@
                             </p>
                             <div class="row justify-content-center g-2 mt-3">
                                 <div class="col-auto">
-                                    <a href=""
-                                        class="btn rounded-0 btn-outline-light fw-bold d-flex align-items-center gap-2">
+                                    <a href="" class="btn rounded-0 fw-bold nav-btn gap-2">
                                         See Our Project <i class="bi bi-arrow-right"></i>
                                     </a>
                                 </div>
                                 <div class="col-auto">
-                                    <a href=""
-                                        class="btn rounded-0 btn-outline-light fw-bold d-flex align-items-center gap-2">
+                                    <a href="" class="btn rounded-0 fw-bold nav-btn gap-2">
                                         See Our Media <i class="bi bi-arrow-right"></i>
                                     </a>
                                 </div>
@@ -190,14 +193,15 @@
                     {{-- awak mas gold project --}}
                     <div class="bg-goldProject d-flex justify-content-center align-items-center text-md-start">
                         <div class="row w-100 m-0">
-                            <div class="col-12 col-md-7 mx-auto">
+                            <div data-aos="zoom-in" class="col-12 col-md-7 mx-auto">
                                 <h1 class="fw-bold" style="color: #A99866;font-size:40px">AWAK MAS GOLD PROJECT</h1>
                                 <p class="text-white fw-medium small">
                                     Mas Gold Project adalah salah satu inisiatif pertambangan emas yang dikembangkan
                                     dengan semangat profesionalisme dan tanggung jawab lingkungan.
                                 </p>
                                 <a class="btn nav-btn btn-sm rounded-0 fw-bold" href="">SELENGKAPNYA <i
-                                        class="fa-solid fa-arrow-right"></i></a>
+                                        class="fa-solid fa-arrow-right"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -205,7 +209,7 @@
                 <div class="col m-0 p-0">
                     <div class="bg-goldProjectR d-flex justify-content-center align-items-center text-md-end">
                         <div class="row w-100 m-0">
-                            <div class="col-12 col-md-7 mx-auto">
+                            <div data-aos="zoom-in" class="col-12 col-md-7 mx-auto">
                                 <h1 class="fw-bold" style="color: #A99866;font-size:40px">MASMINDO DALAM BERITA</h1>
                                 <p class="text-white fw-medium small">
                                     Di sini, kami menyediakan informasi terkini seputar kegiatan dan perkembangan yang
@@ -214,7 +218,8 @@
                                     pencapaian dan inisiatif yang kami lakukan.
                                 </p>
                                 <a class="btn btn-sm rounded-0 nav-btn fw-bold" href="">SELENGKAPNYA <i
-                                        class="fa-solid fa-arrow-right"></i></a>
+                                        class="fa-solid fa-arrow-right"></i>
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -224,27 +229,11 @@
     </section>
     <section>
         <div class="container-fluid m-0 p-0">
-            <div data-aos="fade-up" class="position-fixed bottom-0 end-0 p-3 box" style="z-index: 1100">
-                <div id="sahamToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true"
-                    data-bs-delay="10000">
-                    <div class="toast-header">
-                        <strong class="me-auto">Saham Indika Energy (INDY)</strong>
-                        <small>Info Saham</small>
-                        <button type="button" class="btn-close ms-2 mb-1" data-bs-dismiss="toast"
-                            aria-label="Close"></button>
-                    </div>
-                    <div class="toast-body">
-                        INDY saat ini diperdagangkan di Bursa Efek Indonesia.<br>
-                        <a href="https://www.tradingview.com/symbols/IDX-INDY/" target="_blank">Lihat grafik saham
-                            &raquo;</a>
-                    </div>
-                </div>
-            </div>
             <div class="row flex-column flex-md-row m-0 p-0">
                 <div class="col-md-9 d-flex align-items-center">
                     <div class="container py-4">
                         <div class="row">
-                            <div class="col-12 col-md-10">
+                            <div data-aos="fade-down" class="col-12 col-md-10">
                                 <h1 class="fw-bold" style="color: #A99866; font-size: 28px;">
                                     KARIR <i class="fa-solid fa-user fa-fade"></i>
                                 </h1>
@@ -276,8 +265,8 @@
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col">
-                                        <a href="" class="btn btn-sm rounded-0 nav-btn-karir fw-medium">SEE
-                                            MORE <i class="fa-solid fa-arrow-right"></i></a>
+                                        <a href="" class="btn btn-sm rounded-0 nav-btn-karir fw-bold">KIRIM CV <i
+                                                class="fa-solid fa-arrow-right"></i></a>
                                     </div>
                                 </div>
                             </div>
