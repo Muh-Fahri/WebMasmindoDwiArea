@@ -17,7 +17,7 @@
                     </div>
                     <div class="row justify-content-center">
                         <div class="col-8">
-                            <p class="fw-medium">SELAMAT DATANG DI MASMINDO, TEMPAT DIMANA KOMITMEN INOVASI DAN
+                            <p class="fw-medium">SELAMAT DATANG DI WEB MASMINDO, TEMPAT DIMANA KOMITMEN INOVASI DAN
                                 KEBERLANJUTAN
                                 MENCIPTAKAN MASA DEPAN PERTAMBANGAN YANG LEBIH BAIK.</p>
                         </div>
@@ -192,32 +192,36 @@
 
         <section>
             <div class="container-fluid m-0 p-0">
-                <div class="row">
+                <div class="row flex-column flex-md-row m-0 p-0">
                     <div class="col m-0 p-0">
                         {{-- awak mas gold project --}}
-                        <div class="bg-goldProject d-flex justify-content-center align-items-center">
-                            <div class="row">
-                                <div data-aos="fade-right" class="col-7">
+                        <div class="bg-goldProject d-flex justify-content-center align-items-center text-md-start">
+                            <div class="row w-100 m-0">
+                                <div data-aos="fade-right" class="col-12 col-md-7 mx-auto">
                                     <h1 class="fw-bold" style="color: #A99866;font-size:40px">AWAK MAS GOLD PROJECT</h1>
-                                    <p class="text-white fw-medium small">Lorem ipsum dolor sit amet consectetur
-                                        adipisicing
-                                        elit.
-                                        Sequi, maxime!</p>
-                                    <a class="btn nav-btn btn-sm rounded-0 fw-bold" href="">SELENGKAPNYA</a>
+                                    <p class="text-white fw-medium small">
+                                        Mas Gold Project adalah salah satu inisiatif pertambangan emas yang dikembangkan
+                                        dengan semangat profesionalisme dan tanggung jawab lingkungan.
+                                    </p>
+                                    <a class="btn nav-btn btn-sm rounded-0 fw-bold" href="">SELENGKAPNYA <i
+                                            class="fa-solid fa-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col m-0 p-0">
-                        <div class="bg-goldProjectR d-flex justify-content-center align-items-center">
-                            <div class="row">
-                                <div data-aos="fade-left" class="col-7 text-end">
-                                    <h1 class="fw-bold" style="color: #A99866;font-size:40px">AWAK MAS GOLD PROJECT</h1>
-                                    <p class="text-white fw-medium small">Lorem ipsum dolor sit amet consectetur
-                                        adipisicing
-                                        elit.
-                                        Sequi, maxime!</p>
-                                    <a class="btn btn-sm rounded-0 nav-btn fw-bold" href="">SELENGKAPNYA</a>
+                        <div class="bg-goldProjectR d-flex justify-content-center align-items-center text-md-end">
+                            <div class="row w-100 m-0">
+                                <div data-aos="fade-left" class="col-12 col-md-7 mx-auto">
+                                    <h1 class="fw-bold" style="color: #A99866;font-size:40px">MASMINDO DALAM BERITA</h1>
+                                    <p class="text-white fw-medium small">
+                                        Di sini, kami menyediakan informasi terkini seputar kegiatan dan perkembangan yang
+                                        terjadi di Masmindo. Kami berkomitmen untuk selalu menyajikan berita yang relevan
+                                        dan menarik seputar industri pertambangan, kebijakan keberlanjutan, serta berbagai
+                                        pencapaian dan inisiatif yang kami lakukan.
+                                    </p>
+                                    <a class="btn btn-sm rounded-0 nav-btn fw-bold" href="">SELENGKAPNYA <i
+                                            class="fa-solid fa-arrow-right"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -225,42 +229,61 @@
                 </div>
             </div>
         </section>
+
         <section>
             <div class="container-fluid m-0 p-0">
-                <div class="row">
-                    <div class="col">
-                        <div style="height: 500px; display: flex; align-items: center;">
-                            <div class="container">
-                                <div class="row">
-                                    <div class="col">
-                                        <h1>KARIR</h1>
-                                        <p>
-                                            Bersama Masmindo, Anda tidak hanya membangun karier — Anda menjadi bagian dari
-                                            sebuah
-                                            misi besar: mengembangkan potensi sumber daya alam Indonesia secara bertanggung
-                                            jawab dan
-                                            berkelanjutan.
-                                            Kami percaya bahwa sumber daya manusia adalah aset paling berharga. Oleh karena
-                                            itu, kami
-                                            menciptakan lingkungan kerja yang aman, inklusif, dan penuh peluang untuk tumbuh
-                                            dan
-                                            berkembang.
-                                            Mari bergabung dengan tim profesional yang berdedikasi, dan bersama-sama kita
-                                            wujudkan masa depan emas Indonesia.
-                                        </p>
+                <div class="row flex-column flex-md-row m-0 p-0">
+                    <div data-aos="zoom-out" class="col-md-9 d-flex align-items-center">
+                        <div class="container py-4">
+                            <div class="row">
+                                <div class="col-12 col-md-10">
+                                    <h1 class="fw-bold" style="color: #A99866; font-size: 28px;">
+                                        KARIR <i class="fa-solid fa-user fa-fade"></i>
+                                    </h1>
+                                    <p class="fw-medium small" style="color: #A99866; font-size: 14px;">
+                                        Bersama Masmindo, Anda tidak hanya membangun karier — Anda menjadi bagian dari
+                                        sebuah
+                                        misi besar: mengembangkan potensi sumber daya alam Indonesia secara bertanggung
+                                        jawab dan berkelanjutan.
+                                        Kami percaya bahwa sumber daya manusia adalah aset paling berharga. Oleh karena
+                                        itu, kami menciptakan lingkungan kerja yang aman, inklusif, dan penuh peluang untuk
+                                        tumbuh
+                                        dan berkembang.
+                                        Mari bergabung dengan tim profesional yang berdedikasi, dan bersama-sama kita
+                                        wujudkan masa depan emas Indonesia.
+                                    </p>
+                                    <div class="row">
+                                        <div class="col-auto">
+                                            <a style="color:#A99866"
+                                                href="{{ url('https://www.linkedin.com/company/pt-masmindo-dwi-area/posts/?feedView=all') }}"><i
+                                                    class="fa-brands fa-linkedin-in fa-fade"
+                                                    style="--fa-animation-duration: 2s; --fa-fade-opacity: 0.6;font-size:24px;"></i></a>
+                                        </div>
+                                        <div class="col-auto">
+                                            <a style="color:#A99866"
+                                                href="{{ url('https://www.instagram.com/masmindodwiarea/') }}"><i
+                                                    class="fa-brands fa-instagram fa-fade"
+                                                    style="--fa-animation-duration: 2s; --fa-fade-opacity: 0.6;font-size:24px;"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="row mt-4">
+                                        <div class="col">
+                                            <a href="" class="btn btn-sm rounded-0 nav-btn-karir fw-medium">SEE
+                                                MORE <i class="fa-solid fa-arrow-right"></i></a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                    <aside class="col-3">
-                        <img class="h-100 w-100" src="{{ asset('template/406bd29d-45fa-48c6-8a43-ad8feb2f77a9.jpg') }}"
-                            alt="">
+                    <aside class="col-md-3 m-0 p-0" data-aos="fade-left">
+                        <img class="w-100 h-100 object-fit-cover"
+                            src="{{ asset('template/406bd29d-45fa-48c6-8a43-ad8feb2f77a9.jpg') }}" alt="">
                     </aside>
                 </div>
             </div>
         </section>
+
     </main>
     @include('footter')
 @endsection

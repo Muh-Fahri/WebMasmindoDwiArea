@@ -1,10 +1,11 @@
 <div class="container-fluid">
-    <div id="navbar" style="z-index: 1000;"
-        class="fixed-top top-0 w-full z-50 bg-transparent transition-all ease-in-out duration-700">
-        <div class=" bg-atas-nav" style="background-color: #e8c56b00;">
+    <div id="navbar" class="fixed-top top-0 w-full z-50 bg-transparent transition-all ease-in-out duration-700">
+        <div class="bg-atas-nav" style="background-color: #e8c56b00;">
             <div class="container d-flex justify-content-between">
-                <a class="navbar-brand" href="{{ route('user.home') }}"><img style="width: 8em"
-                        src="{{ asset('logo/LogoMasmindo.webp') }}" alt=""></a>
+                <a class="navbar-brand" href="{{ route('user.home') }}">
+                    <img class="img-fluid" style="max-width: 8em; width: 100%;"
+                        src="{{ asset('logo/LogoMasmindo.webp') }}" alt="">
+                </a>
                 <ul class="text-white navbar-nav fw-bolder d-flex flex-row align-items-center">
                     <li class="nav-item mx-3">
                         <a class="nav-link d-flex align-items-center text-white" style="gap:5px" href="#">
@@ -45,10 +46,9 @@
                                     <li class="nav-item">
                                         <a class="nav-link {{ Request::is('/') ? 'active' : '' }}"
                                             href="{{ route('user.home') }}">Beranda</a>
-
                                     </li>
-                                    <li class="nav-item ">
-                                        <a class="nav-link {{ Request::is('user/portofolio') ? 'active' : '' }} "
+                                    <li class="nav-item">
+                                        <a class="nav-link {{ Request::is('user/portofolio') ? 'active' : '' }}"
                                             href="{{ route('user.portofolio') }}">Portofolio Kami</a>
                                     </li>
                                     <li class="nav-item">
@@ -72,7 +72,6 @@
                                                     href="{{ route('user.manajemen') }}">Manajemen</a></li>
                                         </ul>
                                     </li>
-
                                     <li class="nav-item dropdown">
                                         <a class="nav-link dropdown-toggle
                                         {{ Request::is('user/kebijakanPerusahaan', 'user/lingkungan', 'user/sosial') ? 'active' : '' }}"
@@ -101,7 +100,5 @@
                 </div>
             </nav>
         </div>
-
     </div>
-
 </div>

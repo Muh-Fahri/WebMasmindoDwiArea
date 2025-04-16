@@ -162,10 +162,29 @@ body {
     transition: color 0.3s ease-in-out, outline 0.3s ease-in-out;
 }
 
+
+.nav-btn-karir {
+    outline: solid #A99866 2px;
+    color: #A99866 !important;
+    transition: color 0.3s ease-in-out, outline 0.3s ease-in-out;
+}
+
 .nav-btn:hover {
     color: #A99866 !important;
     outline: solid #A99866 2px;
 }
+
+
+.navbar-toggler-icon {
+    background-color: #e8c56b;
+    /* Ganti dengan warna yang lebih terlihat */
+}
+
+
+
+
+
+
 
 .under-line {
     background-color: #E8C56B;
