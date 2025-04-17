@@ -222,7 +222,23 @@
     background-color: #6e6e6e54;
 }
 
+.bg-dokumentasi {
+    background: linear-gradient(rgba(0, 0, 0, 0.644)), url('/template/omid-roshan-lHI9NA4U7hg-unsplash.jpg');
+    height: 70vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+}
 
+#galeriScroll::-webkit-scrollbar {
+    display: none;
+}
+
+#gasleriScroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
 
 
 
@@ -260,13 +276,15 @@
 
     .logo-track {
         animation-duration: 20s;
-        /* biar lebih cepat di mobile */
+
     }
 
     .logo-item img {
         height: 40px;
     }
 }
+
+
 
 
 

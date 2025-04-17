@@ -176,14 +176,7 @@ class AdminController extends Controller
             $request->file('img_berita')->move(public_path('berita'), $imageName);
             $berita->img_berita = $imageName;
         }
-        // if ($request->hasFile('img_berita')) {
-        //     $file = $request->file('img_berita');
-        //     $namaFileBaru = time() . '-' . Str::slug(pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
-        //     $file->move(public_path('berita'), $namaFileBaru);
-        //     $berita->img_program = $namaFileBaru;
-        // }
         $berita->save();
-        // dd($berita);
         return redirect()->back()->with('Berita_tertambah', 'Berhasil ditambahkan!');
     }
 
@@ -470,7 +463,7 @@ class AdminController extends Controller
     // js
     public function getPesanRealtime()
     {
-        $pesan = Pesan::latest()->get(); // Ambil pesan terbaru
+        $pesan = Pesan::latest()->get();
         return response()->json($pesan);
     }
 }

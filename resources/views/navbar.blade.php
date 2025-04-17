@@ -18,7 +18,7 @@
                     aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="collapse navbar-collapse bg-bawah" id="navbarNav">
+                <div class="collapse navbar-collapse bg-bawah" id="navbarNav" data-bs-theme="light">
                     <ul class="menu-navbar fw-bold navbar-nav mx-auto">
                         <li class="nav-item">
                             <a class="nav-link {{ Request::is('/') ? 'active' : '' }}"
@@ -65,6 +65,16 @@
                                         style="color: #B6812C" href="{{ route('user.sosial') }}">Sosial</a>
                                 </li>
                             </ul>
+                        </li>
+                    </ul>
+                    <ul class="navbar-nav ms-auto fw-bold">
+                        <li class="nav-item">
+                            <a style="color: #FFDF8F"
+                                class="nav-link {{ Request::is('user/kontak') ? 'active-bg' : '' }}"
+                                href="{{ route('user.kontak') }}">Kontak <i class="fa-solid fa-phone"></i></a>
+                        </li>
+                        <li class="nav-item">
+                            <a style="color: #FFDF8F" class="nav-link" href="#">Karir</a>
                         </li>
                     </ul>
                 </div>

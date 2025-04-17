@@ -51,9 +51,8 @@ class UserController extends Controller
 
     function portofolio()
     {
-        $galeri = Galeri::all();
         $videos = Video::all();
-        return view('User.portofolio', compact('galeri', 'videos'));
+        return view('User.portofolio', compact('videos'));
     }
 
     function media()
@@ -61,8 +60,9 @@ class UserController extends Controller
         $lainnya = Media::whereNull('category_berita')->get();
         $utama = Media::where('category_berita', 'utama')->get();
         $populer = Media::where('category_berita', 'populer')->get();
+        $galeri = Galeri::all();
 
-        return view('User.media', compact('lainnya', 'utama', 'populer'));
+        return view('User.media', compact('lainnya', 'utama', 'populer', 'galeri'));
     }
 
     function tampilSelengkapnya($id)
