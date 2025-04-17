@@ -214,3 +214,24 @@ window.addEventListener("scroll", function () {
 
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // cegah scrollTop negatif
 });
+
+function scrollProject(direction) {
+    const container = document.getElementById('projectScroll');
+    const scrollAmount = 300; // geser 300px
+    if (direction === 'left') {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+}
+
+function scrollBeritaUtama(direction) {
+    const container = document.getElementById('beritaUtamaScroll');
+    const scrollAmount = 300; // geser 300px
+    if (direction === 'left') {
+        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+    } else {
+        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+    }
+}
+

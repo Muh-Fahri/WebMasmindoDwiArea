@@ -237,7 +237,7 @@
                                 <h1 class="fw-bold" style="color: #A99866; font-size: 28px;">
                                     KARIR <i class="fa-solid fa-user fa-fade"></i>
                                 </h1>
-                                <p class="fw-medium small" style="color: #A99866; font-size: 14px;">
+                                <p class="fw-medium small" style="color: #6E6E6E; font-size: 14px;">
                                     Bersama Masmindo, Anda tidak hanya membangun karier — Anda menjadi bagian dari
                                     sebuah
                                     misi besar: mengembangkan potensi sumber daya alam Indonesia secara bertanggung

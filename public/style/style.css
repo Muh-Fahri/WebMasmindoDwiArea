@@ -155,6 +155,74 @@
     background-repeat: no-repeat;
 }
 
+#projectScroll::-webkit-scrollbar {
+    display: none;
+}
+
+#projectScroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.logo-slider {
+    white-space: nowrap;
+    overflow: hidden;
+    position: relative;
+}
+
+.logo-track {
+    animation: scroll-left 30s linear infinite;
+}
+
+.bg-media {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.644), rgba(0, 0, 0, 0.644)),
+        url('/template/Jovem\ líder\ da\ equipe\ de\ engenharia\ com\ braços\ cruzados\ e\ seus\ estagiários\ de\ sucesso\ em\ poses\ de\ vestuário\ de\ trabalho\ _\ Foto\ Premium.jpg');
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.card-lainnya {
+    background-color: #A99866 !important;
+    border: none;
+    height: 90px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.card-lainnya:hover {
+    background-color: #6E6E6E !important;
+}
+
+.text-media-masmindo {
+    color: #A99866;
+    transition: color 0.3s ease-in-out;
+}
+
+.text-media-masmindo:hover {
+    color: #FFDF8F;
+}
+
+#beritaUtamaScroll::-webkit-scrollbar {
+    display: none;
+}
+
+#beritaUtamaScroll {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+}
+
+.isi-card-beritaUtama {
+    background-color: #ffdf8f54;
+    height: 50%;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.isi-card-beritaUtama:hover {
+    background-color: #6e6e6e54;
+}
+
+
 
 
 
@@ -189,4 +257,29 @@
     .bg-mepo p {
         font-size: 1rem;
     }
+
+    .logo-track {
+        animation-duration: 20s;
+        /* biar lebih cepat di mobile */
+    }
+
+    .logo-item img {
+        height: 40px;
+    }
+}
+
+
+
+@keyframes scroll-left {
+    0% {
+        transform: translateX(0%);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+.logo-item {
+    flex: 0 0 auto;
 }
