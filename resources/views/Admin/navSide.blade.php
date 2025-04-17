@@ -45,14 +45,11 @@
                                 </li>
                                 <li class="nav-item">
                                     <a href="{{ route('admin.video') }}" class="nav-link">
-
                                         <p>Video</p>
                                     </a>
                                 </li>
                             </ul>
                         </li>
-
-
                         <li class="nav-item">
                             <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#masmindoMenu">
                                 <i class="bi bi-collection-fill"></i>
@@ -87,6 +84,12 @@
                                     <span>Pesan</span>
                                 </div>
                                 <span id="badge-pesan" class="badge bg-danger d-none"></span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.safety') }}" class="nav-link">
+                                <i class="bi bi-person-fill"></i>
+                                <p>Safety Hour</p>
                             </a>
                         </li>
 

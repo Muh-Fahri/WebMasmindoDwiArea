@@ -2,17 +2,19 @@
 
 namespace App\Http\Controllers;
 
+use Carbon\Carbon;
 use App\Models\Home;
 use App\Models\Media;
+use App\Models\Pesan;
 use App\Models\Video;
 use App\Models\Galeri;
 use App\Models\Masmindo;
 use App\Models\Lingkungan;
 use App\Models\BannerMedia;
-use App\Models\Pesan;
+use App\Models\SafetyHours;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
 use function PHPUnit\Framework\fileExists;
 
@@ -459,11 +461,86 @@ class AdminController extends Controller
         return redirect()->back()->with('berhasil', 'Pesan terhapus');
     }
 
+    function tampil_safety()
+    {
+        $safety = SafetyHours::latest()->first();
+        $totalJam = 0;
+
+        if ($safety) {
+            $tanggalMulai = \Carbon\Carbon::parse($safety->tanggal_mulai);
+
+            if ($tanggalMulai->lessThanOrEqualTo(\Carbon\Carbon::now())) {
+                // hitung selisih jam (bukan hari saja)
+                $jamKerja = $tanggalMulai->diffInHours(\Carbon\Carbon::now());
+
+                // Misalnya hanya 8 jam kerja per hari → kita sesuaikan
+                $jamPerHari = (int) $safety->jam_per_hari;
+
+                // Total hari kerja = jam kerja dibagi jam/hari
+                $hariKerja = floor($jamKerja / 24); // atau ubah logika ini sesuai kebutuhan
+
+                // Total jam kerja aktual:
+                $totalJam = $hariKerja * $jamPerHari;
+            }
+        }
+        return view('Admin.safety', compact('safety', 'totalJam'));
+    }
+
+    function addSafety(Request $request)
+    {
+        $request->validate([
+            'jumlah_pekerja' => 'required|numeric',
+            'jam_per_hari' => 'required|numeric',
+            'tanggal_mulai' => 'required|date|before_or_equal:today',
+        ]);
+
+        SafetyHours::create([
+            'jumlah_pekerja' => $request->jumlah_pekerja,
+            'jam_per_hari' => $request->jam_per_hari,
+            'tanggal_mulai' => $request->tanggal_mulai,
+            'jam_tanpaKecelakaan' => 0, // <-- WAJIB diisi
+            'total_kecelakaan' => 0,     // <-- Juga kalau kolom ini NOT NULL
+        ]);
+
+
+        return redirect()->back()->with('success', 'Data berhasil disimpan!');
+    }
+
+
 
     // js
     public function getPesanRealtime()
     {
         $pesan = Pesan::latest()->get();
         return response()->json($pesan);
+    }
+
+    public function getTotalJam()
+    {
+        $safety = SafetyHours::latest()->first();
+        $totalJam = 0;
+
+        if ($safety) {
+            $tanggalMulai = \Carbon\Carbon::parse($safety->tanggal_mulai);
+
+            if ($tanggalMulai->lessThanOrEqualTo(\Carbon\Carbon::now())) {
+                // hitung selisih jam (bukan hari saja)
+                $jamKerja = $tanggalMulai->diffInHours(\Carbon\Carbon::now());
+
+                // Misalnya hanya 8 jam kerja per hari → kita sesuaikan
+                $jamPerHari = (int) $safety->jam_per_hari;
+
+                // Total hari kerja = jam kerja dibagi jam/hari
+                $hariKerja = floor($jamKerja / 24); // atau ubah logika ini sesuai kebutuhan
+
+                // Total jam kerja aktual:
+                $totalJam = $hariKerja * $jamPerHari;
+            }
+        }
+
+        return response()->json([
+            'totalJam' => number_format($totalJam),
+            'tanggalMulai' => $safety ? \Carbon\Carbon::parse($safety->tanggal_mulai)->format('d M Y') : null
+        ]);
     }
 }

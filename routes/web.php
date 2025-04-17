@@ -53,10 +53,13 @@ Route::middleware('admin')->group(function () {
     Route::get('admin/kontak', [AdminController::class, 'tampilPesan'])->name('admin.kontak');
     Route::get('admin/kontak/lihatPesan/{id}', [AdminController::class, 'lihatPesan'])->name('admin.lihatPesan');
     Route::delete('admin/kontak/hapusPesan/{id}', [AdminController::class, 'hapusPesan'])->name('admin.hapusPesan');
+    Route::get('/admin/safety', [AdminController::class, 'tampil_safety'])->name('admin.safety');
+    Route::post('/admin/safety', [AdminController::class, 'addSafety'])->name('admin.safetyAdd');
 
     Route::get('/admin/jumlah-pesan', function () {
         $jumlah = \App\Models\Pesan::where('status_baca', false)->count();
         return response()->json(['jumlah' => $jumlah]);
     });
     Route::get('/admin/pesan/realtime', [AdminController::class, 'getPesanRealtime'])->name('admin.pesan.realtime');
+    Route::get('/safety/jam-terbaru', [AdminController::class, 'getTotalJam'])->name('safety.jamTerbaru');
 });

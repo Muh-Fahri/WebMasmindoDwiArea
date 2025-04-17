@@ -245,3 +245,18 @@ function scrollGaleri(direction) {
     }
 }
 
+function loadTotalJam() {
+    $.ajax({
+        url: '{{ route("safety.jamTerbaru") }}',
+        method: 'GET',
+        success: function (response) {
+            toastr.info(response.totalJam + ' jam kerja tanpa kecelakaan sejak ' + response.tanggalMulai);
+        }
+    });
+}
+
+// Jalankan pertama kali
+loadTotalJam();
+
+// Lalu ulangi setiap 1 jam sekali (3600000 ms)
+setInterval(loadTotalJam, 3600000);
