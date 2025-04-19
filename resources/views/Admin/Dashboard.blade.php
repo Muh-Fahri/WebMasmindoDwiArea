@@ -1,7 +1,6 @@
 @extends('layout')
-@include('Admin.navSide')
-
 @section('konten')
+    @include('Admin.navSide')
     <!-- Modal Selamat Datang -->
     @if (session('berhasil'))
         <div class="modal fade" id="welcomeAminModal" tabindex="-1" aria-labelledby="welcomeModalLabel" aria-hidden="true">
@@ -21,10 +20,9 @@
             </div>
         </div>
     @endif
-    <!-- Konten di sebelah sidebar -->
     <div class="content-wrapper">
         <section class="content">
-            <div class="container-fluid p-4">
+            <div class="container-fluid p-3 bg-white" style="max-height: 100vh; overflow-y: auto; overflow-x: hidden;">
                 <div class="row">
                     <div class="col">
                         <div class="small-box bg-info fade-in">

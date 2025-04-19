@@ -13,7 +13,7 @@
                                     <img class="w-100 h-100" src="{{ asset('logo/LogoMasmindo.webp') }}" alt="">
                                 </div>
                             </div>
-                            <p class="text-white fw-medium">SELAMAT DATANG DI WEB MASMINDO, TEMPAT DIMANA KOMITMEN INOVASI
+                            <p class="text-white fw-medium">TEMPAT DIMANA KOMITMEN INOVASI
                                 DAN
                                 KEBERLANJUTAN
                                 MENCIPTAKAN MASA DEPAN PERTAMBANGAN YANG LEBIH BAIK.</p>
@@ -27,7 +27,7 @@
             </div>
         </div>
     </section>
-    <section id="nilaiNilai" style="background-color: #736B52">
+    <section id="nilaiNilai" style="background-color: #6E6E6E">
         <div class="container-fluid fade-in" id="nilaiInti">
             <div class="row justify-content-start align-items-center">
                 <aside class=" col-lg-4 p-0">
@@ -35,17 +35,17 @@
                 </aside>
                 <div class="col-lg-6 p-5">
                     <div data-aos="fade-right">
-                        <h1 class="fw-bold text-white">NILAI - NILAI INTI</h1>
-                        <p class="fw-medium text-white">
-                            Di Masmindo, kami percaya bahwa keberhasilan proyek tidak hanya ditentukan oleh hasil akhir,
-                            tetapi juga oleh nilai-nilai yang menjadi dasar setiap langkah kami.
-                            Nilai-nilai ini membentuk budaya kerja, memandu setiap keputusan, dan memperkuat komitmen
-                            kami
-                            untuk menjalankan operasional secara profesional, bertanggung jawab, dan berkelanjutan.
-                            Melalui prinsip-prinsip inilah, kami membangun kepercayaan, menjaga integritas, dan terus
-                            tumbuh
-                            bersama masyarakat serta pemangku kepentingan.
-                        </p>
+                        <h3 class="fw-medium text-white">Nilai -Nilai Inti</h1>
+                            <p class="text-white">
+                                Di Masmindo, kami percaya bahwa keberhasilan proyek tidak hanya ditentukan oleh hasil akhir,
+                                tetapi juga oleh nilai-nilai yang menjadi dasar setiap langkah kami.
+                                Nilai-nilai ini membentuk budaya kerja, memandu setiap keputusan, dan memperkuat komitmen
+                                kami
+                                untuk menjalankan operasional secara profesional, bertanggung jawab, dan berkelanjutan.
+                                Melalui prinsip-prinsip inilah, kami membangun kepercayaan, menjaga integritas, dan terus
+                                tumbuh
+                                bersama masyarakat serta pemangku kepentingan.
+                            </p>
                     </div>
                     <div class="row">
                         <div class="col" data-aos="fade-right">
@@ -61,7 +61,7 @@
                                         <div class="me-3 p-2 bg-iconCard rounded" style=" ">
                                             <img class="w-100 h-100" src="{{ asset('svg/agility.png') }}" alt="">
                                         </div>
-                                        <h4 class="m-0 fw-bold">AGILITY</h4>
+                                        <h4 class="m-0">Agility</h4>
                                     </div>
                                     <p class="fw-medium">
                                         Kemampuan untuk beradaptasi dengan lingkungan yang dinamis dan terbuka
@@ -78,7 +78,7 @@
                                         <div class="me-3 p-2 rounded bg-iconCard">
                                             <img class="w-100 h-100 " src="{{ asset('svg/caring.png') }}" alt="">
                                         </div>
-                                        <h4 class="m-0 fw-bold">CARING</h4>
+                                        <h4 class="m-0">Caring</h4>
                                     </div>
                                     <p class="fw-medium">
                                         Menempatkan keselamatan dan kesejahteraan karyawan sebagai prioritas, serta
@@ -94,7 +94,7 @@
                                         <div class="me-3 p-2 rounded bg-iconCard">
                                             <img class="w-100 h-100" src="{{ asset('svg/teamwork.png') }}" alt="">
                                         </div>
-                                        <h4 class="m-0 fw-bold">TEAMWORK</h4>
+                                        <h4 class="m-0">Teamwork</h4>
                                     </div>
                                     <p class="fw-medium">
                                         Menghargai kolaborasi dan keberagaman untuk mencapai tujuan bersama.
@@ -109,7 +109,7 @@
                                         <div class="me-3 p-2 rounded bg-iconCard">
                                             <img class="w-100 h-100" src="{{ asset('svg/integrity.png') }}" alt="">
                                         </div>
-                                        <h4 class="m-0 fw-bold">INTEGRITY</h4>
+                                        <h4 class="m-0">Integrity</h4>
                                     </div>
                                     <p class="fw-medium">
                                         Menempatkan keselamatan dan kesejahteraan karyawan sebagai prioritas, serta
@@ -125,7 +125,7 @@
                                         <div class="me-3 p-2 rounded bg-iconCard">
                                             <img class="w-100 h-100" src="{{ asset('svg/caring.png') }}" alt="">
                                         </div>
-                                        <h4 class="m-0 fw-bold">EXCELLENCE</h4>
+                                        <h4 class="m-0">Excellence</h4>
                                     </div>
                                     <p class="fw-medium">
                                         Menempatkan keselamatan dan kesejahteraan karyawan sebagai prioritas, serta
@@ -142,7 +142,7 @@
                                             style="background-color: #FFEE6D; width: 40px; height: 40px;">
                                             <img class="w-100 h-100" src="{{ asset('svg/caring.png') }}" alt="">
                                         </div>
-                                        <h4 class="m-0 fw-bold">CARING</h4>
+                                        <h4 class="m-0">Caring</h4>
                                     </div>
                                     <p class="fw-medium">
                                         Menempatkan keselamatan dan kesejahteraan karyawan sebagai prioritas, serta

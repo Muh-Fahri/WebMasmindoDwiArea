@@ -4,7 +4,7 @@
     <div class="content-wrapper">
         <div class="container-fluid bg-white fade-in overflow-auto" style="max-height: 100vh">
             <div class="container mt-4">
-                <h2 class="mb-4">Jam Kerja Tanpa Kecelakaan</h2>
+                <h2 class="mb-4 fw-bold">Jam Kerja Tanpa Kecelakaan</h2>
 
                 @if ($safety)
                     <div class="alert alert-success">

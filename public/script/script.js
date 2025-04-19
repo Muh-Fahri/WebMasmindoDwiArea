@@ -260,3 +260,6 @@ loadTotalJam();
 
 // Lalu ulangi setiap 1 jam sekali (3600000 ms)
 setInterval(loadTotalJam, 3600000);
+
+
+

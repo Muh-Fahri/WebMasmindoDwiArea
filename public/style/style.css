@@ -5,6 +5,7 @@
     background-position: center;
 }
 
+
 .custom-img {
     background: linear-gradient(to right, rgba(0, 0, 0, 0.877), rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.651)),
         url('/template/omid-roshan-lHI9NA4U7hg-unsplash.jpg');
@@ -16,6 +17,11 @@
 
 .menu-navbar .nav-link {
     color: #FFDF8F;
+    transition: color 0.3s ease-in-out;
+}
+
+.dropdown-menu {
+    z-index: 9999;
 }
 
 #navbar {
@@ -231,22 +237,221 @@
     align-items: center;
 }
 
+
 #galeriScroll::-webkit-scrollbar {
     display: none;
 }
 
-#gasleriScroll {
+#galeriScroll {
     scrollbar-width: none;
     -ms-overflow-style: none;
 }
 
+.bg-tentang-kami {
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.815), rgba(0, 0, 0, 0.596), rgba(0, 0, 0, 0.185)), url('/template/omid-roshan-lHI9NA4U7hg-unsplash.jpg');
+    min-height: 100vh;
+    background-size: cover;
+    background-position: center;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
+}
 
+.masmindo-tentang {
+    color: #A99866;
+    transition: color 0.3s ease-in-out;
+}
 
+.masmindo-tentang:hover {
+    color: #FFDF8F;
 
+}
 
+.isi-tentang {
+    color: #A99866;
+    transition: color 0.3s ease-in-out;
+}
 
+.isi-tentang:hover {
+    color: white;
+}
 
+.visi-misi {
+    color: #E2C062;
+    transition: color 0.3s ease-in-out;
+}
+
+.visi-misi:hover {
+    color: #A99866;
+}
+
+.visi-misi-card {
+    background-color: #FFFCEF !important;
+    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
+}
+
+.visi-misi-card:hover {
+    transform: translateY(-10px);
+    background-color: #FFDF8F !important;
+}
+
+.text-active {
+    color: #6E6E6E;
+    transition: color 0.3s ease-in-out;
+}
+
+.text-active:hover {
+    color: #FFDF8F;
+}
+
+.custom-toggler {
+    background-color: #A99866;
+    /* warna emas */
+    border: 2px solid white;
+    /* garis tepi putih */
+    border-radius: 5px;
+    /* sudut melengkung biar lebih halus */
+    padding: 6px 10px;
+    transition: all 0.3s ease-in-out;
+}
+
+.custom-toggler:hover {
+    background-color: white;
+    border-color: #A99866;
+}
+
+.custom-toggler .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+.custom-toggler:hover .navbar-toggler-icon {
+    filter: invert(39%) sepia(23%) saturate(547%) hue-rotate(17deg) brightness(92%) contrast(89%);
+}
+
+.text-kebijakan-keberlanjutan {
+    color: #A99866;
+    transition: color 0.3s ease-in-out;
+}
+
+.text-kebijakan-keberlanjutan:hover {
+    color: #FFDF8F;
+}
+
+.esg-orbit {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    margin: 50px auto;
+}
+
+/* Lingkaran tengah (SUSTAINABILITY) */
+.center-circle {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 100px;
+    height: 100px;
+    background-color: #A99866;
+    color: white;
+    font-weight: bold;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2;
+}
+
+/* Orbit bundar */
+.orbit-line {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    border: 2px solid #A99866;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 1;
+}
+
+/* Container berputar */
+.orbit-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 300px;
+    height: 300px;
+    transform: translate(-50%, -50%);
+    animation: rotateOrbit 20s linear infinite;
+    z-index: 2;
+}
+
+/* Lingkaran luar (ENV, SOC, GOV) */
+.orbiter {
+    position: absolute;
+    width: 100px;
+    height: 100px;
+    background-color: #A99866;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: white;
+}
+
+/* Posisi masing-masing lingkaran */
+.env {
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.soc {
+    top: 70%;
+    /* Menggeser lebih ke bawah */
+    left: 15%;
+    transform: translate(-50%, -50%);
+}
+
+.gov {
+    top: 70%;
+    /* Menggeser lebih ke bawah */
+    right: 15%;
+    transform: translate(50%, -50%);
+}
+
+/* Supaya teks tidak ikut berputar */
+.orbiter span {
+    transform: rotate(-0deg);
+    animation: counter-rotate 20s linear infinite;
+    display: inline-block;
+}
+
+/* Animasi orbit utama */
+@keyframes rotateOrbit {
+    from {
+        transform: translate(-50%, -50%) rotate(0deg);
+    }
+
+    to {
+        transform: translate(-50%, -50%) rotate(360deg);
+    }
+}
+
+/* Teks tetap (counter rotate) */
+@keyframes counter-rotate {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-360deg);
+    }
+}
 
 
 
@@ -300,4 +505,60 @@
 
 .logo-item {
     flex: 0 0 auto;
+}
+
+@media (max-width: 768px) {
+    .center-circle {
+        width: 60px;
+        height: 60px;
+    }
+
+    .orbit-line {
+        width: 180px;
+        height: 180px;
+    }
+
+    .orbit-container {
+        width: 180px;
+        height: 180px;
+    }
+
+    .orbiter {
+        width: 50px;
+        height: 50px;
+    }
+
+    .soc,
+    .gov {
+        top: 75%;
+        /* Menurunkan posisi lebih sedikit untuk perangkat lebih kecil */
+    }
+}
+
+@media (max-width: 480px) {
+    .center-circle {
+        width: 50px;
+        height: 50px;
+    }
+
+    .orbit-line {
+        width: 150px;
+        height: 150px;
+    }
+
+    .orbit-container {
+        width: 150px;
+        height: 150px;
+    }
+
+    .orbiter {
+        width: 40px;
+        height: 40px;
+    }
+
+    .soc,
+    .gov {
+        top: 80%;
+        /* Mengurangi jarak lebih banyak pada perangkat mobile */
+    }
 }

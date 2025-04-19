@@ -1,6 +1,6 @@
 @extends('layout')
-@include('Admin.navSide')
 @section('konten')
+    @include('Admin.navSide')
     @if (session('editProgram'))
         <!-- Modal Success Edit -->
         <div class="modal fade" id="modalEditSuccess" tabindex="-1" aria-labelledby="modalEditSuccessLabel" aria-hidden="true">

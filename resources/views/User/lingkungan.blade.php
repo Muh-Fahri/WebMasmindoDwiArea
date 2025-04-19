@@ -1,84 +1,81 @@
-@include('navbar')
-@include('bg-halaman')
 @extends('layout')
 @section('konten')
-    <div class="container">
-        <div class="row mt-5">
-            <div class="col">
-                <h1 style="color: #e8c56b">Lingkungan</h1>
-                <div class="under-lines-masmindo"></div>
-            </div>
-        </div>
-        <div class="row mt-5">
-            <div class="col">
-                <h5 style="color: #e8c56b">Kebijakan Lingkungan</h5>
-                <p style="text-align: justify">Lorem ipsum, dolor sit amet consectetur adipisicing elit. Repellat mollitia
-                    laudantium quia aliquid
-                    recusandae nesciunt enim dolor, dolorum quos dolorem hic voluptate pariatur labore? Illum voluptates
-                    error consequatur dolor dolores eius, voluptate cupiditate maiores doloribus reprehenderit harum ad, ut,
-                    quasi autem eveniet porro recusandae facere aliquam? Ipsa necessitatibus vel maxime quos odit ad
-                    repudiandae aliquam impedit eos sed corporis omnis, provident maiores ipsum. Praesentium repudiandae,
-                    laboriosam, a cum nostrum dolor sed earum atque fugit repellendus at similique accusantium modi itaque
-                    ex quidem officiis reprehenderit. Placeat eligendi odit maiores earum illum odio, tempora asperiores
-                    quia. Veritatis aliquid recusandae fugiat illo consequatur.</p>
-            </div>
-        </div>
-        <div class="row mb-5 ">
-            <div class="col d-flex justify-content-center">
-                <div id="carouselExampleIndicator" class="carousel carousel-fade" style="width:60%;"
-                    data-bs-ride="carousel">
-                    <div class="carousel-indicators" style="">
-                        <button type="button" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="0"
-                            class="active" aria-current="true" aria-label="Slide 1"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="1"
-                            aria-label="Slide 2"></button>
-                        <button type="button" data-bs-target="#carouselExampleIndicator" data-bs-slide-to="2"
-                            aria-label="Slide 3"></button>
+    @include('navbar')
+    @include('bg-halaman')
+    <section style="background-color: #D9D9D9">
+        <div class="container">
+            <div class="row p-5">
+                <aside data-aos="fade-up" class="col-5 p-5" style="background-color: #A99866">
+                    <div class="row">
+                        <div class="col">
+                            <h1 class="pb-5 text-white">Program Pemantauan Rutin</h1>
+                            <p class="text-white">Perusahaan mempertahankan program pemantauan rutin dan terus mengevaluasi
+                                bidang-bidang yang
+                                memerlukan perbaikan.</p>
+                        </div>
                     </div>
-                    <div class="carousel-inner  overflow-hidden" style="height: 40vh;">
-                        <div class="carousel-item active">
-                            <div class="bg-carousel-lingkungan d-flex flex-column justify-content-end"
-                                style="background: linear-gradient(to top, #b6812c,#f8f8f800), url({{ asset('web/36e9e0fc-ebeb-4b24-ab40-52c094e49995.jpg') }});
-                                width:100%; height:40vh; background-size:cover; background-position:center;">
-
-                                <div class="tulisan-carousel p-4">
-                                    <h5 class="text-white">Tree Planting</h5>
-                                    <p class="mt-3 text-white">Perusahaan terus melakukan program penanaman kembali di
-                                        bidang pertanian untuk menggantikan tanaman yang terganggu selama kegiatan di
-                                        lokasi, serta membangun sistem pembuangan limbah berbahaya.</p>
-                                </div>
+                </aside>
+                <div data-aos="fade-down" class="col p-5">
+                    <h1 style="color: #A99866">Kebijakan Lingkungan</h1>
+                    <p style="color: #707070">Masmindo secara aktif berupaya melindungi lingkungan operasinya dengan
+                        kegiatan dan program
+                        pemantauan lingkungan, termasuk pengumpulan data curah hujan, pemantauan air tanah dan air
+                        permukaan, program revegetasi dan pembuangan limbah.</p>
+                    <p style="color: #707070">
+                        Perusahaan mempertahankan program pemantauan rutin dan terus mengevaluasi bidang-bidang yang
+                        memerlukan perbaikan. Beberapa studi baseline lingkungan telah diselesaikan sebelumnya dan
+                        Perusahaan terus memperbarui database lingkungannya. Pemantauan lingkungan dilakukan untuk kualitas
+                        Air Permukaan, Hidrologi, Meteorologi, Kualitas Udara Ambien dan Kebisingan, Flora dan Fauna
+                        Terestrial, dan Ekologi Akuatik.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section style="background-color: #084D30">
+        <div class="container">
+            <div class="row">
+                <aside data-aos="fade-right" class="col-5 p-5">
+                    <img class="w-100 h-100" src="{{ asset('logo/logoLingkungan.svg') }}" alt="">
+                </aside>
+                <div class="col-4 d-flex align-items-center" style="min-height: 300px;">
+                    <div class="w-100">
+                        <div class="row">
+                            <div data-aos="fade-down" class="col">
+                                <h4 class="text-white">Pengelompokan Sampah Berdasarkan Jenis</h4> <br>
+                                <p class="text-white">Sebagai bagian dari komitmen Masmindo dalam menjaga kelestarian
+                                    lingkungan,
+                                    kami menerapkan
+                                    kebijakan pengelolaan sampah yang bertanggung jawab melalui sistem pengelompokan sampah
+                                    yang
+                                    jelas dan terstruktur. Tujuannya adalah untuk mempermudah proses daur ulang, mengurangi
+                                    dampak
+                                    negatif terhadap lingkungan, serta meningkatkan kesadaran seluruh karyawan terhadap
+                                    pentingnya
+                                    memilah sampah sejak dini.</p>
                             </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="bg-carousel-lingkungan d-flex flex-column justify-content-end"
-                                style="background: linear-gradient(to top, #b6812c,#f8f8f800), url({{ asset('web/8b6e7bcd-8f8b-4714-8653-d7a7d7a1a6cd.jpg') }});
-                                width:100%; height:40vh; background-size:cover; background-position:center;">
 
-                                <div class="tulisan-carousel p-4">
-                                    <h5 class="text-white">Planting Mangrove</h5>
-                                    <p class="mt-3 text-white">Perusahaan terus melakukan program penanaman kembali di
-                                        bidang pertanian untuk menggantikan tanaman yang terganggu selama kegiatan di
-                                        lokasi, serta membangun sistem pembuangan limbah berbahaya.</p>
-                                </div>
+                        </div>
+                        <div data-aos="fade-down" class="row">
+                            <div class="col-2">
+                                <img class="w-100 h-100 rounded-3" src="{{ asset('logo/anorganikLogo.svg') }}"
+                                    alt="">
                             </div>
-                        </div>
-                        <div class="carousel-item">
-                            <div class="bg-carousel-lingkungan d-flex flex-column justify-content-end"
-                                style="background: linear-gradient(to top, #b6812c,#f8f8f800), url({{ asset('web/a29d224a-7bd2-465f-889e-25d00e55b066.jpg') }});
-                                width:100%; height:40vh; background-size:cover; background-position:center;">
-
-                                <div class="tulisan-carousel p-4">
-                                    <h5 class="text-white">Water Monitoring</h5>
-                                    <p class="mt-3 text-white">Perusahaan terus melakukan program penanaman kembali di
-                                        bidang pertanian untuk menggantikan tanaman yang terganggu selama kegiatan di
-                                        lokasi, serta membangun sistem pembuangan limbah berbahaya.</p>
-                                </div>
+                            <div class="col-2">
+                                <img class="w-100 h-100 rounded-3" src="{{ asset('logo/organikLogo.svg') }}" alt="">
+                            </div>
+                            <div class="col-2">
+                                <img class="w-100 h-100 rounded-3" src="{{ asset('logo/b3logo.svg') }}" alt="">
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
-    @include('footter')
+    </section>
+    <section>
+        <div class="bg-kebijakan-bottom"
+            style="background: linear-gradient(to right, rgba(0, 0, 0, 0.616), rgba(0, 0, 0, 0.616)), url({{ asset('template/pexels-bence-szemerey-337043-6804255.jpg') }}); height: 50vh; background-size: cover; background-position: center;">
+        </div>
+    </section>
 @endsection

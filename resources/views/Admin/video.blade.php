@@ -1,6 +1,6 @@
 @extends('layout')
-@include('Admin.navSide')
 @section('konten')
+    @include('Admin.navSide')
     <div class="content-wrapper">
         <div class="container-fluid fade-in overflow-auto" style="max-height: 100vh;">
             {{-- Modal Tambah --}}

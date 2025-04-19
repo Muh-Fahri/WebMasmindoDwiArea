@@ -1,8 +1,8 @@
 @extends('layout')
-@include('Admin.navSide')
 @section('konten')
+    @include('Admin.navSide')
     <div class="content-wrapper">
-        <div class="container-fluid">
+        <div class="container-fluid p-3 bg-white" style="max-height: 100vh; overflow-y: auto; overflow-x: hidden;">
             <div class="row">
                 <div class="col">
                     <h1 class="m-5">Admin Account</h1>
@@ -21,7 +21,8 @@
                             <div class="col-auto">
                                 <p>Username : {{ Auth::user()->name }}</p>
                                 <p>Email : {{ Auth::user()->email }}</p>
-                                <a href="{{ route('admin.logout') }}" class="btn btn-danger">Logout <i class="bi bi-box-arrow-right bg-transparent"></i></a>
+                                <a href="{{ route('admin.logout') }}" class="btn btn-danger">Logout <i
+                                        class="bi bi-box-arrow-right bg-transparent"></i></a>
                             </div>
                         </div>
                     </div>
