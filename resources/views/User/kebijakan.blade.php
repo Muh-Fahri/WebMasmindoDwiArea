@@ -2,16 +2,13 @@
 @section('konten')
     @include('navbar')
     @include('bg-halaman')
-    <section style="background-color: #D9D9D9">
+    <section>
         <div class="container pb-5">
             <div class="row flex-column-reverse flex-md-row">
                 <aside data-aos="fade-right" class="col-md-5">
                     <div class="esg-orbit">
-                        <!-- Orbit line -->
                         <div class="orbit-line"></div>
                         <div class="center-circle">SUSTAINABILITY</div>
-
-                        <!-- Orbiter -->
                         <div class="orbit-container">
                             <div class="orbiter env"><span>ENVIRONMENT</span></div>
                             <div class="orbiter soc"><span>SOCIAL</span></div>
@@ -83,7 +80,6 @@
             </div>
         </div>
     </section>
-
     <section>
         <div class="bg-kebijakan-bottom"
             style="background: linear-gradient(to right, rgba(0, 0, 0, 0.616), rgba(0, 0, 0, 0.616)), url({{ asset('template/pexels-bence-szemerey-337043-6804255.jpg') }}); height: 50vh; background-size: cover; background-position: center;">

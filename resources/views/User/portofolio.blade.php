@@ -7,16 +7,16 @@
                 <!-- Bagian Tengah (Judul & Deskripsi) -->
                 <div data-aos="zoom-out" class="container my-auto">
                     <div class="row justify-content-center text-center">
-                        <div class="col-lg-8 col-md-10 col-12">
-                            <p class="text-white fw-medium fs-6">PORTOFOLIO KAMI</p>
+                        <div class="col-lg-8 col-md-10 col-11 px-3">
+                            <p class="text-white fw-medium fs-6 fs-md-5 mb-2">PORTOFOLIO KAMI</p>
                             <div class="row justify-content-center">
                                 <div class="col-12">
-                                    <h1 class="text-white fw-bold display-4 display-md-2">
+                                    <h1 class="text-white fw-bold display-5 display-md-3 display-lg-2">
                                         AWAK MAS <span style="color: #A99866">GOLD</span> PROJECT
                                     </h1>
                                 </div>
                             </div>
-                            <p class="text-white mt-3 text-uppercase fs-6 fs-md-5 px-2">
+                            <p class="text-white mt-3 text-uppercase fs-6 fs-md-5 px-1 px-md-4">
                                 Terletak di pegunungan Latimojong, Sulawesi Selatan, proyek ini
                                 merupakan salah satu proyek strategis nasional yang menggabungkan potensi sumber daya alam
                                 dengan komitmen terhadap keberlanjutan dan pemberdayaan masyarakat lokal.
@@ -30,57 +30,29 @@
             </div>
         </div>
     </section>
-    <section id="project">
-        <div class="container p-5">
+
+    <section id="project" style="background-color: #ffffff;">
+        <div class="container">
             <div class="row">
-                <aside class="col-7 m-0 p-0">
-                    <img class="w-75 h-100" src="{{ asset('template/pexels-bence-szemerey-337043-6804255.jpg') }}"
-                        alt="">
-                    <p class="text-secondary small pt-2">Awak Mas Project</p>
+                <aside data-aos="fade-right"class="col-12 col-md-5">
+                    <img style="object-fit: cover" class="w-100 h-100"
+                        src="{{ asset('template/pexels-bence-szemerey-337043-6804255.jpg') }}" alt="">
                 </aside>
-                <div class="col m-0 p-0">
-                    <p style="color: #A99866">Project</p>
-                    <h1 data-aos="zoom-in-down" style="color: #A99866" class="fw-bold">AWAK MAS GOLD PROJECT</h1>
-                    <p data-aos="zoom-in-right" class="pt-5 fw-medium" style="color: #6E6E6E">Lorem ipsum dolor sit amet,
-                        consectetur adipiscing
-                        elit. Sed
-                        leo dui,
-                        scelerisque quis massa ac,
-                        faucibus pellentesque ex. Duis a eleifend sem. Donec bibendum sit amet sem sed tempor. Nullam
-                        vehicula malesuada elit, vitae eleifend sapien efficitur et. Quisque finibus pellentesque urna, eget
-                        sodales ligula varius vitae. Vestibulum viverra tellus quis metus porttitor consectetur. Donec
-                        vehicula libero id lectus tempus pharetra. Phasellus viverra augue ut massa varius viverra.
-                        Suspendisse </p>
-                </div>
-            </div>
-            <div class="row mt-5">
-                <div class="col p-0">
-                    <p data-aos="zoom-in-right" class="fw-medium" style="color: #6E6E6E;text-align:justify">Lorem ipsum
-                        dolor sit amet consectetur
-                        adipisicing elit.
-                        Veniam ab omnis
-                        facilis neque, beatae nihil
-                        voluptatem nemo ratione porro aliquid odio magni, voluptate minima dicta modi accusamus sapiente
-                        reiciendis numquam corrupti explicabo voluptas fuga harum voluptatibus? Nesciunt ea quae laudantium
-                        quo, iusto aperiam maiores consequatur neque non eos modi impedit aliquam praesentium veritatis nam
-                        ab amet qui! Repudiandae labore ex exercitationem deserunt corrupti aspernatur minus nam! Reiciendis
-                        beatae nihil laudantium quidem nobis excepturi harum quibusdam sit in impedit officia molestias
-                        sequi rerum quisquam itaque earum, repellat id dolorum reprehenderit, quam nam vitae? Sapiente rem
-                        praesentium veritatis quae vel, libero repellendus. Lorem ipsum dolor sit, amet consectetur
-                        adipisicing elit. Velit maxime vero est deserunt eligendi. Sunt commodi praesentium enim ipsum
-                        pariatur molestiae, dolor aliquam aliquid animi aperiam deserunt illum incidunt necessitatibus
-                        officia veritatis sint perspiciatis labore odio amet, consequatur repudiandae quibusdam laudantium.
-                        Nobis amet dignissimos accusamus autem? Excepturi labore sequi ad et autem adipisci pariatur
-                        laudantium recusandae, facere tempora repudiandae minima numquam qui similique aspernatur possimus
-                        molestias, perspiciatis, beatae distinctio hic. Quae consequatur unde natus maxime numquam rem eius
-                        iste omnis a alias ea eos quia, error rerum autem accusantium illum accusamus, tenetur architecto.
-                        Sit minus ratione, laudantium dolore dolor facilis!</p>
+                <div class="col-12 col-md-6 p-5 d-flex flex-column justify-content-center">
+                    <h1 data-aos="zoom-in-down" style="color: #A99866;" class="fw-bold fs-1 fs-md-0 mb-3">
+                        AWAK MAS GOLD PROJECT
+                    </h1>
+                    <p data-aos="zoom-in-right" style="color:#6E6E6E;" class="fs-4 fs-md-3">
+                        Proyek Awak Mas adalah proyek pertambangan emas yang dikelola PT Masmindo Dwi Area di Luwu, Sulawesi
+                        Selatan. Proyek ini berfokus pada pengelolaan sumber daya emas secara berkelanjutan, dengan komitmen
+                        terhadap lingkungan dan pemberdayaan masyarakat sekitar.
+                    </p>
                 </div>
             </div>
         </div>
     </section>
     <section>
-        <div class="bg-sroll-project" style="background-color: #A99866">
+        <div class="bg-sroll-project" style="background-color: #5B6146">
             <div class="container-fluid">
                 <div class="row">
                     <div class="row p-3">
@@ -88,7 +60,7 @@
                             <h4 class="text-center text-white fw-bold">PROJECT DOCUMENTATION</h4>
                         </div>
                     </div>
-                    <div class="col position-relative p-4">
+                    <div class="col position-relative">
                         <!-- Tombol Scroll Kiri -->
                         <button style="background-color: white; width: 48px; height: 48px; border-radius: 50%;"
                             class="scroll-btn d-flex justify-content-center align-items-center position-absolute top-50 start-0 translate-middle-y z-3 border-0 shadow"
@@ -102,7 +74,7 @@
                                 <div class="card flex-shrink-0 position-relative text-white"
                                     style="min-width: clamp(280px, 30vw, 400px); aspect-ratio: 4/3; background: linear-gradient(to right, rgba(0, 0, 0, 0.432), rgba(0, 0, 0, 0.432)),url('{{ asset('template/406bd29d-45fa-48c6-8a43-ad8feb2f77a9.jpg') }}') no-repeat center center / cover;">
                                     <div class="position-absolute bottom-0 start-0 end-0 p-3"
-                                        style="background:#ffdf8f2f; height: 30%;">
+                                        style="background:#a9986693; height: 30%;">
                                         <h6 class="text-white">Testing</h6>
                                         <p class="text-white">Hello</p>
                                     </div>
@@ -122,30 +94,29 @@
         </div>
     </section>
     <section>
-        <div class="container p-5">
-            <div class="row">
-                <aside class="col-7 m-0 p-0">
-                    <img class="w-75 h-100" src="{{ asset('template/pexels-bence-szemerey-337043-6804255.jpg') }}"
-                        alt="">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <aside class="col-12 col-md-3 p-5 m-0 p-0">
+                    <h1 data-aos="zoom-in-down" style="color: #A99866;" class="fw-bold fs-0 fs-md-1 display-4">
+                        We Work With Best Partner
+                    </h1>
+                    <p data-aos="zoom-in-right" style="color: #6E6E6E" class="pt-5 fs-4 fs-md-3">
+                        Kami bekerja sama dengan mitra terbaik di bidangnya untuk memastikan standar tinggi dalam
+                        keselamatan kerja,
+                        perlindungan lingkungan, dan efisiensi operasional. Kolaborasi ini mendukung Masmindo dalam mencapai
+                        tujuan berkelanjutan dan menciptakan nilai jangka panjang.
+                    </p>
                 </aside>
-                <div class="col m-0 p-0">
-                    <h1 data-aos="zoom-in-down" style="color: #A99866" class="fw-bold">PARTNER PROJECT</h1>
-                    <p data-aos="zoom-in-right" class="pt-5 fw-medium" style="color: #6E6E6E">Lorem ipsum dolor sit amet,
-                        consectetur adipiscing
-                        elit. Sed
-                        leo dui,
-                        scelerisque quis massa ac,
-                        faucibus pellentesque ex. Duis a eleifend sem. Donec bibendum sit amet sem sed tempor. Nullam
-                        vehicula malesuada elit, vitae eleifend sapien efficitur et. Quisque finibus pellentesque urna, eget
-                        sodales ligula varius vitae. Vestibulum viverra tellus quis metus porttitor consectetur. Donec
-                        vehicula libero id lectus tempus pharetra. Phasellus viverra augue ut massa varius viverra.
-                        Suspendisse </p>
+                <div class="col-12 col-md-5 m-0 p-0">
+                    <img style="object-fit: cover" class="w-100 h-100"
+                        src="{{ asset('template/pexels-bence-szemerey-337043-6804255.jpg') }}" alt="">
                 </div>
             </div>
         </div>
     </section>
+
     <section>
-        <div class="bg-partner py-3" style="background-color: #A99866; overflow: hidden;">
+        <div class="bg-partner py-3" style="background-color: #5B6146; overflow: hidden;">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col">

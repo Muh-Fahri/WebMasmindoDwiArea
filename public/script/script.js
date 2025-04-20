@@ -262,4 +262,3 @@ loadTotalJam();
 setInterval(loadTotalJam, 3600000);
 
 
-

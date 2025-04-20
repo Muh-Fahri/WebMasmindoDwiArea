@@ -92,7 +92,7 @@
                         <div class="container-fluid">
                             <div class="row p-3">
                                 <div class="col text-center">
-                                    <h5 class="fw-medium" style="color: #6E6E6E">BERITA UTAMA</h5>
+                                    <h5 class="fw-bold" style="color: #5B6146">BERITA UTAMA</h5>
                                 </div>
                             </div>
                             <div class="position-relative px-4 pb-4">
@@ -150,7 +150,7 @@
         </div>
     </section>
     <section>
-        <div class="bg-sroll-project" style="background-color: #A99866">
+        <div class="bg-sroll-project" style="background-color: #5B6146">
             <div class="container-fluid">
                 <div class="row">
                     <div class="row p-3">

@@ -27,7 +27,7 @@
             </div>
         </div>
     </section>
-    <section id="nilaiNilai" style="background-color: #6E6E6E">
+    <section id="nilaiNilai">
         <div class="container-fluid fade-in" id="nilaiInti">
             <div class="row justify-content-start align-items-center">
                 <aside class=" col-lg-4 p-0">
@@ -35,22 +35,20 @@
                 </aside>
                 <div class="col-lg-6 p-5">
                     <div data-aos="fade-right">
-                        <h3 class="fw-medium text-white">Nilai -Nilai Inti</h1>
-                            <p class="text-white">
-                                Di Masmindo, kami percaya bahwa keberhasilan proyek tidak hanya ditentukan oleh hasil akhir,
+                        <h2 style="color: #5B6146" class="fw-bold">Nilai -Nilai Inti</h2>
+                        <div class="ud-nilaiInti" style="background-color: #A99866;width:15%;height:10px"></div>
+                        <div class="col-md-8 col-lg-7">
+                            <p class="fw-medium" style="color: #6E6E6E">
+                                Di Masmindo, kami percaya bahwa keberhasilan proyek tidak hanya ditentukan oleh hasil
+                                akhir,
                                 tetapi juga oleh nilai-nilai yang menjadi dasar setiap langkah kami.
-                                Nilai-nilai ini membentuk budaya kerja, memandu setiap keputusan, dan memperkuat komitmen
-                                kami
-                                untuk menjalankan operasional secara profesional, bertanggung jawab, dan berkelanjutan.
-                                Melalui prinsip-prinsip inilah, kami membangun kepercayaan, menjaga integritas, dan terus
-                                tumbuh
-                                bersama masyarakat serta pemangku kepentingan.
                             </p>
+                        </div>
                     </div>
                     <div class="row">
                         <div class="col" data-aos="fade-right">
-                            <a href="" class="btn nav-btn btn-outline-light fw-medium rounded-0">Selengkapnya <i
-                                    class="fa-solid fa-arrow-right"></i></a>
+                            <a href="" class="btn nav-btn bg-transparent btn-outline-light fw-bold rounded-0">VIEW
+                                MORE <i class="fa-solid fa-arrow-right"></i></a>
                         </div>
                     </div>
                     <div data-aos="fade-down" class="row pt-4">
@@ -162,8 +160,9 @@
                 <div class="row justify-content-center text-center text-md-start">
                     <div class="col-12 col-md-10 col-lg-8">
                         <div class="fade-in" data-aos="zoom-in-down">
-                            <h1 class="fw-bold display-4 display-md-2 display-lg-1 text-light mb-3">
-                                Gold With Integrity
+                            <h1 style="color: #A9745B"
+                                class="fw-bold display-4 display-md-2 text-white display-lg-1 mb-3">
+                                <span style="color: #A99866">Gold</span> With Integrity
                             </h1>
                             <p class="fw-medium text-white lead">
                                 Menerapkan praktik pertambangan terbaik demi hasil maksimal yang bertanggung jawab.
@@ -234,20 +233,13 @@
                     <div class="container py-4">
                         <div class="row">
                             <div data-aos="fade-down" class="col-12 col-md-10">
-                                <h1 class="fw-bold" style="color: #A99866; font-size: 28px;">
-                                    KARIR <i class="fa-solid fa-user fa-fade"></i>
+                                <h1 class="fw-bold " style="color: #A99866;">
+                                    KARIR
                                 </h1>
-                                <p class="fw-medium small" style="color: #6E6E6E; font-size: 14px;">
-                                    Bersama Masmindo, Anda tidak hanya membangun karier — Anda menjadi bagian dari
-                                    sebuah
-                                    misi besar: mengembangkan potensi sumber daya alam Indonesia secara bertanggung
-                                    jawab dan berkelanjutan.
-                                    Kami percaya bahwa sumber daya manusia adalah aset paling berharga. Oleh karena
-                                    itu, kami menciptakan lingkungan kerja yang aman, inklusif, dan penuh peluang untuk
-                                    tumbuh
-                                    dan berkembang.
-                                    Mari bergabung dengan tim profesional yang berdedikasi, dan bersama-sama kita
-                                    wujudkan masa depan emas Indonesia.
+                                <p class="fw-medium" style="color: #6E6E6E;">
+                                    Bergabunglah bersama Masmindo dan tumbuh bersama kami! Kami membuka peluang karir bagi
+                                    individu berbakat yang siap berkontribusi dalam membangun masa depan pertambangan yang
+                                    berkelanjutan dan bertanggung jawab.
                                 </p>
                                 <div class="row">
                                     <div class="col-auto">
@@ -265,7 +257,7 @@
                                 </div>
                                 <div class="row mt-4">
                                     <div class="col">
-                                        <a href="" class="btn btn-sm rounded-0 nav-btn-karir fw-bold">KIRIM CV <i
+                                        <a href="" class="btn btn-sm rounded-0 nav-btn fw-bold">KIRIM CV <i
                                                 class="fa-solid fa-arrow-right"></i></a>
                                     </div>
                                 </div>

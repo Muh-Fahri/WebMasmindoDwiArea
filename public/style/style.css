@@ -5,6 +5,9 @@
     background-position: center;
 }
 
+body {
+    font-family: 'Rubik', sans-serif;
+}
 
 .custom-img {
     background: linear-gradient(to right, rgba(0, 0, 0, 0.877), rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.651)),
@@ -41,13 +44,13 @@
 
 .card-nilaiNilai {
     color: white;
-    background-color: #fff;
+    background-color: #5B6146 !important;
     transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
 }
 
 .card-nilaiNilai:hover {
     color: #A99866;
-    background-color: #A99866;
+    background-color: #A9745B !important;
     transform: translateY(-10px);
 }
 
@@ -57,7 +60,7 @@
 
 .card-nilaiNilai h4,
 .card-nilaiNilai p {
-    color: #6E6E6E;
+    color: #F5F2E7;
 }
 
 .card-nilaiNilai:hover h4,
@@ -98,27 +101,16 @@
 }
 
 .nav-btn {
-    outline: solid white 2px;
-    color: white !important;
+    outline: solid #A99866 3px;
+    color: #A99866 !important;
     transition: color 0.3s ease-in-out, outline 0.3s ease-in-out;
 }
 
 .nav-btn:hover {
-    color: #A99866 !important;
-    outline: solid #A99866 2px;
+    color: #A9745B !important;
+    outline: solid #A9745B 3px;
 }
 
-.nav-btn-karir {
-    outline: solid #A99866 2px;
-    color: #A99866 !important;
-    transition: color 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-        outline 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-}
-
-.nav-btn-karir:hover {
-    outline: solid #6E6E6E 2px;
-    color: #6E6E6E !important;
-}
 
 .scrolling-wrapper {
     -ms-overflow-style: none;
@@ -275,7 +267,7 @@
 }
 
 .isi-tentang:hover {
-    color: white;
+    color: #6E6E6E;
 }
 
 .visi-misi {
@@ -294,11 +286,11 @@
 
 .visi-misi-card:hover {
     transform: translateY(-10px);
-    background-color: #FFDF8F !important;
+    background-color: #A9745B !important;
 }
 
 .text-active {
-    color: #6E6E6E;
+    color: #A99866;
     transition: color 0.3s ease-in-out;
 }
 
@@ -453,13 +445,40 @@
     }
 }
 
+.text-lingkungan {
+    color: #A99866;
+    transition: color 0.3s ease-in-out;
+}
+
+.text-lingkungan:hover {
+    color: #FFDF8F;
+}
+
+.tree-section {
+    position: relative;
+    overflow: hidden;
+    height: 70vh;
+    background-color: white;
+}
+
+.tree-section::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 35%;
+    height: 100%;
+    background-color: #5B6146;
+    border-top-left-radius: 60% 100%;
+    border-bottom-left-radius: 60% 100%;
+    z-index: 1;
+}
 
 
-
-
-
-
-
+.tree-section .z-2 {
+    z-index: 2;
+    position: relative;
+}
 
 
 
