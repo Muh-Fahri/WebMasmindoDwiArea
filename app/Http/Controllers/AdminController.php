@@ -15,6 +15,7 @@ use App\Models\SafetyHours;
 use Illuminate\Support\Str;
 
 use Illuminate\Http\Request;
+use App\Models\BeritaTerkini;
 use Illuminate\Support\Facades\File;
 use function PHPUnit\Framework\fileExists;
 

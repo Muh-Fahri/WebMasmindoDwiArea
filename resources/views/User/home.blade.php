@@ -1,185 +1,116 @@
 @extends('layout')
 @section('konten')
     @include('navbar')
+
     <section>
-        <div class="container-fluid m-0 p-0">
-            <div class="bg-home" style="min-height: 100vh;">
-                <div class="container h-100">
-                    <div class="row h-100 justify-content-center align-items-center">
-                        <div data-aos="zoom-in-up" class="col text-center">
-                            <p class="text-white fw-medium">SELAMAT DATANG DI WEBSITE</p>
-                            <div class="row justify-content-center">
-                                <div class="col-10">
-                                    <img class="w-100 h-100" src="{{ asset('logo/LogoMasmindo.webp') }}" alt="">
+        <div id="carouselHero" class="carousel carousel-fade" data-bs-ride="carousel">
+            <!-- Garis Navigasi di Bawah -->
+            <div class="carousel-indicators mb-0">
+                <hr style="background-color: white">
+                <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="0" class="active" aria-current="true"
+                    aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselHero" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+
+            <!-- Isi Slide -->
+            <div class="carousel-inner">
+                <!-- Slide 1 -->
+                <div class="carousel-item active">
+                    <div class="d-flex align-items-center"
+                        style="background: url('/img-web/ac9caba6-67d1-4879-a003-492737821cbd.jpg'); background-size: cover; background-position: center; height: 100vh;">
+                        <div class="container">
+                            <div class="row">
+                                <div class="col">
+                                    <h1 class="fw-bold display-3" style="color:#F16022">Produser Emas</h1>
+                                    <div class="row">
+                                        <div class="col-md-6 display-3">
+                                            <p style="color:#115258">di Indonesia Berikutnya</p>
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <a href="#" class="btn w-100 btn-lg nav-btn rounded-5">Bisnis
+                                                        Kami</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <p class="text-white fw-medium">TEMPAT DIMANA KOMITMEN INOVASI
-                                DAN
-                                KEBERLANJUTAN
-                                MENCIPTAKAN MASA DEPAN PERTAMBANGAN YANG LEBIH BAIK.</p>
-                            <p class="text-white fw-medium m-0">MEMBER OF</p>
-                            <p class="text-white fw-bold">PT. INDIKA ENERGY</p>
-                            <a href="#nilaiNilai" class="btn btn-lg fw-bold nav-btn rounded-0">VIEW MORE <i
-                                    class="fa-solid fa-angles-down fa-beat"></i></a>
                         </div>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="d-flex align-items-center"
+                        style="background: url('/img-web/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg'); background-size: cover; background-position: center; height: 100vh;">
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <div class="d-flex align-items-center"
+                        style="background: url('/img-web/ac9caba6-67d1-4879-a003-492737821cbd.jpg'); background-size: cover; background-position: center; height: 100vh;">
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    <section id="nilaiNilai">
-        <div class="container-fluid fade-in" id="nilaiInti">
-            <div class="row justify-content-start align-items-center">
-                <aside class=" col-lg-4 p-0">
-                    <div class="custom-img"></div>
-                </aside>
-                <div class="col-lg-6 p-5">
-                    <div data-aos="fade-right">
-                        <h2 style="color: #5B6146" class="fw-bold">Nilai -Nilai Inti</h2>
-                        <div class="ud-nilaiInti" style="background-color: #A99866;width:15%;height:10px"></div>
-                        <div class="col-md-8 col-lg-7">
-                            <p class="fw-medium" style="color: #6E6E6E">
-                                Di Masmindo, kami percaya bahwa keberhasilan proyek tidak hanya ditentukan oleh hasil
-                                akhir,
-                                tetapi juga oleh nilai-nilai yang menjadi dasar setiap langkah kami.
-                            </p>
+    <section>
+        <div class="container-fluid p-5">
+            <div class="row p-5">
+                <div class="col">
+                    <div class="row">
+                        <div class="col">
+                            <h5 class="text-uppercase text-secondary">Tentang Kami</h5>
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col" data-aos="fade-right">
-                            <a href="" class="btn nav-btn bg-transparent btn-outline-light fw-bold rounded-0">VIEW
-                                MORE <i class="fa-solid fa-arrow-right"></i></a>
+                        <div class="col">
+                            <h1 class="fw-bold p-0 m-0">Bersiap Menjadi</h1>
+                            <h1 class="fw-bold p-0 m-0" style="color: #F16022">Produser Emas</h1>
+                            <h1 class="fw-bold p-0 m-0">Terkemuka di indonesia</h1>
                         </div>
                     </div>
-                    <div data-aos="fade-down" class="row pt-4">
-                        <div class="col-md-4 mb-3">
-                            <div class="card shadow-sm card-nilaiNilai rounded-0 h-100">
-                                <div class="card-body p-3" style="min-height: 250px;">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="me-3 p-2 bg-iconCard rounded" style=" ">
-                                            <img class="w-100 h-100" src="{{ asset('svg/agility.png') }}" alt="">
-                                        </div>
-                                        <h4 class="m-0">Agility</h4>
-                                    </div>
-                                    <p class="fw-medium">
-                                        Kemampuan untuk beradaptasi dengan lingkungan yang dinamis dan terbuka
-                                        terhadap
-                                        pendekatan baru.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card shadow-sm card-nilaiNilai rounded-0 h-100">
-                                <div class="card-body p-3" style="min-height: 250px;">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="me-3 p-2 rounded bg-iconCard">
-                                            <img class="w-100 h-100 " src="{{ asset('svg/caring.png') }}" alt="">
-                                        </div>
-                                        <h4 class="m-0">Caring</h4>
-                                    </div>
-                                    <p class="fw-medium">
-                                        Menempatkan keselamatan dan kesejahteraan karyawan sebagai prioritas, serta
-                                        bertanggung jawab terhadap lingkungan dan masyarakat sekitar.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card shadow-sm card-nilaiNilai rounded-0 h-100">
-                                <div class="card-body p-3" style="min-height: 250px;">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="me-3 p-2 rounded bg-iconCard">
-                                            <img class="w-100 h-100" src="{{ asset('svg/teamwork.png') }}" alt="">
-                                        </div>
-                                        <h4 class="m-0">Teamwork</h4>
-                                    </div>
-                                    <p class="fw-medium">
-                                        Menghargai kolaborasi dan keberagaman untuk mencapai tujuan bersama.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card shadow-sm card-nilaiNilai rounded-0 h-100">
-                                <div class="card-body p-3" style="min-height: 250px;">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="me-3 p-2 rounded bg-iconCard">
-                                            <img class="w-100 h-100" src="{{ asset('svg/integrity.png') }}" alt="">
-                                        </div>
-                                        <h4 class="m-0">Integrity</h4>
-                                    </div>
-                                    <p class="fw-medium">
-                                        Menempatkan keselamatan dan kesejahteraan karyawan sebagai prioritas, serta
-                                        bertanggung jawab terhadap lingkungan dan masyarakat sekitar.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card shadow-sm card-nilaiNilai rounded-0 h-100">
-                                <div class="card-body p-3" style="min-height: 250px;">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="me-3 p-2 rounded bg-iconCard">
-                                            <img class="w-100 h-100" src="{{ asset('svg/caring.png') }}" alt="">
-                                        </div>
-                                        <h4 class="m-0">Excellence</h4>
-                                    </div>
-                                    <p class="fw-medium">
-                                        Menempatkan keselamatan dan kesejahteraan karyawan sebagai prioritas, serta
-                                        bertanggung jawab terhadap lingkungan dan masyarakat sekitar.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4 mb-3">
-                            <div class="card shadow-sm rounded-0 card-nilaiNilai h-100">
-                                <div class="card-body p-3" style="min-height: 250px;">
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="me-3 p-2 bg-iconCard rounded"
-                                            style="background-color: #FFEE6D; width: 40px; height: 40px;">
-                                            <img class="w-100 h-100" src="{{ asset('svg/caring.png') }}" alt="">
-                                        </div>
-                                        <h4 class="m-0">Caring</h4>
-                                    </div>
-                                    <p class="fw-medium">
-                                        Menempatkan keselamatan dan kesejahteraan karyawan sebagai prioritas, serta
-                                        bertanggung jawab terhadap lingkungan dan masyarakat sekitar.
-                                    </p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                </div>
+                <div class="col d-flex flex-column justify-content-end">
+                    <p class="fs-3">PT Masmindo Dwi Area (MDA) berdedikasi untuk menjadi produsen emas Indonesia
+                        berikutnya melalui
+                        pengembangan Proyek Awak Mas
+                        . Proyek Awak Mas berlokasi di kecamatan Latimojong, Kabupaten Luwu, Sulawesi Selatan.
+                    </p>
+                    <a href="">
+                        <h5 class="text-secondary fw-bold">Lebih Lanjut ></h5>
+                    </a>
                 </div>
             </div>
         </div>
     </section>
-    <section>
-        <div class="bg-mepo d-flex align-items-center">
-            <div class="container">
-                <div class="row justify-content-center text-center text-md-start">
-                    <div class="col-12 col-md-10 col-lg-8">
-                        <div class="fade-in" data-aos="zoom-in-down">
-                            <h1 style="color: #A9745B"
-                                class="fw-bold display-4 display-md-2 text-white display-lg-1 mb-3">
-                                <span style="color: #A99866">Gold</span> With Integrity
-                            </h1>
-                            <p class="fw-medium text-white lead">
-                                Menerapkan praktik pertambangan terbaik demi hasil maksimal yang bertanggung jawab.
-                            </p>
-                            <div class="row justify-content-center g-2 mt-3">
-                                <div class="col-auto">
-                                    <a href="" class="btn rounded-0 fw-bold nav-btn gap-2">
-                                        See Our Project <i class="bi bi-arrow-right"></i>
-                                    </a>
-                                </div>
-                                <div class="col-auto">
-                                    <a href="" class="btn rounded-0 fw-bold nav-btn gap-2">
-                                        See Our Media <i class="bi bi-arrow-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
+    <section style="background-color: #115258">
+        <div class="container-fluid p-5">
+            <div class="row justify-content-center">
+                <div class="col text-center p-5">
+                    <h5 class="text-uppercase fw-bold text-white-50 fs-2">bisnis kami</h5>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col">
+                    <p class="text-white fs-2">
+                        PT MASMINDO DWI AREA (MDA) adalah pemegang Kontrak Karya Generasi VIII
+                        (Ketukuh) yang berlokasi di Kecamatan Latimojong, Kabupaten Luwu,
+                        Provinsi Sulawesi Selatan yang saat ini telah mendapatkan Penyesuaian Tahap Kegiatan Kontrak Karya.
+                        PT MASMINDO DWI AREA menjadi Tahap Kegiatan Operasi Produksi sesuai surat keputusan Menteri Energi
+                        dan Sumber Daya Mineral
+                        No. 171.K/30/DJB/2018 tanggal 16 Januari 2018 dan berlaku hingga tanggal 19 Juni 2050.
+                    </p>
+                    <a href="" class="text-white-50">
+                        <h5 class="fs-2 fw-bold">Lebih Lanjut ></h5>
+                    </a>
+                </div>
+            </div>
+            <div class="row mt-4">
+                <div class="col p-5">
+                    <div class="ratio ratio-16x9">
+                        <iframe class="rounded-5" src="https://www.youtube.com/embed/ZWexQojbWEQ?si=Kvf_BZnRB25tbNg1"
+                            title="YouTube video player" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowfullscreen></iframe>
                     </div>
                 </div>
             </div>
@@ -187,88 +118,36 @@
     </section>
     <section>
         <div class="container-fluid m-0 p-0">
-            <div class="row flex-column flex-md-row m-0 p-0">
-                <div class="col m-0 p-0">
-                    {{-- awak mas gold project --}}
-                    <div class="bg-goldProject d-flex justify-content-center align-items-center text-md-start">
-                        <div class="row w-100 m-0">
-                            <div data-aos="zoom-in" class="col-12 col-md-7 mx-auto">
-                                <h1 class="fw-bold" style="color: #A99866;font-size:40px">AWAK MAS GOLD PROJECT</h1>
-                                <p class="text-white fw-medium small">
-                                    Mas Gold Project adalah salah satu inisiatif pertambangan emas yang dikembangkan
-                                    dengan semangat profesionalisme dan tanggung jawab lingkungan.
-                                </p>
-                                <a class="btn nav-btn btn-sm rounded-0 fw-bold" href="">SELENGKAPNYA <i
-                                        class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col m-0 p-0">
-                    <div class="bg-goldProjectR d-flex justify-content-center align-items-center text-md-end">
-                        <div class="row w-100 m-0">
-                            <div data-aos="zoom-in" class="col-12 col-md-7 mx-auto">
-                                <h1 class="fw-bold" style="color: #A99866;font-size:40px">MASMINDO DALAM BERITA</h1>
-                                <p class="text-white fw-medium small">
-                                    Di sini, kami menyediakan informasi terkini seputar kegiatan dan perkembangan yang
-                                    terjadi di Masmindo. Kami berkomitmen untuk selalu menyajikan berita yang relevan
-                                    dan menarik seputar industri pertambangan, kebijakan keberlanjutan, serta berbagai
-                                    pencapaian dan inisiatif yang kami lakukan.
-                                </p>
-                                <a class="btn btn-sm rounded-0 nav-btn fw-bold" href="">SELENGKAPNYA <i
-                                        class="fa-solid fa-arrow-right"></i>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <div id="map" style="height: 55vh;"></div>
         </div>
     </section>
     <section>
-        <div class="container-fluid m-0 p-0">
-            <div class="row flex-column flex-md-row m-0 p-0">
-                <div class="col-md-9 d-flex align-items-center">
-                    <div class="container py-4">
-                        <div class="row">
-                            <div data-aos="fade-down" class="col-12 col-md-10">
-                                <h1 class="fw-bold " style="color: #A99866;">
-                                    KARIR
-                                </h1>
-                                <p class="fw-medium" style="color: #6E6E6E;">
-                                    Bergabunglah bersama Masmindo dan tumbuh bersama kami! Kami membuka peluang karir bagi
-                                    individu berbakat yang siap berkontribusi dalam membangun masa depan pertambangan yang
-                                    berkelanjutan dan bertanggung jawab.
-                                </p>
-                                <div class="row">
-                                    <div class="col-auto">
-                                        <a style="color:#A99866"
-                                            href="{{ url('https://www.linkedin.com/company/pt-masmindo-dwi-area/posts/?feedView=all') }}"><i
-                                                class="fa-brands fa-linkedin-in fa-fade"
-                                                style="--fa-animation-duration: 2s; --fa-fade-opacity: 0.6;font-size:24px;"></i></a>
-                                    </div>
-                                    <div class="col-auto">
-                                        <a style="color:#A99866"
-                                            href="{{ url('https://www.instagram.com/masmindodwiarea/') }}"><i
-                                                class="fa-brands fa-instagram fa-fade"
-                                                style="--fa-animation-duration: 2s; --fa-fade-opacity: 0.6;font-size:24px;"></i></a>
-                                    </div>
-                                </div>
-                                <div class="row mt-4">
-                                    <div class="col">
-                                        <a href="" class="btn btn-sm rounded-0 nav-btn fw-bold">KIRIM CV <i
-                                                class="fa-solid fa-arrow-right"></i></a>
-                                    </div>
-                                </div>
-                            </div>
+        <div class="container-fluid p-3">
+            <div class="row p-5">
+                <div class="col">
+                    <h3 class="text-uppercase text-center text-secondary">Berita Terkini</h3>
+                </div>
+            </div>
+
+            <div class="scroll-wrapper my-5">
+                <button class="scroll-button scroll-button-left" onclick="scrollBeritaTerkiniLeft()">
+                    <i class="fas fa-chevron-left"></i> <!-- Ikon untuk kiri -->
+                </button>
+                <button class="scroll-button scroll-button-right" onclick="scrollBeritaTerkiniRight()">
+                    <i class="fas fa-chevron-right"></i> <!-- Ikon untuk kanan -->
+                </button>
+
+                <div class="scroll-container" id="scrollRow">
+                    <div class="custom-card">
+                        <div class="overflow-hidden">
+                            <img class="custom-img" src="{{ asset('template/406bd29d-45fa-48c6-8a43-ad8feb2f77a9.jpg') }}"
+                                alt="Panen Pertama Greenhouse Destana Bonelemo">
                         </div>
+                        <h3 class="text-center pt-3 fw-bold">UJI COBA MAKANAN BERGIZI UNTUK INDONESIA EMAS</h3>
+                        <p class="pt-3 px-3">PT. Masmindo Dwi Area (MDA) bekerja sama dengan Pemda Luwu dan Kodim 1403...
+                        </p>
                     </div>
                 </div>
-                <aside class="col-md-3 m-0 p-0">
-                    <img class="w-100 h-100 object-fit-cover"
-                        src="{{ asset('template/406bd29d-45fa-48c6-8a43-ad8feb2f77a9.jpg') }}" alt="">
-                </aside>
             </div>
         </div>
     </section>

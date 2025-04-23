@@ -134,38 +134,6 @@ updatePesanBadge();
 
 setInterval(updatePesanBadge, 5000);
 
-function scrollGallery(direction) {
-    const gallery = document.getElementById('galleryScroll');
-    const scrollAmount = 300;
-
-    if (direction === 'left') {
-        gallery.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    } else {
-        gallery.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-}
-
-const backToTop = document.getElementById("backToTop");
-let scrollTimer;
-
-backToTop.style.opacity = 0;
-
-window.addEventListener("scroll", () => {
-    backToTop.style.opacity = 0;
-
-    clearTimeout(scrollTimer);
-
-    scrollTimer = setTimeout(() => {
-        backToTop.style.opacity = 1;
-    }, 300);
-});
-
-backToTop.addEventListener("click", () => {
-    window.scrollTo({
-        top: 0,
-        behavior: "smooth"
-    });
-});
 
 function scrollVideo(direction) {
     const scrollContainer = document.getElementById('videoScroll');
@@ -215,50 +183,83 @@ window.addEventListener("scroll", function () {
     lastScrollTop = scrollTop <= 0 ? 0 : scrollTop; // cegah scrollTop negatif
 });
 
-function scrollProject(direction) {
-    const container = document.getElementById('projectScroll');
-    const scrollAmount = 300; // geser 300px
-    if (direction === 'left') {
-        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    } else {
-        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-}
 
-function scrollBeritaUtama(direction) {
-    const container = document.getElementById('beritaUtamaScroll');
-    const scrollAmount = 300; // geser 300px
-    if (direction === 'left') {
-        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    } else {
-        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-}
 
-function scrollGaleri(direction) {
-    const container = document.getElementById('galeriScroll');
-    const scrollAmount = 300;
-    if (direction === 'left') {
-        container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-    } else {
-        container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-    }
-}
+const carousel = document.querySelector('#carouselHero');
+const bsCarousel = new bootstrap.Carousel(carousel, {
+    interval: 4000,
+    ride: 'carousel'
+});
 
-function loadTotalJam() {
-    $.ajax({
-        url: '{{ route("safety.jamTerbaru") }}',
-        method: 'GET',
-        success: function (response) {
-            toastr.info(response.totalJam + ' jam kerja tanpa kecelakaan sejak ' + response.tanggalMulai);
-        }
+
+
+document.addEventListener("DOMContentLoaded", function () {
+    const map = new ol.Map({
+        target: 'map',
+        layers: [
+            new ol.layer.Tile({
+                source: new ol.source.XYZ({
+                    url: 'https://{a-d}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png'
+                })
+            })
+        ],
+        view: new ol.View({
+            center: ol.proj.fromLonLat([120.1101611, -3.3383611]),
+            zoom: 15
+        })
     });
+
+    // Lokasi titik Desa Ranteballa
+    const lokasi = ol.proj.fromLonLat([120.1101611, -3.3383611]);
+
+    // Menambahkan marker ke peta dengan bentuk bundar
+    const marker = new ol.Overlay({
+        position: lokasi,
+        positioning: 'center-center',
+        element: document.createElement('div')
+    });
+
+    // Mengubah marker menjadi bentuk bundar
+    marker.getElement().style.width = '20px';
+    marker.getElement().style.height = '20px';
+    marker.getElement().style.backgroundColor = '#F16022';  // Warna biru
+    marker.getElement().style.borderRadius = '50%';      // Membuat bentuk bundar
+    marker.getElement().style.border = '2px solid white'; // Memberi border putih
+    marker.getElement().style.cursor = 'pointer';       // Menambahkan cursor pointer saat hover
+    map.addOverlay(marker);
+
+    // Membuat pop-up untuk menampilkan informasi
+    const popup = new ol.Overlay({
+        element: document.createElement('div'),
+        autoPan: true,
+        autoPanAnimation: { duration: 250 },
+        positioning: 'bottom-center'
+    });
+
+    popup.getElement().innerHTML = `<div style="background:rgba(17, 82, 88, 0);border-radius: 5px;">
+        <h1 class="fw-bold fs-3" style="color:#F16022">Proyek Awak Mas</h1>
+        <h5 class="p-0 m-0 fw-bold">14.390 Ha</h5>
+        <p class="p-0 m-0">Kecamatan Latimojong,</p>
+        <p class="p-0 m-0"> Kab. Luwu,</p>
+        <p class="p-0 m-0">Sulawesi Selatan</p>
+    </div>`;
+
+    // Menambahkan pop-up
+    map.addOverlay(popup);
+
+    // Menambahkan event listener untuk klik pada marker bundar
+    marker.getElement().addEventListener('click', function () {
+        popup.setPosition(lokasi);
+    });
+});
+
+
+function scrollBeritaTerkiniLeft() {
+    const container = document.getElementById('scrollRow');
+    container.scrollBy({ left: -320, behavior: 'smooth' });
 }
 
-// Jalankan pertama kali
-loadTotalJam();
-
-// Lalu ulangi setiap 1 jam sekali (3600000 ms)
-setInterval(loadTotalJam, 3600000);
-
-
+function scrollBeritaTerkiniRight() {
+    const container = document.getElementById('scrollRow');
+    container.scrollBy({ left: 320, behavior: 'smooth' });
+}

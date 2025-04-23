@@ -1,583 +1,104 @@
-.bg-home {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.815), rgba(0, 0, 0, 0.596), rgba(0, 0, 0, 0.185)), url('/template/nicolas-j-leclercq-ojK5ADTY4so-unsplash\ \(1\).webp');
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
+* {
+    font-family: "poppins";
 }
 
-body {
-    font-family: 'Rubik', sans-serif;
-}
-
-.custom-img {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.877), rgba(0, 0, 0, 0.705), rgba(0, 0, 0, 0.651)),
-        url('/template/omid-roshan-lHI9NA4U7hg-unsplash.jpg');
-    height: 100vh;
-    background-size: cover;
-    background-position: center;
+.nav-item a {
+    color: black;
 }
 
 
-.menu-navbar .nav-link {
-    color: #FFDF8F;
-    transition: color 0.3s ease-in-out;
-}
-
-.dropdown-menu {
-    z-index: 9999;
-}
-
-#navbar {
-    transition: top 0.3s;
-}
-
-.navbar-hidden {
-    top: -100px !important;
-}
-
-
-.bg-iconCard {
-    background-color: #FFEE6D;
-    width: 40px;
-    height: 40px;
-}
-
-.card-nilaiNilai {
-    color: white;
-    background-color: #5B6146 !important;
-    transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, transform 0.3s ease-in-out;
-}
-
-.card-nilaiNilai:hover {
-    color: #A99866;
-    background-color: #A9745B !important;
-    transform: translateY(-10px);
-}
-
-.card-nilaiNilai:hover .bg-iconCard {
-    background-color: #F9F8F3;
-}
-
-.card-nilaiNilai h4,
-.card-nilaiNilai p {
-    color: #F5F2E7;
-}
-
-.card-nilaiNilai:hover h4,
-.card-nilaiNilai:hover p {
-    color: white;
-}
-
-.bg-mepo {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.884), rgba(0, 0, 0, 0.589), rgba(0, 0, 0, 0.164)),
-        url("/template/nicolas-j-leclercq-ojK5ADTY4so-unsplash (1).webp");
-    background-size: cover;
-    background-position: center;
-    min-height: 70vh;
-}
-
-.bg-goldProject {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.884), rgba(0, 0, 0, 0.753), rgba(0, 0, 0, 0.438)),
-        url("/template/Camión de obras  777G.jpg");
-    background-size: cover;
-    background-position: center;
-    min-height: 50vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.bg-goldProjectR {
-    background: linear-gradient(to left, rgba(0, 0, 0, 0.884), rgba(0, 0, 0, 0.753), rgba(0, 0, 0, 0.438)),
-        url('/template/406bd29d-45fa-48c6-8a43-ad8feb2f77a9.jpg');
-    background-size: cover;
-    background-position: center;
-    min-height: 50vh;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
 
 .nav-btn {
-    outline: solid #A99866 3px;
-    color: #A99866 !important;
-    transition: color 0.3s ease-in-out, outline 0.3s ease-in-out;
+    outline: solid rgb(69, 69, 69) 1px;
+    color: rgb(69, 69, 69);
+    transition: color 1.5s ease, outline 1.5s ease, background-color 1.5s ease;
+
 }
 
 .nav-btn:hover {
-    color: #A9745B !important;
-    outline: solid #A9745B 3px;
+    color: #ffffff !important;
+    background-color: #F16022;
+    outline: none;
 }
 
-
-.scrolling-wrapper {
-    -ms-overflow-style: none;
-    scrollbar-width: none;
+.carousel-indicators [data-bs-target] {
+    width: 40px;
+    height: 4px;
+    border-radius: 2px;
+    background-color: rgba(255, 255, 255, 0.408);
+    transition: all 0.6s ease;
+    margin: 0 5px;
 }
 
-#backToTop:hover {
-    background-color: #915f1b;
-    cursor: pointer;
-    transition: 0.3s;
+.carousel-indicators .active {
+    background-color: #F16022;
 }
 
-#backToTop:hover {
-    cursor: pointer;
-    transition: 0.3s;
-}
-
-.iconArrow-hover {
-    font-size: 50px;
-    color: #A7965F;
-    transition: color 0.3s ease;
-}
-
-.iconArrow-hover:hover {
-    color: #FFEE6D !important;
-}
-
-.nav-link.active {
-    background-color: #A99866;
-    color: white !important;
-    border-radius: 0px 0px 0px 20px;
-}
-
-.bg-portofolio {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.644), rgba(0, 0, 0, 0.644)),
-        url("/template/omid-roshan-lHI9NA4U7hg-unsplash.jpg");
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-#projectScroll::-webkit-scrollbar {
-    display: none;
-}
-
-#projectScroll {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.logo-slider {
-    white-space: nowrap;
-    overflow: hidden;
+.scroll-container {
+    overflow-x: auto;
+    display: flex;
+    gap: 2rem;
+    scroll-behavior: smooth;
+    padding: 1rem 2.5rem;
     position: relative;
+    z-index: 1;
 }
 
-.logo-track {
-    animation: scroll-left 30s linear infinite;
+
+.scroll-container::-webkit-scrollbar {
+    display: none;
+    /* Chrome, Safari */
 }
 
-.bg-media {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.644), rgba(0, 0, 0, 0.644)),
-        url('/template/Jovem\ líder\ da\ equipe\ de\ engenharia\ com\ braços\ cruzados\ e\ seus\ estagiários\ de\ sucesso\ em\ poses\ de\ vestuário\ de\ trabalho\ _\ Foto\ Premium.jpg');
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
-.card-lainnya {
-    background-color: #A99866 !important;
+.scroll-button {
+    background-color: transparent;
     border: none;
-    height: 90px;
-    transition: background-color 0.3s ease-in-out;
+    font-size: 30px;
+    /* Sesuaikan ukuran ikon */
+    color: #333;
+    /* Ubah warna ikon sesuai kebutuhan */
+    cursor: pointer;
+    outline: none;
+    /* Menghapus outline saat tombol diklik */
 }
 
-.card-lainnya:hover {
-    background-color: #6E6E6E !important;
-}
-
-.text-media-masmindo {
-    color: #A99866;
-    transition: color 0.3s ease-in-out;
-}
-
-.text-media-masmindo:hover {
-    color: #FFDF8F;
-}
-
-#beritaUtamaScroll::-webkit-scrollbar {
-    display: none;
-}
-
-#beritaUtamaScroll {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.isi-card-beritaUtama {
-    background-color: #ffdf8f54;
-    height: 50%;
-    transition: background-color 0.3s ease-in-out;
-}
-
-.isi-card-beritaUtama:hover {
-    background-color: #6e6e6e54;
-}
-
-.bg-dokumentasi {
-    background: linear-gradient(rgba(0, 0, 0, 0.644)), url('/template/omid-roshan-lHI9NA4U7hg-unsplash.jpg');
-    height: 70vh;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-}
-
-
-#galeriScroll::-webkit-scrollbar {
-    display: none;
-}
-
-#galeriScroll {
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-}
-
-.bg-tentang-kami {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.815), rgba(0, 0, 0, 0.596), rgba(0, 0, 0, 0.185)), url('/template/omid-roshan-lHI9NA4U7hg-unsplash.jpg');
-    min-height: 100vh;
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    text-align: center;
-
-}
-
-.masmindo-tentang {
-    color: #A99866;
-    transition: color 0.3s ease-in-out;
-}
-
-.masmindo-tentang:hover {
-    color: #FFDF8F;
-
-}
-
-.isi-tentang {
-    color: #A99866;
-    transition: color 0.3s ease-in-out;
-}
-
-.isi-tentang:hover {
-    color: #6E6E6E;
-}
-
-.visi-misi {
-    color: #E2C062;
-    transition: color 0.3s ease-in-out;
-}
-
-.visi-misi:hover {
-    color: #A99866;
-}
-
-.visi-misi-card {
-    background-color: #FFFCEF !important;
-    transition: transform 0.3s ease-in-out, background-color 0.3s ease-in-out;
-}
-
-.visi-misi-card:hover {
-    transform: translateY(-10px);
-    background-color: #A9745B !important;
-}
-
-.text-active {
-    color: #A99866;
-    transition: color 0.3s ease-in-out;
-}
-
-.text-active:hover {
-    color: #FFDF8F;
-}
-
-.custom-toggler {
-    background-color: #A99866;
-    /* warna emas */
-    border: 2px solid white;
-    /* garis tepi putih */
-    border-radius: 5px;
-    /* sudut melengkung biar lebih halus */
-    padding: 6px 10px;
-    transition: all 0.3s ease-in-out;
-}
-
-.custom-toggler:hover {
-    background-color: white;
-    border-color: #A99866;
-}
-
-.custom-toggler .navbar-toggler-icon {
-    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
-}
-
-.custom-toggler:hover .navbar-toggler-icon {
-    filter: invert(39%) sepia(23%) saturate(547%) hue-rotate(17deg) brightness(92%) contrast(89%);
-}
-
-.text-kebijakan-keberlanjutan {
-    color: #A99866;
-    transition: color 0.3s ease-in-out;
-}
-
-.text-kebijakan-keberlanjutan:hover {
-    color: #FFDF8F;
-}
-
-.esg-orbit {
-    position: relative;
-    width: 400px;
-    height: 400px;
-    margin: 50px auto;
-}
-
-/* Lingkaran tengah (SUSTAINABILITY) */
-.center-circle {
+.scroll-button-left,
+.scroll-button-right {
     position: absolute;
     top: 50%;
-    left: 50%;
-    width: 100px;
-    height: 100px;
-    background-color: #A99866;
-    color: white;
-    font-weight: bold;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 2;
+    transform: translateY(-50%);
+    background: none;
+    box-shadow: none;
+    z-index: 9999;
+    /* Menghilangkan bayangan jika ada */
 }
 
-/* Orbit bundar */
-.orbit-line {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 300px;
-    border: 2px solid #A99866;
-    border-radius: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1;
+.scroll-button-left {
+    left: 10px;
 }
 
-/* Container berputar */
-.orbit-container {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    width: 300px;
-    height: 300px;
-    transform: translate(-50%, -50%);
-    animation: rotateOrbit 20s linear infinite;
-    z-index: 2;
+.scroll-button-right {
+    right: 10px;
 }
 
-/* Lingkaran luar (ENV, SOC, GOV) */
-.orbiter {
-    position: absolute;
-    width: 100px;
-    height: 100px;
-    background-color: #A99866;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-weight: bold;
-    color: white;
-}
-
-/* Posisi masing-masing lingkaran */
-.env {
-    top: 0;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-.soc {
-    top: 70%;
-    /* Menggeser lebih ke bawah */
-    left: 15%;
-    transform: translate(-50%, -50%);
-}
-
-.gov {
-    top: 70%;
-    /* Menggeser lebih ke bawah */
-    right: 15%;
-    transform: translate(50%, -50%);
-}
-
-/* Supaya teks tidak ikut berputar */
-.orbiter span {
-    transform: rotate(-0deg);
-    animation: counter-rotate 20s linear infinite;
-    display: inline-block;
-}
-
-/* Animasi orbit utama */
-@keyframes rotateOrbit {
-    from {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    to {
-        transform: translate(-50%, -50%) rotate(360deg);
-    }
-}
-
-/* Teks tetap (counter rotate) */
-@keyframes counter-rotate {
-    from {
-        transform: rotate(0deg);
-    }
-
-    to {
-        transform: rotate(-360deg);
-    }
-}
-
-.text-lingkungan {
-    color: #A99866;
-    transition: color 0.3s ease-in-out;
-}
-
-.text-lingkungan:hover {
-    color: #FFDF8F;
-}
-
-.tree-section {
+.scroll-wrapper {
     position: relative;
     overflow: hidden;
-    height: 70vh;
-    background-color: white;
+    /* Pastikan ini hanya untuk menghindari overflow vertikal */
+    width: 100%;
+    /* Pastikan lebar wrapper menyesuaikan dengan kontainer */
 }
 
-.tree-section::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    right: 0;
-    width: 35%;
-    height: 100%;
-    background-color: #5B6146;
-    border-top-left-radius: 60% 100%;
-    border-bottom-left-radius: 60% 100%;
-    z-index: 1;
-}
-
-
-.tree-section .z-2 {
-    z-index: 2;
-    position: relative;
-}
-
-
-
-
-
-
-@media (max-width: 768px) {
-    .bg-mepo {
-        background-position: center;
-    }
-
-    .bg-mepo h1 {
-        font-size: 2.5rem !important;
-    }
-
-    .bg-mepo p {
-        font-size: 1rem;
-    }
-
-    .logo-track {
-        animation-duration: 20s;
-
-    }
-
-    .logo-item img {
-        height: 40px;
-    }
-}
-
-
-
-
-
-@keyframes scroll-left {
-    0% {
-        transform: translateX(0%);
-    }
-
-    100% {
-        transform: translateX(-50%);
-    }
-}
-
-.logo-item {
+.custom-card {
     flex: 0 0 auto;
+    width: 500px;
+    /* Sesuaikan lebar card jika perlu */
 }
 
-@media (max-width: 768px) {
-    .center-circle {
-        width: 60px;
-        height: 60px;
-    }
-
-    .orbit-line {
-        width: 180px;
-        height: 180px;
-    }
-
-    .orbit-container {
-        width: 180px;
-        height: 180px;
-    }
-
-    .orbiter {
-        width: 50px;
-        height: 50px;
-    }
-
-    .soc,
-    .gov {
-        top: 75%;
-        /* Menurunkan posisi lebih sedikit untuk perangkat lebih kecil */
-    }
-}
-
-@media (max-width: 480px) {
-    .center-circle {
-        width: 50px;
-        height: 50px;
-    }
-
-    .orbit-line {
-        width: 150px;
-        height: 150px;
-    }
-
-    .orbit-container {
-        width: 150px;
-        height: 150px;
-    }
-
-    .orbiter {
-        width: 40px;
-        height: 40px;
-    }
-
-    .soc,
-    .gov {
-        top: 80%;
-        /* Mengurangi jarak lebih banyak pada perangkat mobile */
-    }
+.custom-img {
+    width: 100%;
+    height: 500px;
+    /* Sesuaikan tinggi sesuai kebutuhan */
+    object-fit: cover;
+    border-radius: 12px;
 }

@@ -92,7 +92,42 @@
                                 <p>Safety Hour</p>
                             </a>
                         </li>
-
+                        <li class="nav-item">
+                            <a href="{{ route('admin.bisnis') }}" class="nav-link">
+                                <i class="bi bi-person-fill"></i>
+                                <p>Bisnis Kami</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{{ route('admin.createBeritaTerkini') }}" class="nav-link">
+                                <i class="bi bi-person-fill"></i>
+                                <p>Berita Terkini</p>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-bs-toggle="collapse" data-bs-target="#ESGMenu">
+                                <i class="bi bi-collection-fill"></i>
+                                <i class="bi bi-chevron-down float-end"></i>
+                                <p>ESG</p>
+                            </a>
+                            <ul id="ESGMenu" class="collapse list-unstyled">
+                                <li class="nav-item">
+                                    <a href="{{ route('admin.viewLingkungan') }}" class="nav-link">
+                                        <p>Lingkungan Hidup</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <p>Sosial</p>
+                                    </a>
+                                </li>
+                                <li class="nav-item">
+                                    <a href="" class="nav-link">
+                                        <p>Tata Kelola</p>
+                                    </a>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
                 </li>
             </ul>

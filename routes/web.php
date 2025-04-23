@@ -2,7 +2,11 @@
 
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\createAdmin;
+use App\Http\Controllers\deleteAdmin;
+use App\Http\Controllers\updateAdmin;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\viewAdmin;
 use Illuminate\Support\Facades\Route;
 
 //Authenticated
@@ -55,6 +59,29 @@ Route::middleware('admin')->group(function () {
     Route::delete('admin/kontak/hapusPesan/{id}', [AdminController::class, 'hapusPesan'])->name('admin.hapusPesan');
     Route::get('/admin/safety', [AdminController::class, 'tampil_safety'])->name('admin.safety');
     Route::post('/admin/safety', [AdminController::class, 'addSafety'])->name('admin.safetyAdd');
+
+
+    // route baru
+    Route::get('/Admin/BisnisKami', [viewAdmin::class, 'tampilBisnis'])->name('admin.bisnis');
+    Route::post('/Admin/BisnisKami', [createAdmin::class, 'buatPostingan'])->name('admin.postBisnis');
+    Route::put('/Admin/BisnisKami/{id}', [updateAdmin::class, 'updateBisnis'])->name('admin.updateBisnis');
+    Route::delete('/Admin/BisnisKami/hapusBisnis/{id}', [deleteAdmin::class, 'deleteBisnis'])->name('admin.deleteBisnis');
+
+    Route::get('/Admin/BeritaTerkini', [viewAdmin::class, 'viewBeritaTerkini'])->name('admin.viewBeritaTerkini');
+    Route::post('/Admin/BeritaTerkini', [createAdmin::class, 'createBeritaTerkini'])->name('admin.createBeritaTerkini');
+    Route::put('/Admin/BeritaTerkini/{id}', [updateAdmin::class, 'updateBeritaTerkini'])->name('admin.updateBeritaTerkini');
+    Route::delete('/Admin/BeritaTerkini/HapusBerita/{id}', [deleteAdmin::class, 'deleteBeritaTerkini'])->name('admin.deleteBeritaTerkini');
+
+    Route::get('/Admin/Esg/Lingkungan', [viewAdmin::class, 'viewLingkungan'])->name('admin.viewLingkungan');
+    Route::post('/Admin/Esg/Lingkungan', [createAdmin::class, 'createLingkungan'])->name('admin.createLingkungan');
+
+
+
+
+
+
+
+    // Route::get('/Admin/BisnisKami',[])
 
     Route::get('/admin/jumlah-pesan', function () {
         $jumlah = \App\Models\Pesan::where('status_baca', false)->count();
