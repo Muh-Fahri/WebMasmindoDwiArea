@@ -1,0 +1,167 @@
+<?php
+
+namespace App\Http\Controllers\Admin;
+
+use App\Http\Controllers\Controller;
+use App\Models\BeritaTerkini;
+use App\Models\Bisnis;
+use App\Models\DeskripLingkungan;
+use App\Models\ImageLingkungan;
+use App\Models\Instagram;
+use App\Models\Lingkungan;
+use App\Models\Sosial;
+use App\Models\Youtube;
+use Illuminate\Http\Request;
+
+class createAdmin extends Controller
+{
+    function createBisnis(Request $request)
+    {
+        $request->validate([
+            'link_video' => 'required',
+            'deskripsi_bisnis' => 'required',
+        ]);
+
+        $bisnis = Bisnis::create([
+            'link_video' => $request->link_video,
+            'deskripsi_bisnis' => $request->deskripsi_bisnis,
+        ]);
+
+        return response()->json([
+            'msg' => 'Berhasil Membuat Data',
+            'bisnis' => $bisnis,
+        ], 200);
+    }
+
+    function createBerita(Request $request)
+    {
+        $request->validate([
+            'judul_berita' => 'required|string|max:255',
+            'deskripsi_berita' => 'required|string',
+            'image_berita' => 'required|image|mimes:jpeg,png,jpg', // optional sesuai kebutuhan
+        ]);
+
+        if ($request->hasFile('image_berita')) {
+            $imageName = time() . '_' . $request->file('image_berita')->getClientOriginalName();
+            $request->file('image_berita')->move(public_path('Berita'), $imageName);
+        } else {
+            $imageName = null;
+        }
+
+        $berita = BeritaTerkini::create([
+            'judul_berita' => $request->input('judul_berita'),
+            'deskripsi_berita' => $request->input('deskripsi_berita'),
+            'image_berita' => $imageName,
+        ]);
+
+        return response()->json([
+            'message' => 'Berita berhasil disimpan',
+            'data' => $berita,
+            'image_berita' => 'Berita/' . $imageName,
+        ], 201);
+    }
+
+
+
+    function createDesLing(Request $request)
+    {
+        $request->validate([
+            'deskripsi_halaman' => 'string|required',
+        ]);
+
+        if (DeskripLingkungan::exists()) {
+            return response()->json([
+                'msg' => 'Deskripsi sudah ada, tidak bisa menambahkan lagi',
+            ], 409);
+        }
+
+        $desLing = DeskripLingkungan::create([
+            'deskripsi_halaman' => $request->deskripsi_halaman
+        ]);
+
+
+        return response()->json([
+            'msg' => 'Deskripsi Berhasil di tambahkan',
+            'deskripsiLingkungan' => $desLing,
+        ], 200);
+    }
+
+    function createImgLing(Request $request)
+    {
+        $request->validate([
+            'image_lingkungan' => 'required|image|mimes:png,jpg,jpeg|', // Max file size 10MB
+        ]);
+
+        if ($request->hasFile('image_lingkungan')) {
+            $imageName = time() . '_' . $request->file('image_lingkungan')->getClientOriginalName();
+            $destinationPath = public_path('Lingkungan');
+            $request->file('image_lingkungan')->move($destinationPath, $imageName);
+            $imageUrl = '/Lingkungan/' . $imageName;
+        }
+
+        ImageLingkungan::create([
+            'image_lingkungan' => $imageName,
+        ]);
+
+        return response()->json([
+            'msg' => 'Berhasil Menambahkan Data',
+            'image_url' => $imageUrl,
+        ], 200);
+    }
+
+    function createSosial(Request $request)
+    {
+        $request->validate([
+            'imageSosial' => 'required|image|mimes:png,jpg,jpeg',
+            'category' => 'required|in:pengembanganMasyarakat,pendidikan,kesehatan,infrastruktur,pemberdayaan'
+        ]);
+
+        if ($request->hasFile('imageSosial')) {
+            $imageName = time() . '_' . $request->file('imageSosial')->getClientOriginalName();
+            $simpan = public_path('Sosial');
+            $request->file('imageSosial')->move($simpan, $imageName);
+        }
+
+        $sosial = Sosial::create([
+            'category' => $request->category,
+            'imageSosial' => $imageName
+        ]);
+
+        return response()->json([
+            'msg' => 'Berhasil Menambahkan Data',
+            'sosial' => $sosial
+        ]);
+    }
+
+    function createInstagram(Request $request)
+    {
+        $request->validate([
+            'linkInstagram' => 'required|string|min:10'
+        ]);
+
+        $instagram = Instagram::create([
+            'linkInstagram' => $request->linkInstagram
+        ]);
+
+        return response()->json([
+            'msg' => 'Berhasil Menambahkann Data',
+            'instagram' => $instagram
+        ], 200);
+    }
+
+    function createYoutube(Request $request)
+    {
+        $request->validate([
+            'linkYoutube' => 'required|string|min:10'
+        ]);
+
+        $youtube = Youtube::create([
+            'linkYoutube' => $request->linkYoutube
+        ]);
+
+        return response()->json([
+            'msg' => 'Berhasil Menambahkan Data',
+            'youtube' => $youtube
+        ], 200);
+    }
+}

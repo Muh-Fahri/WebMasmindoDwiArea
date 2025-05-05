@@ -1,0 +1,60 @@
+<?php
+
+use App\Http\Controllers\Admin\createAdmin;
+use App\Http\Controllers\Admin\deleteAdmin;
+use App\Http\Controllers\Admin\readAdmin;
+use App\Http\Controllers\Admin\updateAdmin;
+use App\Http\Controllers\Auth\AuthController;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
+
+Route::post('/login-admin-123', [AuthController::class, 'login'])->middleware(['throttle:3,1']);
+
+
+Route::middleware(['auth:sanctum', 'admin', 'throttle:60,1'])->group(function () {
+    // bisnis
+    Route::post('/admin/bisnis', [createAdmin::class, 'createBisnis']);
+    Route::get('/admin/bisnis', [readAdmin::class, 'readBisnis']);
+    Route::put('/admin/bisnis/{uuid}', [updateAdmin::class, 'updateBisnis']);
+    Route::delete('/admin/bisnis/{uuid}', [deleteAdmin::class, 'deleteBisnis']);
+
+    // berita
+    Route::post('/admin/berita', [createAdmin::class, 'createBerita']);
+    Route::get('/admin/berita/{uuid}', [readAdmin::class, 'readBerita']);
+    Route::get('/admin/berita', [readAdmin::class, 'readAllBerita']);
+    Route::post('/admin/berita/{uuid}', [updateAdmin::class, 'editBerita']);
+    Route::delete('/admin/berita/{uuid}', [deleteAdmin::class, 'deleteBerita']);
+
+    // lingkungan img
+    Route::post('/admin/esg/lingkungan/imgLingkungan', [createAdmin::class, 'createImgLing']);
+    Route::get('/admin/esg/lingkungan/imgLingkungan', [readAdmin::class, 'readImgLing']);
+    Route::post('/admin/esg/lingkungan/imgLingkungan/{uuid}', [updateAdmin::class, 'updateImgLing']);
+    Route::delete('/admin/esg/lingkungan/imgLingkungan/{uuid}', [deleteAdmin::class, 'deleteImgLing']);
+
+    // deskripsi lingkungan
+    Route::post('/admin/esg/lingkungan/deskripLingkungan', [createAdmin::class, 'createDesLing']);
+    Route::get('/admin/esg/lingkungan/deskripLingkungan/{uuid}', [readAdmin::class, 'readDesLingById']);
+    Route::get('/admin/esg/lingkungan/deskripLingkungan', [readAdmin::class, 'readDesLing']);
+    Route::put('/admin/esg/lingkungan/deskripLingkungan/{uuid}', [updateAdmin::class, 'updateDesLing']);
+    Route::delete('/admin/esg/lingkungan/deskripLingkungan/{uuid}', [deleteAdmin::class, 'deleteDesling']);
+
+    // sosial
+    Route::post('/admin/esg/sosial', [createAdmin::class, 'createSosial']);
+    Route::get('/admin/esg/sosial/{uuid}', [readAdmin::class, 'readSosialById']);
+    Route::get('/admin/esg/sosial', [readAdmin::class, 'readSosial']);
+    Route::post('/admin/esg/sosial/{uuid}', [updateAdmin::class, 'updateSosial']);
+    Route::delete('/admin/esg/sosial/{uuid}', [deleteAdmin::class, 'deleteSosial']);
+
+    // instagram
+    Route::post('/admin/instagram', [createAdmin::class, 'createinstagram']);
+    Route::get('/admin/instagram', [readAdmin::class, 'readInstagram']);
+    Route::get('/admin/instagram/{uuid}', [readAdmin::class, 'readInstagramById']);
+    Route::post('/admin/instagram/{uuid}', [updateAdmin::class, 'updateInstagram']);
+    Route::delete('/admin/instagram/delete/{uuid}', [deleteAdmin::class, 'deleteInstagram']);
+
+    // youtube
+    Route::post('/admin/youtube', [createAdmin::class, 'createYoutube']);
+    Route::get('/admin/youtube', [readAdmin::class, 'readYoutube']);
+    Route::post('/admin/youtube/{uuid}', [updateAdmin::class, 'updateYoutube']);
+    Route::delete('/admin/youtube/delete/{uuid}', [deleteAdmin::class, 'deleteAdmin']);
+});
