@@ -2,6 +2,8 @@
     font-family: "poppins";
 }
 
+
+
 .bg-login {
     background: linear-gradient(to right, rgba(0, 0, 0, 0.473), rgba(0, 0, 0, 0.473)), url('/public/Image/login.jpg');
     height: 100vh;
@@ -11,4 +13,46 @@
 
 .card-login {
     background-color: rgba(255, 255, 255, 0.342);
+}
+
+.navbar-user {
+    background-color: rgba(0, 255, 255, 0);
+}
+
+.carousel-item {
+    height: 100vh;
+    /* Membuat carousel full layar */
+    background-color: #000;
+}
+
+.carousel-item img {
+    object-fit: cover;
+    /* Menjaga gambar agar sesuai dengan ukuran layar */
+    height: 100%;
+    width: 100%;
+}
+
+.bg-carousel-1 {
+    background: url('/public/Image/Background/ac9caba6-67d1-4879-a003-492737821cbd.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.bg-carousel-2 {
+    background: url('/public/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.bg-carousel-3 {
+    background: linear-gradient(to right, #11525854, #f1602283), url('/public/Image/Background/CampAwakMasJPEG.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 100vh;
+}
+
+.btn-carousel-1 {
+    height: 5vh;
 }

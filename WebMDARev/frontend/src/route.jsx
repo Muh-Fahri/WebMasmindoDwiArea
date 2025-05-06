@@ -10,7 +10,6 @@ function AppRouter() {
         <div>
             <Router>
                 <Routes>
-                    <Route path="/" element={<Home />} />
                     <Route path="/Login-admin-123" element={<Login />} />
 
                     <Route path="/admin/*"
@@ -18,6 +17,10 @@ function AppRouter() {
                             <AdminPage />
                         </ProtectedRoute>}
                     />
+
+
+                    {/* user */}
+                    <Route path="/" element={<Home />} />
                 </Routes>
             </Router>
         </div>

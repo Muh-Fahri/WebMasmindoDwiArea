@@ -5,10 +5,15 @@ use App\Http\Controllers\Admin\deleteAdmin;
 use App\Http\Controllers\Admin\readAdmin;
 use App\Http\Controllers\Admin\updateAdmin;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\readUser;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/login-admin-123', [AuthController::class, 'login'])->middleware(['throttle:3,1']);
+
+
+// user
+Route::get('/user/bisnis', [readUser::class, 'readBisnis']);
 
 
 Route::middleware(['auth:sanctum', 'admin', 'throttle:60,1'])->group(function () {
