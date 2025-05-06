@@ -1,21 +1,127 @@
-import React from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Navbar from "../Component/navbar";
-import { Carousel, button } from "react-bootstrap"
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
+import axios from "axios";
+import { MapContainer, TileLayer, CircleMarker, useMap, useMapEvent } from 'react-leaflet';
+import 'leaflet/dist/leaflet.css';
+import L from 'leaflet';
+
+
+
+delete L.Icon.Default.prototype._getIconUrl;
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+    iconUrl: require('leaflet/dist/images/marker-icon.png'),
+    shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
+});
+
+
+
+
+
+
+function InfoCard({ position, visible }) {
+    const map = useMap();
+    const [point, setPoint] = useState(map.latLngToContainerPoint(position));
+    const cardRef = useRef();
+    useMapEvent('move', () => {
+        setPoint(map.latLngToContainerPoint(position));
+    });
+    useMapEvent('zoom', () => {
+        setPoint(map.latLngToContainerPoint(position));
+    });
+
+    if (!visible) return null;
+
+    return (
+        <div
+            ref={cardRef}
+            style={{
+                position: 'absolute',
+                left: point.x,
+                top: point.y - 70,
+                transform: 'translate(-50%, -100%)',
+                zIndex: 1000,
+                backgroundColor: ' rgba(0, 0, 0, 0)',
+                padding: '10px',
+                borderRadius: '8px',
+                pointerEvents: 'auto',
+            }}
+        >
+            <h1 className="fw-bold" style={{ color: "#F16022" }}>Proyek Awak Mas</h1>
+            <h3 className="fw-bold">14.390 Ha</h3>
+            <div className="row">
+                <div className="col-md-5">
+                    <p className="fs-4">Kecamatan Latimojong,
+                        Kabupaten Luwu,
+                        Sulawesi Selatan
+                    </p>
+                </div>
+            </div>
+        </div>
+    );
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 function Home() {
+    const [bisnisList, setBisnisList] = useState([]);
+    const [beritaList, setBeritaList] = useState([]);
+    const position = [-3.4717, 120.1994];
+    const [showCard, setShowCard] = useState(false);
+
+
+    const handleMarkerClick = () => {
+        setShowCard((prevState) => !prevState); // Toggle visibility of the card
+    };
+
+
+    useEffect(() => {
+        getBisnisData();
+        getBeritaData();
+    }, []);
+
+    const getBisnisData = async () => {
+        try {
+            const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
+            setBisnisList(res.data.bisnisUser);
+            getBisnisData();
+        } catch (error) {
+            alert("Gagal Mengambil Data");
+        }
+    }
+
+
+    const getBeritaData = async () => {
+        try {
+            const res = await axios.get("http://127.0.0.1:8000/api/user/berita");
+            setBeritaList(res.data.berita);
+            getBeritaData();
+        } catch (error) {
+            alert('Gagal Mengambil Data');
+        }
+    }
+
     return (
-
-
-
-
         <div>
             <Navbar />
             <section>
                 <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
-                    {/* Indikator Carousel */}
                     <div className="carousel-indicators">
                         <button
                             type="button"
@@ -38,8 +144,6 @@ function Home() {
                             aria-label="Slide 3"
                         ></button>
                     </div>
-
-                    {/* Konten Carousel */}
                     <div className="carousel-inner">
                         <div className="carousel-item active">
                             <div className="bg-carousel-1 d-flex align-items-center" style={{ height: "100vh" }}>
@@ -133,26 +237,142 @@ function Home() {
                         </div>
                         <div className="row">
                             <div className="col">
-                                <p className="text-white fs-3">
-                                    {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore placeat similique ipsa voluptatem illo sequi veritatis animi nemo, nulla ab quasi nisi est commodi temporibus error repellendus atque. Quaerat cumque ratione iusto facere reiciendis odio provident quidem? Fugiat qui explicabo suscipit tempore esse facere, nulla asperiores neque odit libero deleniti minus non quod, ipsa facilis doloribus! Aperiam odit iure in exercitationem. Exercitationem adipisci itaque aspernatur doloribus ab cupiditate repellendus eius, praesentium aut corporis perspiciatis incidunt nobis dignissimos qui, atque, nostrum dolorum eaque. Soluta aliquam inventore quae quam. Facilis, ut. Voluptatem facere aliquid, dolor dolorum asperiores a, sapiente facilis nesciunt molestias excepturi optio porro corporis nulla ad? Qui suscipit molestias est nesciunt quisquam optio facere architecto vitae odio! Unde ipsa expedita hic, asperiores esse veritatis nihil quibusdam illo assumenda odio ut, aspernatur vel. Beatae error debitis aliquid iste! Asperiores provident debitis quo, aliquid perferendis vitae, natus nam vel sit esse exercitationem, aliquam repellendus consequatur beatae corrupti libero quidem! Cumque, quas? Corporis dolorum nostrum asperiores dignissimos dicta architecto perspiciatis provident ab consequatur nulla. Placeat laudantium libero iusto? Impedit illo explicabo odio ex inventore consequuntur ducimus, officia natus suscipit sapiente tenetur vero, aspernatur harum magnam! Eaque magnam blanditiis ratione, odit laborum repudiandae excepturi.`.split(' ').slice(0, 80).join(' ') + '...'}
-                                </p>
+                                {
+                                    bisnisList.length > 0 ? (
+                                        bisnisList.map((bisnis) => (
+                                            <p key={bisnis.uuid} className="text-white fs-3">
+                                                {bisnis.deskripsi_bisnis.split(' ').slice(0, 80).join(' ') + '.'}
+                                            </p>
+                                        ))
+                                    ) : (
+                                        <div className="justify-content-center">
+                                            <h5>No Data</h5>
+                                        </div>
+                                    )
+                                }
                                 <Link className="text-decoration-none text-secondary fs-3 fw-bold">Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} /> </Link>
                             </div>
                         </div>
                         <div className="container mt-5">
                             <div className="row mt-4">
-                                <div className="col">
-                                    <div className="responsive-iframe-container">
-                                        <iframe
-                                            className="rounded-5"
-                                            src="https://www.youtube.com/embed/7Km9H_xc6qY?si=zoxBAxxoVf-kCKj6"
-                                            title="YouTube video player"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                            allowFullScreen
-                                        ></iframe>
+                                {bisnisList.length > 0 ? (
+                                    <div className="col">
+                                        {bisnisList.map((bisnis) => ((
+                                            <div key={bisnis.uuid} className="responsive-iframe-container">
+                                                <iframe
+                                                    className="rounded-5"
+                                                    src={bisnis.link_video}
+                                                    title="YouTube video player"
+                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                    allowFullScreen
+                                                ></iframe>
+                                            </div>
+                                        )))}
                                     </div>
-                                </div>
+                                ) : (
+                                    <div className="justify-content-center">
+                                        <h5>No Data Yet</h5>
+                                    </div>
+                                )};
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                {/* PETA */}
+                <div style={{ position: 'relative' }}>
+                    <MapContainer center={position} zoom={5} style={{ height: '60vh', width: '100%' }}>
+                        <TileLayer
+                            attribution='&copy; <a href="https://carto.com/">Carto</a>'
+                            url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
+                        />
+                        <CircleMarker
+                            center={position}
+                            radius={15}
+                            pathOptions={{
+                                color: "#F16022",
+                                fillColor: "#F16022",
+                                fillOpacity: 1
+                            }}
+                            eventHandlers={{
+                                click: handleMarkerClick,
+                            }}
+                        />
+                        <InfoCard position={position} visible={showCard} />
+                    </MapContainer>
+                </div>
+            </section>
+            <section>
+                {/* berita */}
+                <div className="container-fluid">
+                    <div className="row">
+                        <div className="col p-5">
+                            <h3 className="text-secondary text-center text-uppercase fw-semibold">Berita Terkini</h3>
+                        </div>
+                    </div>
+                    <div className="row gap-3 mt-5">
+                        <div className="position-relative">
+                            <button
+                                className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
+                                style={{ zIndex: 10 }}
+                                onClick={() => {
+                                    document.getElementById("beritaSlider").scrollBy({ left: -300, behavior: 'smooth' });
+                                }}
+                            >
+                                &#10094;
+                            </button>
+
+                            {beritaList.length > 0 ? (
+                                <div
+                                    id="beritaSlider"
+                                    className="row gap-3 mt-5 flex-nowrap overflow-auto"
+                                    style={{ overflowX: 'hidden', scrollBehavior: 'smooth' }}
+                                >
+                                    {beritaList.map((berita) => (
+                                        <div key={berita.uuid} className="col-md-3">
+                                            <div className="card rounded-3" style={{ height: '500px', overflow: 'hidden' }}>
+                                                <div className="card-body m-0 p-0">
+                                                    <img
+                                                        style={{
+                                                            objectFit: "cover",
+                                                            height: '100%',
+                                                            width: '100%'
+                                                        }}
+                                                        className="rounded-3"
+                                                        src={`http://localhost:8000/Berita/${berita.image_berita}`}
+                                                        alt="foto"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <div className="row justify-content-center">
+                                                <div className="col mt-5">
+                                                    <h3 className="fw-bold text-center">{berita.judul_berita}</h3>
+                                                </div>
+                                            </div>
+                                            <div className="row">
+                                                <div className="col p-5">
+                                                    {berita.deskripsi_berita.split(' ').slice(0, 80).join(' ') + '.'}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            ) : (
+                                <div className="justify-content-center">
+                                    <h5>No Data</h5>
+                                </div>
+                            )}
+
+
+                            <button
+                                className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
+                                style={{ zIndex: 10 }}
+                                onClick={() => {
+                                    document.getElementById("beritaSlider").scrollBy({ left: 300, behavior: 'smooth' });
+                                }}>
+                                &#10095;
+                            </button>
                         </div>
                     </div>
                 </div>

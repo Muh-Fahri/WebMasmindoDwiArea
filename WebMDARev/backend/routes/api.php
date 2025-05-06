@@ -14,6 +14,7 @@ Route::post('/login-admin-123', [AuthController::class, 'login'])->middleware(['
 
 // user
 Route::get('/user/bisnis', [readUser::class, 'readBisnis']);
+Route::get('/user/berita', [readUser::class, 'readBerita']);
 
 
 Route::middleware(['auth:sanctum', 'admin', 'throttle:60,1'])->group(function () {
