@@ -56,5 +56,5 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:60,1'])->group(function ()
     Route::post('/admin/youtube', [createAdmin::class, 'createYoutube']);
     Route::get('/admin/youtube', [readAdmin::class, 'readYoutube']);
     Route::post('/admin/youtube/{uuid}', [updateAdmin::class, 'updateYoutube']);
-    Route::delete('/admin/youtube/delete/{uuid}', [deleteAdmin::class, 'deleteAdmin']);
+    Route::delete('/admin/youtube/delete/{uuid}', [deleteAdmin::class, 'deleteYoutube']);
 });

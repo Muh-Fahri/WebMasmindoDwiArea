@@ -105,10 +105,10 @@ class readAdmin extends Controller
 
     function readYoutube()
     {
-        $instagram = Youtube::all();
+        $youtube = Youtube::all();
 
         return response()->json([
-            'instagram' => $instagram
+            'youtube' => $youtube
         ], 200);
     }
 }

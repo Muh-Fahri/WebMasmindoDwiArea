@@ -85,7 +85,7 @@ class deleteAdmin extends Controller
         ], 200);
     }
 
-    function deleteAdmin($uuid)
+    function deleteYoutube($uuid)
     {
         $youtube = Youtube::where('uuid', $uuid)->firstOrFail();
         $youtube->delete();
