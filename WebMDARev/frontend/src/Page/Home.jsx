@@ -7,6 +7,10 @@ import { faArrowRight } from '@fortawesome/free-solid-svg-icons';
 
 function Home() {
     return (
+
+
+
+
         <div>
             <Navbar />
             <section>
@@ -92,7 +96,7 @@ function Home() {
                     </div>
                 </div>
             </section>
-            <section>
+            <section className="p-5">
                 <div className="container-fluid p-5">
                     <div className="row">
                         <div className="col">
@@ -115,6 +119,40 @@ function Home() {
                                 Proyek Awak Mas berlokasi di Kecamatan Latimojong, Kabupaten Luwu, Sulawesi Selatan
                             </p>
                             <Link className="text-decoration-none text-secondary fs-4 fw-bold">Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} /> </Link>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div className="bg-halBisnis" style={{ backgroundColor: "#115258" }}>
+                    <div className="container-fluid p-5">
+                        <div className="row">
+                            <div className="col">
+                                <h3 className="text-uppercase text-center text-secondary fw-bold">Bisnis Kami</h3>
+                            </div>
+                        </div>
+                        <div className="row">
+                            <div className="col">
+                                <p className="text-white fs-3">
+                                    {`Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore placeat similique ipsa voluptatem illo sequi veritatis animi nemo, nulla ab quasi nisi est commodi temporibus error repellendus atque. Quaerat cumque ratione iusto facere reiciendis odio provident quidem? Fugiat qui explicabo suscipit tempore esse facere, nulla asperiores neque odit libero deleniti minus non quod, ipsa facilis doloribus! Aperiam odit iure in exercitationem. Exercitationem adipisci itaque aspernatur doloribus ab cupiditate repellendus eius, praesentium aut corporis perspiciatis incidunt nobis dignissimos qui, atque, nostrum dolorum eaque. Soluta aliquam inventore quae quam. Facilis, ut. Voluptatem facere aliquid, dolor dolorum asperiores a, sapiente facilis nesciunt molestias excepturi optio porro corporis nulla ad? Qui suscipit molestias est nesciunt quisquam optio facere architecto vitae odio! Unde ipsa expedita hic, asperiores esse veritatis nihil quibusdam illo assumenda odio ut, aspernatur vel. Beatae error debitis aliquid iste! Asperiores provident debitis quo, aliquid perferendis vitae, natus nam vel sit esse exercitationem, aliquam repellendus consequatur beatae corrupti libero quidem! Cumque, quas? Corporis dolorum nostrum asperiores dignissimos dicta architecto perspiciatis provident ab consequatur nulla. Placeat laudantium libero iusto? Impedit illo explicabo odio ex inventore consequuntur ducimus, officia natus suscipit sapiente tenetur vero, aspernatur harum magnam! Eaque magnam blanditiis ratione, odit laborum repudiandae excepturi.`.split(' ').slice(0, 80).join(' ') + '...'}
+                                </p>
+                                <Link className="text-decoration-none text-secondary fs-3 fw-bold">Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} /> </Link>
+                            </div>
+                        </div>
+                        <div className="container mt-5">
+                            <div className="row mt-4">
+                                <div className="col">
+                                    <div className="responsive-iframe-container">
+                                        <iframe
+                                            className="rounded-5"
+                                            src="https://www.youtube.com/embed/7Km9H_xc6qY?si=zoxBAxxoVf-kCKj6"
+                                            title="YouTube video player"
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                            allowFullScreen
+                                        ></iframe>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
