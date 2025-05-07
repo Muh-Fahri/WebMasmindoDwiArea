@@ -4,6 +4,8 @@ import Home from "./Page/Home";
 import Login from "./Page/login";
 import ProtectedRoute from "./protectedRoute";
 import AdminPage from "./Page/Admin/admin";
+import Tentang from "./Page/tentang";
+import Bisnis from "./Page/bisnis";
 
 function AppRouter() {
     return (
@@ -21,6 +23,9 @@ function AppRouter() {
 
                     {/* user */}
                     <Route path="/" element={<Home />} />
+                    <Route path="tentang" element={<Tentang />} />
+                    <Route path="bisnis" element={<Bisnis />} />
+
                 </Routes>
             </Router>
         </div>

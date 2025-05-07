@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState, useRef, } from "react";
 import Navbar from "../Component/navbar";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -8,6 +8,9 @@ import { MapContainer, TileLayer, CircleMarker, useMap, useMapEvent } from 'reac
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
 import Footer from "./fotter";
+import AOS from 'aos';
+import 'aos/dist/aos.css';
+
 
 
 
@@ -18,7 +21,15 @@ L.Icon.Default.mergeOptions({
     shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 });
 
+function DisableScrollZoom() {
+    const map = useMap();
 
+    useEffect(() => {
+        map.scrollWheelZoom.disable(); // benar-benar matikan scroll zoom
+    }, [map]);
+
+    return null;
+}
 
 
 
@@ -95,6 +106,10 @@ function Home() {
     useEffect(() => {
         getBisnisData();
         getBeritaData();
+        AOS.init({
+            duration: 1000, // durasi animasi dalam ms
+            // once: true,
+        });
     }, []);
 
     const getBisnisData = async () => {
@@ -149,7 +164,7 @@ function Home() {
                         <div className="carousel-item active">
                             <div className="bg-carousel-1 d-flex align-items-center" style={{ height: "100vh" }}>
                                 <div className="container">
-                                    <div className="row">
+                                    <div className="row" data-aos="fade-right">
                                         <div className="col-md-6">
                                             <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>Produser Emas</h1>
                                             <h4 className="display-3" style={{ color: "#115258" }}>Di Indonesia Berikutnya</h4>
@@ -166,7 +181,7 @@ function Home() {
                         <div className="carousel-item">
                             <div className="bg-carousel-2 d-flex align-items-center" style={{ height: "100vh" }}>
                                 <div className="container">
-                                    <div className="row">
+                                    <div className="row" data-aos="fade-right">
                                         <div className="col-md-9">
                                             <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>Kami Memelihara</h1>
                                             <h4 className="display-3" style={{ color: "#115258" }}>Generasi Berikutnya Berikutnya</h4>
@@ -183,7 +198,7 @@ function Home() {
                         <div className="carousel-item">
                             <div className="bg-carousel-3 d-flex align-items-center" style={{ height: "100vh" }}>
                                 <div className="container">
-                                    <div className="row">
+                                    <div className="row" data-aos="fade-right">
                                         <div className="col-md-6">
                                             <h1>Renov</h1>
                                             <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>Produser Emas</h1>
@@ -202,14 +217,14 @@ function Home() {
                 </div>
             </section>
             <section className="p-5">
-                <div className="container-fluid p-5">
-                    <div className="row">
+                <div className="container-fluid p-5" >
+                    <div className="row" data-aos="fade-right">
                         <div className="col">
                             <h4 className="text-uppercase fw-semibold text-secondary">Tentang Kami</h4>
                         </div>
                     </div>
                     <div className="row">
-                        <div className="col">
+                        <div className="col" data-aos="fade-right">
                             <div className="row d-block">
                                 <div className="col-md-5">
                                     <h1 className="fw-bold m-0">Bersiap Menjadi <span style={{ color: "#F16022" }}>Produser Emas</span> </h1>
@@ -219,11 +234,11 @@ function Home() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col">
+                        <div className="col" data-aos="fade-down">
                             <p className="display-6 fs-3 fw-medium">PT Masmindo Dwi Area (MDA) berdedikasi untuk menjadi produsen emas Indonesia berikutnya melalui pengembangan Proyek Awak Mas.
                                 Proyek Awak Mas berlokasi di Kecamatan Latimojong, Kabupaten Luwu, Sulawesi Selatan
                             </p>
-                            <Link className="text-decoration-none text-secondary fs-4 fw-bold">Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} /> </Link>
+                            <Link to={'tentang'} data-aos="fade-down" className="text-decoration-none text-secondary fs-4 fw-bold">Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} /> </Link>
                         </div>
                     </div>
                 </div>
@@ -236,7 +251,7 @@ function Home() {
                                 <h3 className="text-uppercase text-center text-secondary fw-bold">Bisnis Kami</h3>
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row" data-aos="fade-right">
                             <div className="col">
                                 {
                                     bisnisList.length > 0 ? (
@@ -255,7 +270,7 @@ function Home() {
                             </div>
                         </div>
                         <div className="container mt-5">
-                            <div className="row mt-4">
+                            <div className="row mt-4" data-aos="zoom-in">
                                 {bisnisList.length > 0 ? (
                                     <div className="col">
                                         {bisnisList.map((bisnis) => ((
@@ -283,7 +298,14 @@ function Home() {
             <section>
                 {/* PETA */}
                 <div style={{ position: 'relative' }}>
-                    <MapContainer center={position} zoom={5} style={{ height: '60vh', width: '100%' }}>
+                    <MapContainer
+                        center={position}
+                        zoom={5}
+                        zoomControl={true}
+                        style={{ height: '60vh', width: '100%' }}
+                    >
+                        <DisableScrollZoom /> {/* Tambahkan ini */}
+
                         <TileLayer
                             attribution='&copy; <a href="https://carto.com/">Carto</a>'
                             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
@@ -302,17 +324,18 @@ function Home() {
                         />
                         <InfoCard position={position} visible={showCard} />
                     </MapContainer>
+
                 </div>
             </section>
             <section>
                 {/* berita */}
                 <div className="container-fluid">
-                    <div className="row">
+                    <div className="row" data-aos="fade-down">
                         <div className="col p-5">
                             <h3 className="text-secondary text-center text-uppercase fw-semibold">Berita Terkini</h3>
                         </div>
                     </div>
-                    <div className="row gap-3 mt-5">
+                    <div className="row gap-3 mt-5" data-aos="fade-right">
                         <div className="position-relative">
                             <button
                                 className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
@@ -389,11 +412,11 @@ function Home() {
                 {/* Esg */}
                 <div className="container-fluid p-5">
                     <div className="row">
-                        <div className="col p-3">
+                        <div className="col p-3" data-aos="fade-right">
                             <h3 className="text-secondary text-center fw-semibold">ESG</h3>
                         </div>
                     </div>
-                    <div className="d-flex justify-content-center gap-4 flex-wrap">
+                    <div className="d-flex justify-content-center gap-4 flex-wrap" data-aos="fade-down">
                         <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
                             <div
                                 className="card"
@@ -407,7 +430,7 @@ function Home() {
                                 <div className="card-body m-0 p-0">
                                     <div
                                         style={{
-                                            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.26), rgba(0,0,0,0.425)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
+                                            backgroundImage: `linear-gradient(to right, rgba(85, 38, 16, 0.75), rgba(85, 38, 16, 0.75)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
                                             backgroundSize: 'cover',
                                             backgroundPosition: 'center',
                                             height: '70vh',
@@ -421,7 +444,7 @@ function Home() {
                                         <div className="text-center p-5">
                                             <h1 className="text-white fw-bold">Lingkungan Hidup</h1>
                                             <Link className="text-decoration-none">
-                                                <h4 className="text-secondary text-white">Lebih Lanjut</h4>
+                                                <h4 className="text-secondary fw-light text-white">Lebih Lanjut</h4>
                                             </Link>
                                         </div>
                                     </div>
@@ -442,7 +465,7 @@ function Home() {
                                 <div className="card-body m-0 p-0">
                                     <div
                                         style={{
-                                            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.26), rgba(0,0,0,0.425)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
+                                            backgroundImage: `linear-gradient(to right, rgba(114, 91, 0, 0.61),rgba(114, 91, 0, 0.61)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
                                             backgroundSize: 'cover',
                                             backgroundPosition: 'center',
                                             height: '70vh',
@@ -456,7 +479,7 @@ function Home() {
                                         <div className="text-center p-5">
                                             <h1 className="text-white fw-bold">Sosial</h1>
                                             <Link className="text-decoration-none">
-                                                <h4 className="text-secondary text-white">Lebih Lanjut</h4>
+                                                <h4 className="text-secondary fw-light text-white">Lebih Lanjut</h4>
                                             </Link>
                                         </div>
                                     </div>
@@ -477,7 +500,7 @@ function Home() {
                                 <div className="card-body m-0 p-0">
                                     <div
                                         style={{
-                                            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.26), rgba(0,0,0,0.425)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
+                                            backgroundImage: `linear-gradient(to right,  rgba(17, 82, 88, 0.84), rgba(17,86,88,0.84)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
                                             backgroundSize: 'cover',
                                             backgroundPosition: 'center',
                                             height: '70vh',
@@ -491,7 +514,7 @@ function Home() {
                                         <div className="text-center p-5">
                                             <h1 className="text-white fw-bold">Tata Kelola</h1>
                                             <Link className="text-decoration-none">
-                                                <h4 className="text-secondary text-white">Lebih Lanjut</h4>
+                                                <h4 className="text-secondary fw-light text-white">Lebih Lanjut</h4>
                                             </Link>
                                         </div>
                                     </div>

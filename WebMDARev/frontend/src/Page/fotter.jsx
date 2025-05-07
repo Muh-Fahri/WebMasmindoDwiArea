@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 function Footer() {
     return (
         <div>
-            <section style={{ backgroundColor: '#828282' }}>
+            <section style={{ backgroundColor: '#747474' }}>
                 <div className="container-fluid p-5">
                     <div className="row text-white">
                         <div className="col">
@@ -17,7 +17,7 @@ function Footer() {
                             {/* office */}
                             <div className="row mt-5">
                                 <div className="col">
-                                    <Link className="text-white text-decoration-none">
+                                    <Link className="text-white text-decoration-none" to={"https://maps.app.goo.gl/KFwqC4n5qFBmWoYw7"}>
                                         <h5>Jakarta Office</h5>
                                         <p>Graha Mitra, 10th Floor Unit 1002
                                             Jl. Gatot Subroto Kav. 21
@@ -26,7 +26,7 @@ function Footer() {
                                     </Link>
                                 </div>
                                 <div className="col">
-                                    <Link className="text-white text-decoration-none">
+                                    <Link className="text-white text-decoration-none" to={"https://maps.app.goo.gl/BpVoqWP74vmW7aJC7"}>
                                         <h5>Site Office</h5>
                                         <p>Desa Rante Balla
                                             Kec. Latimojong, Kabupaten Luwu
@@ -37,7 +37,7 @@ function Footer() {
                             </div>
                             <div className="row">
                                 <div className="col">
-                                    <Link className="text-white text-decoration-none">
+                                    <Link className="text-white text-decoration-none" to={"https://maps.app.goo.gl/PCsbpMixdEaYRx9Y7"}>
                                         <h5>Representative Office</h5>
                                         <p>Jl. Sawerigading, Balo-Balo
                                             Kec. Belopa, Kabupaten Luwu
