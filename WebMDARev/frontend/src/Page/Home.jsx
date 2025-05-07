@@ -7,6 +7,7 @@ import axios from "axios";
 import { MapContainer, TileLayer, CircleMarker, useMap, useMapEvent } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import Footer from "./fotter";
 
 
 
@@ -353,6 +354,13 @@ function Home() {
                                             <div className="row">
                                                 <div className="col p-5">
                                                     {berita.deskripsi_berita.split(' ').slice(0, 80).join(' ') + '.'}
+                                                    <div className="row">
+                                                        <div className="col pt-5 text-center">
+                                                            <Link className="text-decoration-none">
+                                                                <h4 className="text-secondary fw-semibold">Lebih Lanjut </h4>
+                                                            </Link>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -376,6 +384,142 @@ function Home() {
                         </div>
                     </div>
                 </div>
+            </section>
+            <section>
+                {/* Esg */}
+                <div className="container-fluid p-5">
+                    <div className="row">
+                        <div className="col p-3">
+                            <h3 className="text-secondary text-center fw-semibold">ESG</h3>
+                        </div>
+                    </div>
+                    <div className="d-flex justify-content-center gap-4 flex-wrap">
+                        <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
+                            <div
+                                className="card"
+                                style={{
+                                    width: '100%',
+                                    maxWidth: '500px',
+                                    borderRadius: '10px',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                <div className="card-body m-0 p-0">
+                                    <div
+                                        style={{
+                                            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.26), rgba(0,0,0,0.425)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                            height: '70vh',
+                                            width: '100%',
+                                            display: 'flex',
+                                            alignItems: 'flex-end', // teks di bawah
+                                            justifyContent: 'center', // teks tetap di tengah horizontal
+                                            paddingBottom: '30px', // jarak dari bawah
+                                        }}
+                                    >
+                                        <div className="text-center p-5">
+                                            <h1 className="text-white fw-bold">Lingkungan Hidup</h1>
+                                            <Link className="text-decoration-none">
+                                                <h4 className="text-secondary text-white">Lebih Lanjut</h4>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
+                            <div
+                                className="card"
+                                style={{
+                                    width: '100%',
+                                    maxWidth: '500px',
+                                    borderRadius: '10px',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                <div className="card-body m-0 p-0">
+                                    <div
+                                        style={{
+                                            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.26), rgba(0,0,0,0.425)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                            height: '70vh',
+                                            width: '100%',
+                                            display: 'flex',
+                                            alignItems: 'flex-end', // teks di bawah
+                                            justifyContent: 'center', // teks tetap di tengah horizontal
+                                            paddingBottom: '30px', // jarak dari bawah
+                                        }}
+                                    >
+                                        <div className="text-center p-5">
+                                            <h1 className="text-white fw-bold">Sosial</h1>
+                                            <Link className="text-decoration-none">
+                                                <h4 className="text-secondary text-white">Lebih Lanjut</h4>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
+                            <div
+                                className="card"
+                                style={{
+                                    width: '100%',
+                                    maxWidth: '500px',
+                                    borderRadius: '10px',
+                                    overflow: 'hidden',
+                                }}
+                            >
+                                <div className="card-body m-0 p-0">
+                                    <div
+                                        style={{
+                                            backgroundImage: `linear-gradient(to right, rgba(0,0,0,0.26), rgba(0,0,0,0.425)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
+                                            backgroundSize: 'cover',
+                                            backgroundPosition: 'center',
+                                            height: '70vh',
+                                            width: '100%',
+                                            display: 'flex',
+                                            alignItems: 'flex-end', // teks di bawah
+                                            justifyContent: 'center', // teks tetap di tengah horizontal
+                                            paddingBottom: '30px', // jarak dari bawah
+                                        }}
+                                    >
+                                        <div className="text-center p-5">
+                                            <h1 className="text-white fw-bold">Tata Kelola</h1>
+                                            <Link className="text-decoration-none">
+                                                <h4 className="text-secondary text-white">Lebih Lanjut</h4>
+                                            </Link>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div className="bg-bawah d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
+                    <div className="container text-center">
+                        <div className="row">
+                            <div className="col">
+                                <h1 className="text-white fw-bold">Profesional & Inspiratif</h1>
+                                <p className="fs-6 text-white">Kami percaya bahwa setiap individu memiliki potensi luar biasa. Bersama tim yang solid dan budaya kerja
+                                    yang mendukung, mari ciptakan masa depan yang lebih cerah.
+                                </p>
+                                <button className="btn rounded-5 fw-bold shadow-none fs-3 mt-5 text-white" style={{ backgroundColor: "#F16022", width: "20%", height: "5vh" }}>Karier</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                {/* footer */}
+                <Footer />
             </section>
         </div>
     );
