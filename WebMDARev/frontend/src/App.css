@@ -124,3 +124,9 @@
     background-size: cover;
     background-position: cover;
 }
+
+.garis-aw-p {
+    background-color: rgb(73, 73, 73);
+    width: 5px;
+    height: 30vh;
+}
