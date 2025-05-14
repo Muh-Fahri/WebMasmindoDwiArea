@@ -31,12 +31,12 @@ function Navbar() {
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link nav-a" href="#">
+                                        <a className="nav-link nav-a" href="ESG">
                                             <h5 className="display-5 fw-medium fs-5">ESG</h5>
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link nav-a" href="#">
+                                        <a className="nav-link nav-a" href="berita">
                                             <h5 className="display-5 fw-medium fs-5">Berita</h5>
                                         </a>
                                     </li>

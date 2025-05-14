@@ -6,6 +6,10 @@ import ProtectedRoute from "./protectedRoute";
 import AdminPage from "./Page/Admin/admin";
 import Tentang from "./Page/tentang";
 import Bisnis from "./Page/bisnis";
+import ESG from "./Page/esg";
+import Sosial from "./Page/sosial";
+import Berita from "./Page/berita";
+
 
 function AppRouter() {
     return (
@@ -25,6 +29,11 @@ function AppRouter() {
                     <Route path="/" element={<Home />} />
                     <Route path="tentang" element={<Tentang />} />
                     <Route path="bisnis" element={<Bisnis />} />
+                    <Route path="ESG" element={<ESG />} />
+                    <Route path="ESG/sosial" element={<Sosial />} />
+                    <Route path="berita" element={<Berita />} />
+
+
 
                 </Routes>
             </Router>

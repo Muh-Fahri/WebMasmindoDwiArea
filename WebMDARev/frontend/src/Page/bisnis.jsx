@@ -80,7 +80,7 @@ function Bisnis() {
                 </div>
             </section>
             <section>
-                <div className="container mt-5 " data-aos="fade-down">
+                <div className="container mt-5 " data-aos="fade-down"  >
                     <div className="row mt-4">
                         {bisnisList.length > 0 ? (
                             <div className="col p-5">

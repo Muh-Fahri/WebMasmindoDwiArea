@@ -21,22 +21,22 @@ function NavbarHijau() {
                             <div className="collapse navbar-collapse" id="navbarNav">
                                 <ul className="navbar-nav gap-5 ms-auto"> {/* Tambah margin start (ms-4) */}
                                     <li className="nav-item">
-                                        <a className="nav-link" aria-current="page" href="tentang">
+                                        <a className="nav-link" aria-current="page" href="/tentang">
                                             <h5 className="display-5 fw-medium fs-5 text-white">Tentang</h5>
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="bisnis">
+                                        <a className="nav-link" href="/bisnis">
                                             <h5 className="display-5 fw-medium fs-5 text-white">Bisnis</h5>
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">
+                                        <a className="nav-link" href="/ESG">
                                             <h5 className="display-5 fw-medium fs-5 text-white">ESG</h5>
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">
+                                        <a className="nav-link" href="/berita">
                                             <h5 className="display-5 fw-medium fs-5 text-white">Berita</h5>
                                         </a>
                                     </li>

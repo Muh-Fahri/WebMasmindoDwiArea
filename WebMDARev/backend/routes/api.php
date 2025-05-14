@@ -15,7 +15,13 @@ Route::post('/login-admin-123', [AuthController::class, 'login'])->middleware(['
 // user
 Route::get('/user/bisnis', [readUser::class, 'readBisnis']);
 Route::get('/user/berita', [readUser::class, 'readBerita']);
-
+Route::get('/user/esg/lingkungan/deskripLingkungan', [readUser::class, 'readLingkunganDeskrip']);
+Route::get('/user/esg/lingkungan/imgLingkungan', [readUser::class, 'readImgLing']);
+Route::get('/user/esg/sosial/infrastruktur', [readUser::class, 'readSosialInfra']);
+Route::get('/user/esg/sosial/pengembanganMasyarakat', [readUser::class, 'readPengembanganMasyarakat']);
+Route::get('/user/esg/sosial/pendidikan', [readUser::class, 'readSosialPendidikan']);
+Route::get('/user/esg/sosial/kesehatan', [readUser::class, 'readSosialKesehatan']);
+Route::get('/user/esg/sosial/pemberdayaan', [readUser::class, 'readSosialPemberdayaan']);
 
 Route::middleware(['auth:sanctum', 'admin', 'throttle:60,1'])->group(function () {
     // bisnis

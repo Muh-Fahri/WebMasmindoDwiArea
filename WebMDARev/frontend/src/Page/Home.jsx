@@ -116,7 +116,6 @@ function Home() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
             setBisnisList(res.data.bisnisUser);
-            getBisnisData();
         } catch (error) {
             alert("Gagal Mengambil Data");
         }
@@ -443,7 +442,7 @@ function Home() {
                                     >
                                         <div className="text-center p-5">
                                             <h1 className="text-white fw-bold">Lingkungan Hidup</h1>
-                                            <Link className="text-decoration-none">
+                                            <Link to="/ESG/lingkungan" className="text-decoration-none">
                                                 <h4 className="text-secondary fw-light text-white">Lebih Lanjut</h4>
                                             </Link>
                                         </div>
