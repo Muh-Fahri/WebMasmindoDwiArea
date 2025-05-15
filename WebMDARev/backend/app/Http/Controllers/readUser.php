@@ -88,4 +88,14 @@ class readUser extends Controller
             "sosialPemberdayaan" => $sosialPemberdayaan
         ], 200);
     }
+
+    public function beritaSelengkapnya($uuid)
+    {
+        // Ambil data berdasarkan kolom 'uuid', bukan 'id'
+        $berita = BeritaTerkini::where('uuid', $uuid)->firstOrFail();
+
+        return response()->json([
+            "selengkapnya" => $berita
+        ], 200);
+    }
 }

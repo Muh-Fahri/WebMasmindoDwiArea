@@ -11,7 +11,8 @@ class BeritaTerkini extends Model
     protected $fillable = [
         'image_berita',
         'judul_berita',
-        'deskripsi_berita'
+        'deskripsi_berita',
+        'uuid',
     ];
 
     public static function boot()

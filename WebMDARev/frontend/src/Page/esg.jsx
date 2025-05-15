@@ -22,6 +22,7 @@ function ESG() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/lingkungan/deskripLingkungan");
             setDeskripLingkunganList(res.data.deskripLingkunan);
+            getdeskripLingkungan();
         } catch (error) {
             alert("Error Pada Pengambilan Data Deskripsi Lingkungan");
         }
@@ -31,6 +32,7 @@ function ESG() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/lingkungan/imgLingkungan");
             setImgLingList(res.data.imgLing);
+            getImgLingData();
         } catch (error) {
             alert("Error Pada Pengambilan Data Gambar")
         }

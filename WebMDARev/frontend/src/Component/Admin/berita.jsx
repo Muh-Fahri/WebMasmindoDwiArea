@@ -53,17 +53,18 @@ function Berita() {
             await axios.post("http://127.0.0.1:8000/api/admin/berita", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
+                    'Content-Type': 'multipart/form-data' // Pastikan ini ada
                 }
             });
             setJudulBerita("");
             setDeskripBerita("");
             setImgBerita("");
             getBeritaData();
+            alert("Berhasil Menambahkan Data");
         } catch (error) {
             alert("Gagal Menambahkan Data");
         }
     };
-
 
     const editBeritaData = async (e) => {
         e.preventDefault();

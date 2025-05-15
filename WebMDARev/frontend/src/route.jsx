@@ -9,6 +9,7 @@ import Bisnis from "./Page/bisnis";
 import ESG from "./Page/esg";
 import Sosial from "./Page/sosial";
 import Berita from "./Page/berita";
+import BeritaSelengkapnya from "./Page/beritaSelengkapnya";
 
 
 function AppRouter() {
@@ -32,6 +33,7 @@ function AppRouter() {
                     <Route path="ESG" element={<ESG />} />
                     <Route path="ESG/sosial" element={<Sosial />} />
                     <Route path="berita" element={<Berita />} />
+                    <Route path="/berita/selengkapnya/:uuid" element={<BeritaSelengkapnya />} />
 
 
 

@@ -22,6 +22,7 @@ Route::get('/user/esg/sosial/pengembanganMasyarakat', [readUser::class, 'readPen
 Route::get('/user/esg/sosial/pendidikan', [readUser::class, 'readSosialPendidikan']);
 Route::get('/user/esg/sosial/kesehatan', [readUser::class, 'readSosialKesehatan']);
 Route::get('/user/esg/sosial/pemberdayaan', [readUser::class, 'readSosialPemberdayaan']);
+Route::get('/user/berita/selengkapnya/{uuid}', [readUser::class, 'beritaSelengkapnya']);
 
 Route::middleware(['auth:sanctum', 'admin', 'throttle:60,1'])->group(function () {
     // bisnis

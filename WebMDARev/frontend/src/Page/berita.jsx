@@ -19,6 +19,7 @@ function Berita() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/berita")
             setBeritaList(res.data.berita);
+            getBeritaData();
         } catch (error) {
             alert("Eror Pada Pengambilan Data Berita")
         }
@@ -58,16 +59,15 @@ function Berita() {
                             {
                                 beritaList.length > 0 ? (
                                     beritaList.map((berita) => (
-                                        <div className="col-auto p-3">
+                                        <div key={berita.uuid} className="col-auto p-3">
                                             <div
-                                                key={berita.uuid}
                                                 className="card rounded-5 overflow-hidden position-relative"
                                                 style={{ width: '500px', height: '500px' }}
                                             >
                                                 <div
                                                     className="img-berita"
                                                     style={{
-                                                        backgroundImage: 'url("/Image/Background/CampAwakMasJPEG.jpg")',
+                                                        backgroundImage: `url(http://127.0.0.1:8000/Berita/${encodeURIComponent(berita.image_berita)})`,
                                                         backgroundSize: 'cover',
                                                         backgroundPosition: 'center',
                                                         width: '100%',
@@ -77,12 +77,11 @@ function Berita() {
 
                                                 <div
                                                     className="position-absolute bottom-0 w-100 p-4"
-                                                    style={{
-                                                        color: 'white',
-                                                    }}
+                                                    style={{ color: 'white' }}
                                                 >
                                                     <p className="mb-1">
                                                         {new Date(berita.created_at).toLocaleDateString("id-ID", {
+                                                            weekday: "long", // tampilkan hari
                                                             day: "numeric",
                                                             month: "long",
                                                             year: "numeric"
@@ -92,7 +91,7 @@ function Berita() {
                                                         {berita.judul_berita}
                                                     </h5>
                                                     <div className="d-flex justify-content-center">
-                                                        <Link className="text-white display-5 text-decoration-none">
+                                                        <Link to={`/berita/selengkapnya/${berita.uuid}`} className="text-white display-5 text-decoration-none">
                                                             <FontAwesomeIcon icon={faCircleArrowRight} />
                                                         </Link>
                                                     </div>
@@ -104,6 +103,7 @@ function Berita() {
                                     <h1>No Data</h1>
                                 )
                             }
+
                         </div>
                     </div>
                 </div>

@@ -378,8 +378,8 @@ function Home() {
                                                     {berita.deskripsi_berita.split(' ').slice(0, 80).join(' ') + '.'}
                                                     <div className="row">
                                                         <div className="col pt-5 text-center">
-                                                            <Link className="text-decoration-none">
-                                                                <h4 className="text-secondary fw-semibold">Lebih Lanjut </h4>
+                                                            <Link to={`/berita/selengkapnya/${berita.uuid}`} className="text-secondary fs-2 fw-bold text-decoration-none">
+                                                                Lebih Lanjut
                                                             </Link>
                                                         </div>
                                                     </div>
