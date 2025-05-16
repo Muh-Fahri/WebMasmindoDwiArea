@@ -6,7 +6,9 @@ use App\Models\BeritaTerkini;
 use App\Models\Bisnis;
 use App\Models\DeskripLingkungan;
 use App\Models\ImageLingkungan;
+use App\Models\Instagram;
 use App\Models\Sosial;
+use App\Models\Youtube;
 use Illuminate\Http\Request;
 
 class readUser extends Controller
@@ -89,13 +91,31 @@ class readUser extends Controller
         ], 200);
     }
 
-    public function beritaSelengkapnya($uuid)
+    function beritaSelengkapnya($uuid)
     {
         // Ambil data berdasarkan kolom 'uuid', bukan 'id'
         $berita = BeritaTerkini::where('uuid', $uuid)->firstOrFail();
 
         return response()->json([
             "selengkapnya" => $berita
+        ], 200);
+    }
+
+    function readInstagram()
+    {
+        $instagram = Instagram::all();
+
+        return response()->json([
+            "instagram" => $instagram
+        ], 200);
+    }
+
+    function readYoutube()
+    {
+        $youtube = Youtube::all();
+
+        return response()->json([
+            "youtube" => $youtube
         ], 200);
     }
 }

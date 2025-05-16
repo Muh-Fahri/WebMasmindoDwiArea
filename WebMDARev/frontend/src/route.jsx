@@ -10,6 +10,8 @@ import ESG from "./Page/esg";
 import Sosial from "./Page/sosial";
 import Berita from "./Page/berita";
 import BeritaSelengkapnya from "./Page/beritaSelengkapnya";
+import Instagram from "./Page/instagram";
+import Youtube from "./Page/youtube";
 
 
 function AppRouter() {
@@ -34,6 +36,8 @@ function AppRouter() {
                     <Route path="ESG/sosial" element={<Sosial />} />
                     <Route path="berita" element={<Berita />} />
                     <Route path="/berita/selengkapnya/:uuid" element={<BeritaSelengkapnya />} />
+                    <Route path="instagram" element={<Instagram />} />
+                    <Route path="youtube" element={<Youtube />} />
 
 
 

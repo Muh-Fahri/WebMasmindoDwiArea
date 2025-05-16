@@ -49,8 +49,8 @@ function BeritaSelengkapnya() {
                             <div className="col-md-4 d-flex flex-column justify-content-between">
                                 <div>
                                     <ul className="list-unstyled">
-                                        <li><a href="" className="fs-1 text-black text-decoration-none fw-bold">Masmindo dalam berita</a></li>
-                                        <li><a href="" className="fs-1 text-black text-decoration-none">Instagram</a></li>
+                                        <li><a href="/berita" className="fs-1 text-black text-decoration-none fw-bold">Masmindo dalam berita</a></li>
+                                        <li><a href="/instagram" className="fs-1 text-black text-decoration-none">Instagram</a></li>
                                         <li><a href="" className="fs-1 text-black text-decoration-none">Youtube</a></li>
                                     </ul>
                                 </div>

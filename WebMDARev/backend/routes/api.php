@@ -23,8 +23,10 @@ Route::get('/user/esg/sosial/pendidikan', [readUser::class, 'readSosialPendidika
 Route::get('/user/esg/sosial/kesehatan', [readUser::class, 'readSosialKesehatan']);
 Route::get('/user/esg/sosial/pemberdayaan', [readUser::class, 'readSosialPemberdayaan']);
 Route::get('/user/berita/selengkapnya/{uuid}', [readUser::class, 'beritaSelengkapnya']);
+Route::get('/user/berita/instagram', [readUser::class, 'readInstagram']);
+Route::get('/user/berita/youtube', [readUser::class, 'readYoutube']);
 
-Route::middleware(['auth:sanctum', 'admin', 'throttle:60,1'])->group(function () {
+Route::middleware(['auth:sanctum', 'admin', 'throttle:60,3'])->group(function () {
     // bisnis
     Route::post('/admin/bisnis', [createAdmin::class, 'createBisnis']);
     Route::get('/admin/bisnis', [readAdmin::class, 'readBisnis']);

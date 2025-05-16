@@ -44,13 +44,13 @@ function Berita() {
                         {/* Nav */}
                         <ul className="list-unstyled">
                             <li>
-                                <a href="" className="fs-1 text-black text-decoration-none fw-bold">Masmindo dalam berita</a>
+                                <a href="/berita" className="fs-1 text-black text-decoration-none fw-bold">Masmindo dalam berita</a>
                             </li>
                             <li>
-                                <a href="" className="fs-1 text-black text-decoration-none">Instagram</a>
+                                <a href="/instagram" className="fs-1 text-black text-decoration-none">Instagram</a>
                             </li>
                             <li>
-                                <a href="" className="fs-1 text-black text-decoration-none">Youtube</a>
+                                <a href="/youtube" className="fs-1 text-black text-decoration-none">Youtube</a>
                             </li>
                         </ul>
                     </div>

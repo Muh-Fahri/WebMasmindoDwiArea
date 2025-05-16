@@ -1,0 +1,75 @@
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import NavbarHijau from "../Component/navbarHijau";
+import EmbedInstagram from "../Component/Admin/embedIg";
+
+
+
+function Instagram() {
+
+    const [instagaramList, setInstagramList] = useState([]);
+
+
+    const getInstagramData = async () => {
+        try {
+            const res = await axios.get("http://127.0.0.1:8000/api/user/berita/instagram");
+            setInstagramList(res.data.instagram);
+            getInstagramData();
+        } catch (error) {
+            alert("Gagal Mengambil Data");
+        }
+    }
+
+    useEffect(() => {
+        getInstagramData();
+    }, [])
+
+
+    return (
+        <div>
+            <NavbarHijau />
+            <div className="container-fluid pt-5 mt-5">
+                <div className="row pt-5 mt-5">
+                    <div className="col p-5">
+                        <h2 className="text-uppercase text-secondary">Berita</h2>
+                    </div>
+                </div>
+                <div className="row p-5">
+                    <div className="col-auto">
+                        <div className="garis-berita"></div>
+                    </div>
+                    <div className="col-md-4">
+                        {/* Nav */}
+                        <ul className="list-unstyled">
+                            <li>
+                                <a href="/berita" className="fs-1 text-black text-decoration-none">Masmindo dalam berita</a>
+                            </li>
+                            <li>
+                                <a href="/instagram" className="fs-1 text-black text-decoration-none fw-bold">Instagram</a>
+                            </li>
+                            <li>
+                                <a href="/youtube" className="fs-1 text-black text-decoration-none">Youtube</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div className="col">
+                        <div className="row">
+                            {
+                                instagaramList.length > 0 ? (
+                                    instagaramList.map((instagram) => (
+                                        <div className="col-auto p-3">
+                                            <EmbedInstagram url={instagram.linkInstagram} />
+                                        </div>
+                                    ))
+                                ) : (
+                                    <h1>Loading...</h1>
+                                )
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    )
+}
+export default Instagram;
