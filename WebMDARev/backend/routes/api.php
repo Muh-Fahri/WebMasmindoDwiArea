@@ -25,6 +25,8 @@ Route::get('/user/esg/sosial/pemberdayaan', [readUser::class, 'readSosialPemberd
 Route::get('/user/berita/selengkapnya/{uuid}', [readUser::class, 'beritaSelengkapnya']);
 Route::get('/user/berita/instagram', [readUser::class, 'readInstagram']);
 Route::get('/user/berita/youtube', [readUser::class, 'readYoutube']);
+Route::get('lihat_user', [AuthController::class, 'readLogin']);
+Route::get('/user/esg/laporan', [readUser::class, 'readLaporan']);
 
 Route::middleware(['auth:sanctum', 'admin', 'throttle:60,3'])->group(function () {
     // bisnis
@@ -72,4 +74,10 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:60,3'])->group(function ()
     Route::get('/admin/youtube', [readAdmin::class, 'readYoutube']);
     Route::post('/admin/youtube/{uuid}', [updateAdmin::class, 'updateYoutube']);
     Route::delete('/admin/youtube/delete/{uuid}', [deleteAdmin::class, 'deleteYoutube']);
+
+    // pdf
+    Route::post("/admin/pdf", [createAdmin::class, 'createPdf']);
+    Route::get('/admin/pdf', [readAdmin::class, 'readPdf']);
+    Route::get('/admin/pdf/download_pdf/{stored_name}', [readAdmin::class, 'downloadPdf']);
+    Route::delete('/admin/pdf/delete/{uuid}', [deleteAdmin::class, 'deletePdf']);
 });

@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\BeritaTerkini;
 use App\Models\Bisnis;
-use App\Models\DeskripLingkungan;
-use App\Models\ImageLingkungan;
-use App\Models\Instagram;
-use App\Models\Lingkungan;
 use App\Models\Sosial;
 use App\Models\Youtube;
+use App\Models\Instagram;
+use App\Models\Lingkungan;
+use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\BeritaTerkini;
+use App\Models\ImageLingkungan;
+use App\Models\DeskripLingkungan;
+use App\Http\Controllers\Controller;
+use App\Models\PDF;
 
 class createAdmin extends Controller
 {
@@ -162,6 +164,39 @@ class createAdmin extends Controller
         return response()->json([
             'msg' => 'Berhasil Menambahkan Data',
             'youtube' => $youtube
+        ], 200);
+    }
+
+    function createPdf(Request $request)
+    {
+        $request->validate([
+            "pdf" => "required|mimes:pdf|max:20480",
+            "tahun" => "required|digits:4|integer|min:1900|max:" . date('Y')
+        ]);
+
+
+        $file = $request->file('pdf');
+        if ($file) {
+            $originalName = $file->getClientOriginalName();
+            $storedName = time() . "_" . Str::random(8) . "." . $file->getClientOriginalName();
+
+            $file->move(public_path('pdf'), $storedName);
+
+
+            $pdfFile = PDF::create([
+                'original_name' => $originalName,
+                'stored_name' => $storedName,
+                'tahun' => $request->tahun
+            ]);
+
+            return response()->json([
+                "msg" => "Berhasil Mengupload File",
+                "pdf" => $pdfFile,
+            ], 200);
+        }
+
+        return response()->json([
+            "msg" => "Gagal Upload File"
         ], 200);
     }
 }

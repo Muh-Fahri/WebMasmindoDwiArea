@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavSide from "./navSide";
+import handleUnauthorized from "./unouthorized";
 
 function Youtube() {
     const [listYt, setListYt] = useState([]);
@@ -27,7 +28,7 @@ function Youtube() {
             });
             setListYt(res.data.youtube);
         } catch (error) {
-            alert('Gagal Mengambil Data');
+            handleUnauthorized(error);
         }
     };
 

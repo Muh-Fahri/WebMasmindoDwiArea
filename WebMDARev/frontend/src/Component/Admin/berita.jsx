@@ -4,6 +4,7 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import NoData from "../Error/NoData";
+import handleUnauthorized from "./unouthorized";
 
 
 
@@ -34,7 +35,7 @@ function Berita() {
             // console.log(response.data);
             setBeritaList(response.data.berita);
         } catch (error) {
-            alert('Gagal Mengambil Data');
+            handleUnauthorized(error);
         }
     }
 
@@ -65,6 +66,8 @@ function Berita() {
             alert("Gagal Menambahkan Data");
         }
     };
+
+
 
     const editBeritaData = async (e) => {
         e.preventDefault();

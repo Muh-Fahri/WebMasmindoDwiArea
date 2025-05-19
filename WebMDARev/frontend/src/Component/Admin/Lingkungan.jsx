@@ -5,6 +5,7 @@ import moment from "moment";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import NoData from "../Error/NoData";
+import handleUnauthorized from "./unouthorized";
 
 
 
@@ -19,7 +20,9 @@ function Lingkungan() {
 
     // var untuk membuat data
     const [deskripsi, setDeskripsiHalaman] = useState("");
-
+    const handleUnauthorized = () => {
+        window.location.href = '/Login-admin-123'
+    };
 
 
     // untuk mengambil data
@@ -45,7 +48,7 @@ function Lingkungan() {
             // console.log(desLing.data);
             setDeskripList(desLing.data.deskrip);
         } catch (error) {
-            alert('Gagal Mengambil Data');
+            handleUnauthorized(error);
         }
     }
 
@@ -60,7 +63,7 @@ function Lingkungan() {
             // console.log(imgLing.data);
             setImgList(imgLing.data.imgLing);
         } catch (error) {
-            alert('Gagal Mengambil Data');
+            handleUnauthorized(error);
         }
     }
 

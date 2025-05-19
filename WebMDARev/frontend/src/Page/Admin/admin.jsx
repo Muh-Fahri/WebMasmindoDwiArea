@@ -7,6 +7,7 @@ import Lingkungan from "../../Component/Admin/Lingkungan";
 import Sosial from "../../Component/Admin/sosial";
 import Instagram from "../../Component/Admin/instagram";
 import Youtube from "../../Component/Admin/youtube";
+import PDF from "../../Component/Admin/pdf";
 
 function AdminPage() {
     return (
@@ -15,10 +16,11 @@ function AdminPage() {
                 <Route path="/" element={<Dashboard />} />
                 <Route path="bisnis" element={<Bisnis />} />
                 <Route path="berita" element={<Berita />} />
-                <Route path="/esg/lingkungan" element={<Lingkungan />} />
-                <Route path="/esg/sosial" element={<Sosial />} />
+                <Route path="esg/lingkungan" element={<Lingkungan />} />
+                <Route path="esg/sosial" element={<Sosial />} />
                 <Route path="instagram" element={<Instagram />} />
                 <Route path="youtube" element={<Youtube />} />
+                <Route path="laporan_keberlanjutan" element={<PDF />} />
 
             </Routes>
         </div>

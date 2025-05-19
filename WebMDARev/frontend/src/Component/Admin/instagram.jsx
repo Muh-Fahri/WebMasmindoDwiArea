@@ -3,7 +3,7 @@ import NavSide from "./navSide";
 import axios from "axios";
 import EmbedInstagram from "./embedIg";
 import NoData from "../Error/NoData";
-
+import handleUnauthorized from "./unouthorized";
 
 function Instagram() {
     const [instagramList, setInstagramList] = useState([]);
@@ -15,6 +15,9 @@ function Instagram() {
     const [editId, setEditId] = useState("");
     const [modlLinkIg, setModlLinkIg] = useState("");
 
+    // Tambah state untuk loading dan error (optional)
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         if (window.instgrm && window.instgrm.Embeds) {
@@ -22,13 +25,11 @@ function Instagram() {
         }
     }, []);
 
-
-    const [shouldReprocessIg, setShouldReprocessIg] = useState(false);
-
-
     useEffect(() => {
         getInstagramData();
     }, []);
+
+    // Fungsi untuk handle error 401
 
     const createInstagramData = async (e) => {
         e.preventDefault();
@@ -44,12 +45,13 @@ function Instagram() {
             getInstagramData();
             alert("Berhasil Menambahkan Data");
         } catch (error) {
-            alert("Gagal Menambahkan Data");
+            alert("Error");
         }
     };
 
-
     const getInstagramData = async () => {
+        setLoading(true);
+        setError(null);
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/admin/instagram", {
                 headers: {
@@ -57,9 +59,9 @@ function Instagram() {
                 }
             });
             setInstagramList(res.data.instagram);
-            setShouldReprocessIg(true);
+            setLoading(false);
         } catch (error) {
-            alert("Gagal Mengambil Data")
+            handleUnauthorized(error);
         }
     };
 
@@ -81,7 +83,11 @@ function Instagram() {
             getInstagramData();
             alert('Edit Data Sukses');
         } catch (error) {
-            alert('Gagal Mengubah Data');
+            if (error.response && error.response.status === 401) {
+                handleUnauthorized();
+            } else {
+                alert('Gagal Mengubah Data');
+            }
         }
     };
 
@@ -101,16 +107,18 @@ function Instagram() {
             getInstagramData();
             alert('Berhasil Menghapus Data');
         } catch (error) {
-            alert('Gagal Menghapus Data');
+            if (error.response && error.response.status === 401) {
+                handleUnauthorized();
+            } else {
+                alert('Gagal Menghapus Data');
+            }
         }
     };
-
 
     return (
         <div>
             <NavSide />
             <div className="flex-grow-1 p-3">
-                {/* create data */}
                 <section>
                     <div className="container">
                         <div className="row">
@@ -127,7 +135,12 @@ function Instagram() {
                                     <form onSubmit={createInstagramData}>
                                         <div className="mb-3">
                                             <label className="form-label">Link Intagram</label>
-                                            <input type="text" className="form-control" value={linkIg} onChange={(e) => setLinkIg(e.target.value)} />
+                                            <input
+                                                type="text"
+                                                className="form-control"
+                                                value={linkIg}
+                                                onChange={(e) => setLinkIg(e.target.value)}
+                                            />
                                         </div>
                                         <button className="btn btn-sm btn-primary">Add Data</button>
                                     </form>
@@ -136,8 +149,8 @@ function Instagram() {
                         </div>
                     </div>
                 </section>
+
                 <section>
-                    {/* lihat data */}
                     <div className="container">
                         <div className="row mt-3">
                             <div className="col">
@@ -145,12 +158,13 @@ function Instagram() {
                                     <div className="mb-5">
                                         <h3 className="text-secondary">Data Postingan</h3>
                                     </div>
-                                    {instagramList.length > 0 ? (
+                                    {loading && <div>Loading...</div>}
+                                    {error && <div className="text-danger">{error}</div>}
+                                    {!loading && !error && (instagramList.length > 0 ? (
                                         <div className="row">
                                             {instagramList.map((instagram) => (
                                                 <div key={instagram.uuid} className="col-md-4 mb-4">
                                                     <EmbedInstagram url={instagram.linkInstagram} />
-                                                    {/* Tombol edit dan delete */}
                                                     <div className="mt-2">
                                                         <button className="btn btn-sm btn-warning me-2" onClick={() => openEditModalIg(instagram)}>Edit</button>
                                                         <button className="btn btn-sm btn-danger" onClick={() => deleteInstagramData(instagram.uuid)}>Delete</button>
@@ -160,14 +174,14 @@ function Instagram() {
                                         </div>
                                     ) : (
                                         <NoData />
-                                    )}
+                                    ))}
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
+
                 <section>
-                    {/* modal edit */}
                     {editIgModal && (
                         <div className="modal show fade d-block" tabIndex="-1">
                             <div className="modal-dialog">
@@ -200,8 +214,7 @@ function Instagram() {
                 </section>
             </div>
         </div>
-
-    )
+    );
 }
 
 export default Instagram;

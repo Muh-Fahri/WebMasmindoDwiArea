@@ -8,6 +8,7 @@ use App\Models\Bisnis;
 use App\Models\DeskripLingkungan;
 use App\Models\ImageLingkungan;
 use App\Models\Instagram;
+use App\Models\PDF;
 use App\Models\Sosial;
 use App\Models\Youtube;
 use Illuminate\Http\Request;
@@ -110,5 +111,25 @@ class readAdmin extends Controller
         return response()->json([
             'youtube' => $youtube
         ], 200);
+    }
+
+    function readPdf()
+    {
+        $pdf = PDF::all();
+
+        return response()->json([
+            "pdf" => $pdf
+        ], 200);
+    }
+
+    function downloadPDF($stored_name)
+    {
+        $path = public_path("pdf/" . $stored_name);
+
+        if (!file_exists($path)) {
+            abort(404, 'File tidak ditemukan.');
+        }
+
+        return response()->download($path);
     }
 }

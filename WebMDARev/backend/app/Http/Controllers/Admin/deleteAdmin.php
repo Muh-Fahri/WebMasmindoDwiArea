@@ -2,15 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\BeritaTerkini;
+use App\Models\PDF;
 use App\Models\Bisnis;
-use App\Models\DeskripLingkungan;
-use App\Models\ImageLingkungan;
-use App\Models\Instagram;
 use App\Models\Sosial;
 use App\Models\Youtube;
+use App\Models\Instagram;
 use Illuminate\Http\Request;
+use App\Models\BeritaTerkini;
+use App\Models\ImageLingkungan;
+use App\Models\DeskripLingkungan;
+use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\File;
 
 class deleteAdmin extends Controller
 {
@@ -57,6 +59,12 @@ class deleteAdmin extends Controller
     function deleteImgLing($uuid)
     {
         $imgLing = ImageLingkungan::where('uuid', $uuid)->firstOrFail();
+        if ($imgLing->image_lingkungan) {
+            $imagePath = public_path('Lingkungan/' . $imgLing->image_lingkungan);
+            if (file_exists($imagePath)) {
+                unlink($imagePath);
+            }
+        }
         $imgLing->delete();
 
         return response()->json([
@@ -92,6 +100,26 @@ class deleteAdmin extends Controller
 
         return response()->json([
             'msg' => 'Berhasil Menghapus Data'
+        ], 200);
+    }
+
+    function deletePdf($uuid)
+    {
+        $pdf = PDF::where('uuid', $uuid)->firstOrFail();
+
+        // Path lengkap file di folder public/pdf
+        $filePath = public_path('pdf/' . $pdf->stored_name);
+
+
+        if (File::exists($filePath)) {
+            File::delete($filePath);
+        }
+
+        // Hapus data dari database
+        $pdf->delete();
+
+        return response()->json([
+            "msg" => "Berhasil Menghapus Data"
         ], 200);
     }
 }

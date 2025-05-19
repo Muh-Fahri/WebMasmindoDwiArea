@@ -55,6 +55,11 @@ function NavSide() {
                                     ▸ Tata Kelola
                                 </Link>
                             </li>
+                            <li>
+                                <Link to="/admin/laporan_keberlanjutan" className="text-white text-decoration-none d-block py-1 px-3 hover-bg">
+                                    ▸ Laporan
+                                </Link>
+                            </li>
                         </ul>
                     </li>
                     <li>

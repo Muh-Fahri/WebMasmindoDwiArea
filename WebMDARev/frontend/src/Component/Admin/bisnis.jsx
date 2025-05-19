@@ -5,6 +5,7 @@ import NavSide from "./navSide";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
 import NoData from "../Error/NoData";
+import handleUnauthorized from "./unouthorized";
 
 
 function Bisnis() {
@@ -20,6 +21,8 @@ function Bisnis() {
     const [editLink, setEditLink] = useState("");
     const [editDeskrip, setEditDeskrip] = useState("");
 
+
+
     const getBisnisData = async () => {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/admin/bisnis', {
@@ -29,13 +32,15 @@ function Bisnis() {
             });
             setBisnisList(response.data.bisnis);
         } catch (error) {
-            alert('Gagal Mengambil Data');
+            handleUnauthorized(error);
         }
     };
 
     useEffect(() => {
         getBisnisData();
     }, []);
+
+
 
     const addBisnisPage = async (e) => {
         e.preventDefault();

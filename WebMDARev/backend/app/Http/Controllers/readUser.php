@@ -7,6 +7,7 @@ use App\Models\Bisnis;
 use App\Models\DeskripLingkungan;
 use App\Models\ImageLingkungan;
 use App\Models\Instagram;
+use App\Models\PDF;
 use App\Models\Sosial;
 use App\Models\Youtube;
 use Illuminate\Http\Request;
@@ -116,6 +117,26 @@ class readUser extends Controller
 
         return response()->json([
             "youtube" => $youtube
+        ], 200);
+    }
+
+    public function downloadPdf($stored_name)
+    {
+        $path = public_path('pdf/' . $stored_name);
+
+        if (!file_exists($path)) {
+            return response()->json(['error' => 'File tidak ditemukan.'], 404);
+        }
+
+        return response()->download($path);
+    }
+
+    function readLaporan()
+    {
+        $laporan = PDF::all();
+
+        return response()->json([
+            "laporan" => $laporan
         ], 200);
     }
 }

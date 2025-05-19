@@ -26,4 +26,23 @@ class AuthController extends Controller
             'user' => $user,
         ], 200);
     }
+
+
+    public function readLogin()
+    {
+        $tokens = \Laravel\Sanctum\PersonalAccessToken::with('tokenable')->get();
+
+        $logins = $tokens->map(function ($token) {
+            return [
+                'user_id' => $token->tokenable->id,
+                'user_name' => $token->tokenable->name,
+                'email' => $token->tokenable->email,
+                'token' => $token->token
+            ];
+        });
+
+        return response()->json([
+            'active_logins' => $logins
+        ]);
+    }
 }

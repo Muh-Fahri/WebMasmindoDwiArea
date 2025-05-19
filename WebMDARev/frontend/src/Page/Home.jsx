@@ -330,7 +330,7 @@ function Home() {
                 {/* berita */}
                 <div className="container-fluid">
                     <div className="row" data-aos="fade-down">
-                        <div className="col p-5">
+                        <div className="col p-5" data-aos="fade-down">
                             <h3 className="text-secondary text-center text-uppercase fw-semibold">Berita Terkini</h3>
                         </div>
                     </div>

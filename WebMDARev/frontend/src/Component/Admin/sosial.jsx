@@ -3,6 +3,7 @@ import NavSide from "./navSide";
 import axios from "axios";
 import moment from "moment";
 import NoData from "../Error/NoData";
+import handleUnauthorized from "./unouthorized";
 
 function Sosial() {
     const [sosialList, setSosialList] = useState([]);
@@ -31,7 +32,7 @@ function Sosial() {
             });
             setSosialList(response.data.sosial);
         } catch (error) {
-            alert('Gagal Mengambil Data');
+            handleUnauthorized(error);
         }
     }
 

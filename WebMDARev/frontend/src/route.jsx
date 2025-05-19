@@ -1,5 +1,5 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import Home from "./Page/Home";
 import Login from "./Page/login";
 import ProtectedRoute from "./protectedRoute";
@@ -26,6 +26,14 @@ function AppRouter() {
                             <AdminPage />
                         </ProtectedRoute>}
                     />
+                    {/* <Route
+                        path="/admin/*"
+                        element={
+                            <ProtectedRoute>
+                                <AdminPage />
+                            </ProtectedRoute>
+                        }
+                    /> */}
 
 
                     {/* user */}
