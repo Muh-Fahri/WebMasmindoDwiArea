@@ -27,6 +27,7 @@ Route::get('/user/berita/instagram', [readUser::class, 'readInstagram']);
 Route::get('/user/berita/youtube', [readUser::class, 'readYoutube']);
 Route::get('lihat_user', [AuthController::class, 'readLogin']);
 Route::get('/user/esg/laporan', [readUser::class, 'readLaporan']);
+Route::get('/user/esg/pdf/download/{stored_name}', [readUser::class, 'downloadPdf']);
 
 Route::middleware(['auth:sanctum', 'admin', 'throttle:60,3'])->group(function () {
     // bisnis

@@ -4,6 +4,7 @@ import { data, NavLink } from "react-router-dom";
 import Footer from "./fotter";
 import axios from "axios";
 import NoData from "../Component/Error/NoData";
+import Laporan from "./laporan";
 
 
 function Sosial() {
@@ -25,6 +26,7 @@ function Sosial() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/sosial/pengembanganMasyarakat");
             setMasyarakatList(res.data.sosialMasyarakat);
+            getMasyarakatData();
         } catch (error) {
             alert("Gagal Mengambil Data Sosial Masyarakat");
         }
@@ -34,6 +36,7 @@ function Sosial() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/sosial/kesehatan");
             setKesehatanList(res.data.sosialKesehatan);
+            getKesehatanData();
         } catch (error) {
             alert("Gagal Mengambil Data Sosial Kesehtan");
         }
@@ -73,57 +76,7 @@ function Sosial() {
                 </div>
             </section>
             <section>
-                <div className="container-fluid">
-                    <div className="row">
-                        <div className="col p-5">
-                            <h3 className="text-uppercase fw-semibold text-center text-secondary">
-                                Laporan Keberlanjutan
-                            </h3>
-                        </div>
-                    </div>
-
-                    {/* Wrapper tombol dan slider */}
-                    <div className="position-relative">
-                        {/* Tombol Kiri */}
-                        <button
-                            className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
-                            onClick={() => {
-                                document
-                                    .getElementById("laporan-slider")
-                                    .scrollBy({ left: -300, behavior: "smooth" });
-                            }}
-                        >
-                            &#10094;
-                        </button>
-
-                        {/* Slider */}
-                        <div
-                            id="laporan-slider"
-                            className="d-flex gap-3 flex-nowrap overflow-auto px-5"
-                            style={{ scrollBehavior: "smooth" }}
-                        >
-                            {/* Item 1 */}
-                            <div className="flex-shrink-0" style={{ width: "300px" }}>
-                                <div className="card rounded-3" style={{ height: "400px", overflow: "hidden" }}>
-                                    <img src="/Image/Background/CampAwakMasJPEG.jpg" alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
-                                </div>
-                                <div className="text-center mt-2">
-                                    <h5 className="fw-bold">2020</h5>
-                                </div>
-                            </div>
-                        </div>
-                        <button
-                            className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
-                            onClick={() => {
-                                document
-                                    .getElementById("laporan-slider")
-                                    .scrollBy({ left: 300, behavior: "smooth" });
-                            }}
-                        >
-                            &#10095;
-                        </button>
-                    </div>
-                </div>
+                <Laporan />
             </section>
             <section>
                 <div className="container d-flex justify-content-center">

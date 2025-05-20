@@ -159,7 +159,6 @@ function Instagram() {
                                         <h3 className="text-secondary">Data Postingan</h3>
                                     </div>
                                     {loading && <div>Loading...</div>}
-                                    {error && <div className="text-danger">{error}</div>}
                                     {!loading && !error && (instagramList.length > 0 ? (
                                         <div className="row">
                                             {instagramList.map((instagram) => (

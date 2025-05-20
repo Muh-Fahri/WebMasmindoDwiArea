@@ -5,6 +5,9 @@ import NavbarHijau from "../Component/navbarHijau";
 function Youtube() {
 
     const [ytList, setYtList] = useState([]);
+    useEffect(() => {
+        getYtData();
+    }, [])
 
     const getYtData = async () => {
         try {
@@ -15,9 +18,7 @@ function Youtube() {
         }
     }
 
-    useEffect(() => {
-        getYtData();
-    }, [])
+
     return (
         <div>
             <NavbarHijau />
