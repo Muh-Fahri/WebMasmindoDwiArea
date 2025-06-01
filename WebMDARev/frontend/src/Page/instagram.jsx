@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavbarHijau from "../Component/navbarHijau";
 import EmbedInstagram from "../Component/Admin/embedIg";
+import Aos from "aos";
 
 
 
@@ -22,6 +23,9 @@ function Instagram() {
 
     useEffect(() => {
         getInstagramData();
+        Aos.init({
+            duration: 1000,
+        })
     }, [])
 
 
@@ -53,7 +57,7 @@ function Instagram() {
                         </ul>
                     </div>
                     <div className="col">
-                        <div className="row">
+                        <div className="row" data-aos="fade-down">
                             {
                                 instagaramList.length > 0 ? (
                                     instagaramList.map((instagram) => (

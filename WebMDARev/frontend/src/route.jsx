@@ -24,16 +24,7 @@ function AppRouter() {
                     <Route path="/admin/*"
                         element={<ProtectedRoute allowedroles={['admin']}>
                             <AdminPage />
-                        </ProtectedRoute>}
-                    />
-                    {/* <Route
-                        path="/admin/*"
-                        element={
-                            <ProtectedRoute>
-                                <AdminPage />
-                            </ProtectedRoute>
-                        }
-                    /> */}
+                        </ProtectedRoute>} />
 
 
                     {/* user */}
@@ -46,9 +37,6 @@ function AppRouter() {
                     <Route path="/berita/selengkapnya/:uuid" element={<BeritaSelengkapnya />} />
                     <Route path="instagram" element={<Instagram />} />
                     <Route path="youtube" element={<Youtube />} />
-
-
-
                 </Routes>
             </Router>
         </div>

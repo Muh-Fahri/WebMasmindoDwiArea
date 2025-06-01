@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavbarHijau from "../Component/navbarHijau";
+import Aos from "aos";
 
 function Youtube() {
 
     const [ytList, setYtList] = useState([]);
     useEffect(() => {
         getYtData();
+        Aos.init({
+            duration: 1000,
+        })
     }, [])
 
     const getYtData = async () => {
@@ -48,11 +52,11 @@ function Youtube() {
                     </div>
                     <div className="col">
                         <div className="row">
-                            <div className="col p-3">
+                            <div className="col p-3" >
                                 {
                                     ytList.length > 0 ? (
                                         ytList.map((youtube) => (
-                                            <div className="col-auto p-3">
+                                            <div className="col-auto p-3" data-aos="fade-down">
                                                 <iframe className="rounded-5" width="1000" height="500" src={youtube.linkYoutube} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
                                             </div>
                                         ))

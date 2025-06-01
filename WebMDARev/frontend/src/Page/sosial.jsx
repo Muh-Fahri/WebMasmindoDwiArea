@@ -5,6 +5,8 @@ import Footer from "./fotter";
 import axios from "axios";
 import NoData from "../Component/Error/NoData";
 import Laporan from "./laporan";
+import { duration } from "moment";
+import AOS from "aos";
 
 
 function Sosial() {
@@ -16,6 +18,9 @@ function Sosial() {
     useEffect(() => {
         getMasyarakatData();
         getKesehatanData();
+        AOS.init({
+            duration: 1000,
+        })
         getInfrastrukturData();
         getPemberdayaan();
     }, []);
@@ -78,36 +83,26 @@ function Sosial() {
             <section>
                 <Laporan />
             </section>
-            <section>
-                <div className="container d-flex justify-content-center">
-                    <div className="row">
+            <section className="p-5" >
+                <div className="container p-5">
+                    <div className="row mt-5" data-aos="zoom-out">
                         <div className="col">
-                            <ul className="d-flex gap-5">
-                                <li className="list-unstyled">
-                                    <NavLink
-                                        to="/ESG"
-                                        className=" text-decoration-none"
-
-                                    >
-                                        <h1 className="text-black text-center fw-light">Lingkungan</h1>
+                            <ul className="nav-esg list-unstyled d-flex flex-md-row flex-column align-items-center justify-content-center gap-3 gap-md-5 p-0 m-0">
+                                <li>
+                                    <NavLink to="/ESG" className="text-decoration-none text-center">
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">Lingkungan</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
-                                <li className="list-unstyled">
-                                    <NavLink
-                                        to="/ESG/sosial"
-                                        className="text-decoration-none active-esg"
-                                    >
-                                        <h1 className="text-black text-center fw-light">Sosial</h1>
+                                <li>
+                                    <NavLink to="/ESG/sosial" className="active-esg text-decoration-none text-center">
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">Sosial</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
-                                <li className="list-unstyled">
-                                    <NavLink
-                                        to="tata-kelola"
-                                        className="text-decoration-none"
-                                    >
-                                        <h1 className="text-black text-center fw-light">Tata Kelola</h1>
+                                <li>
+                                    <NavLink to="/tata-kelola" className="text-decoration-none text-center">
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">Tata Kelola</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
@@ -117,17 +112,14 @@ function Sosial() {
                 </div>
             </section>
             <section>
-                {/* isi */}
                 <div className="container-fluid p-5">
-                    {/* isi */}
-                    <div className="row">
-                        <div className="col p-5">
+                    <div className="row" >
+                        <div className="col p-5" data-aos="fade-right">
                             <img style={{ maxHeight: "50vh", objectFit: 'cover' }} className="img-fluid w-100 h-100 rounded-5" src="/Image/Background/CampAwakMasJPEG.jpg" alt="" />
                         </div>
                     </div>
-                    <div className="row">
+                    <div className="row" data-aos="fade-down">
                         <div className="col-md-4">
-                            {/* judul */}
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
                                     <h1 className="display-5 fw-bold">Program Pengembangan Masyarakat</h1>
@@ -135,19 +127,15 @@ function Sosial() {
                             </div>
                         </div>
                         <div className="col-auto">
-                            {/* garis */}
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            {/* isi deskrip lingkungan */}
                             <p className="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ex delectus saepe suscipit dolore ut neque porro eveniet aspernatur sint quam sunt itaque nobis officiis dignissimos corporis, iste minima eum hic nulla praesentium repudiandae tempore? Pariatur omnis nulla asperiores voluptas veniam dicta hic doloremque qui porro rerum? Repudiandae hic, necessitatibus accusantium deserunt ullam illum autem nesciunt dignissimos ad debitis veritatis voluptatum amet praesentium modi, adipisci tempore delectus commodi in, explicabo expedita totam tempora! In eligendi eos, repellendus iste consequatur ratione quibusdam ipsum deserunt eum similique, beatae modi qui eius, possimus dolores velit iure officia ab necessitatibus nesciunt explicabo minus eaque.</p>
                         </div>
                     </div>
                 </div>
                 <div className="container-fluid pt-5">
-                    {/* Wrapper tombol dan slider */}
                     <div className="position-relative">
-                        {/* Tombol Kiri */}
                         <button
                             className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
                             onClick={() => {
@@ -166,11 +154,25 @@ function Sosial() {
                             {
                                 masyarakatList.length > 0 ? (
                                     masyarakatList.map((masyarakat) => (
-                                        <div key={masyarakat.uuid} className="flex-shrink-0" style={{ width: "600px" }}>
-                                            <div className="card rounded-5" style={{ height: "400px", overflow: "hidden" }}>
-                                                <img src={`http://127.0.0.1:8000/Sosial/${masyarakat.imageSosial}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
+                                        <div
+                                            key={masyarakat.uuid}
+                                            className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
+                                            data-aos="fade-right"
+                                            style={{ maxWidth: "600px" }}
+                                        >
+                                            <div
+                                                className="card rounded-5 responsive-height"
+                                                style={{ height: "400px", overflow: "hidden" }}
+                                            >
+                                                <img
+                                                    src={`http://127.0.0.1:8000/Sosial/${masyarakat.imageSosial}`}
+                                                    alt="Laporan 2020"
+                                                    className="w-100 h-100 object-fit-cover"
+                                                />
                                             </div>
+
                                         </div>
+
                                     ))
                                 ) : (
                                     <div className="container-fluid">
@@ -197,12 +199,9 @@ function Sosial() {
                 </div>
             </section>
             <section>
-                {/* isi */}
                 <div className="container-fluid p-5">
-                    {/* isi */}
                     <div className="row">
                         <div className="col-md-4">
-                            {/* judul */}
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
                                     <h1 className="display-5 fw-bold">Program Kesehatan</h1>
@@ -210,19 +209,15 @@ function Sosial() {
                             </div>
                         </div>
                         <div className="col-auto">
-                            {/* garis */}
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            {/* isi deskrip lingkungan */}
                             <p className="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ex delectus saepe suscipit dolore ut neque porro eveniet aspernatur sint quam sunt itaque nobis officiis dignissimos corporis, iste minima eum hic nulla praesentium repudiandae tempore? Pariatur omnis nulla asperiores voluptas veniam dicta hic doloremque qui porro rerum? Repudiandae hic, necessitatibus accusantium deserunt ullam illum autem nesciunt dignissimos ad debitis veritatis voluptatum amet praesentium modi, adipisci tempore delectus commodi in, explicabo expedita totam tempora! In eligendi eos, repellendus iste consequatur ratione quibusdam ipsum deserunt eum similique, beatae modi qui eius, possimus dolores velit iure officia ab necessitatibus nesciunt explicabo minus eaque.</p>
                         </div>
                     </div>
                 </div>
                 <div className="container-fluid pt-5">
-                    {/* Wrapper tombol dan slider */}
                     <div className="position-relative">
-                        {/* Tombol Kiri */}
                         <button
                             className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
                             onClick={() => {
@@ -241,8 +236,11 @@ function Sosial() {
                             {
                                 kesehatanList.length > 0 ? (
                                     kesehatanList.map((kesehatan) => (
-                                        <div key={kesehatan.uuid} className="flex-shrink-0" style={{ width: "600px" }}>
-                                            <div className="card rounded-5" style={{ height: "400px", overflow: "hidden" }}>
+                                        <div key={kesehatan.uuid}
+                                            className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
+                                            style={{ maxwidth: "600px" }}>
+                                            <div className="card rounded-5 responsive-height"
+                                                style={{ height: "400px", overflow: "hidden" }}>
                                                 <img src={`http://127.0.0.1:8000/Sosial/${kesehatan.imageSosial}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
                                             </div>
                                         </div>
@@ -251,7 +249,6 @@ function Sosial() {
                                     <NoData />
                                 )
                             }
-
                         </div>
                         <button
                             className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
@@ -267,12 +264,9 @@ function Sosial() {
                 </div>
             </section>
             <section>
-                {/* isi */}
                 <div className="container-fluid p-5">
-                    {/* isi */}
                     <div className="row">
                         <div className="col-md-4">
-                            {/* judul */}
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
                                     <h1 className="display-5 fw-bold">Program Infrastruktur</h1>
@@ -280,19 +274,15 @@ function Sosial() {
                             </div>
                         </div>
                         <div className="col-auto">
-                            {/* garis */}
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            {/* isi deskrip lingkungan */}
                             <p className="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ex delectus saepe suscipit dolore ut neque porro eveniet aspernatur sint quam sunt itaque nobis officiis dignissimos corporis, iste minima eum hic nulla praesentium repudiandae tempore? Pariatur omnis nulla asperiores voluptas veniam dicta hic doloremque qui porro rerum? Repudiandae hic, necessitatibus accusantium deserunt ullam illum autem nesciunt dignissimos ad debitis veritatis voluptatum amet praesentium modi, adipisci tempore delectus commodi in, explicabo expedita totam tempora! In eligendi eos, repellendus iste consequatur ratione quibusdam ipsum deserunt eum similique, beatae modi qui eius, possimus dolores velit iure officia ab necessitatibus nesciunt explicabo minus eaque.</p>
                         </div>
                     </div>
                 </div>
                 <div className="container-fluid pt-5">
-                    {/* Wrapper tombol dan slider */}
                     <div className="position-relative">
-                        {/* Tombol Kiri */}
                         <button
                             className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
                             onClick={() => {
@@ -336,12 +326,9 @@ function Sosial() {
                 </div>
             </section>
             <section>
-                {/* isi */}
                 <div className="container-fluid p-5">
-                    {/* isi */}
                     <div className="row">
                         <div className="col-md-4">
-                            {/* judul */}
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
                                     <h1 className="display-5 fw-bold">Program Pemberdayaan</h1>
@@ -349,22 +336,18 @@ function Sosial() {
                             </div>
                         </div>
                         <div className="col-auto">
-                            {/* garis */}
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            {/* isi deskrip lingkungan */}
                             <p className="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ex delectus saepe suscipit dolore ut neque porro eveniet aspernatur sint quam sunt itaque nobis officiis dignissimos corporis, iste minima eum hic nulla praesentium repudiandae tempore? Pariatur omnis nulla asperiores voluptas veniam dicta hic doloremque qui porro rerum? Repudiandae hic, necessitatibus accusantium deserunt ullam illum autem nesciunt dignissimos ad debitis veritatis voluptatum amet praesentium modi, adipisci tempore delectus commodi in, explicabo expedita totam tempora! In eligendi eos, repellendus iste consequatur ratione quibusdam ipsum deserunt eum similique, beatae modi qui eius, possimus dolores velit iure officia ab necessitatibus nesciunt explicabo minus eaque.</p>
                         </div>
                     </div>
                 </div>
                 <div className="container-fluid pt-5">
-                    {/* Wrapper tombol dan slider */}
                     {
                         pemberdayaanList.length > 0 ? (
                             pemberdayaanList.map((pemberdayaan) => (
                                 <div className="position-relative">
-                                    {/* Tombol Kiri */}
                                     <button
                                         className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
                                         onClick={() => {
@@ -407,7 +390,7 @@ function Sosial() {
             <section className="pt-5">
                 <Footer />
             </section>
-        </div>
+        </div >
     )
 }
 export default Sosial;

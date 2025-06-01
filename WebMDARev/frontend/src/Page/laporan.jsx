@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-
+import AOS from "aos";
 
 
 function Laporan() {
@@ -9,6 +9,9 @@ function Laporan() {
 
     useEffect(() => {
         getLaporan();
+        AOS.init({
+            duration: 1000,
+        })
     }, []);
 
     const getLaporan = async () => {
@@ -27,7 +30,7 @@ function Laporan() {
     return (
         <div>
             <section>
-                <div className="container-fluid">
+                <div className="container-fluid" data-aos="fade-right">
                     <div className="row">
                         <div className="col p-5">
                             <h3 className="text-uppercase fw-semibold text-center text-secondary">

@@ -171,3 +171,84 @@
     height: 30vh;
     background-color: rgb(0, 0, 0);
 }
+
+@media (max-width: 767.98px) {
+
+    .navbar .row.align-items-center {
+        flex-direction: row !important;
+        justify-content: flex-start;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .navbar .col-auto {
+        display: none;
+    }
+
+
+    .navbar .col-md-2,
+    .navbar .col-md-1 {
+        width: auto !important;
+        max-width: 120px;
+        padding-left: 0;
+        padding-right: 0;
+    }
+
+    .navbar .col-md-2 img.navbar-brand {
+        max-width: 120px !important;
+    }
+
+    .navbar .col-md-1 img.navbar-brand {
+        max-width: 60px !important;
+    }
+
+}
+
+@media (max-width: 576px) {
+    p.fs-3 {
+        font-size: 1rem !important;
+    }
+
+    .dokEsg-slider-item {
+        width: 200px;
+        /* hp */
+    }
+
+    .card-custom {
+        height: 250px;
+        /* hp */
+    }
+
+    .card.responsive-height {
+        height: 250px !important;
+    }
+}
+
+.deskripsi-lingkungan {
+    font-size: 1.75rem;
+    /* default besar */
+}
+
+@media (max-width: 768px) {
+    .deskripsi-lingkungan {
+        font-size: 15px;
+        /* kecil untuk HP saja */
+    }
+}
+
+.dokEsg-slider-item {
+    width: 600px;
+    /* default desktop */
+}
+
+@media (max-width: 992px) {
+    .dokEsg-slider-item {
+        width: 450px;
+        /* tablet */
+    }
+}
+
+.card-custom {
+    height: 500px;
+    /* desktop */
+}

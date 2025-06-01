@@ -81,4 +81,7 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:60,3'])->group(function ()
     Route::get('/admin/pdf', [readAdmin::class, 'readPdf']);
     Route::get('/admin/pdf/download_pdf/{stored_name}', [readAdmin::class, 'downloadPdf']);
     Route::delete('/admin/pdf/delete/{uuid}', [deleteAdmin::class, 'deletePdf']);
+
+    // Auth
+    Route::post('/admin/logout', [AuthController::class, 'logout']);
 });

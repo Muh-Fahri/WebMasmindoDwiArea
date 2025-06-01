@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavbarHijau from "../Component/navbarHijau";
 import Footer from "./fotter";
-import NavEsgR from "./navEsgR";
+import AOS from "aos";
 import { NavLink } from "react-router-dom";
 import Laporan from "./laporan";
 
@@ -16,6 +16,9 @@ function ESG() {
     useEffect(() => {
         getdeskripLingkungan();
         getImgLingData();
+        AOS.init({
+            duration: 1000,
+        })
     }, []);
 
 
@@ -46,7 +49,7 @@ function ESG() {
             <section>
                 <div className="bg-esg d-flex justify-content-center align-items-end" style={{ minHeight: '100vh' }}>
                     <div className="container mb-5">
-                        <div className="row text-center">
+                        <div className="row text-center" data-aos="fade-down">
                             <div className="col p-5">
                                 <h1 className="display-1 fw-bold" style={{ color: "#F16022" }}>ESG</h1>
                             </div>
@@ -57,37 +60,26 @@ function ESG() {
             <section>
                 <Laporan />
             </section>
-            <section>
-                {/* nav */}
-                <div className="container d-flex justify-content-center">
-                    <div className="row">
+            <section className="p-5" data-aos="zoom-in-up">
+                <div className="container p-5">
+                    <div className="row mt-5">
                         <div className="col">
-                            <ul className="d-flex gap-5">
-                                <li className="list-unstyled">
-                                    <NavLink
-                                        to="/ESG"
-                                        className="active-esg text-decoration-none"
-
-                                    >
-                                        <h1 className="text-black text-center fw-light">Lingkungan</h1>
+                            <ul className="nav-esg list-unstyled d-flex flex-md-row flex-column align-items-center justify-content-center gap-3 gap-md-5 p-0 m-0">
+                                <li>
+                                    <NavLink to="/ESG" className="active-esg text-decoration-none text-center">
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">Lingkungan</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
-                                <li className="list-unstyled">
-                                    <NavLink
-                                        to="/ESG/sosial"
-                                        className="text-decoration-none"
-                                    >
-                                        <h1 className="text-black text-center fw-light">Sosial</h1>
+                                <li>
+                                    <NavLink to="/ESG/sosial" className="text-decoration-none text-center">
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">Sosial</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
-                                <li className="list-unstyled">
-                                    <NavLink
-                                        to="tata-kelola"
-                                        className="text-decoration-none"
-                                    >
-                                        <h1 className="text-black text-center fw-light">Tata Kelola</h1>
+                                <li>
+                                    <NavLink to="/tata-kelola" className="text-decoration-none text-center">
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">Tata Kelola</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
@@ -99,7 +91,7 @@ function ESG() {
             <section>
                 <div className="container-fluid p-5">
                     {/* isi */}
-                    <div className="row">
+                    <div className="row" data-aos="fade-right">
                         <div className="col p-5">
                             <img style={{ maxHeight: "50vh", objectFit: 'cover' }} className="img-fluid w-100 h-100 rounded-5" src="/Image/Background/CampAwakMasJPEG.jpg" alt="" />
                         </div>
@@ -117,23 +109,27 @@ function ESG() {
                             {/* garis */}
                             <div className="garis-esg"></div>
                         </div>
-                        {
-                            deskripLingkunganList.length > 0 ? (
-                                deskripLingkunganList.map((deskripLing) => (
-                                    <div className="col" key={deskripLing.uuid}>
-                                        {/* isi deskrip lingkungan */}
-                                        <p className="fs-3">{deskripLing.deskripsi_halaman}</p>
-                                    </div>
-                                ))
-                            ) : (
-                                <h5>No data</h5>
-                            )
-                        }
+                        <div className="col" data-aos="fade-down">
+                            {
+                                deskripLingkunganList.length > 0 ? (
+                                    deskripLingkunganList.map((deskripLing) => (
+                                        <div className="col" key={deskripLing.uuid}>
+                                            {/* isi deskrip lingkungan */}
+                                            <p className="deskripsi-lingkungan">{deskripLing.deskripsi_halaman}</p>
+
+
+                                        </div>
+                                    ))
+                                ) : (
+                                    <h5>No data</h5>
+                                )
+                            }
+                        </div>
                     </div>
                 </div>
             </section>
-            <section className="pt-5">
-                <div className="container-fluid">
+            <section className="pt-5" data-aos="fade-right">
+                <div className="container-fluid" data-aos="fade-right">
                     {/* Wrapper tombol dan slider */}
                     <div className="position-relative">
                         {/* Tombol Kiri */}
@@ -155,11 +151,20 @@ function ESG() {
                             {
                                 imgLingList.length > 0 ? (
                                     imgLingList.map((imgLing) => (
-                                        <div className="flex-shrink-0" style={{ width: "600px" }}>
+                                        <div
+                                            className="flex-shrink-0 dokEsg-slider-item"
+                                            // style width dihapus, diganti CSS nanti
+                                            key={imgLing.uuid}
+                                        >
                                             <div className="card rounded-5" style={{ height: "400px", overflow: "hidden" }}>
-                                                <img src={`http://localhost:8000/Lingkungan/${imgLing.image_lingkungan}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
+                                                <img
+                                                    src={`http://localhost:8000/Lingkungan/${imgLing.image_lingkungan}`}
+                                                    alt="Laporan 2020"
+                                                    className="w-100 h-100 object-fit-cover"
+                                                />
                                             </div>
                                         </div>
+
                                     ))
                                 ) : (
                                     <h5>

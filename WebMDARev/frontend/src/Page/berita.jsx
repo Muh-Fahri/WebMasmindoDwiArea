@@ -4,6 +4,7 @@ import NavbarHijau from "../Component/navbarHijau";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
+import Aos from "aos";
 
 function Berita() {
 
@@ -12,6 +13,9 @@ function Berita() {
 
     useEffect(() => {
         getBeritaData();
+        Aos.init({
+            duration: 1000,
+        })
     }, []);
 
 
@@ -55,12 +59,13 @@ function Berita() {
                         </ul>
                     </div>
                     <div className="col">
-                        <div className="row">
+                        <div className="row" >
                             {
                                 beritaList.length > 0 ? (
                                     beritaList.map((berita) => (
                                         <div key={berita.uuid} className="col-auto p-3">
                                             <div
+                                                data-aos="fade-down"
                                                 className="card rounded-5 overflow-hidden position-relative"
                                                 style={{ width: '500px', height: '500px' }}
                                             >
@@ -103,7 +108,6 @@ function Berita() {
                                     <h1>No Data</h1>
                                 )
                             }
-
                         </div>
                     </div>
                 </div>

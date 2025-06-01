@@ -28,7 +28,7 @@ class AuthController extends Controller
     }
 
 
-    public function readLogin()
+    function readLogin()
     {
         $tokens = \Laravel\Sanctum\PersonalAccessToken::with('tokenable')->get();
 
@@ -44,5 +44,14 @@ class AuthController extends Controller
         return response()->json([
             'active_logins' => $logins
         ]);
+    }
+
+    function logout(Request $request)
+    {
+        $request->user()->currentAccessToken()->delete();
+
+        return response()->json([
+            'msg' => 'Berhasil logout'
+        ], 200);
     }
 }

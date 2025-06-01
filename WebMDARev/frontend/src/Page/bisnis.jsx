@@ -28,7 +28,6 @@ function Bisnis() {
             alert('Erorr Pada Tampilan');
         }
     }
-
     return (
         <div>
             <NavbarProject />
@@ -36,13 +35,24 @@ function Bisnis() {
                 <div className="bg-bisnis d-flex align-items-center">
                     <div className="container-fluid p-5" data-aos="fade-right">
                         <div className="row">
-                            <div className="col-md-5">
-                                <h1 className=" display-1 fw-bold" style={{ color: '#F16022' }}>Tambang Emas <span style={{ color: "#115258" }}>Pertama</span></h1>
+                            <div className="col-12 col-md-5">
+                                <h1 className="fw-bold text-break"
+                                    style={{
+                                        fontSize: 'clamp(2rem, 5vw, 5rem)',
+                                        color: '#F16022',
+                                    }}>
+                                    Tambang Emas <span style={{ color: "#115258" }}>Pertama</span>
+                                </h1>
                             </div>
                         </div>
                         <div className="row">
-                            <div className="col">
-                                <h1 className="display-1" style={{ color: 'white' }}>di Sulawesi Selatan</h1>
+                            <div className="col-12">
+                                <h1 className="text-white text-break"
+                                    style={{
+                                        fontSize: 'clamp(2rem, 5vw, 5rem)',
+                                    }}>
+                                    di Sulawesi Selatan
+                                </h1>
                             </div>
                         </div>
                     </div>
@@ -50,31 +60,28 @@ function Bisnis() {
             </section>
             <section>
                 <div className="container-fluid p-5">
-                    <div className="row p-5">
-                        <div className="col-auto p-5" data-aos="fade-right">
+                    <div className="row p-3 p-md-5 align-items-center">
+                        {/* Gambar */}
+                        <div className="col-12 col-md-auto mb-4 mb-md-0" data-aos="fade-right">
                             <img
                                 className="img-fluid"
                                 src="/Image/AwakMasCol.png"
-                                alt=""
+                                alt="Logo"
                                 style={{ width: "300px", height: "auto" }}
                             />
                         </div>
-                        <div className="col-auto">
-                            {/* garis atas */}
+                        <div className="d-none d-md-block col-md-auto">
                             <div className="garis-aw-p"></div>
                         </div>
-                        <div className="col" data-aos="fade-down">
-                            {
-                                bisnisList.length > 0 ? (
-                                    bisnisList.map((bisnis) => (
-                                        <p key={bisnis.uuid} className="fs-3">{bisnis.deskripsi_bisnis}</p>
-                                    ))
-                                ) : (
-                                    <div>
-                                        <h5>No Data</h5>
-                                    </div>
-                                )
-                            }
+
+                        <div className="col-12 col-md" data-aos="fade-down">
+                            {bisnisList.length > 0 ? (
+                                bisnisList.map((bisnis) => (
+                                    <p key={bisnis.uuid} className="fs-3 fs-md-5">{bisnis.deskripsi_bisnis}</p>
+                                ))
+                            ) : (
+                                <h5>No Data</h5>
+                            )}
                         </div>
                     </div>
                 </div>
@@ -110,5 +117,4 @@ function Bisnis() {
         </div>
     )
 }
-
 export default Bisnis;

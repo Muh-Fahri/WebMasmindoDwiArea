@@ -215,80 +215,92 @@ function Home() {
                     </div>
                 </div>
             </section>
-            <section className="p-5">
-                <div className="container-fluid p-5" >
-                    <div className="row" data-aos="fade-right">
-                        <div className="col">
+            <section className="p-4 p-md-5">
+                <div className="container-fluid p-3 p-md-5">
+                    <div className="row mb-3" data-aos="fade-right">
+                        <div className="col-12">
                             <h4 className="text-uppercase fw-semibold text-secondary">Tentang Kami</h4>
                         </div>
                     </div>
-                    <div className="row">
-                        <div className="col" data-aos="fade-right">
-                            <div className="row d-block">
-                                <div className="col-md-5">
-                                    <h1 className="fw-bold m-0">Bersiap Menjadi <span style={{ color: "#F16022" }}>Produser Emas</span> </h1>
+
+                    <div className="row align-items-center">
+                        <div className="col-lg-6 mb-4 mb-lg-0" data-aos="fade-right">
+                            <div className="row">
+                                <div className="col-12">
+                                    <h2 className="fw-bold m-0 fs-3 fs-md-2">
+                                        Bersiap Menjadi <span style={{ color: "#F16022" }}>Produser Emas</span>
+                                    </h2>
                                 </div>
-                                <div className="col">
-                                    <h1 className="fw-bold m-0">Terkemuka Di Indonesia</h1>
+                                <div className="col-12">
+                                    <h2 className="fw-bold m-0 fs-3 fs-md-2">Terkemuka Di Indonesia</h2>
                                 </div>
                             </div>
                         </div>
-                        <div className="col" data-aos="fade-down">
-                            <p className="display-6 fs-3 fw-medium">PT Masmindo Dwi Area (MDA) berdedikasi untuk menjadi produsen emas Indonesia berikutnya melalui pengembangan Proyek Awak Mas.
+
+                        <div className="col-lg-6" data-aos="fade-down">
+                            <p className="fs-5 fs-md-4 fw-medium">
+                                PT Masmindo Dwi Area (MDA) berdedikasi untuk menjadi produsen emas Indonesia berikutnya melalui pengembangan Proyek Awak Mas.
                                 Proyek Awak Mas berlokasi di Kecamatan Latimojong, Kabupaten Luwu, Sulawesi Selatan
                             </p>
-                            <Link to={'tentang'} data-aos="fade-down" className="text-decoration-none text-secondary fs-4 fw-bold">Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} /> </Link>
+                            <Link to={'tentang'} className="text-decoration-none text-secondary fs-5 fw-bold">
+                                Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} />
+                            </Link>
                         </div>
                     </div>
                 </div>
             </section>
             <section>
                 <div className="bg-halBisnis" style={{ backgroundColor: "#115258" }}>
-                    <div className="container-fluid p-5">
+                    <div className="container-fluid p-4 p-md-5">
                         <div className="row">
                             <div className="col">
-                                <h3 className="text-uppercase text-center text-secondary fw-bold">Bisnis Kami</h3>
+                                <h3 className="text-uppercase text-center text-secondary fw-bold fs-4 fs-md-3">
+                                    Bisnis Kami
+                                </h3>
                             </div>
                         </div>
-                        <div className="row" data-aos="fade-right">
+
+                        <div className="row mt-3" data-aos="fade-right">
                             <div className="col">
-                                {
-                                    bisnisList.length > 0 ? (
-                                        bisnisList.map((bisnis) => (
-                                            <p key={bisnis.uuid} className="text-white fs-3">
-                                                {bisnis.deskripsi_bisnis.split(' ').slice(0, 80).join(' ') + '.'}
-                                            </p>
-                                        ))
-                                    ) : (
-                                        <div className="justify-content-center">
-                                            <h5>No Data</h5>
-                                        </div>
-                                    )
-                                }
-                                <Link className="text-decoration-none text-secondary fs-3 fw-bold">Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} /> </Link>
+                                {bisnisList.length > 0 ? (
+                                    bisnisList.map((bisnis) => (
+                                        <p key={bisnis.uuid} className="text-white fs-5 fs-md-5">
+                                            {bisnis.deskripsi_bisnis.split(' ').slice(0, 80).join(' ') + '.'}
+                                        </p>
+                                    ))
+                                ) : (
+                                    <div className="text-center text-white">
+                                        <h5>No Data</h5>
+                                    </div>
+                                )}
+                                <Link className="text-decoration-none text-secondary fs-4 fs-md-3 fw-bold">
+                                    Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} />
+                                </Link>
                             </div>
                         </div>
+
                         <div className="container mt-5">
                             <div className="row mt-4" data-aos="zoom-in">
                                 {bisnisList.length > 0 ? (
                                     <div className="col">
-                                        {bisnisList.map((bisnis) => ((
-                                            <div key={bisnis.uuid} className="responsive-iframe-container">
+                                        {bisnisList.map((bisnis) => (
+                                            <div key={bisnis.uuid} className="responsive-iframe-container mb-4">
                                                 <iframe
-                                                    className="rounded-5"
+                                                    className="rounded-5 w-100"
+                                                    style={{ aspectRatio: "16 / 9" }}
                                                     src={bisnis.link_video}
                                                     title="YouTube video player"
                                                     allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
                                                     allowFullScreen
                                                 ></iframe>
                                             </div>
-                                        )))}
+                                        ))}
                                     </div>
                                 ) : (
-                                    <div className="justify-content-center">
+                                    <div className="text-center text-white">
                                         <h5>No Data Yet</h5>
                                     </div>
-                                )};
+                                )}
                             </div>
                         </div>
                     </div>
@@ -336,6 +348,7 @@ function Home() {
                     </div>
                     <div className="row gap-3 mt-5" data-aos="fade-right">
                         <div className="position-relative">
+                            {/* Tombol kiri */}
                             <button
                                 className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
                                 style={{ zIndex: 10 }}
@@ -346,67 +359,76 @@ function Home() {
                                 &#10094;
                             </button>
 
+                            {/* Konten berita */}
                             {beritaList.length > 0 ? (
                                 <div
                                     id="beritaSlider"
-                                    className="row gap-3 mt-5 flex-nowrap overflow-auto"
-                                    style={{ overflowX: 'hidden', scrollBehavior: 'smooth' }}
+                                    className="row flex-nowrap overflow-auto px-3"
+                                    style={{ scrollBehavior: 'smooth' }}
                                 >
                                     {beritaList.map((berita) => (
-                                        <div key={berita.uuid} className="col-md-3">
-                                            <div className="card rounded-3" style={{ height: '500px', overflow: 'hidden' }}>
-                                                <div className="card-body m-0 p-0">
+                                        <div key={berita.uuid} className="col-10 col-sm-6 col-md-4 col-lg-3 me-3">
+                                            <div className="card rounded-3 border-0 shadow-sm" style={{ height: '100%' }}>
+                                                {/* Gambar responsif */}
+                                                <div className="card-body p-0">
                                                     <img
-                                                        style={{
-                                                            objectFit: "cover",
-                                                            height: '100%',
-                                                            width: '100%'
-                                                        }}
-                                                        className="rounded-3"
                                                         src={`http://localhost:8000/Berita/${berita.image_berita}`}
                                                         alt="foto"
+                                                        className="img-fluid rounded-3 w-100"
+                                                        style={{
+                                                            objectFit: 'cover',
+                                                            height: '200px',
+                                                            width: '100%',
+                                                        }}
                                                     />
                                                 </div>
-                                            </div>
-                                            <div className="row justify-content-center">
-                                                <div className="col mt-5">
-                                                    <h3 className="fw-bold text-center">{berita.judul_berita}</h3>
+
+                                                {/* Judul */}
+                                                <div className="px-3 pt-3">
+                                                    <h5 className="fw-bold text-center">{berita.judul_berita}</h5>
                                                 </div>
-                                            </div>
-                                            <div className="row">
-                                                <div className="col p-5">
-                                                    {berita.deskripsi_berita.split(' ').slice(0, 80).join(' ') + '.'}
-                                                    <div className="row">
-                                                        <div className="col pt-5 text-center">
-                                                            <Link to={`/berita/selengkapnya/${berita.uuid}`} className="text-secondary fs-2 fw-bold text-decoration-none">
-                                                                Lebih Lanjut
-                                                            </Link>
-                                                        </div>
-                                                    </div>
+
+                                                {/* Deskripsi */}
+                                                <div className="px-3 py-2">
+                                                    <p className="text-secondary" style={{ fontSize: '0.9rem' }}>
+                                                        {berita.deskripsi_berita.split(' ').slice(0, 30).join(' ') + '...'}
+                                                    </p>
+                                                </div>
+
+                                                {/* Link */}
+                                                <div className="pb-4 text-center">
+                                                    <Link
+                                                        to={`/berita/selengkapnya/${berita.uuid}`}
+                                                        className="text-secondary fw-bold text-decoration-none"
+                                                    >
+                                                        Lebih Lanjut
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
                                     ))}
                                 </div>
                             ) : (
-                                <div className="justify-content-center">
+                                <div className="text-center">
                                     <h5>No Data</h5>
                                 </div>
                             )}
 
-
+                            {/* Tombol kanan */}
                             <button
                                 className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
                                 style={{ zIndex: 10 }}
                                 onClick={() => {
                                     document.getElementById("beritaSlider").scrollBy({ left: 300, behavior: 'smooth' });
-                                }}>
+                                }}
+                            >
                                 &#10095;
                             </button>
                         </div>
                     </div>
                 </div>
             </section>
+
             <section>
                 {/* Esg */}
                 <div className="container-fluid p-5">
@@ -432,7 +454,7 @@ function Home() {
                                             backgroundImage: `linear-gradient(to right, rgba(85, 38, 16, 0.75), rgba(85, 38, 16, 0.75)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
                                             backgroundSize: 'cover',
                                             backgroundPosition: 'center',
-                                            height: '70vh',
+                                            height: '50vh',
                                             width: '100%',
                                             display: 'flex',
                                             alignItems: 'flex-end', // teks di bawah
@@ -441,9 +463,9 @@ function Home() {
                                         }}
                                     >
                                         <div className="text-center p-5">
-                                            <h1 className="text-white fw-bold">Lingkungan Hidup</h1>
+                                            <h1 className="text-white fw-bold fs-4 fs-md-2">Lingkungan Hidup</h1>
                                             <Link to="/ESG/lingkungan" className="text-decoration-none">
-                                                <h4 className="text-secondary fw-light text-white">Lebih Lanjut</h4>
+                                                <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">Lebih Lanjut</h4>
                                             </Link>
                                         </div>
                                     </div>
@@ -467,7 +489,7 @@ function Home() {
                                             backgroundImage: `linear-gradient(to right, rgba(114, 91, 0, 0.61),rgba(114, 91, 0, 0.61)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
                                             backgroundSize: 'cover',
                                             backgroundPosition: 'center',
-                                            height: '70vh',
+                                            height: '50vh',
                                             width: '100%',
                                             display: 'flex',
                                             alignItems: 'flex-end', // teks di bawah
@@ -476,10 +498,11 @@ function Home() {
                                         }}
                                     >
                                         <div className="text-center p-5">
-                                            <h1 className="text-white fw-bold">Sosial</h1>
+                                            <h1 className="text-white fw-bold fs-4 fs-md-2">Sosial</h1>
                                             <Link className="text-decoration-none">
-                                                <h4 className="text-secondary fw-light text-white">Lebih Lanjut</h4>
+                                                <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">Lebih Lanjut</h4>
                                             </Link>
+
                                         </div>
                                     </div>
                                 </div>
@@ -502,7 +525,7 @@ function Home() {
                                             backgroundImage: `linear-gradient(to right,  rgba(17, 82, 88, 0.84), rgba(17,86,88,0.84)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
                                             backgroundSize: 'cover',
                                             backgroundPosition: 'center',
-                                            height: '70vh',
+                                            height: '50vh',
                                             width: '100%',
                                             display: 'flex',
                                             alignItems: 'flex-end', // teks di bawah
@@ -511,10 +534,11 @@ function Home() {
                                         }}
                                     >
                                         <div className="text-center p-5">
-                                            <h1 className="text-white fw-bold">Tata Kelola</h1>
+                                            <h1 className="text-white fw-bold fs-4 fs-md-2">Tata Kelola</h1>
                                             <Link className="text-decoration-none">
-                                                <h4 className="text-secondary fw-light text-white">Lebih Lanjut</h4>
+                                                <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">Lebih Lanjut</h4>
                                             </Link>
+
                                         </div>
                                     </div>
                                 </div>
@@ -523,7 +547,7 @@ function Home() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
             <section>
                 <div className="bg-bawah d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
                     <div className="container text-center">
@@ -533,7 +557,12 @@ function Home() {
                                 <p className="fs-6 text-white">Kami percaya bahwa setiap individu memiliki potensi luar biasa. Bersama tim yang solid dan budaya kerja
                                     yang mendukung, mari ciptakan masa depan yang lebih cerah.
                                 </p>
-                                <button className="btn rounded-5 fw-bold shadow-none fs-3 mt-5 text-white" style={{ backgroundColor: "#F16022", width: "20%", height: "5vh" }}>Karier</button>
+                                <button
+                                    className="btn rounded-5 fw-bold shadow-none fs-6 fs-md-3 mt-4 px-4 py-2 text-white"
+                                    style={{ backgroundColor: "#F16022" }}
+                                >
+                                    Karier
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -543,7 +572,7 @@ function Home() {
                 {/* footer */}
                 <Footer />
             </section>
-        </div>
+        </div >
     );
 }
 
