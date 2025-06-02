@@ -35,11 +35,11 @@ function Instagram() {
             <div className="container-fluid pt-5 mt-5">
                 <div className="row pt-5 mt-5">
                     <div className="col p-5">
-                        <h2 className="text-uppercase text-secondary">Berita</h2>
+                        <h2 className="text-uppercase fw-bold" style={{ color: '#115258' }}>Berita</h2>
                     </div>
                 </div>
                 <div className="row p-5">
-                    <div className="col-auto">
+                    <div className="col-auto d-none d-sm-block">
                         <div className="garis-berita"></div>
                     </div>
                     <div className="col-md-4">
@@ -49,7 +49,7 @@ function Instagram() {
                                 <a href="/berita" className="fs-1 text-black text-decoration-none">Masmindo dalam berita</a>
                             </li>
                             <li>
-                                <a href="/instagram" className="fs-1 text-black text-decoration-none fw-bold">Instagram</a>
+                                <a href="/instagram" className="fs-1 text-decoration-none berita-active-green">Instagram</a>
                             </li>
                             <li>
                                 <a href="/youtube" className="fs-1 text-black text-decoration-none">Youtube</a>

@@ -254,7 +254,7 @@ function Home() {
                     <div className="container-fluid p-4 p-md-5">
                         <div className="row">
                             <div className="col">
-                                <h3 className="text-uppercase text-center text-secondary fw-bold fs-4 fs-md-3">
+                                <h3 style={{ color: '#F16022' }} className="text-uppercase text-center fw-bold fs-4 fs-md-3">
                                     Bisnis Kami
                                 </h3>
                             </div>
@@ -273,7 +273,7 @@ function Home() {
                                         <h5>No Data</h5>
                                     </div>
                                 )}
-                                <Link className="text-decoration-none text-secondary fs-4 fs-md-3 fw-bold">
+                                <Link style={{ color: '#F16022' }} className="text-decoration-none fs-4 fs-md-3 fw-bold">
                                     Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} />
                                 </Link>
                             </div>
@@ -343,7 +343,7 @@ function Home() {
                 <div className="container-fluid">
                     <div className="row" data-aos="fade-down">
                         <div className="col p-5" data-aos="fade-down">
-                            <h3 className="text-secondary text-center text-uppercase fw-semibold">Berita Terkini</h3>
+                            <h3 style={{ color: '#F16022' }} className="text-center text-uppercase fw-bold">Berita Terkini</h3>
                         </div>
                     </div>
                     <div className="row gap-3 mt-5" data-aos="fade-right">
@@ -434,7 +434,7 @@ function Home() {
                 <div className="container-fluid p-5">
                     <div className="row">
                         <div className="col p-3" data-aos="fade-right">
-                            <h3 className="text-secondary text-center fw-semibold">ESG</h3>
+                            <h3 style={{ color: '#F16022' }} className="text-center fw-bold">ESG</h3>
                         </div>
                     </div>
                     <div className="d-flex justify-content-center gap-4 flex-wrap" data-aos="fade-down">

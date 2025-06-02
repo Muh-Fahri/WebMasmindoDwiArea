@@ -41,7 +41,7 @@ function Navbar() {
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link nav-a" href="#">
+                                        <a className="nav-link nav-a" href="">
                                             <h5 className="display-5 fw-medium fs-5">Karir</h5>
                                         </a>
                                     </li>

@@ -70,7 +70,7 @@ function Berita() {
             <div className="container-fluid pt-5 mt-5">
                 <div className="row pt-5 mt-5">
                     <div className="col p-5">
-                        <h2 className="text-uppercase text-secondary">Berita</h2>
+                        <h2 className="text-uppercase fw-bold" style={{ color: '#115258' }}>Berita</h2>
                     </div>
                 </div>
                 <div className="row p-5">
@@ -81,7 +81,7 @@ function Berita() {
                         {/* Nav */}
                         <ul className="list-unstyled">
                             <li>
-                                <a href="/berita" className="fs-1 text-black text-decoration-none fw-bold">Masmindo dalam berita</a>
+                                <a href="/berita" className="fs-1 text-decoration-none berita-active">Masmindo dalam berita</a>
                             </li>
                             <li>
                                 <a href="/instagram" className="fs-1 text-black text-decoration-none">Instagram</a>
@@ -98,7 +98,7 @@ function Berita() {
                                 placeholder="Cari berita..."
                                 value={searchKeyword}
                                 onChange={handleSearchChange}
-                                className="form-control mb-5 rounded-5"
+                                className="search-bar p-3 form-control mb-5 rounded-5"
                             />
                         </div>
                         <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">

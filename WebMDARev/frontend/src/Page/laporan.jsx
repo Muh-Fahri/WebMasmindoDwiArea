@@ -33,7 +33,7 @@ function Laporan() {
                 <div className="container-fluid" data-aos="fade-right">
                     <div className="row">
                         <div className="col p-5">
-                            <h3 className="text-uppercase fw-semibold text-center text-secondary">
+                            <h3 className="text-uppercase fw-bold text-center" style={{ color: '#115258' }}>
                                 Laporan Keberlanjutan
                             </h3>
                         </div>
@@ -78,7 +78,7 @@ function Laporan() {
                                             </div>
                                         </a>
                                         <div className="text-center mt-2">
-                                            <h5 className="fw-bold">{laporan.tahun}</h5>
+                                            <h5 className="fw-bold" style={{ color: '#115258' }}>{laporan.tahun}</h5>
                                         </div>
                                     </div>
                                 ))}

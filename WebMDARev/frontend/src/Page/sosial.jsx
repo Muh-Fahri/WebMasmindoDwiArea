@@ -128,8 +128,6 @@ function Sosial() {
                                 alt=""
                             />
                         </div>
-
-                        {/* Gambar versi mobile */}
                         <div className="d-block d-sm-none">
                             <img
                                 className="img-fluid rounded-5 w-100 h-auto"
@@ -142,11 +140,11 @@ function Sosial() {
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
-                                    <h1 className="display-5 fw-bold">Program Pengembangan Masyarakat</h1>
+                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program Pengembangan <span style={{ color: "#115258" }}> Masyarakat</span></h1>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-auto">
+                        <div className="col-auto d-none d-sm-block">
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
@@ -225,11 +223,11 @@ function Sosial() {
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
-                                    <h1 className="display-5 fw-bold">Program Kesehatan</h1>
+                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program <span style={{ color: '#115258' }}>Kesehatan</span></h1>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-auto">
+                        <div className="col-auto d-none d-sm-block">
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
@@ -292,11 +290,11 @@ function Sosial() {
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
-                                    <h1 className="display-5 fw-bold">Program Infrastruktur</h1>
+                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program <span style={{ color: '#115258' }}>Infrastruktur</span></h1>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-auto">
+                        <div className="col-auto d-none d-sm-block">
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
@@ -360,11 +358,11 @@ function Sosial() {
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
-                                    <h1 className="display-5 fw-bold">Program Pemberdayaan Masyarakat</h1>
+                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program Pemberdayaan <span style={{ color: '#115258' }}>Masyarakat</span></h1>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-auto">
+                        <div className="col-auto d-none d-sm-block">
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">

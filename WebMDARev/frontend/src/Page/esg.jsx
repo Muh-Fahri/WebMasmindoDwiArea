@@ -117,7 +117,7 @@ function ESG() {
                             {/* judul */}
                             <div className="row d-flex justify-content-center p-5">
                                 <div className="col-md-5">
-                                    <h1 className="display-5 fw-bold">Kebijakan Lingkungan</h1>
+                                    <h1 className="display-5 fw-bold" style={{ color: ' #F16022' }}>Kebijakan <span style={{ color: '#115258' }}>Lingkungan</span></h1>
                                 </div>
                             </div>
                         </div>

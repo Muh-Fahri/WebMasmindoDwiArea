@@ -43,7 +43,7 @@ function NavbarProject() {
                                         </a>
                                     </li>
                                     <li className="nav-item">
-                                        <a className="nav-link" href="#">
+                                        <a className="nav-link" href="">
                                             <h5 className="display-5 fw-medium fs-5 text-white">Karir</h5>
                                         </a>
                                     </li>

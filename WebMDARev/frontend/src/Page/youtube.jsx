@@ -29,11 +29,11 @@ function Youtube() {
             <div className="container-fluid pt-5 mt-5">
                 <div className="row pt-5 mt-5">
                     <div className="col p-5">
-                        <h2 className="text-uppercase text-secondary">Berita</h2>
+                        <h2 className="text-uppercase fw-bold" style={{ color: '#115258' }}>Berita</h2>
                     </div>
                 </div>
                 <div className="row p-5">
-                    <div className="col-auto">
+                    <div className="col-auto d-none d-sm-block">
                         <div className="garis-berita"></div>
                     </div>
                     <div className="col-md-4">
@@ -46,7 +46,7 @@ function Youtube() {
                                 <a href="/instagram" className="fs-1 text-black text-decoration-none">Instagram</a>
                             </li>
                             <li>
-                                <a href="/youtube" className="fs-1 text-black text-decoration-none  fw-bold">Youtube</a>
+                                <a href="/youtube" className="fs-1 text-decoration-none berita-active ">Youtube</a>
                             </li>
                         </ul>
                     </div>
@@ -56,9 +56,27 @@ function Youtube() {
                                 {
                                     ytList.length > 0 ? (
                                         ytList.map((youtube) => (
-                                            <div className="col-auto p-3" data-aos="fade-down">
-                                                <iframe className="rounded-5" width="1000" height="500" src={youtube.linkYoutube} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                                            <div className="col-12 p-3" data-aos="fade-down">
+                                                <div style={{ position: 'relative', paddingBottom: '56.25%', height: 0, overflow: 'hidden', borderRadius: '1rem' }}>
+                                                    <iframe
+                                                        className="rounded-5 rounded-sm-none"
+                                                        src={youtube.linkYoutube}
+                                                        title="YouTube video player"
+                                                        style={{
+                                                            position: 'absolute',
+                                                            top: 0,
+                                                            left: 0,
+                                                            width: '100%',
+                                                            height: '100%',
+                                                            border: 0,
+                                                        }}
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                        referrerPolicy="strict-origin-when-cross-origin"
+                                                        allowFullScreen
+                                                    />
+                                                </div>
                                             </div>
+
                                         ))
                                     ) : (
                                         <h1>Loading</h1>

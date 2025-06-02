@@ -155,7 +155,7 @@
 }
 
 .active-esg h1 {
-    color: rgb(0, 0, 0) !important;
+    color: #115258 !important;
     font-weight: bold !important;
     /* warna teks aktif */
 }
@@ -172,6 +172,11 @@
     background-color: rgb(0, 0, 0);
 }
 
+/* .card-berita {
+    filter: drop-shadow(5px 5px 5px rgb(196, 196, 196));
+}
+
+*/
 @media (max-width: 767.98px) {
 
     .navbar .row.align-items-center {
@@ -230,7 +235,7 @@
 
     .card-berita {
         height: 300px !important;
-        /* atau sesuaikan sesuai keinginan */
+
     }
 
 }
@@ -259,7 +264,27 @@
     }
 }
 
+@media (max-width: 400px) {
+    .instagram-media {
+        min-width: 100% !important;
+    }
+}
+
 .card-custom {
     height: 500px;
     /* desktop */
+}
+
+.search-bar {
+    filter: drop-shadow(2px 2px 1px rgb(196, 196, 196));
+}
+
+.berita-active {
+    font-weight: bold;
+    color: #F16022;
+}
+
+.berita-active-green {
+    font-weight: bold;
+    color: #115258;
 }
