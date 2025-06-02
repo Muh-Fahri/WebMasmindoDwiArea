@@ -372,7 +372,7 @@ function Home() {
                                                 {/* Gambar responsif */}
                                                 <div className="card-body p-0">
                                                     <img
-                                                        src={`http://localhost:8000/Berita/${berita.image_berita}`}
+                                                        src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
                                                         alt="foto"
                                                         className="img-fluid rounded-3 w-100"
                                                         style={{

@@ -149,7 +149,8 @@ function Berita() {
                                 </div>
                                 <div className="p-2">
                                     <p>Deskrip Berita</p>
-                                    <textarea type="text" className="form-control" value={deskipBerita} onChange={(e) => setDeskripBerita(e.target.value)}></textarea>
+                                    <p className="text-danger">Hindari Mengupload Gambar Yang Memiliki Nama Dengan Karakter Unik</p>
+                                    <textarea type="text" rows={20} className="form-control" value={deskipBerita} onChange={(e) => setDeskripBerita(e.target.value)}></textarea>
                                 </div>
                                 <div className="p-2">
                                     <p>Image Berita</p>
@@ -195,7 +196,11 @@ function Berita() {
                                                     <td>{berita.judul_berita}</td>
                                                     <td>{berita.deskripsi_berita}</td>
                                                     <td>
-                                                        <img src={`http://localhost:8000/Berita/${berita.image_berita}`} alt="Gambar Berita" style={{ width: "100px" }} />
+                                                        <img
+                                                            src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
+                                                            alt="Gambar Berita"
+                                                            style={{ width: "100px" }}
+                                                        />
                                                     </td>
                                                     <td>
                                                         <div className="row">

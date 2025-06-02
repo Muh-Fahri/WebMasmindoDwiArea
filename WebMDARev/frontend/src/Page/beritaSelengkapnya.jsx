@@ -62,7 +62,7 @@ function BeritaSelengkapnya() {
                             <div className="col-md-7">
                                 <div className="card rounded-5 overflow-hidden" style={{ height: '100vh' }}>
                                     <img
-                                        src={`http://127.0.0.1:8000/Berita/${berita.image_berita}`}
+                                        src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
                                         alt={berita.judul_berita}
                                         className="img-fluid object-fit-cover rounded-5"
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}

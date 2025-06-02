@@ -92,9 +92,25 @@ function ESG() {
                 <div className="container-fluid p-5">
                     {/* isi */}
                     <div className="row" data-aos="fade-right">
-                        <div className="col p-5">
-                            <img style={{ maxHeight: "50vh", objectFit: 'cover' }} className="img-fluid w-100 h-100 rounded-5" src="/Image/Background/CampAwakMasJPEG.jpg" alt="" />
+                        {/* Gambar versi besar */}
+                        <div className="col p-5 d-none d-sm-block">
+                            <img
+                                className="img-fluid rounded-5 w-100"
+                                style={{ maxHeight: "50vh", objectFit: 'cover' }}
+                                src="/Image/Background/CampAwakMasJPEG.jpg"
+                                alt=""
+                            />
                         </div>
+
+                        {/* Gambar versi mobile */}
+                        <div className="d-block d-sm-none">
+                            <img
+                                className="img-fluid rounded-5 w-100 h-auto"
+                                src="/Image/Background/CampAwakMasJPEG.jpg"
+                                alt=""
+                            />
+                        </div>
+
                     </div>
                     <div className="row">
                         <div className="col-auto ">
@@ -105,7 +121,7 @@ function ESG() {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-auto">
+                        <div className="col-auto d-none d-sm-block">
                             {/* garis */}
                             <div className="garis-esg"></div>
                         </div>
@@ -115,7 +131,9 @@ function ESG() {
                                     deskripLingkunganList.map((deskripLing) => (
                                         <div className="col" key={deskripLing.uuid}>
                                             {/* isi deskrip lingkungan */}
-                                            <p className="deskripsi-lingkungan">{deskripLing.deskripsi_halaman}</p>
+                                            <p className="deskripsi-lingkungan">
+                                                {deskripLing.deskripsi_halaman}
+                                            </p>
 
 
                                         </div>
@@ -152,15 +170,18 @@ function ESG() {
                                 imgLingList.length > 0 ? (
                                     imgLingList.map((imgLing) => (
                                         <div
-                                            className="flex-shrink-0 dokEsg-slider-item"
+                                            className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
                                             // style width dihapus, diganti CSS nanti
+                                            style={{ maxWidth: "600px" }}
                                             key={imgLing.uuid}
                                         >
-                                            <div className="card rounded-5" style={{ height: "400px", overflow: "hidden" }}>
+                                            <div className="card rounded-5 responsive-height"
+                                                style={{ height: "400px", overflow: "hidden" }}>
                                                 <img
                                                     src={`http://localhost:8000/Lingkungan/${imgLing.image_lingkungan}`}
                                                     alt="Laporan 2020"
                                                     className="w-100 h-100 object-fit-cover"
+                                                    style={{ objectFit: "cover" }}
                                                 />
                                             </div>
                                         </div>

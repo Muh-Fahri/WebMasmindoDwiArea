@@ -2,16 +2,17 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
-use App\Models\BeritaTerkini;
-use App\Models\Bisnis;
-use App\Models\DeskripLingkungan;
-use App\Models\ImageLingkungan;
-use App\Models\Instagram;
 use App\Models\PDF;
+use App\Models\Bisnis;
 use App\Models\Sosial;
 use App\Models\Youtube;
+use App\Models\Instagram;
 use Illuminate\Http\Request;
+use App\Models\BeritaTerkini;
+use App\Models\ImageLingkungan;
+use App\Models\DeskripLingkungan;
+use Illuminate\Support\Facades\Log;
+use App\Http\Controllers\Controller;
 
 class readAdmin extends Controller
 {
@@ -131,5 +132,25 @@ class readAdmin extends Controller
         }
 
         return response()->download($path);
+    }
+
+    function readSearchBerita(Request $request)
+    {
+        $keyword = $request->query('q');
+
+        if (!$keyword) {
+            return response()->json([
+                'berita' => [],
+                'message' => 'Query Keywoard Kosong'
+            ]);
+        }
+
+        $berita = BeritaTerkini::where('judul_berita', 'LIKE', "%{$keyword}%")->get();
+
+        Log::info('Jumlah hasil pencarian: ' . $berita->count());
+
+        return response()->json([
+            'berita' => $berita,
+        ], 200);
     }
 }

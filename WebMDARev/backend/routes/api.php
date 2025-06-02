@@ -28,6 +28,7 @@ Route::get('/user/berita/youtube', [readUser::class, 'readYoutube']);
 Route::get('lihat_user', [AuthController::class, 'readLogin']);
 Route::get('/user/esg/laporan', [readUser::class, 'readLaporan']);
 Route::get('/user/esg/pdf/download/{stored_name}', [readUser::class, 'downloadPdf']);
+Route::get('/admin/berita/search_berita', [readAdmin::class, 'readSearchBerita']);
 
 Route::middleware(['auth:sanctum', 'admin', 'throttle:60,3'])->group(function () {
     // bisnis
@@ -42,6 +43,7 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:60,3'])->group(function ()
     Route::get('/admin/berita', [readAdmin::class, 'readAllBerita']);
     Route::post('/admin/berita/{uuid}', [updateAdmin::class, 'editBerita']);
     Route::delete('/admin/berita/{uuid}', [deleteAdmin::class, 'deleteBerita']);
+
 
     // lingkungan img
     Route::post('/admin/esg/lingkungan/imgLingkungan', [createAdmin::class, 'createImgLing']);

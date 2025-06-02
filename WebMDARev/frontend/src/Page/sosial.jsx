@@ -15,6 +15,9 @@ function Sosial() {
     const [infraList, setInfraList] = useState([]);
     const [pemberdayaanList, setPemberdayaanList] = useState([]);
 
+    const [loading, setLoading] = useState(false)
+    const [error, setError] = useState(null)
+
     useEffect(() => {
         getMasyarakatData();
         getKesehatanData();
@@ -28,6 +31,8 @@ function Sosial() {
 
 
     const getMasyarakatData = async () => {
+        // setLoading(true);
+        // setError(nul)
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/sosial/pengembanganMasyarakat");
             setMasyarakatList(res.data.sosialMasyarakat);
@@ -51,6 +56,7 @@ function Sosial() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/sosial/infrastruktur");
             setInfraList(res.data.sosialInfra);
+            getInfrastrukturData();
         } catch (error) {
             alert("Gagal Mengambil Data Program Infrastruktur");
         }
@@ -114,8 +120,22 @@ function Sosial() {
             <section>
                 <div className="container-fluid p-5">
                     <div className="row" >
-                        <div className="col p-5" data-aos="fade-right">
-                            <img style={{ maxHeight: "50vh", objectFit: 'cover' }} className="img-fluid w-100 h-100 rounded-5" src="/Image/Background/CampAwakMasJPEG.jpg" alt="" />
+                        <div className="col p-5 d-none d-sm-block">
+                            <img
+                                className="img-fluid rounded-5 w-100"
+                                style={{ maxHeight: "50vh", objectFit: 'cover' }}
+                                src="/Image/Background/CampAwakMasJPEG.jpg"
+                                alt=""
+                            />
+                        </div>
+
+                        {/* Gambar versi mobile */}
+                        <div className="d-block d-sm-none">
+                            <img
+                                className="img-fluid rounded-5 w-100 h-auto"
+                                src="/Image/Background/CampAwakMasJPEG.jpg"
+                                alt=""
+                            />
                         </div>
                     </div>
                     <div className="row" data-aos="fade-down">
@@ -130,7 +150,8 @@ function Sosial() {
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            <p className="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ex delectus saepe suscipit dolore ut neque porro eveniet aspernatur sint quam sunt itaque nobis officiis dignissimos corporis, iste minima eum hic nulla praesentium repudiandae tempore? Pariatur omnis nulla asperiores voluptas veniam dicta hic doloremque qui porro rerum? Repudiandae hic, necessitatibus accusantium deserunt ullam illum autem nesciunt dignissimos ad debitis veritatis voluptatum amet praesentium modi, adipisci tempore delectus commodi in, explicabo expedita totam tempora! In eligendi eos, repellendus iste consequatur ratione quibusdam ipsum deserunt eum similique, beatae modi qui eius, possimus dolores velit iure officia ab necessitatibus nesciunt explicabo minus eaque.</p>
+                            <p className="fs-3">Di Masmindo, kami berkomitmen untuk memberikan kontribusi nyata bagi kemajuan masyarakat sekitar melalui program pengembangan masyarakat yang berkelanjutan dan inklusif. Kami percaya bahwa pembangunan tidak hanya tentang pertumbuhan ekonomi, tetapi juga meningkatkan kualitas hidup dan kesejahteraan sosial. <br /> <br />
+                                Melalui inisiatif ini, Masmindo berupaya menciptakan dampak positif yang berkelanjutan, mendorong inovasi sosial, dan memperkuat hubungan harmonis antara perusahaan dan komunitas. Bersama, kita wujudkan perubahan yang berarti demi kemajuan bersama.</p>
                         </div>
                     </div>
                 </div>
@@ -212,7 +233,8 @@ function Sosial() {
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            <p className="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ex delectus saepe suscipit dolore ut neque porro eveniet aspernatur sint quam sunt itaque nobis officiis dignissimos corporis, iste minima eum hic nulla praesentium repudiandae tempore? Pariatur omnis nulla asperiores voluptas veniam dicta hic doloremque qui porro rerum? Repudiandae hic, necessitatibus accusantium deserunt ullam illum autem nesciunt dignissimos ad debitis veritatis voluptatum amet praesentium modi, adipisci tempore delectus commodi in, explicabo expedita totam tempora! In eligendi eos, repellendus iste consequatur ratione quibusdam ipsum deserunt eum similique, beatae modi qui eius, possimus dolores velit iure officia ab necessitatibus nesciunt explicabo minus eaque.</p>
+                            <p className="fs-3"> Melalui Program Kesehatan, kami berupaya meningkatkan kualitas hidup warga sekitar dengan menyediakan akses layanan kesehatan yang lebih baik, edukasi kesehatan, dan upaya pencegahan penyakit. <br /><br />
+                                Dengan dukungan tenaga medis profesional dan kerja sama aktif bersama masyarakat, Masmindo berkomitmen menciptakan lingkungan yang sehat dan produktif demi masa depan yang lebih baik.</p>
                         </div>
                     </div>
                 </div>
@@ -238,7 +260,8 @@ function Sosial() {
                                     kesehatanList.map((kesehatan) => (
                                         <div key={kesehatan.uuid}
                                             className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
-                                            style={{ maxwidth: "600px" }}>
+                                            data-aos="fade-right"
+                                            style={{ maxWidth: "600px" }}>
                                             <div className="card rounded-5 responsive-height"
                                                 style={{ height: "400px", overflow: "hidden" }}>
                                                 <img src={`http://127.0.0.1:8000/Sosial/${kesehatan.imageSosial}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
@@ -277,7 +300,8 @@ function Sosial() {
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            <p className="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ex delectus saepe suscipit dolore ut neque porro eveniet aspernatur sint quam sunt itaque nobis officiis dignissimos corporis, iste minima eum hic nulla praesentium repudiandae tempore? Pariatur omnis nulla asperiores voluptas veniam dicta hic doloremque qui porro rerum? Repudiandae hic, necessitatibus accusantium deserunt ullam illum autem nesciunt dignissimos ad debitis veritatis voluptatum amet praesentium modi, adipisci tempore delectus commodi in, explicabo expedita totam tempora! In eligendi eos, repellendus iste consequatur ratione quibusdam ipsum deserunt eum similique, beatae modi qui eius, possimus dolores velit iure officia ab necessitatibus nesciunt explicabo minus eaque.</p>
+                            <p className="fs-3">Program ini bertujuan meningkatkan aksesibilitas, memperlancar aktivitas ekonomi, dan menciptakan lingkungan yang nyaman dan aman bagi warga. Kami bekerja sama dengan pemerintah daerah dan komunitas setempat untuk memastikan pembangunan yang tepat sasaran dan berkelanjutan. <br /><br />
+                                Dengan infrastruktur yang lebih baik, masyarakat dapat menikmati kemudahan mobilitas dan layanan publik, sehingga meningkatkan kualitas hidup dan membuka peluang baru untuk pertumbuhan ekonomi lokal.</p>
                         </div>
                     </div>
                 </div>
@@ -301,8 +325,13 @@ function Sosial() {
                             {
                                 infraList.length > 0 ? (
                                     infraList.map((infra) => (
-                                        <div key={infra.uuid} className="flex-shrink-0" style={{ width: "600px" }}>
-                                            <div className="card rounded-5" style={{ height: "400px", overflow: "hidden" }}>
+                                        <div key={infra.uuid}
+                                            className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
+                                            style={{ maxWidth: "600px" }}
+                                            data-aos="fade-right">
+                                            <div className="card rounded-5 responsive-height"
+                                                style={{ height: "400px", overflow: "hidden" }}
+                                            >
                                                 <img src={`http://127.0.0.1:8000/Sosial/${infra.imageSosial}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
                                             </div>
                                         </div>
@@ -331,7 +360,7 @@ function Sosial() {
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
-                                    <h1 className="display-5 fw-bold">Program Pemberdayaan</h1>
+                                    <h1 className="display-5 fw-bold">Program Pemberdayaan Masyarakat</h1>
                                 </div>
                             </div>
                         </div>
@@ -339,52 +368,71 @@ function Sosial() {
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            <p className="fs-3">Lorem ipsum dolor sit amet consectetur adipisicing elit. Soluta ex delectus saepe suscipit dolore ut neque porro eveniet aspernatur sint quam sunt itaque nobis officiis dignissimos corporis, iste minima eum hic nulla praesentium repudiandae tempore? Pariatur omnis nulla asperiores voluptas veniam dicta hic doloremque qui porro rerum? Repudiandae hic, necessitatibus accusantium deserunt ullam illum autem nesciunt dignissimos ad debitis veritatis voluptatum amet praesentium modi, adipisci tempore delectus commodi in, explicabo expedita totam tempora! In eligendi eos, repellendus iste consequatur ratione quibusdam ipsum deserunt eum similique, beatae modi qui eius, possimus dolores velit iure officia ab necessitatibus nesciunt explicabo minus eaque.</p>
+                            <p className="fs-3">Kami berfokus pada pemberian akses sumber daya dan pengetahuan agar masyarakat dapat mengoptimalkan potensi mereka, menciptakan peluang ekonomi baru, serta memperkuat kemandirian sosial. Program ini dirancang untuk membangun sinergi antara perusahaan, komunitas, dan pemangku kepentingan lokal demi masa depan yang lebih sejahtera <br /><br />
+                                Dengan semangat gotong-royong dan inovasi, Masmindo berkomitmen menjadi mitra terpercaya dalam perjalanan pembangunan masyarakat yang inklusif dan berkelanjutan.</p>
                         </div>
                     </div>
                 </div>
-                <div className="container-fluid pt-5">
-                    {
-                        pemberdayaanList.length > 0 ? (
-                            pemberdayaanList.map((pemberdayaan) => (
-                                <div className="position-relative">
-                                    <button
-                                        className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
-                                        onClick={() => {
-                                            document
-                                                .getElementById("dokEsg-slider")
-                                                .scrollBy({ left: -300, behavior: "smooth" });
-                                        }}
-                                    >
-                                        &#10094;
-                                    </button>
+                <div className="container-fluid pt-5 position-relative">
+                    {/* Tombol navigasi kiri */}
+                    <button
+                        className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
+                        style={{ zIndex: 10 }}
+                        onClick={() => {
+                            document
+                                .getElementById("dokEsg-slider")
+                                .scrollBy({ left: -300, behavior: "smooth" });
+                        }}
+                    >
+                        &#10094;
+                    </button>
+
+                    {/* Slider container */}
+                    <div
+                        id="dokEsg-slider"
+                        className="d-flex gap-3 flex-nowrap overflow-auto px-5"
+                        style={{ scrollBehavior: "smooth" }}
+                    >
+                        {
+                            pemberdayaanList.length > 0 ? (
+                                pemberdayaanList.map((pemberdayaan) => (
                                     <div
-                                        id="dokEsg-slider"
-                                        className="d-flex gap-3 flex-nowrap overflow-auto px-5"
-                                        style={{ scrollBehavior: "smooth" }}
+                                        key={pemberdayaan.uuid}
+                                        className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
+                                        data-aos="fade-right"
+                                        style={{ maxWidth: "600px" }}
                                     >
-                                        <div key={pemberdayaan.uuid} className="flex-shrink-0" style={{ width: "600px" }}>
-                                            <div className="card rounded-5" style={{ height: "400px", overflow: "hidden" }}>
-                                                <img src={`http://127.0.0.1:8000/Sosial/${pemberdayaan.imageSosial}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
-                                            </div>
+                                        <div
+                                            className="card rounded-5 responsive-height"
+                                            style={{ height: "400px", overflow: "hidden" }}
+                                        >
+                                            <img
+                                                src={`http://127.0.0.1:8000/Sosial/${pemberdayaan.imageSosial}`}
+                                                alt="Laporan 2020"
+                                                className="w-100 h-100 object-fit-cover"
+                                                style={{ objectFit: "cover" }}
+                                            />
                                         </div>
                                     </div>
-                                    <button
-                                        className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
-                                        onClick={() => {
-                                            document
-                                                .getElementById("dokEsg-slider")
-                                                .scrollBy({ left: 300, behavior: "smooth" });
-                                        }}
-                                    >
-                                        &#10095;
-                                    </button>
-                                </div>
-                            ))
-                        ) : (
-                            <NoData />
-                        )
-                    }
+                                ))
+                            ) : (
+                                <NoData />
+                            )
+                        }
+                    </div>
+
+                    {/* Tombol navigasi kanan */}
+                    <button
+                        className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
+                        style={{ zIndex: 10 }}
+                        onClick={() => {
+                            document
+                                .getElementById("dokEsg-slider")
+                                .scrollBy({ left: 300, behavior: "smooth" });
+                        }}
+                    >
+                        &#10095;
+                    </button>
                 </div>
             </section>
             <section className="pt-5">

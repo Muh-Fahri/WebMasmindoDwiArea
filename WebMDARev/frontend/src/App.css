@@ -222,6 +222,17 @@
     .card.responsive-height {
         height: 250px !important;
     }
+
+    p.deskripsi-lingkungan {
+        font-size: 15px;
+        line-height: 1.2;
+    }
+
+    .card-berita {
+        height: 300px !important;
+        /* atau sesuaikan sesuai keinginan */
+    }
+
 }
 
 .deskripsi-lingkungan {
