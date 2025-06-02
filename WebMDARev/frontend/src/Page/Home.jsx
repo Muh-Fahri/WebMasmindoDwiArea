@@ -308,11 +308,12 @@ function Home() {
             </section>
             <section>
                 {/* PETA */}
-                <div style={{ position: 'relative' }}>
+                <div data-aos="fade-right" style={{ position: 'relative' }}>
                     <MapContainer
                         center={position}
                         zoom={5}
                         zoomControl={true}
+                        attributionControl={false}
                         style={{ height: '60vh', width: '100%' }}
                     >
                         <DisableScrollZoom /> {/* Tambahkan ini */}
@@ -550,7 +551,7 @@ function Home() {
             </section >
             <section>
                 <div className="bg-bawah d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
-                    <div className="container text-center">
+                    <div className="container text-center" data-aos="zoom-in-up">
                         <div className="row">
                             <div className="col">
                                 <h1 className="text-white fw-bold">Profesional & Inspiratif</h1>

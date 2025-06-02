@@ -238,6 +238,10 @@
 
     }
 
+    .responsive-image-container {
+        height: 50vh !important;
+    }
+
 }
 
 .deskripsi-lingkungan {

@@ -169,7 +169,9 @@ function Bisnis() {
                                                     allowFullScreen
                                                 ></iframe>
                                             </td>
-                                            <td>{bisnis.deskripsi_bisnis}</td>
+                                            <td>
+                                                <p style={{ whiteSpace: 'pre-line' }}>{bisnis.deskripsi_bisnis}</p>
+                                            </td>
                                             <td>
                                                 <div className="row">
                                                     <div className="col d-flex gap-3">
@@ -209,7 +211,7 @@ function Bisnis() {
                                             </div>
                                             <div className="mb-3">
                                                 <label className="form-label">Deskripsi</label>
-                                                <textarea className="form-control" value={editDeskrip} onChange={(e) => setEditDeskrip(e.target.value)}></textarea>
+                                                <textarea rows={20} className="form-control" value={editDeskrip} onChange={(e) => setEditDeskrip(e.target.value)}></textarea>
                                             </div>
                                         </div>
                                         <div className="modal-footer">

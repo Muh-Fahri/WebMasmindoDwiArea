@@ -13,7 +13,9 @@ function NavSide() {
             </button>
 
             {/* Sidebar */}
-            <div className={`sidebar bg-dark text-white p-3 ${showSidebar ? 'd-block' : 'd-none'} d-md-block`} style={{ width: '250px', height: '100vh', position: 'fixed', zIndex: 999 }}>
+            <div className={`sidebar bg-dark text-white p-3 ${showSidebar ? 'd-block' : 'd-none'} d-md-block`}
+                style={{ width: '250px', height: '100vh', position: 'fixed', zIndex: 1050 }}>
+
                 <div className="row justify-content-center">
                     <div className="col-8">
                         <img className="w-100 img-fluid" src="/Image/LogoMasmindoGold.webp" alt="Logo" />

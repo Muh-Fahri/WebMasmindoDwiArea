@@ -116,7 +116,7 @@ function ESG() {
                         <div className="col-auto ">
                             {/* judul */}
                             <div className="row d-flex justify-content-center p-5">
-                                <div className="col-md-5">
+                                <div className="col-md-5" data-aos="fade-right">
                                     <h1 className="display-5 fw-bold" style={{ color: ' #F16022' }}>Kebijakan <span style={{ color: '#115258' }}>Lingkungan</span></h1>
                                 </div>
                             </div>
@@ -131,7 +131,7 @@ function ESG() {
                                     deskripLingkunganList.map((deskripLing) => (
                                         <div className="col" key={deskripLing.uuid}>
                                             {/* isi deskrip lingkungan */}
-                                            <p className="deskripsi-lingkungan">
+                                            <p style={{ whiteSpace: 'pre-line' }} className="deskripsi-lingkungan">
                                                 {deskripLing.deskripsi_halaman}
                                             </p>
 

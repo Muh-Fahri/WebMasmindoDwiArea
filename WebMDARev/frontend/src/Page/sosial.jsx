@@ -219,10 +219,10 @@ function Sosial() {
             </section>
             <section>
                 <div className="container-fluid p-5">
-                    <div className="row">
+                    <div className="row" data-aos="fade-down">
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
-                                <div className="col-md-8">
+                                <div className="col-md-8" >
                                     <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program <span style={{ color: '#115258' }}>Kesehatan</span></h1>
                                 </div>
                             </div>
@@ -286,10 +286,10 @@ function Sosial() {
             </section>
             <section>
                 <div className="container-fluid p-5">
-                    <div className="row">
+                    <div className="row" data-aos="fade-down">
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
-                                <div className="col-md-8">
+                                <div className="col-md-8" >
                                     <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program <span style={{ color: '#115258' }}>Infrastruktur</span></h1>
                                 </div>
                             </div>
@@ -354,10 +354,10 @@ function Sosial() {
             </section>
             <section>
                 <div className="container-fluid p-5">
-                    <div className="row">
+                    <div className="row" data-aos="fade-down">
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
-                                <div className="col-md-8">
+                                <div className="col-md-8" >
                                     <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program Pemberdayaan <span style={{ color: '#115258' }}>Masyarakat</span></h1>
                                 </div>
                             </div>

@@ -60,7 +60,7 @@ function Bisnis() {
             </section>
             <section>
                 <div className="container-fluid p-5">
-                    <div className="row p-3 p-md-5 align-items-center">
+                    <div className="row p-3 p-md-5 align-items-start">
                         {/* Gambar */}
                         <div className="col-12 col-md-auto mb-4 mb-md-0" data-aos="fade-right">
                             <img
@@ -70,14 +70,17 @@ function Bisnis() {
                                 style={{ width: "300px", height: "auto" }}
                             />
                         </div>
+
+                        {/* Garis */}
                         <div className="d-none d-md-block col-md-auto">
                             <div className="garis-aw-p"></div>
                         </div>
 
+                        {/* Deskripsi */}
                         <div className="col-12 col-md" data-aos="fade-down">
                             {bisnisList.length > 0 ? (
                                 bisnisList.map((bisnis) => (
-                                    <p key={bisnis.uuid} className="fs-3 fs-md-5">{bisnis.deskripsi_bisnis}</p>
+                                    <p style={{ whiteSpace: 'pre-line', textAlign: 'justify' }} key={bisnis.uuid} className="fs-3 fs-md-5">{bisnis.deskripsi_bisnis}</p>
                                 ))
                             ) : (
                                 <h5>No Data</h5>
@@ -86,6 +89,7 @@ function Bisnis() {
                     </div>
                 </div>
             </section>
+
             <section>
                 <div className="container mt-5 " data-aos="fade-down"  >
                     <div className="row mt-4">

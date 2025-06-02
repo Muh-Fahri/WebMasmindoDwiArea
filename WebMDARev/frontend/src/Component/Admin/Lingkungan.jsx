@@ -249,7 +249,9 @@ function Lingkungan() {
                                             {deskripList.length > 0 ? (
                                                 deskripList.map((deskrLing) => (
                                                     <tr key={deskrLing.uuid}>
-                                                        <td>{deskrLing.deskripsi_halaman}</td>
+                                                        <td>
+                                                            <p style={{ whiteSpace: 'pre-line' }}>{deskrLing.deskripsi_halaman}</p>
+                                                        </td>
                                                         <td>
                                                             <div className="row">
                                                                 <div className="col d-flex gap-2">

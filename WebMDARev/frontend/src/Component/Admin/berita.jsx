@@ -194,7 +194,9 @@ function Berita() {
                                                 <tr key={berita.uuid}>
                                                     <td>{index + 1}</td>
                                                     <td>{berita.judul_berita}</td>
-                                                    <td>{berita.deskripsi_berita}</td>
+                                                    <td>
+                                                        <p style={{ whiteSpace: 'pre-line' }}>{berita.deskripsi_berita}</p>
+                                                    </td>
                                                     <td>
                                                         <img
                                                             src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
@@ -248,6 +250,7 @@ function Berita() {
                                                         value={editDeskrip}
                                                         onChange={(e) => setEditDeskrip(e.target.value)}
                                                         className="form-control"
+                                                        rows={20}
                                                     />
                                                 </div>
                                                 <div className="mb-3">

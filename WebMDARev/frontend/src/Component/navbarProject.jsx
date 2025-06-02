@@ -14,7 +14,7 @@ function NavbarProject() {
                             <div className="garis-nav"></div>
                         </div>
                         <div className="col-md-1">
-                            <Link to="/" ><img src="/Image/AwakMasLogo.webp" className="img-fluid navbar-brand w-100 h-auto" alt="Logo" /></Link>
+                            <Link to="/" ><img src="/Image/AwakMasLogo.png" className="img-fluid navbar-brand w-100 h-auto" alt="Logo" /></Link>
                         </div>
                         <div className="col-md-10 ms-auto">
                             <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
