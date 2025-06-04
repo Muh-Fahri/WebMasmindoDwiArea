@@ -153,4 +153,32 @@ class readAdmin extends Controller
             'berita' => $berita,
         ], 200);
     }
+
+    function dashboardAdmin()
+    {
+        $laporan_tahunan = PDF::all();
+        $berita = BeritaTerkini::all();
+        $instagram = Instagram::all();
+        $youtube = Youtube::all();
+        $sosial = Sosial::all();
+        $lingkungan_image = ImageLingkungan::all();
+
+        $hitung_laporan = $laporan_tahunan->count();
+        $hitung_berita = $berita->count();
+        $hitung_instagram = $instagram->count();
+        $hitung_youtube = $youtube->count();
+        $hitung_sosial = $sosial->count();
+        $hitung_lingkungan = $lingkungan_image->count();
+
+
+
+        return response()->json([
+            'laporan' => $hitung_laporan,
+            'berita' => $hitung_berita,
+            'instagram' => $hitung_instagram,
+            'youtube' => $hitung_youtube,
+            'lingkungan' => $hitung_lingkungan,
+            'sosial' => $hitung_sosial,
+        ], 200);
+    }
 }

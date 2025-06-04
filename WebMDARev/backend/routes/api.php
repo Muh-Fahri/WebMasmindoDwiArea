@@ -86,4 +86,7 @@ Route::middleware(['auth:sanctum', 'admin', 'throttle:60,3'])->group(function ()
 
     // Auth
     Route::post('/admin/logout', [AuthController::class, 'logout']);
+
+    // Dashboard
+    Route::get('/admin/dashboard', [readAdmin::class, 'dashboardAdmin']);
 });

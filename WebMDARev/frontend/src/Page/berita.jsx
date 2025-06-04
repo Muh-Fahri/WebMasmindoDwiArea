@@ -32,7 +32,7 @@ function Berita() {
             : `http://127.0.0.1:8000/api/admin/berita/search_berita?q=${encodeURIComponent(trimmedKeyword)}`;
         try {
             const res = await axios.get(url);
-            console.log("Data received:", res.data);
+            // console.log("Data received:", res.data);
             setBeritaList(res.data.berita || []);
             setMessage(res.data.message || "");
         } catch (error) {

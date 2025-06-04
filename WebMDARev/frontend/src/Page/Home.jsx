@@ -77,20 +77,6 @@ function InfoCard({ position, visible }) {
 }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 function Home() {
     const [bisnisList, setBisnisList] = useState([]);
     const [beritaList, setBeritaList] = useState([]);
@@ -574,6 +560,7 @@ function Home() {
                 <Footer />
             </section>
         </div >
+
     );
 }
 

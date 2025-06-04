@@ -1,9 +1,46 @@
 import React from 'react';
 import NavSide from './navSide';
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faBook, faNewspaper, faHashtag } from '@fortawesome/free-solid-svg-icons';
+import { useEffect, useState } from 'react';
+import handleUnauthorized from './unouthorized';
+import CountUp from 'react-countup';
 
 function Dashboard() {
+    const [laporanList, setLaporanList] = useState(0);
+    const [beritaList, setBeritaList] = useState(0);
+    const [instagramList, setInstagramList] = useState(0);
+    const [youtubeList, setYoutubeList] = useState(0);
+    const [lingkunganList, setLingkunganList] = useState(0);
+    const [sosialList, setSosialList] = useState(0);
+
+    const token = localStorage.getItem('token')
+
+    const getDashboardData = async () => {
+        try {
+            const res = await axios.get('http://127.0.0.1:8000/api/admin/dashboard', {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                }
+
+            });
+            setLaporanList(res.data.laporan);
+            setBeritaList(res.data.berita);
+            setInstagramList(res.data.instagram);
+            setYoutubeList(res.data.Youtube);
+            setLingkunganList(res.data.lingkungan);
+            setSosialList(res.data.sosial);
+        } catch (error) {
+            handleUnauthorized(error);
+        }
+    }
+
+
+    useEffect(() => {
+        getDashboardData();
+    }, []);
+
     return (
         <div className="d-flex flex-column flex-md-row">
             {/* Sidebar */}
@@ -30,7 +67,15 @@ function Dashboard() {
                                         {/* h5: Default (xs) fs-6, md ke atas fs-5 (ukuran normal h5) */}
                                         <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>Laporan Tahunan Terupload </h5>
                                         {/* h1: Default (xs) display-6, md ke atas display-4 (ukuran normal h1) */}
-                                        <h1 className="display-6 display-md-4">5</h1>
+                                        <h1 className="display-6 display-md-4">
+                                            <CountUp
+                                                start={0}                // mulai dari angka 0
+                                                end={laporanList}        // angka akhir dari backend
+                                                duration={0.5}           // durasi animasi dalam detik
+                                                delay={0.3}              // jeda sebelum mulai
+                                                separator="."            // pemisah ribuan, misalnya 1.000
+                                            />
+                                        </h1>
                                     </div>
                                     <div className="col-auto">
                                         {/* Ikon: Default (xs) 50px, md ke atas 80px (ukuran normal) */}
@@ -46,7 +91,15 @@ function Dashboard() {
                                 <div className="row align-items-center">
                                     <div className="col">
                                         <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>Berita Terupload </h5>
-                                        <h1 className="display-6 display-md-4">5</h1>
+                                        <h1 className="display-6 display-md-4">
+                                            <CountUp
+                                                start={0}                // mulai dari angka 0
+                                                end={beritaList}        // angka akhir dari backend
+                                                duration={0.5}           // durasi animasi dalam detik
+                                                delay={0.3}              // jeda sebelum mulai
+                                                separator="."            // pemisah ribuan, misalnya 1.000
+                                            />
+                                        </h1>
                                     </div>
                                     <div className="col-auto">
                                         <FontAwesomeIcon icon={faNewspaper} style={{ fontSize: "50px", color: "#115258" }} className="fs-md-icon-80" />
@@ -61,7 +114,15 @@ function Dashboard() {
                                 <div className="row align-items-center">
                                     <div className="col">
                                         <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>Instagram Terupload </h5>
-                                        <h1 className="display-6 display-md-4">5</h1>
+                                        <h1 className="display-6 display-md-4">
+                                            <CountUp
+                                                start={0}                // mulai dari angka 0
+                                                end={instagramList}        // angka akhir dari backend
+                                                duration={0.5}           // durasi animasi dalam detik
+                                                delay={0.3}              // jeda sebelum mulai
+                                                separator="."            // pemisah ribuan, misalnya 1.000
+                                            />
+                                        </h1>
                                     </div>
                                     <div className="col-auto">
                                         <FontAwesomeIcon icon={faHashtag} style={{ fontSize: "50px", color: "#F16022" }} className="fs-md-icon-80" />
@@ -92,7 +153,15 @@ function Dashboard() {
                                                 {/* p: Default (xs) small, lg ke atas tetap small atau bisa diatur fs-6 jika mau sedikit lebih besar */}
                                                 <p className="small mb-2">Postingan Terupload Pada Halaman Enviro</p>
                                                 {/* h1: Default (xs) display-6, lg ke atas display-4 */}
-                                                <h1 className="display-6 display-lg-4">5</h1>
+                                                <h1 className="display-6 display-md-4">
+                                                    <CountUp
+                                                        start={0}                // mulai dari angka 0
+                                                        end={lingkunganList}        // angka akhir dari backend
+                                                        duration={0.5}           // durasi animasi dalam detik
+                                                        delay={0.3}              // jeda sebelum mulai
+                                                        separator="."            // pemisah ribuan, misalnya 1.000
+                                                    />
+                                                </h1>
                                             </div>
                                         </div>
                                     </div>
@@ -101,7 +170,15 @@ function Dashboard() {
                                             <div className="card-body m-0 p-0">
                                                 <h5 className="fs-6 fs-lg-5">Social "Sosial"</h5>
                                                 <p className="small mb-2">Postingan Terupload Pada Halaman Sosial</p>
-                                                <h1 className="display-6 display-lg-4">5</h1>
+                                                <h1 className="display-6 display-md-4">
+                                                    <CountUp
+                                                        start={0}                // mulai dari angka 0
+                                                        end={sosialList}        // angka akhir dari backend
+                                                        duration={0.5}           // durasi animasi dalam detik
+                                                        delay={0.3}              // jeda sebelum mulai
+                                                        separator="."            // pemisah ribuan, misalnya 1.000
+                                                    />
+                                                </h1>
                                             </div>
                                         </div>
                                     </div>
@@ -110,7 +187,7 @@ function Dashboard() {
                                             <div className="card-body m-0 p-0">
                                                 <h5 className="fs-6 fs-lg-5">Governance "Tata Kelola"</h5>
                                                 <p className="small mb-2">Postingan Terupload Pada Halaman Tata Kelola</p>
-                                                <h1 className="display-6 display-lg-4">5</h1>
+                                                <h1 className="display-6 display-lg-4">0</h1>
                                             </div>
                                         </div>
                                     </div>
