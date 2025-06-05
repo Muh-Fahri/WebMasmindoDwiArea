@@ -292,3 +292,54 @@
     font-weight: bold;
     color: #115258;
 }
+
+.fs-7 {
+    font-size: 0.75rem !important;
+}
+
+
+.fs-7 {
+    font-size: 0.7rem !important;
+}
+
+@media (min-width: 768px) {
+    .fs-md-5 {
+        font-size: 1.25rem !important;
+    }
+
+    .fs-md-6 {
+        font-size: 1rem !important;
+    }
+}
+
+.description-limit {
+    display: -webkit-box;
+
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 150px;
+
+}
+
+@media (min-width: 768px) {
+
+    .description-limit {
+        overflow: visible;
+        text-overflow: unset;
+        max-width: unset;
+    }
+}
+
+.nav-link.nav-hijau-actv {
+    color: #F16022 !important;
+    padding-bottom: 0.25rem;
+}
+
+.nav-link h5 {
+    color: white;
+}
+
+.nav-link.nav-hijau-actv h5 {
+    color: #F16022 !important;
+}
