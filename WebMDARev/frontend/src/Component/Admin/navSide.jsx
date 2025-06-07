@@ -92,6 +92,23 @@ function NavSide() {
                             </li>
                         </ul>
                     </li>
+                    <li>
+                        <span className="text-white text-decoration-none d-block py-2 px-3">
+                            <FontAwesomeIcon icon={faTree} /> Galeri
+                        </span>
+                        <ul className="list-unstyled ps-4">
+                            <li>
+                                <NavLink to="/admin/galeri" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                                    ▸ Dokumentasi
+                                </NavLink>
+                            </li>
+                            <li>
+                                <NavLink to="/admin/youtube" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                                    ▸ Video
+                                </NavLink>
+                            </li>
+                        </ul>
+                    </li>
                 </ul>
 
                 {/* Tombol EN dan ID di bagian bawah sidebar */}

@@ -12,6 +12,7 @@ use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
+use App\Models\Galeri;
 use Illuminate\Support\Facades\File;
 
 class deleteAdmin extends Controller
@@ -117,6 +118,16 @@ class deleteAdmin extends Controller
 
         // Hapus data dari database
         $pdf->delete();
+
+        return response()->json([
+            "msg" => "Berhasil Menghapus Data"
+        ], 200);
+    }
+
+    function deleteDokumentasi($uuid)
+    {
+        $galeri = Galeri::where('uuid', $uuid)->firstOrFail();
+        $galeri->delete();
 
         return response()->json([
             "msg" => "Berhasil Menghapus Data"

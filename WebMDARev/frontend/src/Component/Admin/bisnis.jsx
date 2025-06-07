@@ -1,31 +1,59 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
-import NavSide from "./navSide";
+import NavSide from "./navSide"; // Asumsi path ini benar, pastikan file navSide.js ada di lokasi yang sama
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrash } from '@fortawesome/free-solid-svg-icons';
-import NoData from "../Error/NoData";
-import handleUnauthorized from "./unouthorized";
+import { faPencilAlt, faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
+import NoData from "../Error/NoData"; // Asumsi path ini benar, pastikan file NoData.js ada di path relatif ini
+import handleUnauthorized from "./unouthorized"; // Asumsi path ini benar, pastikan file unouthorized.js ada di lokasi yang sama
 import { useTranslation } from "react-i18next";
+import DOMPurify from 'dompurify';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 function Bisnis() {
-    const [linkYt, setLinkYt] = useState("");
-    const [deskrip_id, setDeskrip_id] = useState("");
-    const [deskrip_en, setDeskrip_en] = useState("");
-    const [bisnisList, setBisnisList] = useState([]);
     const navigate = useNavigate();
     const token = localStorage.getItem('token');
     const { t, i18n } = useTranslation();
 
-    // modal
+    // State untuk data input formulir "Tambah Bisnis Baru"
+    const [linkYt, setLinkYt] = useState("");
+    const [deskrip_id, setDeskrip_id] = useState("");
+    const [deskrip_en, setDeskrip_en] = useState("");
+
+    // State untuk daftar bisnis yang diambil dari API
+    const [bisnisList, setBisnisList] = useState([]);
+    // State untuk item bisnis yang sedang ditampilkan (misal: yang pertama di daftar)
+    const [displayedBisnis, setDisplayedBisnis] = useState(null);
+
+    // State untuk Modal Edit
     const [editModal, setEditModal] = useState(false);
     const [editId, setEditId] = useState("");
     const [editLink, setEditLink] = useState("");
-    const [editDeskrip_id, setEditDeskrip_id] = useState("");
-    const [editDeskrip_en, setEditDeskrip_en] = useState("");
+    const [editDeskrip_id, setEditDeskrip_id] = useState(""); // Untuk CKEditor di modal edit
+    const [editDeskrip_en, setEditDeskrip_en] = useState(""); // Untuk CKEditor di modal edit
 
+    // State untuk pesan notifikasi (alert kustom)
+    const [notification, setNotification] = useState({
+        show: false,
+        message: "",
+        type: "" // 'success' atau 'error'
+    });
 
+    // State untuk modal konfirmasi penghapusan kustom
+    const [confirmDeleteModal, setConfirmDeleteModal] = useState(false);
+    const [itemToDelete, setItemToDelete] = useState(null); // Menyimpan UUID item yang akan dihapus
+
+    // Fungsi untuk menampilkan notifikasi kustom
+    const showNotification = (message, type) => {
+        setNotification({ show: true, message, type });
+        setTimeout(() => {
+            setNotification({ show: false, message: "", type: "" });
+        }, 3000); // Notifikasi akan hilang setelah 3 detik
+    };
+
+    // --- Fetch Data Bisnis ---
     const getBisnisData = async () => {
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/admin/bisnis', {
@@ -34,8 +62,15 @@ function Bisnis() {
                 }
             });
             setBisnisList(response.data.bisnis);
+            // Set displayedBisnis ke item pertama jika ada
+            if (response.data.bisnis && response.data.bisnis.length > 0) {
+                setDisplayedBisnis(response.data.bisnis[0]);
+            } else {
+                setDisplayedBisnis(null); // Tidak ada data
+            }
         } catch (error) {
-            handleUnauthorized(error);
+            handleUnauthorized(error, navigate); // Pastikan navigate dilewatkan jika diperlukan
+            showNotification('Gagal memuat data bisnis.', 'error');
         }
     };
 
@@ -43,63 +78,81 @@ function Bisnis() {
         getBisnisData();
     }, []);
 
+    // --- Sanitasi Deskripsi untuk Tampilan ---
+    // Variabel ini didefinisikan setelah state, dan hanya akan dievaluasi setelah
+    // displayedBisnis memiliki nilai.
+    const sanitizedDisplayedDescriptionId = displayedBisnis
+        ? DOMPurify.sanitize(displayedBisnis.deskripsi_bisnis_id || '')
+        : '';
+    const sanitizedDisplayedDescriptionEn = displayedBisnis
+        ? DOMPurify.sanitize(displayedBisnis.deskripsi_bisnis_en || '')
+        : '';
 
-    // tambahkan post page bisnis
+    // --- Tambah Bisnis Baru ---
     const addBisnisPage = async (e) => {
         e.preventDefault();
         try {
             await axios.post("http://127.0.0.1:8000/api/admin/bisnis", {
                 link_video: linkYt,
-                deskripsi_bisnis_id: deskrip_id,
-                deskripsi_bisnis_en: deskrip_en,
-
+                deskripsi_bisnis_id: deskrip_id, // Konten HTML dari CKEditor
+                deskripsi_bisnis_en: deskrip_en, // Konten HTML dari CKEditor
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
-
             });
             setLinkYt("");
-            setDeskrip_id("");
-            alert('Berhasil Menginput Data')
-            getBisnisData();
-
+            setDeskrip_id(""); // Reset CKEditor input
+            setDeskrip_en(""); // Reset CKEditor input
+            showNotification('Berhasil Menginput Data', 'success');
+            getBisnisData(); // Refresh data
         } catch (error) {
-            alert('Gagal Menambahkan Data');
+            showNotification('Gagal Menambahkan Data', 'error');
+            console.error('Error adding data:', error);
         }
-    }
+    };
 
-    const deleteBisnisData = async (uuid) => {
+    // --- Hapus Data Bisnis (Menggunakan Modal Konfirmasi Kustom) ---
+    const handleDeleteClick = (uuid) => {
+        setItemToDelete(uuid);
+        setConfirmDeleteModal(true);
+    };
+
+    const confirmDeleteAction = async () => {
+        setConfirmDeleteModal(false); // Tutup modal konfirmasi
+        if (!itemToDelete) return;
+
         try {
-            const response = await axios.delete(`http://127.0.0.1:8000/api/admin/bisnis/${uuid}`, {
+            await axios.delete(`http://127.0.0.1:8000/api/admin/bisnis/${itemToDelete}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
             getBisnisData();
-            alert('Berhasil Menghapus Data')
+            showNotification('Berhasil Menghapus Data', 'success');
+            setItemToDelete(null); // Reset item yang akan dihapus
         } catch (error) {
-            alert('Gagal Menghapus Data');
+            showNotification('Gagal Menghapus Data', 'error');
+            console.error('Error deleting data:', error);
         }
-    }
-
-    // edit area
-    const openEditModal = (bisnis) => {
-        setEditModal(true);
-        setEditId(bisnis.uuid);
-        setEditLink(bisnis.link_video);
-        setEditDeskrip_id(bisnis.deskripsi_bisnis_id);
-        setEditDeskrip_en(bisnis.deskripsi_bisnis_en);
     };
 
+    // --- Modal Edit ---
+    const openEditModal = (bisnisItem) => {
+        setEditModal(true);
+        setEditId(bisnisItem.uuid);
+        setEditLink(bisnisItem.link_video);
+        setEditDeskrip_id(bisnisItem.deskripsi_bisnis_id || ''); // Pastikan default string kosong
+        setEditDeskrip_en(bisnisItem.deskripsi_bisnis_en || ''); // Pastikan default string kosong
+    };
 
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
             await axios.post(`http://127.0.0.1:8000/api/admin/bisnis/${editId}`, {
                 link_video: editLink,
-                deskripsi_bisnis_id: editDeskrip_id,
-                deskripsi_bisnis_en: editDeskrip_en
+                deskripsi_bisnis_id: editDeskrip_id, // Konten HTML dari CKEditor
+                deskripsi_bisnis_en: editDeskrip_en, // Konten HTML dari CKEditor
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -107,13 +160,12 @@ function Bisnis() {
             });
             setEditModal(false);
             getBisnisData();
-            alert('Data berhasil diperbarui');
+            showNotification('Data berhasil diperbarui', 'success');
         } catch (error) {
-            alert('Gagal mengedit data');
+            showNotification('Gagal mengedit data', 'error');
+            console.error('Error editing data:', error);
         }
     };
-
-
 
     return (
         <div className="d-flex flex-column flex-md-row">
@@ -154,14 +206,24 @@ function Bisnis() {
                                             <label htmlFor="deskripsiHalaman_id" className="form-label">
                                                 {t('form_label_description_id')}
                                             </label>
-                                            <textarea
-                                                id="deskripsiHalaman_id"
-                                                rows={10}
-                                                className="form-control"
-                                                value={deskrip_id}
-                                                onChange={(e) => setDeskrip_id(e.target.value)}
-                                                required
-                                            ></textarea>
+                                            {/* Ganti textarea ini dengan CKEditor */}
+                                            <CKEditor
+                                                editor={ClassicEditor}
+                                                data={deskrip_id} // Mengikat nilai state deskrip_id ke editor
+                                                onChange={(event, editor) => {
+                                                    const data = editor.getData(); // Ambil data HTML dari editor
+                                                    setDeskrip_id(data); // Perbarui state dengan data HTML
+                                                }}
+                                            // Anda bisa menambahkan konfigurasi lain di sini jika diperlukan, contoh:
+                                            // config={{
+                                            //      toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+                                            //      // ... konfigurasi lainnya
+                                            // }}
+                                            />
+                                            {/* Catatan: Untuk CKEditor, atribut 'id' pada label 'for' tidak langsung relevan untuk inputnya
+                                                karena CKEditor membuat struktur DOM sendiri. Namun, `htmlFor` pada label tetap baik
+                                                untuk semantik dan aksesibilitas.
+                                            */}
                                         </div>
 
                                         {/* Textarea Deskripsi Bahasa Inggris */}
@@ -169,14 +231,14 @@ function Bisnis() {
                                             <label htmlFor="deskripsiHalaman_en" className="form-label">
                                                 {t('form_label_description_en')}
                                             </label>
-                                            <textarea
-                                                id="deskripsiHalaman_en"
-                                                rows={10}
-                                                className="form-control"
-                                                value={deskrip_en}
-                                                onChange={(e) => setDeskrip_en(e.target.value)}
-                                                required
-                                            ></textarea>
+                                            <CKEditor // Mengganti textarea dengan CKEditor
+                                                editor={ClassicEditor}
+                                                data={deskrip_en}
+                                                onChange={(event, editor) => {
+                                                    const data = editor.getData();
+                                                    setDeskrip_en(data);
+                                                }}
+                                            />
                                         </div>
 
                                         <button type="submit" className="btn btn-primary btn-sm">
@@ -213,17 +275,15 @@ function Bisnis() {
 
                                 <tbody>
                                     {bisnisList.length > 0 ? (
-                                        bisnisList.map((bisnis, index) => (
-                                            <tr key={bisnis.uuid}>
+                                        bisnisList.map((bisnisItem, index) => (
+                                            <tr key={bisnisItem.uuid}>
                                                 <td className="fs-7 fs-md-5">{index + 1}</td>
-
-                                                {/* Video Youtube Embed */}
                                                 <td>
                                                     <div className="ratio ratio-16x9 mx-auto" style={{ maxWidth: '100px' }}>
                                                         <iframe
                                                             src={
-                                                                bisnis.link_video
-                                                                    ? bisnis.link_video.replace("watch?v=", "embed/")
+                                                                bisnisItem.link_video
+                                                                    ? bisnisItem.link_video.replace("watch?v=", "embed/")
                                                                     : ""
                                                             }
                                                             title="YouTube video"
@@ -233,22 +293,24 @@ function Bisnis() {
                                                         ></iframe>
                                                     </div>
                                                 </td>
-
-                                                {/* Deskripsi Bahasa Aktif */}
                                                 <td>
-                                                    <p className="text-truncate-custom fs-7 fs-md-5 description-limit" style={{ whiteSpace: 'pre-line' }}>
-                                                        {i18n.language === 'id'
-                                                            ? bisnis.deskripsi_bisnis_id
-                                                            : bisnis.deskripsi_bisnis_en}
-                                                    </p>
+                                                    <div
+                                                        className="text-truncate-custom fs-7 fs-md-5 description-limit"
+                                                    >
+                                                        <div
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: i18n.language === 'id'
+                                                                    ? DOMPurify.sanitize(bisnisItem.deskripsi_bisnis_id)
+                                                                    : DOMPurify.sanitize(bisnisItem.deskripsi_bisnis_en)
+                                                            }}
+                                                        />
+                                                    </div>
                                                 </td>
-
-                                                {/* Tombol Aksi */}
                                                 <td>
                                                     <div className="d-flex flex-column flex-md-row gap-1">
                                                         <button
                                                             className="btn btn-sm btn-warning d-flex align-items-center justify-content-center gap-1"
-                                                            onClick={() => openEditModal(bisnis)}
+                                                            onClick={() => openEditModal(bisnisItem)}
                                                         >
                                                             <span className="d-none d-md-inline">{t('edit_button')}</span>
                                                             <FontAwesomeIcon icon={faPencilAlt} />
@@ -256,7 +318,7 @@ function Bisnis() {
 
                                                         <button
                                                             className="btn btn-sm btn-danger d-flex align-items-center justify-content-center gap-1"
-                                                            onClick={() => deleteBisnisData(bisnis.uuid)}
+                                                            onClick={() => handleDeleteClick(bisnisItem.uuid)}
                                                         >
                                                             <span className="d-none d-md-inline">{t('delete_button')}</span>
                                                             <FontAwesomeIcon icon={faTrash} />
@@ -281,7 +343,7 @@ function Bisnis() {
                 <section>
                     {editModal && (
                         <div className="modal show fade d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                            <div className="modal-dialog modal-dialog-centered">
+                            <div className="modal-dialog modal-dialog-centered modal-lg"> {/* Menambahkan modal-lg untuk ukuran yang lebih besar */}
                                 <div className="modal-content">
                                     <form onSubmit={handleEditSubmit}>
                                         <div className="modal-header">
@@ -306,31 +368,35 @@ function Bisnis() {
                                             </div>
                                             {/* Textarea Deskripsi Bahasa Indonesia */}
                                             <div className="mb-3">
-                                                <label htmlFor="editDeskripsiId" className="form-label">
-                                                    {t('form_label_description_id_short')}
-                                                </label>
-                                                <textarea
-                                                    id="editDeskripsiId"
-                                                    rows={5}
-                                                    className="form-control"
-                                                    value={editDeskrip_id}
-                                                    onChange={(e) => setEditDeskrip_id(e.target.value)}
-                                                    required
-                                                ></textarea>
+                                                <label htmlFor="editDeskripsiId" className="form-label">Deskripsi (ID)</label>
+                                                {/* Ganti textarea dengan CKEditor */}
+                                                <CKEditor
+                                                    editor={ClassicEditor}
+                                                    data={editDeskrip_id} // Mengikat data CKEditor ke state
+                                                    onChange={(event, editor) => {
+                                                        const data = editor.getData(); // Mendapatkan konten HTML dari editor
+                                                        setEditDeskrip_id(data); // Memperbarui state
+                                                    }}
+                                                // Anda juga bisa menambahkan konfigurasi lain jika diperlukan, contoh:
+                                                // config={{
+                                                //      toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+                                                //      // ...konfigurasi lainnya
+                                                // }}
+                                                />
                                             </div>
                                             {/* Textarea Deskripsi Bahasa Inggris */}
                                             <div className="mb-3">
                                                 <label htmlFor="editDeskripsiEn" className="form-label">
-                                                    {t('form_label_description_en_short')}
+                                                    {t('form_label_description_en')}
                                                 </label>
-                                                <textarea
-                                                    id="editDeskripsiEn"
-                                                    rows={5}
-                                                    className="form-control"
-                                                    value={editDeskrip_en}
-                                                    onChange={(e) => setEditDeskrip_en(e.target.value)}
-                                                    required
-                                                ></textarea>
+                                                <CKEditor // Mengganti textarea dengan CKEditor
+                                                    editor={ClassicEditor}
+                                                    data={editDeskrip_en}
+                                                    onChange={(event, editor) => {
+                                                        const data = editor.getData();
+                                                        setEditDeskrip_en(data);
+                                                    }}
+                                                />
                                             </div>
                                         </div>
                                         <div className="modal-footer">
@@ -339,10 +405,10 @@ function Bisnis() {
                                                 className="btn btn-secondary"
                                                 onClick={() => setEditModal(false)}
                                             >
-                                                {t('button_close')}
+                                                {t('admin_close_button')}
                                             </button>
                                             <button type="submit" className="btn btn-primary">
-                                                {t('button_save_changes')}
+                                                {t('admin_save_changes_button')}
                                             </button>
                                         </div>
                                     </form>
@@ -352,6 +418,31 @@ function Bisnis() {
                     )}
                 </section>
 
+                {/* Modal Konfirmasi Hapus Kustom */}
+                {confirmDeleteModal && (
+                    <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1" role="dialog">
+                        <div className="modal-dialog" role="document">
+                            <div className="modal-content">
+                                <div className="modal-header">
+                                    <h5 className="modal-title">{t('confirm_delete_title')}</h5>
+                                    <button type="button" className="btn-close" onClick={() => setConfirmDeleteModal(false)} aria-label="Close">
+                                    </button>
+                                </div>
+                                <div className="modal-body">
+                                    <p>{t('confirm_delete_message')}</p>
+                                </div>
+                                <div className="modal-footer">
+                                    <button type="button" className="btn btn-secondary" onClick={() => setConfirmDeleteModal(false)}>
+                                        {t('admin_cancel_button')}
+                                    </button>
+                                    <button type="button" className="btn btn-danger" onClick={confirmDeleteAction}>
+                                        {t('admin_delete_button')}
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                )}
             </div>
         </div >
     )

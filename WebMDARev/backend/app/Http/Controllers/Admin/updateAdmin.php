@@ -10,6 +10,7 @@ use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
+use App\Models\Galeri;
 use App\Models\Instagram;
 use App\Models\Youtube;
 use Illuminate\Support\Facades\File;
@@ -213,6 +214,43 @@ class updateAdmin extends Controller
         return response()->json([
             'msg' => 'Berhasil Mengubah data',
             'youtube' => $youtube
+        ], 200);
+    }
+
+    function updateDokumentasi(Request $request, $uuid)
+    {
+        $request->validate([
+            "foto_galeri" => "nullable|image|mimes:jpg,png,jpeg", // ← Ubah jadi nullable
+            "deskrip_id" => "required",
+            "deskrip_en" => "required",
+        ]);
+
+        $galeri = Galeri::where('uuid', $uuid)->firstOrFail();
+
+        $dataUpdate = [
+            "deskrip_id" => $request->deskrip_id,
+            "deskrip_en" => $request->deskrip_en,
+        ];
+
+        if ($request->hasFile('foto_galeri')) {
+            // Hapus gambar lama
+            $oldPath = public_path('Galeri/' . $galeri->foto_galeri);
+            if (File::exists($oldPath)) {
+                File::delete($oldPath);
+            }
+
+            // Simpan gambar baru
+            $image_name_new = time() . "-" . $request->file('foto_galeri')->getClientOriginalName();
+            $request->file('foto_galeri')->move(public_path("Galeri"), $image_name_new);
+
+            // Tambahkan ke data update
+            $dataUpdate['foto_galeri'] = $image_name_new;
+        }
+
+        $galeri->update($dataUpdate);
+
+        return response()->json([
+            "galeri" => $galeri
         ], 200);
     }
 }

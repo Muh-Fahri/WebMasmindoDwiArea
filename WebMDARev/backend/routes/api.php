@@ -72,12 +72,6 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('/admin/instagram/{uuid}', [updateAdmin::class, 'updateInstagram']);
     Route::delete('/admin/instagram/delete/{uuid}', [deleteAdmin::class, 'deleteInstagram']);
 
-    // youtube
-    Route::post('/admin/youtube', [createAdmin::class, 'createYoutube']);
-    Route::get('/admin/youtube', [readAdmin::class, 'readYoutube']);
-    Route::post('/admin/youtube/{uuid}', [updateAdmin::class, 'updateYoutube']);
-    Route::delete('/admin/youtube/delete/{uuid}', [deleteAdmin::class, 'deleteYoutube']);
-
     // pdf
     Route::post("/admin/pdf", [createAdmin::class, 'createPdf']);
     Route::get('/admin/pdf', [readAdmin::class, 'readPdf']);
@@ -89,4 +83,16 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 
     // Dashboard
     Route::get('/admin/dashboard', [readAdmin::class, 'dashboardAdmin']);
+
+    //Dokumentasi
+    Route::post('/admin/dokumentasi', [createAdmin::class, 'createDokumentasi']);
+    Route::get('/admin/dokumentasi', [readAdmin::class, 'readDokumentasi']);
+    Route::post('/admin/dokumentasi/{uuid}', [updateAdmin::class, 'updateDokumentasi']);
+    Route::delete('/admin/dokumentasi/delete/{uuid}', [deleteAdmin::class, 'deleteDokumentasi']);
+
+    // youtube
+    Route::post('/admin/youtube', [createAdmin::class, 'createYoutube']);
+    Route::get('/admin/youtube', [readAdmin::class, 'readYoutube']);
+    Route::post('/admin/youtube/{uuid}', [updateAdmin::class, 'updateYoutube']);
+    Route::delete('/admin/youtube/delete/{uuid}', [deleteAdmin::class, 'deleteYoutube']);
 });

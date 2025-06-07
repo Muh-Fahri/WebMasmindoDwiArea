@@ -13,6 +13,7 @@ use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Galeri;
 
 class readAdmin extends Controller
 {
@@ -180,6 +181,15 @@ class readAdmin extends Controller
             'youtube' => $hitung_youtube,
             'lingkungan' => $hitung_lingkungan,
             'sosial' => $hitung_sosial,
+        ], 200);
+    }
+
+    function readDokumentasi()
+    {
+        $galeri = Galeri::all();
+
+        return response()->json([
+            "galeri" => $galeri
         ], 200);
     }
 }

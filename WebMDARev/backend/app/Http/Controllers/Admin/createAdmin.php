@@ -13,6 +13,7 @@ use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
+use App\Models\Galeri;
 use App\Models\PDF;
 
 class createAdmin extends Controller
@@ -205,6 +206,33 @@ class createAdmin extends Controller
 
         return response()->json([
             "msg" => "Gagal Upload File"
+        ], 200);
+    }
+
+    function createDokumentasi(Request $request)
+    {
+        $request->validate([
+            "foto_galeri" => "required|mimes:jpg,png,jpeg|image",
+            "deskrip_id" => "required|max:255|",
+            "deskrip_en" => "nullable|max:255"
+        ]);
+
+        if ($request->hasFile('foto_galeri')) {
+            $imageName = time() . '_' . $request->file('foto_galeri')->getClientOriginalName();
+            $simpan = public_path('Sosial');
+            $request->file('foto_galeri')->move($simpan, $imageName);
+        } else {
+            $imageName = null;
+        }
+
+        $galeri = Galeri::create([
+            "deskrip_id" => $request->deskrip_id,
+            "deskrip_en" => $request->deskrip_en,
+            "foto_galeri" => $imageName,
+        ]);
+
+        return response()->json([
+            "galeri" => $galeri
         ], 200);
     }
 }

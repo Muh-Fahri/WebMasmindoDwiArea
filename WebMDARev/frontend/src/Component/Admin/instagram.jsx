@@ -149,7 +149,6 @@ function Instagram() {
                         </div>
                     </div>
                 </section>
-
                 <section>
                     <div className="container">
                         <div className="row mt-3">
@@ -179,7 +178,6 @@ function Instagram() {
                         </div>
                     </div>
                 </section>
-
                 <section>
                     {editIgModal && (
                         <div className="modal show fade d-block" tabIndex="-1">

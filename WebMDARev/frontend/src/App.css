@@ -347,3 +347,48 @@
 .navbar-hijau {
     color: #115258 !important;
 }
+
+
+.navbar .dropdown-menu {
+    /* Set state awal: tersembunyi */
+    opacity: 0;
+    visibility: hidden;
+    /* Sembunyikan sepenuhnya dari interaksi saat tidak terlihat */
+    transform: translateY(20px);
+    /* Mulai dari posisi sedikit di bawah */
+    transition: opacity 1.5s ease-in-out,
+        /* Transisi opacity selama 1.5 detik */
+        transform 1.5s ease-in-out,
+        /* Transisi transform selama 1.5 detik */
+        visibility 1.5s ease-in-out;
+    /* Transisi visibility juga */
+    display: block;
+    /* Overrides Bootstrap's display: none; for transition */
+    pointer-events: none;
+    /* Mencegah interaksi saat tersembunyi */
+}
+
+/* Aturan saat dropdown menu terbuka */
+.navbar .dropdown-menu {
+    opacity: 0;
+    visibility: hidden;
+    transform: translateX(0px);
+    transition: opacity 0.3s ease-in-out,
+        transform 0.3s ease-in-out,
+        visibility 0.3s ease-in-out;
+    /* Penting: tambahkan transition untuk visibility */
+    display: block;
+    /* Overrides Bootstrap's display: none; for transition */
+    pointer-events: none;
+}
+
+.navbar .dropdown-menu.show-custom {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(0);
+    pointer-events: auto;
+}
+
+.custom-editor .ck-editor__editable {
+    min-height: 400px;
+}

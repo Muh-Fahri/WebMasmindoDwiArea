@@ -8,6 +8,7 @@ import Sosial from "../../Component/Admin/sosial";
 import Instagram from "../../Component/Admin/instagram";
 import Youtube from "../../Component/Admin/youtube";
 import PDF from "../../Component/Admin/pdf";
+import Galeri from "../../Component/Admin/galeri";
 
 function AdminPage() {
     return (
@@ -21,6 +22,7 @@ function AdminPage() {
                 <Route path="instagram" element={<Instagram />} />
                 <Route path="youtube" element={<Youtube />} />
                 <Route path="laporan_keberlanjutan" element={<PDF />} />
+                <Route path="galeri" element={<Galeri />} />
 
             </Routes>
         </div>

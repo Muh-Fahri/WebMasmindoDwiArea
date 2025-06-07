@@ -443,7 +443,6 @@ function Lingkungan() {
                         </div>
                     </div>
                 </section>
-                {/* modal dokumentasi */}
                 <section>
                     {editDokumentasiModal && (
                         <div className="modal show fade d-block" tabIndex="-1">

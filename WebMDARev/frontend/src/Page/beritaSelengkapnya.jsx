@@ -2,10 +2,12 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 import NavbarHijau from "../Component/navbarHijau";
+import { useTranslation } from "react-i18next";
 
 function BeritaSelengkapnya() {
     const { uuid } = useParams(); // ambil UUID dari URL
     const [berita, setBerita] = useState(null); // bukan array, tapi satu objek
+    const { i18n } = useTranslation();
 
     useEffect(() => {
         getSelengkapnyaData();
@@ -56,14 +58,14 @@ function BeritaSelengkapnya() {
                                 </div>
                                 <div className="mt-auto pt-4">
                                     <p className="mb-1">{formatTanggal(berita.created_at)}</p>
-                                    <h3 className="fw-bold display-6">{berita.judul_berita}</h3>
+                                    <h3 className="fw-bold display-6">{i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}</h3>
                                 </div>
                             </div>
                             <div className="col-md-7">
                                 <div className="card rounded-5 overflow-hidden responsive-image-container" style={{ height: '100vh' }}>
                                     <img
                                         src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
-                                        alt={berita.judul_berita}
+                                        alt="Image"
                                         className="img-fluid object-fit-cover rounded-5"
                                         style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                                     />
@@ -73,7 +75,7 @@ function BeritaSelengkapnya() {
                         </div>
                         <div className="row p-5 d-flex justify-content-center">
                             <div className="col-12 col-md-8">
-                                <p style={{ whiteSpace: 'pre-line', textAlign: 'justify' }} className="fs-5 fs-md-3">{berita.deskripsi_berita}</p>
+                                <p style={{ whiteSpace: 'pre-line', textAlign: 'justify' }} className="fs-5 fs-md-3">{i18n.language === 'id' ? berita.deskripsi_berita_id : berita.deskripsi_berita_en}</p>
                             </div>
                         </div>
 
