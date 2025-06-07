@@ -21,12 +21,14 @@ class createAdmin extends Controller
     {
         $request->validate([
             'link_video' => 'required',
-            'deskripsi_bisnis' => 'required',
+            'deskripsi_bisnis_id' => 'required',
+            'deskripsi_bisnis_en' => 'nullable',
         ]);
 
         $bisnis = Bisnis::create([
             'link_video' => $request->link_video,
-            'deskripsi_bisnis' => $request->deskripsi_bisnis,
+            'deskripsi_bisnis_id' => $request->deskripsi_bisnis_id,
+            'deskripsi_bisnis_en' => $request->deskripsi_bisnis_en,
         ]);
 
         return response()->json([
@@ -38,8 +40,10 @@ class createAdmin extends Controller
     function createBerita(Request $request)
     {
         $request->validate([
-            'judul_berita' => 'required|string|max:255',
-            'deskripsi_berita' => 'required|string',
+            'judul_berita_id' => 'required|string|max:255',
+            'judul_berita_en' => 'nullable|string|max:255',
+            'deskripsi_berita_id' => 'required|string',
+            'deskripsi_berita_en' => 'nullable|string',
             'image_berita' => 'required|image|mimes:jpeg,png,jpg', // optional sesuai kebutuhan
         ]);
 
@@ -51,8 +55,10 @@ class createAdmin extends Controller
         }
 
         $berita = BeritaTerkini::create([
-            'judul_berita' => $request->input('judul_berita'),
-            'deskripsi_berita' => $request->input('deskripsi_berita'),
+            'judul_berita_id' => $request->input('judul_berita_id'),
+            'judul_berita_en' => $request->input('judul_berita_en'),
+            'deskripsi_berita_id' => $request->input('deskripsi_berita_id'),
+            'deskripsi_berita_en' => $request->input('deskripsi_berita_en'),
             'image_berita' => $imageName,
         ]);
 
@@ -68,7 +74,8 @@ class createAdmin extends Controller
     function createDesLing(Request $request)
     {
         $request->validate([
-            'deskripsi_halaman' => 'string|required',
+            'deskripsi_halaman_id' => 'string|required',
+            'deskripsi_halaman_en' => 'string| nullable',
         ]);
 
         if (DeskripLingkungan::exists()) {
@@ -78,7 +85,8 @@ class createAdmin extends Controller
         }
 
         $desLing = DeskripLingkungan::create([
-            'deskripsi_halaman' => $request->deskripsi_halaman
+            'deskripsi_halaman_id' => $request->deskripsi_halaman_id,
+            'deskripsi_halaman_en' => $request->deskripsi_halaman_en
         ]);
 
 

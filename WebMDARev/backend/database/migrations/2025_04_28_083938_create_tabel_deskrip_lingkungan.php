@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('deskripLingkungan', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid')->unique();
-            $table->text('deskripsi_halaman');
+            $table->text('deskripsi_halaman_id');
+            $table->text('deskripsi_halaman_en')->nullable();
             $table->timestamps();
         });
     }

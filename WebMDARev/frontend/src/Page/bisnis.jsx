@@ -4,12 +4,10 @@ import axios from "axios";
 import Footer from "./fotter";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
+import { useTranslation } from 'react-i18next';
 
 function Bisnis() {
-
-
-
+    const { t, i18n } = useTranslation();
 
     const [bisnisList, setBisnisList] = useState([]);
 
@@ -23,11 +21,16 @@ function Bisnis() {
     const getBisnisData = async () => {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
+            // Pastikan res.data.bisnisUser adalah array dan berisi data yang valid
+            // Tambahkan logging untuk memeriksa data yang diterima
+            console.log("Data bisnis dari API:", res.data.bisnisUser);
             setBisnisList(res.data.bisnisUser);
         } catch (error) {
-            alert('Erorr Pada Tampilan');
+            console.error("Error fetching bisnis data:", error); // Log error lebih detail
+            alert(t('error_display'));
         }
     }
+
     return (
         <div>
             <NavbarProject />
@@ -41,7 +44,7 @@ function Bisnis() {
                                         fontSize: 'clamp(2rem, 5vw, 5rem)',
                                         color: '#F16022',
                                     }}>
-                                    Tambang Emas <span style={{ color: "#115258" }}>Pertama</span>
+                                    {t('mining_title_part1')} <span style={{ color: "#115258" }}>{t('mining_title_part2')}</span>
                                 </h1>
                             </div>
                         </div>
@@ -51,7 +54,7 @@ function Bisnis() {
                                     style={{
                                         fontSize: 'clamp(2rem, 5vw, 5rem)',
                                     }}>
-                                    di Sulawesi Selatan
+                                    {t('mining_title_part3')}
                                 </h1>
                             </div>
                         </div>
@@ -80,10 +83,12 @@ function Bisnis() {
                         <div className="col-12 col-md" data-aos="fade-down">
                             {bisnisList.length > 0 ? (
                                 bisnisList.map((bisnis) => (
-                                    <p style={{ whiteSpace: 'pre-line', textAlign: 'justify' }} key={bisnis.uuid} className="fs-3 fs-md-5">{bisnis.deskripsi_bisnis}</p>
+                                    <p style={{ whiteSpace: 'pre-line', textAlign: 'justify' }} key={bisnis.uuid} className="fs-3 fs-md-5">
+                                        {i18n.language === 'id' ? bisnis.deskripsi_bisnis_id : bisnis.deskripsi_bisnis_en}
+                                    </p>
                                 ))
                             ) : (
-                                <h5>No Data</h5>
+                                <h5>{t('no_data')}</h5>
                             )}
                         </div>
                     </div>
@@ -91,27 +96,30 @@ function Bisnis() {
             </section>
 
             <section>
-                <div className="container mt-5 " data-aos="fade-down"  >
+                <div className="container mt-5 " data-aos="fade-down" >
                     <div className="row mt-4">
                         {bisnisList.length > 0 ? (
                             <div className="col p-5">
-                                {bisnisList.map((bisnis) => ((
-                                    <div key={bisnis.uuid} className="responsive-iframe-container">
-                                        <iframe
-                                            className="rounded-5 shadow-lg"
-                                            src={bisnis.link_video}
-                                            title="YouTube video player"
-                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                            allowFullScreen
-                                        ></iframe>
-                                    </div>
-                                )))}
+                                {bisnisList.map((bisnis) => ( // <<< Perbaiki di sini (hapus satu kurung kurawal pembuka)
+                                    // Hanya render iframe jika link_video tidak null/undefined
+                                    bisnis.link_video ? (
+                                        <div key={bisnis.uuid} className="responsive-iframe-container">
+                                            <iframe
+                                                className="rounded-5 shadow-lg"
+                                                src={bisnis.link_video}
+                                                title="YouTube video player"
+                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                allowFullScreen
+                                            ></iframe>
+                                        </div>
+                                    ) : null // Atau tampilkan pesan alternatif jika tidak ada video
+                                ))} {/* <<< Perbaiki di sini (hapus satu kurung kurawal penutup) */}
                             </div>
                         ) : (
                             <div className="justify-content-center">
-                                <h5>No Data Yet</h5>
+                                <h5>{t('no_data_yet')}</h5>
                             </div>
-                        )};
+                        )}
                     </div>
                 </div>
             </section>

@@ -14,6 +14,7 @@ use App\Models\Instagram;
 use App\Models\Youtube;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use PhpParser\Node\Stmt\ElseIf_;
 
 class updateAdmin extends Controller
 {
@@ -22,14 +23,16 @@ class updateAdmin extends Controller
 
         $request->validate([
             'link_video' => 'required|string',
-            'deskripsi_bisnis' => 'required|string',
+            'deskripsi_bisnis_id' => 'required|string',
+            'deskripsi_bisnis_en' => 'nullable',
         ]);
 
         $bisnis = Bisnis::where('uuid', $uuid)->firstOrFail();
 
         $bisnis->update([
             'link_video' => $request->link_video,
-            'deskripsi_bisnis' => $request->deskripsi_bisnis,
+            'deskripsi_bisnis_id' => $request->deskripsi_bisnis_id,
+            'deskripsi_bisnis_en' => $request->deskripsi_bisnis_en,
         ]);
 
         return response()->json([
@@ -41,8 +44,10 @@ class updateAdmin extends Controller
     function editBerita(Request $request, $uuid)
     {
         $request->validate([
-            'judul_berita' => 'sometimes|required|string|max:255',
-            'deskripsi_berita' => 'sometimes|required|string',
+            'judul_berita_id' => 'sometimes|required|string|max:255',
+            'judul_berita_en' => 'sometimes|required|string|max:255',
+            'deskripsi_berita_id' => 'sometimes|required|string',
+            'deskripsi_berita_en' => 'sometimes|required|string',
             'image_berita' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
         ]);
 
@@ -59,11 +64,17 @@ class updateAdmin extends Controller
 
             $berita->image_berita = $imageName;
         }
-        if ($request->has('judul_berita')) {
-            $berita->judul_berita = $request->input('judul_berita');
+        if ($request->has('judul_berita_id')) {
+            $berita->judul_berita_id = $request->input('judul_berita_id');
         }
-        if ($request->has('deskripsi_berita')) {
-            $berita->deskripsi_berita = $request->input('deskripsi_berita');
+        if ($request->has('deskripsi_berita_id')) {
+            $berita->deskripsi_berita_id = $request->input('deskripsi_berita_id');
+        }
+        if ($request->has('judul_berita_en')) {
+            $berita->judul_berita_en = $request->input('judul_berita_en');
+        }
+        if ($request->has('deskripsi_berita_en')) {
+            $berita->deskripsi_berita_en = $request->input('deskripsi_berita_en');
         }
 
         $berita->save();
@@ -77,13 +88,15 @@ class updateAdmin extends Controller
     function updateDesling(Request $request, $uuid)
     {
         $request->validate([
-            'deskripsi_halaman' => 'required|min:20|string',
+            'deskripsi_halaman_id' => 'required|min:20|string',
+            'deskripsi_halaman_en' => 'required|min:20|string',
         ]);
 
         $deskripsi = DeskripLingkungan::where('uuid', $uuid)->firstOrFail();
 
         $deskripsi->update([
-            'deskripsi_halaman' => $request->deskripsi_halaman
+            'deskripsi_halaman_id' => $request->deskripsi_halaman_id,
+            'deskripsi_halaman_en' => $request->deskripsi_halaman_en
         ]);
 
         return response()->json([

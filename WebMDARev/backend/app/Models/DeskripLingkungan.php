@@ -9,7 +9,8 @@ class DeskripLingkungan extends Model
 {
     protected $table = 'deskripLingkungan';
     protected $fillable = [
-        'deskripsi_halaman',
+        'deskripsi_halaman_id',
+        'deskripsi_halaman_en',
     ];
 
     protected static function boot()

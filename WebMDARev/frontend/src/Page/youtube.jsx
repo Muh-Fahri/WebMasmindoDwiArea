@@ -2,8 +2,11 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavbarHijau from "../Component/navbarHijau";
 import Aos from "aos";
+import { useTranslation } from "react-i18next";
 
 function Youtube() {
+
+    const { t, i18n } = useTranslation();
 
     const [ytList, setYtList] = useState([]);
     useEffect(() => {
@@ -29,7 +32,7 @@ function Youtube() {
             <div className="container-fluid pt-5 mt-5">
                 <div className="row pt-5 mt-5">
                     <div className="col p-5">
-                        <h2 className="text-uppercase fw-bold" style={{ color: '#115258' }}>Berita</h2>
+                        <h2 className="text-uppercase fw-bold" style={{ color: '#115258' }}>{t('news_title')}</h2>
                     </div>
                 </div>
                 <div className="row p-5">
@@ -40,13 +43,13 @@ function Youtube() {
                         {/* Nav */}
                         <ul className="list-unstyled">
                             <li>
-                                <a href="/berita" className="fs-1 text-black text-decoration-none">Masmindo dalam berita</a>
+                                <a href="/berita" className="fs-1 text-black text-decoration-none">{t('news_in_masmindo')}</a>
                             </li>
                             <li>
                                 <a href="/instagram" className="fs-1 text-black text-decoration-none">Instagram</a>
                             </li>
                             <li>
-                                <a href="/youtube" className="fs-1 text-decoration-none berita-active ">Youtube</a>
+                                <a href="/youtube" className="fs-1 text-decoration-none berita-active">Youtube</a>
                             </li>
                         </ul>
                     </div>

@@ -10,8 +10,10 @@ class BeritaTerkini extends Model
     protected $table = 'beritaTerkini';
     protected $fillable = [
         'image_berita',
-        'judul_berita',
-        'deskripsi_berita',
+        'judul_berita_id',
+        'judul_berita_en',
+        'deskripsi_berita_id',
+        'deskripsi_berita_en',
         'uuid',
     ];
 

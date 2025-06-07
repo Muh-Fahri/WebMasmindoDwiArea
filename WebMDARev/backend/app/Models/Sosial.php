@@ -11,7 +11,8 @@ class Sosial extends Model
     protected $table = 'sosial';
     protected $fillable = [
         'imageSosial',
-        'category'
+        'category_id',
+        'category_en',
     ];
 
     protected static function boot()

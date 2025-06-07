@@ -11,7 +11,8 @@ class Bisnis extends Model
     protected $fillable = [
         'uuid',
         'link_video',
-        'deskripsi_bisnis',
+        'deskripsi_bisnis_id',
+        'deskripsi_bisnis_en',
     ];
 
     protected static function boot()

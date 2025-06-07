@@ -6,6 +6,7 @@ import { faBook, faNewspaper, faHashtag } from '@fortawesome/free-solid-svg-icon
 import { useEffect, useState } from 'react';
 import handleUnauthorized from './unouthorized';
 import CountUp from 'react-countup';
+import { useTranslation } from 'react-i18next';
 
 function Dashboard() {
     const [laporanList, setLaporanList] = useState(0);
@@ -14,6 +15,7 @@ function Dashboard() {
     const [youtubeList, setYoutubeList] = useState(0);
     const [lingkunganList, setLingkunganList] = useState(0);
     const [sosialList, setSosialList] = useState(0);
+    const { t, i18n } = useTranslation();
 
     const token = localStorage.getItem('token')
 
@@ -52,8 +54,10 @@ function Dashboard() {
             <div className="flex-grow-1 content px-3 px-md-5 pt-5 mt-5" style={{ overflowX: 'hidden' }}>
                 <div className="row">
                     <div className="col">
-                        <h1>Selamat datang di Dashboard!</h1>
-                        <p>Ini adalah halaman utama setelah login.</p>
+                        {/* Judul Dashboard yang Diterjemahkan */}
+                        <h1>{t('dashboard_welcome_title')}</h1>
+                        {/* Paragraf Selamat Datang yang Diterjemahkan */}
+                        <p>{t('dashboard_welcome_message')}</p>
                     </div>
                 </div>
 
@@ -62,18 +66,21 @@ function Dashboard() {
                     <div className="col-12 col-md-4">
                         <div className="card p-4 shadow h-100">
                             <div className="card-body m-0 p-0">
-                                <div className="row align-items-center"> {/* Tambah align-items-center agar icon dan text sejajar vertikal */}
+                                <div className="row align-items-center">
                                     <div className="col">
                                         {/* h5: Default (xs) fs-6, md ke atas fs-5 (ukuran normal h5) */}
-                                        <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>Laporan Tahunan Terupload </h5>
+                                        {/* Terjemahkan judul card */}
+                                        <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>
+                                            {t('annual_report_card_title')}
+                                        </h5>
                                         {/* h1: Default (xs) display-6, md ke atas display-4 (ukuran normal h1) */}
                                         <h1 className="display-6 display-md-4">
                                             <CountUp
-                                                start={0}                // mulai dari angka 0
-                                                end={laporanList}        // angka akhir dari backend
-                                                duration={0.5}           // durasi animasi dalam detik
-                                                delay={0.3}              // jeda sebelum mulai
-                                                separator="."            // pemisah ribuan, misalnya 1.000
+                                                start={0}
+                                                end={laporanList}
+                                                duration={0.5}
+                                                delay={0.3}
+                                                separator="."
                                             />
                                         </h1>
                                     </div>
@@ -90,14 +97,17 @@ function Dashboard() {
                             <div className="card-body m-0 p-0">
                                 <div className="row align-items-center">
                                     <div className="col">
-                                        <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>Berita Terupload </h5>
+                                        {/* Terjemahkan judul card */}
+                                        <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>
+                                            {t('news_uploaded_card_title')}
+                                        </h5>
                                         <h1 className="display-6 display-md-4">
                                             <CountUp
-                                                start={0}                // mulai dari angka 0
-                                                end={beritaList}        // angka akhir dari backend
-                                                duration={0.5}           // durasi animasi dalam detik
-                                                delay={0.3}              // jeda sebelum mulai
-                                                separator="."            // pemisah ribuan, misalnya 1.000
+                                                start={0}
+                                                end={beritaList}
+                                                duration={0.5}
+                                                delay={0.3}
+                                                separator="."
                                             />
                                         </h1>
                                     </div>
@@ -113,14 +123,17 @@ function Dashboard() {
                             <div className="card-body m-0 p-0">
                                 <div className="row align-items-center">
                                     <div className="col">
-                                        <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>Instagram Terupload </h5>
+                                        {/* Terjemahkan judul card */}
+                                        <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>
+                                            {t('instagram_uploaded_card_title')}
+                                        </h5>
                                         <h1 className="display-6 display-md-4">
                                             <CountUp
-                                                start={0}                // mulai dari angka 0
-                                                end={instagramList}        // angka akhir dari backend
-                                                duration={0.5}           // durasi animasi dalam detik
-                                                delay={0.3}              // jeda sebelum mulai
-                                                separator="."            // pemisah ribuan, misalnya 1.000
+                                                start={0}
+                                                end={instagramList}
+                                                duration={0.5}
+                                                delay={0.3}
+                                                separator="."
                                             />
                                         </h1>
                                     </div>
@@ -140,54 +153,78 @@ function Dashboard() {
                             <div className="card-body m-0 p-0">
                                 <div className="row">
                                     <div className="col">
-                                        <h5>ESG (Environmental, Social, Governance)</h5> {/* Judul utama ESG tetap */}
+                                        {/* Judul utama ESG */}
+                                        <h5>{t('esg_main_title')}</h5>
                                     </div>
                                 </div>
 
                                 <div className="row mt-4 d-flex justify-content-center gy-4 gx-4">
+                                    {/* Kartu Enviro */}
                                     <div className="col-12 col-sm-6 col-lg-3">
                                         <div className="card p-3 p-md-4 text-white h-100" style={{ backgroundColor: '#F16022' }}>
                                             <div className="card-body m-0 p-0">
-                                                {/* h5: Default (xs) fs-6, lg ke atas fs-5 */}
-                                                <h5 className="fs-6 fs-lg-5">Enviro "Lingkungan"</h5>
-                                                {/* p: Default (xs) small, lg ke atas tetap small atau bisa diatur fs-6 jika mau sedikit lebih besar */}
-                                                <p className="small mb-2">Postingan Terupload Pada Halaman Enviro</p>
-                                                {/* h1: Default (xs) display-6, lg ke atas display-4 */}
+                                                <h5 className="fs-6 fs-lg-5">
+                                                    {t('esg_enviro_title')}
+                                                </h5>
+                                                <p className="small mb-2">
+                                                    {t('esg_enviro_description')}
+                                                </p>
                                                 <h1 className="display-6 display-md-4">
                                                     <CountUp
-                                                        start={0}                // mulai dari angka 0
-                                                        end={lingkunganList}        // angka akhir dari backend
-                                                        duration={0.5}           // durasi animasi dalam detik
-                                                        delay={0.3}              // jeda sebelum mulai
-                                                        separator="."            // pemisah ribuan, misalnya 1.000
+                                                        start={0}
+                                                        end={lingkunganList}
+                                                        duration={0.5}
+                                                        delay={0.3}
+                                                        separator="."
                                                     />
                                                 </h1>
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Kartu Social */}
                                     <div className="col-12 col-sm-6 col-lg-3">
                                         <div className="card p-3 p-md-4 text-white h-100" style={{ backgroundColor: '#F16022' }}>
                                             <div className="card-body m-0 p-0">
-                                                <h5 className="fs-6 fs-lg-5">Social "Sosial"</h5>
-                                                <p className="small mb-2">Postingan Terupload Pada Halaman Sosial</p>
+                                                <h5 className="fs-6 fs-lg-5">
+                                                    {t('esg_social_title')}
+                                                </h5>
+                                                <p className="small mb-2">
+                                                    {t('esg_social_description')}
+                                                </p>
                                                 <h1 className="display-6 display-md-4">
                                                     <CountUp
-                                                        start={0}                // mulai dari angka 0
-                                                        end={sosialList}        // angka akhir dari backend
-                                                        duration={0.5}           // durasi animasi dalam detik
-                                                        delay={0.3}              // jeda sebelum mulai
-                                                        separator="."            // pemisah ribuan, misalnya 1.000
+                                                        start={0}
+                                                        end={sosialList}
+                                                        duration={0.5}
+                                                        delay={0.3}
+                                                        separator="."
                                                     />
                                                 </h1>
                                             </div>
                                         </div>
                                     </div>
+
+                                    {/* Kartu Governance */}
                                     <div className="col-12 col-sm-6 col-lg-3">
                                         <div className="card p-3 p-md-4 text-white h-100" style={{ backgroundColor: '#F16022' }}>
                                             <div className="card-body m-0 p-0">
-                                                <h5 className="fs-6 fs-lg-5">Governance "Tata Kelola"</h5>
-                                                <p className="small mb-2">Postingan Terupload Pada Halaman Tata Kelola</p>
-                                                <h1 className="display-6 display-lg-4">0</h1>
+                                                <h5 className="fs-6 fs-lg-5">
+                                                    {t('esg_governance_title')}
+                                                </h5>
+                                                <p className="small mb-2">
+                                                    {t('esg_governance_description')}
+                                                </p>
+                                                {/* Jika Anda memiliki state untuk governance, gunakan CountUp juga di sini */}
+                                                {/* <h1 className="display-6 display-lg-4">
+                                                    <CountUp
+                                                        start={0}
+                                                        end={governanceList} // Asumsi Anda memiliki state ini
+                                                        duration={0.5}
+                                                        delay={0.3}
+                                                        separator="."
+                                                    />
+                                                </h1> */}
                                             </div>
                                         </div>
                                     </div>

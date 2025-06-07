@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import NoData from "../Error/NoData";
 import handleUnauthorized from "./unouthorized";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -19,7 +20,10 @@ function Lingkungan() {
     }, []);
 
     // var untuk membuat data
-    const [deskripsi, setDeskripsiHalaman] = useState("");
+    const [deskripsi, setDeskripsiHalaman] = useState({
+        deskripsi_halaman_id: "",
+        deskripsi_halaman_en: ""
+    });
     const handleUnauthorized = () => {
         window.location.href = '/Login-admin-123'
     };
@@ -29,6 +33,7 @@ function Lingkungan() {
     const [deskripList, setDeskripList] = useState([]);
     const [imgList, setImgList] = useState([]);
     const token = localStorage.getItem('token');
+    const { t, i18n } = useTranslation();
 
 
     // modal edit form
@@ -36,7 +41,9 @@ function Lingkungan() {
     const [editDokumentasiModal, setEditDokumentasiModal] = useState(false);
     const [editId, setEditId] = useState("");
     const [imgLing, setImgLing] = useState("");
-    const [editDeskr, setEditDeskr] = useState("");
+    const [editDeskrId, setEditDeskrId] = useState("");
+    const [editDeskrEn, setEditDeskrEn] = useState("");
+
 
     const getDeskripData = async () => {
         try {
@@ -103,15 +110,17 @@ function Lingkungan() {
     const openEditModal = (deskrLing) => {
         setEditDeskripsiModal(true);
         setEditId(deskrLing.uuid);
-        setEditDeskr(deskrLing.deskripsi_halaman);
-    }
+        setEditDeskrId(deskrLing.deskripsi_halaman_id);
+        setEditDeskrEn(deskrLing.deskripsi_halaman_en);
+    };
 
 
     const editDeskData = async (e) => {
         e.preventDefault();
         try {
             await axios.put(`http://127.0.0.1:8000/api/admin/esg/lingkungan/deskripLingkungan/${editId}`, {
-                deskripsi_halaman: editDeskr
+                deskripsi_halaman_id: editDeskrId,
+                deskripsi_halaman_en: editDeskrEn
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`
@@ -123,26 +132,28 @@ function Lingkungan() {
         } catch (error) {
             alert('Gagal Mengedit Data');
         }
-    }
+    };
 
     const addDeskData = async (e) => {
         e.preventDefault();
         try {
             await axios.post('http://127.0.0.1:8000/api/admin/esg/lingkungan/deskripLingkungan', {
-                deskripsi_halaman: deskripsi,
+                deskripsi_halaman_id: deskripsi.deskripsi_halaman_id,
+                deskripsi_halaman_en: deskripsi.deskripsi_halaman_en,
             }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             });
 
-            setDeskripsiHalaman("");
+            setDeskripsiHalaman({ deskripsi_halaman_id: "", deskripsi_halaman_en: "" });
             alert('Berhasil Menginput Data');
             getDeskripData();
         } catch (error) {
             alert('Gagal Menginput Data');
-        };
-    }
+        }
+    };
+
 
     const addDokumentasi = async (e) => {
         e.preventDefault();
@@ -206,7 +217,7 @@ function Lingkungan() {
                             <div className="col">
                                 <div className="card p-3 bg-info text-white">
                                     <div className="mb-3">
-                                        <h3>ESG Lingkungan Page</h3>
+                                        <h3>{t('esg_environment_page_title')}</h3>
                                     </div>
                                 </div>
                             </div>
@@ -214,15 +225,44 @@ function Lingkungan() {
                         <div className="row">
                             <div className="col">
                                 <div className="card p-3 mt-5">
-                                    <h4 className="text-success">Create Data Deskripsi</h4>
-                                    <p><span className="text-info">Notice!</span> Hanya Bisa Menginput Satu Data Pada Deskripsi Halaman</p>
+                                    <h4 className="text-success">{t('create_description_data_title')}</h4>
+                                    <p>
+                                        <span className="text-info">{t('notice_label')}</span>{' '}
+                                        {t('single_description_entry_warning')}
+                                    </p>
                                     <form onSubmit={addDeskData}>
                                         <div className="mb-3">
-                                            <p>Deskripsi Halaman</p>
-                                            <textarea rows="10" className="form-control" value={deskripsi} onChange={(e) => setDeskripsiHalaman(e.target.value)}></textarea>
+                                            <label className="form-label">{t('page_description_id_label')}</label>
+                                            <textarea
+                                                rows="5"
+                                                className="form-control"
+                                                value={deskripsi.deskripsi_halaman_id || ""}
+                                                onChange={(e) =>
+                                                    setDeskripsiHalaman(prev => ({
+                                                        ...prev,
+                                                        deskripsi_halaman_id: e.target.value
+                                                    }))
+                                                }
+                                                required
+                                            />
                                         </div>
                                         <div className="mb-3">
-                                            <button className="btn btn-sm btn-primary">Add Data</button>
+                                            <label className="form-label">{t('page_description_en_label')}</label>
+                                            <textarea
+                                                rows="5"
+                                                className="form-control"
+                                                value={deskripsi.deskripsi_halaman_en || ""}
+                                                onChange={(e) =>
+                                                    setDeskripsiHalaman(prev => ({
+                                                        ...prev,
+                                                        deskripsi_halaman_en: e.target.value
+                                                    }))
+                                                }
+                                                required
+                                            />
+                                        </div>
+                                        <div className="mb-3">
+                                            <button className="btn btn-sm btn-primary">{t('button_add_data')}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -230,18 +270,20 @@ function Lingkungan() {
                         </div>
                     </div>
                 </section>
+
                 <section>
                     <div className="container">
                         <div className="row">
                             <div className="col">
                                 <div className="card p-3 mt-5 text-secondary">
-                                    <h3>Data Deskripsi Halaman</h3>
+                                    <h3>{t('page_description_data_title')}</h3>
                                     <table className="table">
                                         {deskripList.length > 0 && (
                                             <thead>
                                                 <tr>
-                                                    <th>Deskripsi Halaman</th>
-                                                    <th>Aksi</th>
+                                                    <th>{t('page_description_id_label')}</th>
+                                                    <th>{t('page_description_en_label')}</th>
+                                                    <th>{t('action_label')}</th>
                                                 </tr>
                                             </thead>
                                         )}
@@ -250,13 +292,26 @@ function Lingkungan() {
                                                 deskripList.map((deskrLing) => (
                                                     <tr key={deskrLing.uuid}>
                                                         <td>
-                                                            <p style={{ whiteSpace: 'pre-line' }}>{deskrLing.deskripsi_halaman}</p>
+                                                            <p style={{ whiteSpace: 'pre-line' }}>{deskrLing.deskripsi_halaman_id}</p>
+                                                        </td>
+                                                        <td>
+                                                            <p style={{ whiteSpace: 'pre-line' }}>{deskrLing.deskripsi_halaman_en}</p>
                                                         </td>
                                                         <td>
                                                             <div className="row">
                                                                 <div className="col d-flex gap-2">
-                                                                    <button onClick={() => openEditModal(deskrLing)} className="btn btn-warning btn-sm">Edit</button>
-                                                                    <button onClick={() => deleteDeskripData(deskrLing.uuid)} className="btn btn-s, btn-danger">Delete</button>
+                                                                    <button
+                                                                        onClick={() => openEditModal(deskrLing)}
+                                                                        className="btn btn-warning btn-sm"
+                                                                    >
+                                                                        {t('button_edit')}
+                                                                    </button>
+                                                                    <button
+                                                                        onClick={() => deleteDeskripData(deskrLing.uuid)}
+                                                                        className="btn btn-danger btn-sm"
+                                                                    >
+                                                                        {t('button_delete')}
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -272,6 +327,7 @@ function Lingkungan() {
                         </div>
                     </div>
                 </section>
+
                 {/* modal edit deskripsi */}
                 <section>
                     {editDeskripsiModal && (
@@ -280,16 +336,34 @@ function Lingkungan() {
                                 <div className="modal-content">
                                     <form onSubmit={editDeskData}>
                                         <div className="modal-header">
-                                            <h5 className="modal-title">Edit Data Deskripsi</h5>
-                                            <button type="button" className="btn-close" onClick={() => setEditDeskripsiModal(false)}></button>
+                                            <h5 className="modal-title">{t('edit_description_modal_title')}</h5>
+                                            <button
+                                                type="button"
+                                                className="btn-close"
+                                                onClick={() => setEditDeskripsiModal(false)}
+                                            ></button>
                                         </div>
                                         <div className="modal-body">
                                             <div className="mb-3">
-                                                <label className="form-label">Deskripsi Halaman</label>
-                                                <textarea type="text" className="form-control" value={editDeskr} onChange={(e) => setEditDeskr(e.target.value)} rows="10"></textarea>
+                                                <label className="form-label">{t('page_description_id_label')}</label>
+                                                <textarea
+                                                    className="form-control"
+                                                    value={editDeskrId}
+                                                    onChange={(e) => setEditDeskrId(e.target.value)}
+                                                    rows="6"
+                                                ></textarea>
                                             </div>
                                             <div className="mb-3">
-                                                <button className="btn btn-sm btn-primary">Simpan Perubahan</button>
+                                                <label className="form-label">{t('page_description_en_label')}</label>
+                                                <textarea
+                                                    className="form-control"
+                                                    value={editDeskrEn}
+                                                    onChange={(e) => setEditDeskrEn(e.target.value)}
+                                                    rows="6"
+                                                ></textarea>
+                                            </div>
+                                            <div className="mb-3">
+                                                <button className="btn btn-sm btn-primary">{t('button_save_changes')}</button>
                                             </div>
                                         </div>
                                     </form>
@@ -298,19 +372,20 @@ function Lingkungan() {
                         </div>
                     )}
                 </section>
+
                 <section>
                     <div className="container">
                         <div className="row">
                             <div className="col">
                                 <div className="card p-3 mt-5">
-                                    <h3 className="text-success">Create Data Dokumentasi</h3>
+                                    <h3 className="text-success">{t('create_documentation_data_title')}</h3>
                                     <form onSubmit={addDokumentasi}>
                                         <div className="mb-3">
-                                            <p>Dokumentasi</p>
+                                            <p>{t('documentation_label')}</p>
                                             <input type="file" className="form-control" onChange={handleFileChange} />
                                         </div>
                                         <div className="mb-3">
-                                            <button className="btn btn-sm btn-primary">Add Data</button>
+                                            <button className="btn btn-sm btn-primary">{t('button_add_data')}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -323,15 +398,15 @@ function Lingkungan() {
                         <div className="row">
                             <div className="col">
                                 <div className="card p-3 mt-5 text-secondary">
-                                    <h3>Data Dokumentasi Kegiatan</h3>
+                                    <h3>{t('activity_documentation_data_title')}</h3>
                                     <table className="table">
                                         {imgList.length > 0 && (
                                             <thead>
                                                 <tr>
-                                                    <th>Dokumentasi</th>
-                                                    <th>Dibuat Pada</th>
-                                                    <th>Diubah Pada</th>
-                                                    <th>Aksi</th>
+                                                    <th>{t('documentation_label')}</th>
+                                                    <th>{t('created_at_label')}</th>
+                                                    <th>{t('updated_at_label')}</th>
+                                                    <th>{t('action_label')}</th>
                                                 </tr>
                                             </thead>
                                         )}
@@ -340,15 +415,19 @@ function Lingkungan() {
                                                 imgList.map((dok) => (
                                                     <tr key={dok.uuid}>
                                                         <td>
-                                                            <img src={`http://localhost:8000/Lingkungan/${dok.image_lingkungan}`} alt="" style={{ maxWidth: "20%" }} />
+                                                            <img src={`http://localhost:8000/Lingkungan/${dok.image_lingkungan}`} alt={t('documentation_alt_text')} style={{ maxWidth: "20%" }} />
                                                         </td>
                                                         <td className="text-success">{moment(dok.created_at).format('DD-MM-YYYY')}</td>
                                                         <td className="text-success">{moment(dok.updated_at).format('DD-MM-YYYY')}</td>
                                                         <td>
                                                             <div className="row">
                                                                 <div className="col d-flex gap-2">
-                                                                    <button className="btn btn-sm btn-warning" onClick={() => opendEditModal(dok)}>Edit</button>
-                                                                    <button className="btn btn-sm btn-danger" onClick={() => deleteDokumentasi(dok.uuid)}>Delete</button>
+                                                                    <button className="btn btn-sm btn-warning" onClick={() => opendEditModal(dok)}>
+                                                                        {t('button_edit')}
+                                                                    </button>
+                                                                    <button className="btn btn-sm btn-danger" onClick={() => deleteDokumentasi(dok.uuid)}>
+                                                                        {t('button_delete')}
+                                                                    </button>
                                                                 </div>
                                                             </div>
                                                         </td>
@@ -372,16 +451,16 @@ function Lingkungan() {
                                 <div className="modal-content">
                                     <form onSubmit={editDokData}>
                                         <div className="modal-header">
-                                            <h5 className="modal-title">Edit Data Dokumentasi</h5>
+                                            <h5 className="modal-title">{t('edit_documentation_modal_title')}</h5>
                                             <button type="button" onClick={() => setEditDokumentasiModal(false)} className="btn-close"></button>
                                         </div>
                                         <div className="modal-body">
                                             <div className="mb-3">
-                                                <label className="form-label">Dokumentasi</label>
+                                                <label className="form-label">{t('documentation_label')}</label>
                                                 <input onChange={handleFileChange} type="file" className="form-control" />
                                             </div>
                                             <div className="mb-3">
-                                                <button className="btn btn-sm btn-primary">Simpan Perubahan</button>
+                                                <button className="btn btn-sm btn-primary">{t('button_save_changes')}</button>
                                             </div>
                                         </div>
                                     </form>

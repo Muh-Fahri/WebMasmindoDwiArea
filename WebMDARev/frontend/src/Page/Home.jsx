@@ -10,7 +10,7 @@ import L from 'leaflet';
 import Footer from "./fotter";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
-
+import { useTranslation } from "react-i18next";
 
 
 
@@ -38,6 +38,7 @@ function InfoCard({ position, visible }) {
     const map = useMap();
     const [point, setPoint] = useState(map.latLngToContainerPoint(position));
     const cardRef = useRef();
+    const { t, i18n } = useTranslation();
     useMapEvent('move', () => {
         setPoint(map.latLngToContainerPoint(position));
     });
@@ -62,13 +63,14 @@ function InfoCard({ position, visible }) {
                 pointerEvents: 'auto',
             }}
         >
-            <h1 className="fw-bold" style={{ color: "#F16022" }}>Proyek Awak Mas</h1>
-            <h3 className="fw-bold">14.390 Ha</h3>
+            <h1 className="fw-bold" style={{ color: "#F16022" }}>{t('awak_mas_project_title')}</h1>
+            <h3 className="fw-bold">{t('awak_mas_project_area')}</h3>
             <div className="row">
-                <div className="col-md-5">
-                    <p className="fs-4">Kecamatan Latimojong,
-                        Kabupaten Luwu,
-                        Sulawesi Selatan
+                <div className="col-md-6">
+                    <p className="fs-4">
+                        {t('awak_mas_project_location_part1')}
+                        {t('awak_mas_project_location_part2')}
+                        {t('awak_mas_project_location_part3')}
                     </p>
                 </div>
             </div>
@@ -82,6 +84,7 @@ function Home() {
     const [beritaList, setBeritaList] = useState([]);
     const position = [-3.4717, 120.1994];
     const [showCard, setShowCard] = useState(false);
+    const { t, i18n } = useTranslation();
 
 
     const handleMarkerClick = () => {
@@ -151,11 +154,13 @@ function Home() {
                                 <div className="container">
                                     <div className="row" data-aos="fade-right">
                                         <div className="col-md-6">
-                                            <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>Produser Emas</h1>
-                                            <h4 className="display-3" style={{ color: "#115258" }}>Di Indonesia Berikutnya</h4>
+                                            <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>{t("produser_emas")}</h1>
+                                            <h4 className="display-3" style={{ color: "#115258" }}>{t('di_indonesia_berikutnya')}</h4>
                                             <div className="row mt-4">
                                                 <div className="col-md-5">
-                                                    <button className="w-100 btn btn-carousel-1 rounded-5 btn-outline-dark shadow-none btn-sm">Bisnis Kami</button>
+                                                    <Link to={'/bisnis'}>
+                                                        <button className="w-100 btn btn-carousel-1 rounded-5 btn-outline-dark shadow-none btn-sm">{t('button_bisnis_kami')}</button>
+                                                    </Link>
                                                 </div>
                                             </div>
                                         </div>
@@ -168,11 +173,11 @@ function Home() {
                                 <div className="container">
                                     <div className="row" data-aos="fade-right">
                                         <div className="col-md-9">
-                                            <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>Kami Memelihara</h1>
-                                            <h4 className="display-3" style={{ color: "#115258" }}>Generasi Berikutnya Berikutnya</h4>
+                                            <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>{t('kami_memelihara')}</h1>
+                                            <h4 className="display-3" style={{ color: "#115258" }}>{t('generasi_berikutnya')}</h4>
                                             <div className="row mt-4">
                                                 <div className="col-md-3">
-                                                    <button className="w-100 btn btn-carousel-1 rounded-5 btn-outline-dark shadow-none btn-sm">Karir</button>
+                                                    <button className="w-100 btn btn-carousel-1 rounded-5 btn-outline-dark shadow-none btn-sm">{t('karir_button')}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -184,13 +189,13 @@ function Home() {
                             <div className="bg-carousel-3 d-flex align-items-center" style={{ height: "100vh" }}>
                                 <div className="container">
                                     <div className="row" data-aos="fade-right">
-                                        <div className="col-md-6">
+                                        <div className="col-md-8">
                                             <h1>Renov</h1>
-                                            <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>Produser Emas</h1>
-                                            <h4 className="display-3" style={{ color: "#115258" }}>Di Indonesia Berikutnya</h4>
+                                            <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>{t('bangkit_bersama')}</h1>
+                                            <h4 className="display-3" style={{ color: "#115258" }}>{t('masyarakat')}</h4>
                                             <div className="row mt-4">
                                                 <div className="col-md-5">
-                                                    <button className="w-100 btn btn-carousel-1 rounded-5 btn-outline-light shadow-none btn-sm">Bisnis Kami</button>
+                                                    <button className="w-100 btn btn-carousel-1 rounded-5 btn-outline-light shadow-none btn-sm">{t('bisnis_kami_button')}</button>
                                                 </div>
                                             </div>
                                         </div>
@@ -205,7 +210,7 @@ function Home() {
                 <div className="container-fluid p-3 p-md-5">
                     <div className="row mb-3" data-aos="fade-right">
                         <div className="col-12">
-                            <h4 className="text-uppercase fw-semibold text-secondary">Tentang Kami</h4>
+                            <h4 className="text-uppercase fw-semibold text-secondary">{t('tentang_kami_th_1')}</h4>
                         </div>
                     </div>
 
@@ -214,22 +219,21 @@ function Home() {
                             <div className="row">
                                 <div className="col-12">
                                     <h2 className="fw-bold m-0 fs-3 fs-md-2">
-                                        Bersiap Menjadi <span style={{ color: "#F16022" }}>Produser Emas</span>
+                                        {t('tentang_kami_tb_1')} <span style={{ color: "#F16022" }}>{t('tentang_kami_tb_4')}</span>
                                     </h2>
                                 </div>
                                 <div className="col-12">
-                                    <h2 className="fw-bold m-0 fs-3 fs-md-2">Terkemuka Di Indonesia</h2>
+                                    <h2 className="fw-bold m-0 fs-3 fs-md-2">{t('tentang_kami_tb_2')}</h2>
                                 </div>
                             </div>
                         </div>
 
                         <div className="col-lg-6" data-aos="fade-down">
                             <p className="fs-5 fs-md-4 fw-medium">
-                                PT Masmindo Dwi Area (MDA) berdedikasi untuk menjadi produsen emas Indonesia berikutnya melalui pengembangan Proyek Awak Mas.
-                                Proyek Awak Mas berlokasi di Kecamatan Latimojong, Kabupaten Luwu, Sulawesi Selatan
+                                {t('tentang_kami_tb_3')}
                             </p>
                             <Link to={'tentang'} className="text-decoration-none text-secondary fs-5 fw-bold">
-                                Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} />
+                                {t('tentang_kami_button')}<FontAwesomeIcon icon={faArrowRight} />
                             </Link>
                         </div>
                     </div>
@@ -241,7 +245,7 @@ function Home() {
                         <div className="row">
                             <div className="col">
                                 <h3 style={{ color: '#F16022' }} className="text-uppercase text-center fw-bold fs-4 fs-md-3">
-                                    Bisnis Kami
+                                    {t('bisnis_kami_th_1')}
                                 </h3>
                             </div>
                         </div>
@@ -251,7 +255,7 @@ function Home() {
                                 {bisnisList.length > 0 ? (
                                     bisnisList.map((bisnis) => (
                                         <p key={bisnis.uuid} className="text-white fs-5 fs-md-5">
-                                            {bisnis.deskripsi_bisnis.split(' ').slice(0, 80).join(' ') + '.'}
+                                            {i18n.language === 'id' ? bisnis.deskripsi_bisnis_id.split(' ').slice(0, 100).join(' ') + '...' : bisnis.deskripsi_bisnis_en.split(' ').slice(0, 100).join(' ') + '...'}
                                         </p>
                                     ))
                                 ) : (
@@ -259,8 +263,8 @@ function Home() {
                                         <h5>No Data</h5>
                                     </div>
                                 )}
-                                <Link style={{ color: '#F16022' }} className="text-decoration-none fs-4 fs-md-3 fw-bold">
-                                    Lebih Lanjut <FontAwesomeIcon icon={faArrowRight} />
+                                <Link to={'/bisnis'} style={{ color: '#F16022' }} className="text-decoration-none fs-4 fs-md-3 fw-bold">
+                                    {t('bisnis_kami_btn')} <FontAwesomeIcon icon={faArrowRight} />
                                 </Link>
                             </div>
                         </div>
@@ -284,7 +288,7 @@ function Home() {
                                     </div>
                                 ) : (
                                     <div className="text-center text-white">
-                                        <h5>No Data Yet</h5>
+                                        <h5>{t('no_data')}</h5>
                                     </div>
                                 )}
                             </div>
@@ -330,7 +334,7 @@ function Home() {
                 <div className="container-fluid">
                     <div className="row" data-aos="fade-down">
                         <div className="col p-5" data-aos="fade-down">
-                            <h3 style={{ color: '#F16022' }} className="text-center text-uppercase fw-bold">Berita Terkini</h3>
+                            <h3 style={{ color: '#F16022' }} className="text-center text-uppercase fw-bold">{t('berita_terkini')}</h3>
                         </div>
                     </div>
                     <div className="row gap-3 mt-5" data-aos="fade-right">
@@ -372,13 +376,13 @@ function Home() {
 
                                                 {/* Judul */}
                                                 <div className="px-3 pt-3">
-                                                    <h5 className="fw-bold text-center">{berita.judul_berita}</h5>
+                                                    <h5 className="fw-bold text-center">{i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}</h5>
                                                 </div>
 
                                                 {/* Deskripsi */}
                                                 <div className="px-3 py-2">
                                                     <p className="text-secondary" style={{ fontSize: '0.9rem' }}>
-                                                        {berita.deskripsi_berita.split(' ').slice(0, 30).join(' ') + '...'}
+                                                        {i18n.language === 'id' ? berita.deskripsi_berita_id.split(' ').slice(0, 30).join(' ') + '...' : berita.deskripsi_berita_en.split(' ').slice(0, 30).join(' ') + '...'}
                                                     </p>
                                                 </div>
 
@@ -421,10 +425,13 @@ function Home() {
                 <div className="container-fluid p-5">
                     <div className="row">
                         <div className="col p-3" data-aos="fade-right">
-                            <h3 style={{ color: '#F16022' }} className="text-center fw-bold">ESG</h3>
+                            <h3 style={{ color: '#F16022' }} className="text-center fw-bold">
+                                {t('esg_title')} {/* Menggunakan terjemahan */}
+                            </h3>
                         </div>
                     </div>
                     <div className="d-flex justify-content-center gap-4 flex-wrap" data-aos="fade-down">
+                        {/* Kartu Lingkungan Hidup */}
                         <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
                             <div
                                 className="card"
@@ -444,22 +451,27 @@ function Home() {
                                             height: '50vh',
                                             width: '100%',
                                             display: 'flex',
-                                            alignItems: 'flex-end', // teks di bawah
-                                            justifyContent: 'center', // teks tetap di tengah horizontal
-                                            paddingBottom: '30px', // jarak dari bawah
+                                            alignItems: 'flex-end',
+                                            justifyContent: 'center',
+                                            paddingBottom: '30px',
                                         }}
                                     >
                                         <div className="text-center p-5">
-                                            <h1 className="text-white fw-bold fs-4 fs-md-2">Lingkungan Hidup</h1>
-                                            <Link to="/ESG/lingkungan" className="text-decoration-none">
-                                                <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">Lebih Lanjut</h4>
+                                            <h1 className="text-white fw-bold fs-4 fs-md-2">
+                                                {t('environment_title')} {/* Menggunakan terjemahan */}
+                                            </h1>
+                                            <Link to="/ESG" className="text-decoration-none">
+                                                <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">
+                                                    {t('read_more')} {/* Menggunakan terjemahan */}
+                                                </h4>
                                             </Link>
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
+
+                        {/* Kartu Sosial */}
                         <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
                             <div
                                 className="card"
@@ -479,23 +491,27 @@ function Home() {
                                             height: '50vh',
                                             width: '100%',
                                             display: 'flex',
-                                            alignItems: 'flex-end', // teks di bawah
-                                            justifyContent: 'center', // teks tetap di tengah horizontal
-                                            paddingBottom: '30px', // jarak dari bawah
+                                            alignItems: 'flex-end',
+                                            justifyContent: 'center',
+                                            paddingBottom: '30px',
                                         }}
                                     >
                                         <div className="text-center p-5">
-                                            <h1 className="text-white fw-bold fs-4 fs-md-2">Sosial</h1>
-                                            <Link className="text-decoration-none">
-                                                <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">Lebih Lanjut</h4>
+                                            <h1 className="text-white fw-bold fs-4 fs-md-2">
+                                                {t('social_title')} {/* Menggunakan terjemahan */}
+                                            </h1>
+                                            <Link className="text-decoration-none" to={'/ESG/sosial'}>
+                                                <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">
+                                                    {t('read_more')} {/* Menggunakan terjemahan */}
+                                                </h4>
                                             </Link>
-
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
+
+                        {/* Kartu Tata Kelola */}
                         <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
                             <div
                                 className="card"
@@ -509,46 +525,50 @@ function Home() {
                                 <div className="card-body m-0 p-0">
                                     <div
                                         style={{
-                                            backgroundImage: `linear-gradient(to right,  rgba(17, 82, 88, 0.84), rgba(17,86,88,0.84)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
+                                            backgroundImage: `linear-gradient(to right, rgba(17, 82, 88, 0.84), rgba(17,86,88,0.84)), url('/Image/Background/3e700277-fee4-4224-a980-9ea0cddc693a (1).jpg')`,
                                             backgroundSize: 'cover',
                                             backgroundPosition: 'center',
                                             height: '50vh',
                                             width: '100%',
                                             display: 'flex',
-                                            alignItems: 'flex-end', // teks di bawah
-                                            justifyContent: 'center', // teks tetap di tengah horizontal
-                                            paddingBottom: '30px', // jarak dari bawah
+                                            alignItems: 'flex-end',
+                                            justifyContent: 'center',
+                                            paddingBottom: '30px',
                                         }}
                                     >
                                         <div className="text-center p-5">
-                                            <h1 className="text-white fw-bold fs-4 fs-md-2">Tata Kelola</h1>
+                                            <h1 className="text-white fw-bold fs-4 fs-md-2">
+                                                {t('governance_title')} {/* Menggunakan terjemahan */}
+                                            </h1>
                                             <Link className="text-decoration-none">
-                                                <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">Lebih Lanjut</h4>
+                                                <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">
+                                                    {t('read_more')} {/* Menggunakan terjemahan */}
+                                                </h4>
                                             </Link>
-
                                         </div>
                                     </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
                 </div>
-            </section >
+            </section>
             <section>
                 <div className="bg-bawah d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
                     <div className="container text-center" data-aos="zoom-in-up">
                         <div className="row">
                             <div className="col">
-                                <h1 className="text-white fw-bold">Profesional & Inspiratif</h1>
-                                <p className="fs-6 text-white">Kami percaya bahwa setiap individu memiliki potensi luar biasa. Bersama tim yang solid dan budaya kerja
-                                    yang mendukung, mari ciptakan masa depan yang lebih cerah.
+                                <h1 className="text-white fw-bold">
+                                    {t('professional_inspirational_title')}
+                                </h1>
+                                <p className="fs-6 text-white">
+                                    {t('professional_inspirational_desc')}
                                 </p>
                                 <button
                                     className="btn rounded-5 fw-bold shadow-none fs-6 fs-md-3 mt-4 px-4 py-2 text-white"
                                     style={{ backgroundColor: "#F16022" }}
                                 >
-                                    Karier
+                                    {t('career_button')}
                                 </button>
                             </div>
                         </div>

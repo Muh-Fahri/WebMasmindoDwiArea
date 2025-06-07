@@ -5,6 +5,7 @@ import Footer from "./fotter";
 import AOS from "aos";
 import { NavLink } from "react-router-dom";
 import Laporan from "./laporan";
+import { useTranslation } from "react-i18next";
 
 
 
@@ -12,6 +13,7 @@ function ESG() {
 
     const [deskripLingkunganList, setDeskripLingkunganList] = useState([]);
     const [imgLingList, setImgLingList] = useState([]);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         getdeskripLingkungan();
@@ -67,19 +69,19 @@ function ESG() {
                             <ul className="nav-esg list-unstyled d-flex flex-md-row flex-column align-items-center justify-content-center gap-3 gap-md-5 p-0 m-0">
                                 <li>
                                     <NavLink to="/ESG" className="active-esg text-decoration-none text-center">
-                                        <h1 className="text-black fw-light fs-5 fs-md-3">Lingkungan</h1>
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">{t('esg_environment_nav')}</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/ESG/sosial" className="text-decoration-none text-center">
-                                        <h1 className="text-black fw-light fs-5 fs-md-3">Sosial</h1>
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">{t('esg_social_nav')}</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/tata-kelola" className="text-decoration-none text-center">
-                                        <h1 className="text-black fw-light fs-5 fs-md-3">Tata Kelola</h1>
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">{t('esg_governance_nav')}</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
@@ -132,7 +134,7 @@ function ESG() {
                                         <div className="col" key={deskripLing.uuid}>
                                             {/* isi deskrip lingkungan */}
                                             <p style={{ whiteSpace: 'pre-line' }} className="deskripsi-lingkungan">
-                                                {deskripLing.deskripsi_halaman}
+                                                {i18n.language === 'id' ? deskripLing.deskripsi_halaman_id : deskripLing.deskripsi_halaman_en}
                                             </p>
 
 

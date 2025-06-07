@@ -7,6 +7,7 @@ import NoData from "../Component/Error/NoData";
 import Laporan from "./laporan";
 import { duration } from "moment";
 import AOS from "aos";
+import { useTranslation } from "react-i18next";
 
 
 function Sosial() {
@@ -14,6 +15,7 @@ function Sosial() {
     const [kesehatanList, setKesehatanList] = useState([]);
     const [infraList, setInfraList] = useState([]);
     const [pemberdayaanList, setPemberdayaanList] = useState([]);
+    const { t, i18n } = useTranslation();
 
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState(null)
@@ -89,26 +91,26 @@ function Sosial() {
             <section>
                 <Laporan />
             </section>
-            <section className="p-5" >
+            <section className="p-5" data-aos="zoom-in-up">
                 <div className="container p-5">
-                    <div className="row mt-5" data-aos="zoom-out">
+                    <div className="row mt-5">
                         <div className="col">
                             <ul className="nav-esg list-unstyled d-flex flex-md-row flex-column align-items-center justify-content-center gap-3 gap-md-5 p-0 m-0">
                                 <li>
-                                    <NavLink to="/ESG" className="text-decoration-none text-center">
-                                        <h1 className="text-black fw-light fs-5 fs-md-3">Lingkungan</h1>
+                                    <NavLink to="/ESG" className=" text-decoration-none text-center">
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">{t('esg_environment_nav')}</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/ESG/sosial" className="active-esg text-decoration-none text-center">
-                                        <h1 className="text-black fw-light fs-5 fs-md-3">Sosial</h1>
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">{t('esg_social_nav')}</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
                                 <li>
                                     <NavLink to="/tata-kelola" className="text-decoration-none text-center">
-                                        <h1 className="text-black fw-light fs-5 fs-md-3">Tata Kelola</h1>
+                                        <h1 className="text-black fw-light fs-5 fs-md-3">{t('esg_governance_nav')}</h1>
                                         <div className="garis-bawah-esg"></div>
                                     </NavLink>
                                 </li>
@@ -140,7 +142,7 @@ function Sosial() {
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8">
-                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program Pengembangan <span style={{ color: "#115258" }}> Masyarakat</span></h1>
+                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>{t('community_dev_program_title_part1')} <span style={{ color: "#115258" }}>{t('community_dev_program_title_part2')}</span></h1>
                                 </div>
                             </div>
                         </div>
@@ -148,8 +150,7 @@ function Sosial() {
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            <p className="fs-3">Di Masmindo, kami berkomitmen untuk memberikan kontribusi nyata bagi kemajuan masyarakat sekitar melalui program pengembangan masyarakat yang berkelanjutan dan inklusif. Kami percaya bahwa pembangunan tidak hanya tentang pertumbuhan ekonomi, tetapi juga meningkatkan kualitas hidup dan kesejahteraan sosial. <br /> <br />
-                                Melalui inisiatif ini, Masmindo berupaya menciptakan dampak positif yang berkelanjutan, mendorong inovasi sosial, dan memperkuat hubungan harmonis antara perusahaan dan komunitas. Bersama, kita wujudkan perubahan yang berarti demi kemajuan bersama.</p>
+                            <p className="fs-3">{t('community_dev_program_desc')}</p>
                         </div>
                     </div>
                 </div>
@@ -185,7 +186,7 @@ function Sosial() {
                                             >
                                                 <img
                                                     src={`http://127.0.0.1:8000/Sosial/${masyarakat.imageSosial}`}
-                                                    alt="Laporan 2020"
+                                                    alt="Laporan 2020" // Consider translating "Laporan 2020" if it's static
                                                     className="w-100 h-100 object-fit-cover"
                                                 />
                                             </div>
@@ -197,7 +198,7 @@ function Sosial() {
                                     <div className="container-fluid">
                                         <div className="row justify-content-center">
                                             <div className="col">
-                                                <NoData />
+                                                <NoData /> {/* Assuming NoData component handles its own translation */}
                                             </div>
                                         </div>
                                     </div>
@@ -223,7 +224,7 @@ function Sosial() {
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8" >
-                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program <span style={{ color: '#115258' }}>Kesehatan</span></h1>
+                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>{t('health_program_title_part1')} <span style={{ color: '#115258' }}>{t('health_program_title_part2')}</span></h1>
                                 </div>
                             </div>
                         </div>
@@ -231,8 +232,7 @@ function Sosial() {
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            <p className="fs-3"> Melalui Program Kesehatan, kami berupaya meningkatkan kualitas hidup warga sekitar dengan menyediakan akses layanan kesehatan yang lebih baik, edukasi kesehatan, dan upaya pencegahan penyakit. <br /><br />
-                                Dengan dukungan tenaga medis profesional dan kerja sama aktif bersama masyarakat, Masmindo berkomitmen menciptakan lingkungan yang sehat dan produktif demi masa depan yang lebih baik.</p>
+                            <p className="fs-3">{t('health_program_desc')}</p>
                         </div>
                     </div>
                 </div>
@@ -254,7 +254,7 @@ function Sosial() {
                             style={{ scrollBehavior: "smooth" }}
                         >
                             {
-                                kesehatanList.length > 0 ? (
+                                kesehatanList.length > 0 ? ( // Menggunakan nama variabel yang sesuai, dalam contoh Anda adalah 'kesehatanList'
                                     kesehatanList.map((kesehatan) => (
                                         <div key={kesehatan.uuid}
                                             className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
@@ -290,7 +290,7 @@ function Sosial() {
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8" >
-                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program <span style={{ color: '#115258' }}>Infrastruktur</span></h1>
+                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>{t('infrastructure_program_title_part1')} <span style={{ color: '#115258' }}>{t('infrastructure_program_title_part2')}</span></h1>
                                 </div>
                             </div>
                         </div>
@@ -298,8 +298,7 @@ function Sosial() {
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            <p className="fs-3">Program ini bertujuan meningkatkan aksesibilitas, memperlancar aktivitas ekonomi, dan menciptakan lingkungan yang nyaman dan aman bagi warga. Kami bekerja sama dengan pemerintah daerah dan komunitas setempat untuk memastikan pembangunan yang tepat sasaran dan berkelanjutan. <br /><br />
-                                Dengan infrastruktur yang lebih baik, masyarakat dapat menikmati kemudahan mobilitas dan layanan publik, sehingga meningkatkan kualitas hidup dan membuka peluang baru untuk pertumbuhan ekonomi lokal.</p>
+                            <p className="fs-3">{t('infrastructure_program_desc')}</p>
                         </div>
                     </div>
                 </div>
@@ -358,7 +357,7 @@ function Sosial() {
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
                                 <div className="col-md-8" >
-                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>Program Pemberdayaan <span style={{ color: '#115258' }}>Masyarakat</span></h1>
+                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>{t('community_empowerment_program_title_part1')} <span style={{ color: '#115258' }}>{t('community_empowerment_program_title_part2')}</span></h1>
                                 </div>
                             </div>
                         </div>
@@ -366,8 +365,7 @@ function Sosial() {
                             <div className="garis-esg"></div>
                         </div>
                         <div className="col">
-                            <p className="fs-3">Kami berfokus pada pemberian akses sumber daya dan pengetahuan agar masyarakat dapat mengoptimalkan potensi mereka, menciptakan peluang ekonomi baru, serta memperkuat kemandirian sosial. Program ini dirancang untuk membangun sinergi antara perusahaan, komunitas, dan pemangku kepentingan lokal demi masa depan yang lebih sejahtera <br /><br />
-                                Dengan semangat gotong-royong dan inovasi, Masmindo berkomitmen menjadi mitra terpercaya dalam perjalanan pembangunan masyarakat yang inklusif dan berkelanjutan.</p>
+                            <p className="fs-3">{t('community_empowerment_program_desc')}</p>
                         </div>
                     </div>
                 </div>
@@ -406,7 +404,7 @@ function Sosial() {
                                         >
                                             <img
                                                 src={`http://127.0.0.1:8000/Sosial/${pemberdayaan.imageSosial}`}
-                                                alt="Laporan 2020"
+                                                alt="Laporan 2020" // Consider translating this if it's a fixed text.
                                                 className="w-100 h-100 object-fit-cover"
                                                 style={{ objectFit: "cover" }}
                                             />

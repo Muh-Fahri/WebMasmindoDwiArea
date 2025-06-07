@@ -5,6 +5,8 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 import Aos from "aos";
+import { useTranslation } from "react-i18next";
+
 
 function Berita() {
 
@@ -12,6 +14,7 @@ function Berita() {
     const [searchKeyword, setSearchKeyword] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [message, setMessage] = useState("");
+    const { t, i18n } = useTranslation();
 
     const debounceTimeoutRef = useRef(null);
 
@@ -67,101 +70,104 @@ function Berita() {
     return (
         <div>
             <NavbarHijau />
-            <div className="container-fluid pt-5 mt-5">
-                <div className="row pt-5 mt-5">
-                    <div className="col p-5">
-                        <h2 className="text-uppercase fw-bold" style={{ color: '#115258' }}>Berita</h2>
-                    </div>
-                </div>
-                <div className="row p-5">
-                    <div className="col-auto d-none d-sm-block">
-                        <div className="garis-berita"></div>
-                    </div>
-                    <div className="col-md-4">
-                        {/* Nav */}
-                        <ul className="list-unstyled">
-                            <li>
-                                <a href="/berita" className="fs-1 text-decoration-none berita-active">Masmindo dalam berita</a>
-                            </li>
-                            <li>
-                                <a href="/instagram" className="fs-1 text-black text-decoration-none">Instagram</a>
-                            </li>
-                            <li>
-                                <a href="/youtube" className="fs-1 text-black text-decoration-none">Youtube</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div className="col">
-                        <div>
-                            <input
-                                type="text"
-                                placeholder="Cari berita..."
-                                value={searchKeyword}
-                                onChange={handleSearchChange}
-                                className="search-bar p-3 form-control mb-5 rounded-5"
-                            />
+            <section>
+                <div className="container-fluid pt-5 mt-5">
+                    <div className="row pt-5 mt-5">
+                        <div className="col p-5">
+                            <h2 className="text-uppercase fw-bold" style={{ color: '#115258' }}>{t('news_title')}</h2>
                         </div>
-                        <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+                    </div>
+                    <div className="row p-5">
+                        <div className="col-auto d-none d-sm-block">
+                            <div className="garis-berita"></div>
+                        </div>
+                        <div className="col-md-4">
+                            {/* Nav */}
+                            <ul className="list-unstyled">
+                                <li>
+                                    <a href="/berita" className="fs-1 text-decoration-none berita-active">{t('news_in_masmindo')}</a>
+                                </li>
+                                <li>
+                                    <a href="/instagram" className="fs-1 text-black text-decoration-none">Instagram</a>
+                                </li>
+                                <li>
+                                    <a href="/youtube" className="fs-1 text-black text-decoration-none">Youtube</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div className="col">
+                            <div>
+                                <input
+                                    type="text"
+                                    placeholder={t('news_search_placeholder')}
+                                    value={searchKeyword}
+                                    onChange={handleSearchChange} // Pastikan handleSearchChange didefinisikan
+                                    className="search-bar p-3 form-control mb-5 rounded-5"
+                                />
+                            </div>
+                            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
 
-                            {
-                                isLoading ? (
-                                    <div className="col text-center">Memuat berita...</div>
-                                ) : (
-                                    beritaList.length > 0 ? (
-                                        beritaList.map((berita) => (
-                                            <div key={berita.uuid} className="col">
-                                                <div
-                                                    className="card rounded-5 overflow-hidden position-relative card-berita"
-                                                    style={{ width: "100%", maxWidth: "500px", height: "500px" }}
-                                                >
+                                {
+                                    isLoading ? (
+                                        <div className="col text-center">{t('news_loading')}</div>
+                                    ) : (
+                                        beritaList.length > 0 ? (
+                                            beritaList.map((berita) => (
+                                                <div key={berita.uuid} className="col">
                                                     <div
-                                                        className="img-berita"
-                                                        style={{
-                                                            backgroundImage: `url(http://127.0.0.1:8000/Berita/${encodeURIComponent(berita.image_berita)})`,
-                                                            backgroundSize: "cover",
-                                                            backgroundPosition: "center",
-                                                            width: "100%",
-                                                            height: "100%",
-                                                        }}
-                                                    ></div>
-
-                                                    <div
-                                                        className="position-absolute bottom-0 w-100 p-4"
-                                                        style={{ color: 'white' }}
+                                                        className="card rounded-5 overflow-hidden position-relative card-berita"
+                                                        style={{ width: "100%", maxWidth: "500px", height: "500px" }}
                                                     >
-                                                        <p className="mb-1">
-                                                            {new Date(berita.created_at).toLocaleDateString("id-ID", {
-                                                                weekday: "long",
-                                                                day: "numeric",
-                                                                month: "long",
-                                                                year: "numeric"
-                                                            })}
-                                                        </p>
-                                                        <h5 className="fw-bold mb-2">
-                                                            {berita.judul_berita}
-                                                        </h5>
-                                                        <div className="d-flex justify-content-center">
-                                                            <Link to={`/berita/selengkapnya/${berita.uuid}`} className="text-white display-5 text-decoration-none">
-                                                                <FontAwesomeIcon icon={faCircleArrowRight} />
-                                                            </Link>
+                                                        <div
+                                                            className="img-berita"
+                                                            style={{
+                                                                backgroundImage: `url(http://127.0.0.1:8000/Berita/${encodeURIComponent(berita.image_berita)})`,
+                                                                backgroundSize: "cover",
+                                                                backgroundPosition: "center",
+                                                                width: "100%",
+                                                                height: "100%",
+                                                            }}
+                                                        ></div>
+
+                                                        <div
+                                                            className="position-absolute bottom-0 w-100 p-4"
+                                                            style={{ color: 'white' }}
+                                                        >
+                                                            <p className="mb-1">
+                                                                {new Date(berita.created_at).toLocaleDateString(i18n.language, {
+                                                                    weekday: "long",
+                                                                    day: "numeric",
+                                                                    month: "long",
+                                                                    year: "numeric"
+                                                                })}
+                                                            </p>
+                                                            <h5 className="fw-bold mb-2">
+                                                                {i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}
+                                                            </h5>
+                                                            <div className="d-flex justify-content-center">
+                                                                <Link to={`/berita/selengkapnya/${berita.uuid}`} className="text-white display-5 text-decoration-none">
+                                                                    <FontAwesomeIcon icon={faCircleArrowRight} />
+                                                                </Link>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
+                                            ))
+                                        ) : (
+                                            <div className="justify-content-center">
+                                                <div className="col text-center">
+                                                    {/* Menggunakan t('no_data') atau t('no_data_yet') sesuai kebutuhan */}
+                                                    <h1>{message || t('no_data')}</h1>
+                                                </div>
                                             </div>
-                                        ))
-                                    ) : (
-                                        <div className="justify-content-center">
-                                            <div className="col text-center">
-                                                <h1>{message || "No Data"}</h1>
-                                            </div>
-                                        </div>
+                                        )
                                     )
-                                )
-                            }
+                                }
+                            </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
     );
 }

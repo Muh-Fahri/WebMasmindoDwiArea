@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('link_video');
-            $table->text('deskripsi_bisnis');
+            $table->text('deskripsi_bisnis_id');
+            $table->text('deskripsi_bisnis_en')->nullable();
             $table->timestamps();
         });
     }

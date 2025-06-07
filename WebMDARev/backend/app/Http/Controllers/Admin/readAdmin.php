@@ -145,12 +145,13 @@ class readAdmin extends Controller
             ]);
         }
 
-        $berita = BeritaTerkini::where('judul_berita', 'LIKE', "%{$keyword}%")->get();
+        $berita_id = BeritaTerkini::where('judul_berita_id', 'LIKE', "%{$keyword}%")->get();
+        $berita_en = BeritaTerkini::where('judul_berita_en', 'LIKE', "%{$keyword}%")->get();
 
-        Log::info('Jumlah hasil pencarian: ' . $berita->count());
 
         return response()->json([
-            'berita' => $berita,
+            'berita_id' => $berita_id,
+            'berita_en' => $berita_en
         ], 200);
     }
 

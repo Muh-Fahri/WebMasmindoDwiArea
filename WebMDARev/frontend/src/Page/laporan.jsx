@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AOS from "aos";
+import { useTranslation } from "react-i18next";
 
 
 function Laporan() {
 
     const [laporanList, setLaporanList] = useState([]);
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         getLaporan();
@@ -34,7 +36,7 @@ function Laporan() {
                     <div className="row">
                         <div className="col p-5">
                             <h3 className="text-uppercase fw-bold text-center" style={{ color: '#115258' }}>
-                                Laporan Keberlanjutan
+                                {t('sustainability_report')}
                             </h3>
                         </div>
                     </div>

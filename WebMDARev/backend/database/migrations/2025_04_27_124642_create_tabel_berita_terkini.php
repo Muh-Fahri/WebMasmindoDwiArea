@@ -15,8 +15,10 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid')->unique();
             $table->string('image_berita');
-            $table->string('judul_berita');
-            $table->text('deskripsi_berita');
+            $table->string('judul_berita_id');
+            $table->string('judul_berita_en');
+            $table->text('deskripsi_berita_id');
+            $table->text('deskripsi_berita_en')->nullable();
             $table->timestamps();
         });
     }

@@ -30,11 +30,11 @@ Route::get('/user/esg/laporan', [readUser::class, 'readLaporan']);
 Route::get('/user/esg/pdf/download/{stored_name}', [readUser::class, 'downloadPdf']);
 Route::get('/admin/berita/search_berita', [readAdmin::class, 'readSearchBerita']);
 
-Route::middleware(['auth:sanctum', 'admin', 'throttle:60,3'])->group(function () {
+Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     // bisnis
     Route::post('/admin/bisnis', [createAdmin::class, 'createBisnis']);
     Route::get('/admin/bisnis', [readAdmin::class, 'readBisnis']);
-    Route::put('/admin/bisnis/{uuid}', [updateAdmin::class, 'updateBisnis']);
+    Route::post('/admin/bisnis/{uuid}', [updateAdmin::class, 'updateBisnis']);
     Route::delete('/admin/bisnis/{uuid}', [deleteAdmin::class, 'deleteBisnis']);
 
     // berita
