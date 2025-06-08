@@ -49,7 +49,7 @@ class updateAdmin extends Controller
             'judul_berita_en' => 'sometimes|required|string|max:255',
             'deskripsi_berita_id' => 'sometimes|required|string',
             'deskripsi_berita_en' => 'sometimes|required|string',
-            'image_berita' => 'sometimes|image|mimes:jpeg,png,jpg|max:2048',
+            'image_berita' => 'sometimes|image|mimes:jpeg,png,jpg',
         ]);
 
         $berita = BeritaTerkini::where('uuid', $uuid)->firstOrFail();

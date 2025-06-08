@@ -11,7 +11,9 @@ import Footer from "./fotter";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useTranslation } from "react-i18next";
-
+import { CKEditor } from "@ckeditor/ckeditor5-react";
+import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import DOMPurify from 'dompurify';
 
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -105,6 +107,7 @@ function Home() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
             setBisnisList(res.data.bisnisUser);
+            getBisnisData();
         } catch (error) {
             alert("Gagal Mengambil Data");
         }
@@ -254,9 +257,15 @@ function Home() {
                             <div className="col">
                                 {bisnisList.length > 0 ? (
                                     bisnisList.map((bisnis) => (
-                                        <p key={bisnis.uuid} className="text-white fs-5 fs-md-5">
-                                            {i18n.language === 'id' ? bisnis.deskripsi_bisnis_id.split(' ').slice(0, 100).join(' ') + '...' : bisnis.deskripsi_bisnis_en.split(' ').slice(0, 100).join(' ') + '...'}
-                                        </p>
+                                        <div className="" key={bisnis.uuid}>
+                                            <p
+                                                className="text-white"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: i18n.language === 'id'
+                                                        ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id.split(' ').slice(0, 100).join(' ') + '...')
+                                                        : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en.split(' ').slice(0, 100).join(' ') + '...')
+                                                }} />
+                                        </div>
                                     ))
                                 ) : (
                                     <div className="text-center text-white">

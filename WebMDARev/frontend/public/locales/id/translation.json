@@ -68,14 +68,14 @@
     "awak_mas_project_location_part1": "Kecamatan Latimojong,",
     "awak_mas_project_location_part2": "Kabupaten Luwu,",
     "awak_mas_project_location_part3": "Sulawesi Selatan",
-    "news_title": "Berita",
+    "news_title": "Berita dan Media",
     "news_in_masmindo": "Masmindo dalam berita",
     "news_search_placeholder": "Cari berita...",
     "news_loading": "Memuat berita...",
     "about": "Tentang",
     "business": "Bisnis",
     "esg": "ESG",
-    "news": "Berita",
+    "news": "Berita dan Media",
     "career": "Karir",
     "contact": "Kontak",
     "menu_button": "Menu",
@@ -155,5 +155,6 @@
     "created_at_label": "Dibuat Pada",
     "updated_at_label": "Diubah Pada",
     "documentation_alt_text": "Gambar Dokumentasi Kegiatan",
-    "edit_documentation_modal_title": "Edit Data Dokumentasi"
+    "edit_documentation_modal_title": "Edit Data Dokumentasi",
+    "documentation_title": "Dokumentasi"
 }

@@ -98,7 +98,7 @@ function Youtube() {
                     <div className="container">
                         <div className="row">
                             <div className="col">
-                                <div className="card bg-info text-white p-3">
+                                <div className="card text-white p-3" style={{ backgroundColor: '#F16022' }}>
                                     <h3>Halaman Youtube</h3>
                                 </div>
                             </div>
@@ -115,7 +115,7 @@ function Youtube() {
                                             <input value={createLinkYt} onChange={(e) => setCreateLinkYt(e.target.value)} type="text" className="form-control" required />
                                         </div>
                                         <div className="mb-3">
-                                            <button className="btn btn-sm btn-primary">Add Data</button>
+                                            <button className="btn btn-sm p-2 text-white" style={{ backgroundColor: '#115258' }}>Add Data</button>
                                         </div>
                                     </form>
                                 </div>

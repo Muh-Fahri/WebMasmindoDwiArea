@@ -219,7 +219,7 @@ class createAdmin extends Controller
 
         if ($request->hasFile('foto_galeri')) {
             $imageName = time() . '_' . $request->file('foto_galeri')->getClientOriginalName();
-            $simpan = public_path('Sosial');
+            $simpan = public_path('Galeri');
             $request->file('foto_galeri')->move($simpan, $imageName);
         } else {
             $imageName = null;

@@ -56,6 +56,9 @@ function Instagram() {
                             <li>
                                 <a href="/youtube" className="fs-1 text-black text-decoration-none">Youtube</a>
                             </li>
+                            <li>
+                                <a href="/dokumentasi" className="fs-1 text-black text-decoration-none">{t('documentation_title')}</a>
+                            </li>
                         </ul>
                     </div>
                     <div className="col">

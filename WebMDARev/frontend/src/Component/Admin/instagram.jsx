@@ -123,7 +123,7 @@ function Instagram() {
                     <div className="container">
                         <div className="row">
                             <div className="col">
-                                <div className="card bg-info text-white p-3">
+                                <div className="card text-white p-3" style={{ backgroundColor: '#F16022' }}>
                                     <h3>Halaman Instagram</h3>
                                 </div>
                             </div>
@@ -142,7 +142,7 @@ function Instagram() {
                                                 onChange={(e) => setLinkIg(e.target.value)}
                                             />
                                         </div>
-                                        <button className="btn btn-sm btn-primary">Add Data</button>
+                                        <button className="btn btn-sm text-white p-2" style={{ backgroundColor: '#115258' }}>Add Data</button>
                                     </form>
                                 </div>
                             </div>

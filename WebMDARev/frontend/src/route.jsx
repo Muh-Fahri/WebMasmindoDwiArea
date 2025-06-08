@@ -12,6 +12,7 @@ import Berita from "./Page/berita";
 import BeritaSelengkapnya from "./Page/beritaSelengkapnya";
 import Instagram from "./Page/instagram";
 import Youtube from "./Page/youtube";
+import GaleriUser from "./Page/galeriUser";
 
 
 
@@ -38,6 +39,7 @@ function AppRouter() {
                     <Route path="/berita/selengkapnya/:uuid" element={<BeritaSelengkapnya />} />
                     <Route path="instagram" element={<Instagram />} />
                     <Route path="youtube" element={<Youtube />} />
+                    <Route path="dokumentasi" element={<GaleriUser />} />
                 </Routes>
             </Router>
         </div>

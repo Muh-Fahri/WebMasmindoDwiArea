@@ -10,63 +10,7 @@ function Navbar() {
         i18n.changeLanguage(lng);
     };
 
-    const dropdownContainerRef = useRef(null);
-    const hideTimeoutRef = useRef(null); // Ref untuk menyimpan ID timeout
 
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-    // Durasi transisi (harus sama dengan yang di CSS)
-    const TRANSITION_DURATION_MS = 1500; // 1.5 detik (sesuaikan jika di CSS berbeda)
-
-    useEffect(() => {
-        const handleMouseEnter = () => {
-            // Batalkan timeout penyembunyian jika kursor masuk kembali
-            if (hideTimeoutRef.current) {
-                clearTimeout(hideTimeoutRef.current);
-                hideTimeoutRef.current = null;
-            }
-            if (!isDropdownOpen) {
-                setIsDropdownOpen(true);
-            }
-        };
-
-        const handleMouseLeave = (event) => {
-            // Atur timeout untuk menyembunyikan dropdown setelah jeda singkat
-            hideTimeoutRef.current = setTimeout(() => {
-                // Pastikan kursor benar-benar di luar container dropdown
-                if (dropdownContainerRef.current &&
-                    !dropdownContainerRef.current.contains(event.relatedTarget)) {
-
-                    setIsDropdownOpen(false); // Ini akan menghapus kelas 'show-custom'
-                }
-            }, 100); // Penundaan singkat sebelum memulai proses penyembunyian
-        };
-
-        const currentDropdownContainer = dropdownContainerRef.current;
-
-        if (currentDropdownContainer) {
-            currentDropdownContainer.addEventListener('mouseenter', handleMouseEnter);
-            currentDropdownContainer.addEventListener('mouseleave', handleMouseLeave);
-        }
-
-        // Cleanup function saat komponen unmount
-        return () => {
-            if (currentDropdownContainer) {
-                currentDropdownContainer.removeEventListener('mouseenter', handleMouseEnter);
-                currentDropdownContainer.removeEventListener('mouseleave', handleMouseLeave);
-            }
-            // Pastikan untuk menghapus timeout saat komponen unmount
-            if (hideTimeoutRef.current) {
-                clearTimeout(hideTimeoutRef.current);
-            }
-        };
-    }, [isDropdownOpen]); // isDropdownOpen sebagai dependency
-
-    // Menghitung posisi tengah untuk dropdown menu
-    // Kita perlu tahu lebar dari dropdown toggle (h5) dan lebar dari dropdown menu (card)
-    // Untuk ini, kita bisa menggunakan refs, atau dengan Bootstrap, dropdown biasanya diposisikan relatif terhadap parent.
-    // Cara paling mudah untuk menengahkan elemen yang posisinya absolute adalah dengan left: 50% dan transform: translateX(-50%)
-    // Ini diterapkan pada elemen .dropdown-menu
 
     return (
         <div>
@@ -92,56 +36,6 @@ function Navbar() {
                             </button>
                             <div className="collapse navbar-collapse" id="navbarNav">
                                 <ul className="navbar-nav gap-5 ms-auto">
-                                    <li className="nav-item dropdown" ref={dropdownContainerRef}>
-                                        <h5
-                                            className="nav-link dropdown-toggle"
-                                            style={{ fontSize: '1.25rem', color: '#000', cursor: 'pointer' }}
-                                            role="button"
-                                            aria-expanded={isDropdownOpen}
-                                        >
-                                            Dokumentasi Project
-                                        </h5>
-                                        <ul
-                                            className={`dropdown-menu p-0 m-0 ${isDropdownOpen ? 'show-custom' : ''}`}
-                                            style={{
-                                                // PERUBAHAN UTAMA DI SINI UNTUK MENENGAHKAN
-                                                left: '50%',
-                                                transform: 'translateX(-50%)',
-                                                minWidth: 'auto',
-                                                // Anda mungkin perlu menyesuaikan 'top' atau 'margin-top' jika ada masalah vertikal
-                                                // Misalnya: top: '100%' atau top: 'calc(100% + 5px)' jika ingin sedikit jarak
-                                                // Bootstrap default top: 100% relative to parent
-                                            }}
-                                        >
-                                            <div className="card rounded-0" style={{ width: '900px', backgroundColor: '#F16022' }}>
-                                                <div className="card-body m-0 p-0" >
-                                                    <div className="row">
-                                                        <div className="col-5">
-                                                            <img className='w-100 h-100' src="/Image/Background/CampAwakMasJPEG.jpg" alt="" style={{ objectFit: 'cover' }} />
-                                                        </div>
-                                                        <div className="col p-5 text-white">
-                                                            <div className="row">
-                                                                <div className="col">
-                                                                    <p style={{ fontSize: '13px' }}>Dokumentasi ini mencakup seluruh pengembangan internal Masmindo yang mendukung berbagai kebutuhan operasional perusahaan, termasuk pengelolaan data proyek, pelaporan, ESG (Environmental, Social, Governance), serta manajemen konten. Sistem dibangun untuk meningkatkan efisiensi kerja, transparansi data, dan integrasi antar departemen.</p>
-                                                                </div>
-                                                            </div>
-                                                            <div className="row">
-                                                                <div className="col">
-                                                                    <Link to="#" className='text-white text-decoration-none'>
-                                                                        <h5>Galeri Kami</h5>
-                                                                    </Link>
-                                                                    <Link to="#" className='text-white text-decoration-none'>
-                                                                        <h5>Video</h5>
-                                                                    </Link>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </ul>
-                                    </li>
-
                                     <li className="nav-item">
                                         <NavLink
                                             to="/tentang"

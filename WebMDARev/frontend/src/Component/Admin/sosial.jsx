@@ -115,7 +115,7 @@ function Sosial() {
                     <div className="container">
                         <div className="row">
                             <div className="col">
-                                <div className="card bg-info text-white p-3">
+                                <div className="card text-white p-3" style={{ backgroundColor: '#F16022' }}>
                                     <h3>ESG Sosial Page</h3>
                                 </div>
                             </div>
@@ -142,7 +142,7 @@ function Sosial() {
                                             <label className="form-label">Dokumentasi</label>
                                             <input type="file" className="form-control" onChange={handleFileChange} />
                                         </div>
-                                        <button className="btn btn-sm btn-primary">Add Data</button>
+                                        <button className="btn btn-sm text-white p-2" style={{ backgroundColor: "#115258" }}>Add Data</button>
                                     </form>
                                 </div>
 

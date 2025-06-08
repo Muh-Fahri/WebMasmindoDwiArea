@@ -178,7 +178,7 @@ function Bisnis() {
                         <div className="row">
                             <div className="col">
                                 {/* Header Card */}
-                                <div className="card bg-info p-3">
+                                <div className="card p-3" style={{ backgroundColor: '#F16022' }}>
                                     <h3 className="text-white">{t('bisnis_page_header_title')}</h3>
                                 </div>
 
@@ -202,28 +202,18 @@ function Bisnis() {
                                         </div>
 
                                         {/* Textarea Deskripsi Bahasa Indonesia */}
-                                        <div className="mb-3">
+                                        <div className="mb-3"> {/* Tambahkan kelas kustom di sini */}
                                             <label htmlFor="deskripsiHalaman_id" className="form-label">
                                                 {t('form_label_description_id')}
                                             </label>
-                                            {/* Ganti textarea ini dengan CKEditor */}
                                             <CKEditor
                                                 editor={ClassicEditor}
-                                                data={deskrip_id} // Mengikat nilai state deskrip_id ke editor
+                                                data={deskrip_id}
                                                 onChange={(event, editor) => {
-                                                    const data = editor.getData(); // Ambil data HTML dari editor
-                                                    setDeskrip_id(data); // Perbarui state dengan data HTML
+                                                    const data = editor.getData();
+                                                    setDeskrip_id(data);
                                                 }}
-                                            // Anda bisa menambahkan konfigurasi lain di sini jika diperlukan, contoh:
-                                            // config={{
-                                            //      toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
-                                            //      // ... konfigurasi lainnya
-                                            // }}
                                             />
-                                            {/* Catatan: Untuk CKEditor, atribut 'id' pada label 'for' tidak langsung relevan untuk inputnya
-                                                karena CKEditor membuat struktur DOM sendiri. Namun, `htmlFor` pada label tetap baik
-                                                untuk semantik dan aksesibilitas.
-                                            */}
                                         </div>
 
                                         {/* Textarea Deskripsi Bahasa Inggris */}
@@ -241,7 +231,7 @@ function Bisnis() {
                                             />
                                         </div>
 
-                                        <button type="submit" className="btn btn-primary btn-sm">
+                                        <button style={{ backgroundColor: '#115258', color: 'white' }} type="submit" className="btn btn-sm p-2">
                                             {t('button_add_data')}
                                         </button>
                                     </form>
@@ -255,7 +245,7 @@ function Bisnis() {
                 <section className="mt-5">
                     <div className="container-fluid p-0">
                         {/* Header */}
-                        <div className="card bg-info p-3">
+                        <div className="card p-3" style={{ backgroundColor: '#115258' }}>
                             <h3 className="text-white">{t('data_title')}</h3>
                         </div>
 
@@ -370,19 +360,21 @@ function Bisnis() {
                                             <div className="mb-3">
                                                 <label htmlFor="editDeskripsiId" className="form-label">Deskripsi (ID)</label>
                                                 {/* Ganti textarea dengan CKEditor */}
-                                                <CKEditor
-                                                    editor={ClassicEditor}
-                                                    data={editDeskrip_id} // Mengikat data CKEditor ke state
-                                                    onChange={(event, editor) => {
-                                                        const data = editor.getData(); // Mendapatkan konten HTML dari editor
-                                                        setEditDeskrip_id(data); // Memperbarui state
-                                                    }}
-                                                // Anda juga bisa menambahkan konfigurasi lain jika diperlukan, contoh:
-                                                // config={{
-                                                //      toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
-                                                //      // ...konfigurasi lainnya
-                                                // }}
-                                                />
+                                                <div className="custom-editor">
+                                                    <CKEditor
+                                                        editor={ClassicEditor}
+                                                        data={editDeskrip_id} // Mengikat data CKEditor ke state
+                                                        onChange={(event, editor) => {
+                                                            const data = editor.getData(); // Mendapatkan konten HTML dari editor
+                                                            setEditDeskrip_id(data); // Memperbarui state
+                                                        }}
+                                                    // Anda juga bisa menambahkan konfigurasi lain jika diperlukan, contoh:
+                                                    // config={{
+                                                    //      toolbar: [ 'heading', '|', 'bold', 'italic', 'link', 'bulletedList', 'numberedList', 'blockQuote' ],
+                                                    //      // ...konfigurasi lainnya
+                                                    // }}
+                                                    />
+                                                </div>
                                             </div>
                                             {/* Textarea Deskripsi Bahasa Inggris */}
                                             <div className="mb-3">
@@ -407,7 +399,7 @@ function Bisnis() {
                                             >
                                                 {t('admin_close_button')}
                                             </button>
-                                            <button type="submit" className="btn btn-primary">
+                                            <button style={{ backgroundColor: "#5C522A", color: 'white' }} type="submit" className="btn">
                                                 {t('admin_save_changes_button')}
                                             </button>
                                         </div>

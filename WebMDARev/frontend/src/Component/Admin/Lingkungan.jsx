@@ -7,6 +7,9 @@ import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import NoData from "../Error/NoData";
 import handleUnauthorized from "./unouthorized";
 import { useTranslation } from "react-i18next";
+import DOMPurify from 'dompurify';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 
@@ -215,7 +218,7 @@ function Lingkungan() {
                     <div className="container">
                         <div className="row">
                             <div className="col">
-                                <div className="card p-3 bg-info text-white">
+                                <div className="card p-3 text-white" style={{ backgroundColor: '#F16022' }}>
                                     <div className="mb-3">
                                         <h3>{t('esg_environment_page_title')}</h3>
                                     </div>
@@ -233,38 +236,37 @@ function Lingkungan() {
                                     <form onSubmit={addDeskData}>
                                         <div className="mb-3">
                                             <label className="form-label">{t('page_description_id_label')}</label>
-                                            <textarea
-                                                rows="5"
-                                                className="form-control"
-                                                value={deskripsi.deskripsi_halaman_id || ""}
-                                                onChange={(e) =>
+                                            <CKEditor
+                                                editor={ClassicEditor}
+                                                data={deskripsi.deskripsi_halaman_id}
+                                                onChange={(event, editor) => {
+                                                    const data = editor.getData();
                                                     setDeskripsiHalaman(prev => ({
                                                         ...prev,
-                                                        deskripsi_halaman_id: e.target.value
-                                                    }))
-                                                }
-                                                required
+                                                        deskripsi_halaman_id: data
+                                                    }));
+                                                }}
                                             />
                                         </div>
                                         <div className="mb-3">
                                             <label className="form-label">{t('page_description_en_label')}</label>
-                                            <textarea
-                                                rows="5"
-                                                className="form-control"
-                                                value={deskripsi.deskripsi_halaman_en || ""}
-                                                onChange={(e) =>
+                                            <CKEditor
+                                                editor={ClassicEditor}
+                                                data={deskripsi.deskripsi_halaman_en}
+                                                onChange={(event, editor) => {
+                                                    const data = editor.getData();
                                                     setDeskripsiHalaman(prev => ({
                                                         ...prev,
-                                                        deskripsi_halaman_en: e.target.value
-                                                    }))
-                                                }
-                                                required
+                                                        deskripsi_halaman_en: data
+                                                    }));
+                                                }}
                                             />
                                         </div>
                                         <div className="mb-3">
-                                            <button className="btn btn-sm btn-primary">{t('button_add_data')}</button>
+                                            <button style={{ backgroundColor: '#115258' }} className="btn text-white p-2 btn-sm">{t('button_add_data')}</button>
                                         </div>
                                     </form>
+
                                 </div>
                             </div>
                         </div>
@@ -292,10 +294,16 @@ function Lingkungan() {
                                                 deskripList.map((deskrLing) => (
                                                     <tr key={deskrLing.uuid}>
                                                         <td>
-                                                            <p style={{ whiteSpace: 'pre-line' }}>{deskrLing.deskripsi_halaman_id}</p>
+                                                            <div
+                                                                style={{ whiteSpace: 'pre-line' }}
+                                                                dangerouslySetInnerHTML={{ __html: deskrLing.deskripsi_halaman_id }}
+                                                            />
                                                         </td>
                                                         <td>
-                                                            <p style={{ whiteSpace: 'pre-line' }}>{deskrLing.deskripsi_halaman_en}</p>
+                                                            <div
+                                                                style={{ whiteSpace: 'pre-line' }}
+                                                                dangerouslySetInnerHTML={{ __html: deskrLing.deskripsi_halaman_en }}
+                                                            />
                                                         </td>
                                                         <td>
                                                             <div className="row">
@@ -322,6 +330,7 @@ function Lingkungan() {
                                             )}
                                         </tbody>
                                     </table>
+
                                 </div>
                             </div>
                         </div>
@@ -385,7 +394,7 @@ function Lingkungan() {
                                             <input type="file" className="form-control" onChange={handleFileChange} />
                                         </div>
                                         <div className="mb-3">
-                                            <button className="btn btn-sm btn-primary">{t('button_add_data')}</button>
+                                            <button style={{ backgroundColor: "#115258" }} className="btn btn-sm p-2 text-white">{t('button_add_data')}</button>
                                         </div>
                                     </form>
                                 </div>

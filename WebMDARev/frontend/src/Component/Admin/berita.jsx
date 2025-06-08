@@ -6,6 +6,9 @@ import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import NoData from "../Error/NoData";
 import handleUnauthorized from "./unouthorized";
 import { useTranslation } from "react-i18next";
+import DOMPurify from 'dompurify';
+import { CKEditor } from '@ckeditor/ckeditor5-react';
+import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 
 
 
@@ -107,7 +110,6 @@ function Berita() {
             getBeritaData();
             alert('Berita berhasil diubah');
         } catch (error) {
-            console.error(error);
             alert('Gagal mengubah data');
         }
     };
@@ -115,7 +117,7 @@ function Berita() {
 
     const deleteBeritaData = async (uuid) => {
         try {
-            const response = await axios.delete(`http://127.0.0.1:8000/api/admin/berita/${uuid}`, {
+            await axios.delete(`http://127.0.0.1:8000/api/admin/berita/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
@@ -157,7 +159,7 @@ function Berita() {
             <div className="flex-grow-1 p-3">
                 <div className="container">
                     <section>
-                        <div className="card bg-info p-3 text-white">
+                        <div className="card p-3 text-white" style={{ backgroundColor: '#F16022' }}>
                             <h3>{t('berita_page_header_title')}</h3>
                         </div>
                         <div className="card mt-5 p-3">
@@ -186,21 +188,25 @@ function Berita() {
                                 <div className="p-2">
                                     <p>{t('berita_description_id_label')}</p>
                                     <p className="text-danger">{t('berita_image_warning')}</p>
-                                    <textarea
-                                        rows={10}
-                                        className="form-control"
-                                        value={deskipBerita}
-                                        onChange={(e) => setDeskripBerita(e.target.value)}
-                                    ></textarea>
+                                    <CKEditor
+                                        editor={ClassicEditor}
+                                        data={deskipBerita}
+                                        onChange={(event, editor) => {
+                                            const data = editor.getData();
+                                            setDeskripBerita(data);
+                                        }}
+                                    />
                                 </div>
                                 <div className="p-2">
                                     <p>{t('berita_description_en_label')}</p>
-                                    <textarea
-                                        rows={10}
-                                        className="form-control"
-                                        value={deskipBeritaEn}
-                                        onChange={(e) => setDeskripBeritaEn(e.target.value)}
-                                    ></textarea>
+                                    <CKEditor
+                                        editor={ClassicEditor}
+                                        data={deskipBeritaEn}
+                                        onChange={(event, editor) => {
+                                            const data = editor.getData();
+                                            setDeskripBeritaEn(data);
+                                        }}
+                                    />
                                 </div>
                                 <div className="p-2">
                                     <p>{t('berita_image_label')}</p>
@@ -219,7 +225,7 @@ function Berita() {
                     <section>
                         <div className="row">
                             <div className="col">
-                                <div className="card mt-5 p-3 bg-info">
+                                <div className="card mt-5 p-3" style={{ backgroundColor: '#115258' }}>
                                     <div className="row">
                                         <div className="col text-white">
                                             <h3>{t('berita_data_header_title')}</h3> {/* Terjemahan untuk "Data" */}
@@ -248,28 +254,26 @@ function Berita() {
                                                     <td>{berita.judul_berita_id}</td>
                                                     <td>{berita.judul_berita_en}</td>
                                                     <td>
-                                                        <p style={{ whiteSpace: 'pre-line' }}>{berita.deskripsi_berita_id}</p>
+                                                        <div dangerouslySetInnerHTML={{ __html: berita.deskripsi_berita_id }} />
                                                     </td>
                                                     <td>
-                                                        <p style={{ whiteSpace: 'pre-line' }}>{berita.deskripsi_berita_en}</p>
+                                                        <div dangerouslySetInnerHTML={{ __html: berita.deskripsi_berita_en }} />
                                                     </td>
                                                     <td>
                                                         <img
                                                             src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
                                                             alt={t('alt_text_news_image')}
-                                                            style={{ width: "100px" }}
+                                                            style={{ width: "100px", objectFit: "cover" }}
                                                         />
                                                     </td>
                                                     <td>
-                                                        <div className="row">
-                                                            <div className="col d-flex gap-2">
-                                                                <button className="btn btn-sm btn-warning" onClick={() => openEditModal(berita)}>
-                                                                    {t('edit_button')} <FontAwesomeIcon icon={faPencilAlt} />
-                                                                </button>
-                                                                <button className="btn btn-sm btn-danger" onClick={() => deleteBeritaData(berita.uuid)}>
-                                                                    {t('delete_button')} <FontAwesomeIcon icon={faTrash} />
-                                                                </button>
-                                                            </div>
+                                                        <div className="d-flex gap-2">
+                                                            <button className="btn btn-sm btn-warning" onClick={() => openEditModal(berita)}>
+                                                                {t('edit_button')} <FontAwesomeIcon icon={faPencilAlt} />
+                                                            </button>
+                                                            <button className="btn btn-sm btn-danger" onClick={() => deleteBeritaData(berita.uuid)}>
+                                                                {t('delete_button')} <FontAwesomeIcon icon={faTrash} />
+                                                            </button>
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -277,7 +281,7 @@ function Berita() {
                                         ) : (
                                             <tr>
                                                 <td colSpan="7" className="text-center">
-                                                    <NoData /> {/* Asumsi NoData adalah komponen yang menampilkan pesan "Tidak ada data" */}
+                                                    <NoData /> {/* Komponen ini bisa kamu custom juga tampilkan teks biasa jika belum ada datanya */}
                                                 </td>
                                             </tr>
                                         )}
@@ -290,9 +294,9 @@ function Berita() {
                     <section>
                         {editModal && (
                             <div className="modal show fade d-block" tabIndex="-1">
-                                <div className="modal-dialog">
+                                <div className="modal-dialog modal-lg">
                                     <div className="modal-content">
-                                        <form onSubmit={editBeritaData}>
+                                        <form onSubmit={editBeritaData} encType="multipart/form-data">
                                             <div className="modal-header">
                                                 <h5 className="modal-title">{t('edit_news_modal_title')}</h5>
                                                 <button type="button" onClick={() => setEditModal(false)} className="btn-close"></button>
@@ -322,31 +326,33 @@ function Berita() {
                                                     />
                                                 </div>
 
-                                                {/* Deskripsi Bahasa Indonesia */}
+                                                {/* Deskripsi Bahasa Indonesia (CKEditor) */}
                                                 <div className="mb-3">
                                                     <label className="form-label">{t('news_description_id_label')}</label>
-                                                    <textarea
-                                                        value={editDeskrip.deskripsi_berita_id}
-                                                        onChange={(e) => setEditDeskrip(prev => ({ ...prev, deskripsi_berita_id: e.target.value }))}
-                                                        className="form-control"
-                                                        rows={5}
-                                                        required
+                                                    <CKEditor
+                                                        editor={ClassicEditor}
+                                                        data={editDeskrip.deskripsi_berita_id}
+                                                        onChange={(event, editor) => {
+                                                            const data = editor.getData();
+                                                            setEditDeskrip(prev => ({ ...prev, deskripsi_berita_id: data }));
+                                                        }}
                                                     />
                                                 </div>
 
-                                                {/* Deskripsi Bahasa Inggris */}
+                                                {/* Deskripsi Bahasa Inggris (CKEditor) */}
                                                 <div className="mb-3">
                                                     <label className="form-label">{t('news_description_en_label')}</label>
-                                                    <textarea
-                                                        value={editDeskrip.deskripsi_berita_en}
-                                                        onChange={(e) => setEditDeskrip(prev => ({ ...prev, deskripsi_berita_en: e.target.value }))}
-                                                        className="form-control"
-                                                        rows={5}
-                                                        required
+                                                    <CKEditor
+                                                        editor={ClassicEditor}
+                                                        data={editDeskrip.deskripsi_berita_en}
+                                                        onChange={(event, editor) => {
+                                                            const data = editor.getData();
+                                                            setEditDeskrip(prev => ({ ...prev, deskripsi_berita_en: data }));
+                                                        }}
                                                     />
                                                 </div>
 
-                                                {/* Upload Foto Baru (optional) */}
+                                                {/* Gambar Baru */}
                                                 <div className="mb-3">
                                                     <label className="form-label">{t('news_image_label_edit')}</label>
                                                     <input
@@ -356,7 +362,22 @@ function Berita() {
                                                     />
                                                 </div>
 
-                                                <button type="submit" className="btn btn-primary">{t('button_save_changes')}</button>
+                                                {/* Preview Gambar Lama */}
+                                                {editJudul.image_berita && (
+                                                    <div className="mb-3">
+                                                        <label className="form-label">{t('current_image_label')}</label><br />
+                                                        <img
+                                                            src={`http://localhost:8000/Berita/${encodeURIComponent(editJudul.image_berita)}`}
+                                                            alt="Preview"
+                                                            style={{ width: "150px", borderRadius: "5px" }}
+                                                        />
+                                                    </div>
+                                                )}
+                                            </div>
+                                            <div className="modal-footer">
+                                                <button type="submit" className="btn btn-primary">
+                                                    {t('button_save_changes')}
+                                                </button>
                                             </div>
                                         </form>
                                     </div>
@@ -364,6 +385,7 @@ function Berita() {
                             </div>
                         )}
                     </section>
+
                 </div>
             </div>
         </div>

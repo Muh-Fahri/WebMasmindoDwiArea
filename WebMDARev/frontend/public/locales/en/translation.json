@@ -68,14 +68,14 @@
     "awak_mas_project_location_part1": "Latimojong District,",
     "awak_mas_project_location_part2": "Luwu Regency,",
     "awak_mas_project_location_part3": "South Sulawesi",
-    "news_title": "News",
+    "news_title": "News and Media",
     "news_in_masmindo": "Masmindo in the news",
     "news_search_placeholder": "Search news...",
     "news_loading": "Loading news...",
     "about": "About",
     "business": "Business",
     "esg": "ESG",
-    "news": "News",
+    "news": "News and Media",
     "career": "Career",
     "contact": "Contact",
     "menu_button": "Menu",
@@ -155,5 +155,6 @@
     "created_at_label": "Created At",
     "updated_at_label": "Updated At",
     "documentation_alt_text": "Activity Documentation Image",
-    "edit_documentation_modal_title": "Edit Documentation Data"
+    "edit_documentation_modal_title": "Edit Documentation Data",
+    "documentation_title": "Documentation"
 }

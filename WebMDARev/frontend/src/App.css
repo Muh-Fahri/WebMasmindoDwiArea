@@ -389,6 +389,6 @@
     pointer-events: auto;
 }
 
-.custom-editor .ck-editor__editable {
+.ck-editor__editable {
     min-height: 400px;
 }
