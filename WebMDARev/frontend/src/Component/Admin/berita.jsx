@@ -26,8 +26,8 @@ function Berita() {
     // Modal 
     const [editModal, setEditModal] = useState(false);
     const [editId, setEditId] = useState("");
-    const [editJudul, setEditJudul] = useState("");
-    const [editDeskrip, setEditDeskrip] = useState("");
+    const [editJudul, setEditJudul] = useState({ judul_berita_id: '', judul_berita_en: '' });
+    const [editDeskrip, setEditDeskrip] = useState({ deskripsi_berita_id: '', deskripsi_berita_en: '' });
     const [editImg, setEditImg] = useState(null); // file object
 
 
@@ -88,8 +88,10 @@ function Berita() {
     const editBeritaData = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('judul_berita', editJudul);
-        formData.append('deskripsi_berita', editDeskrip);
+        formData.append('judul_berita_id', editJudul.judul_berita_id);
+        formData.append('judul_berita_en', editJudul.judul_berita_en);
+        formData.append('deskripsi_berita_id', editDeskrip.deskripsi_berita_id);
+        formData.append('deskripsi_berita_en', editDeskrip.deskripsi_berita_en);
         if (editImg) {
             formData.append('image_berita', editImg);
         }
@@ -103,16 +105,20 @@ function Berita() {
             });
 
             // Reset form dan tutup modal
-            setEditJudul("");
-            setEditDeskrip("");
+            setEditJudul({ judul_berita_id: '', judul_berita_en: '' });
+            setEditDeskrip({ deskripsi_berita_id: '', deskripsi_berita_en: '' });
             setEditImg(null);
             setEditModal(false);
-            getBeritaData();
+
+            // Refresh data
+            await getBeritaData();
+
             alert('Berita berhasil diubah');
         } catch (error) {
             alert('Gagal mengubah data');
         }
     };
+
 
 
     const deleteBeritaData = async (uuid) => {
@@ -130,19 +136,19 @@ function Berita() {
     }
 
 
-    const openEditModal = (berita) => {
-        setEditModal(true);
-        setEditId(berita.uuid);
+    function openEditModal(berita) {
         setEditJudul({
-            judul_berita_id: berita.judul_berita_id || '',
-            judul_berita_en: berita.judul_berita_en || '',
+            judul_berita_id: berita.judul_berita_id,
+            judul_berita_en: berita.judul_berita_en,
         });
         setEditDeskrip({
-            deskripsi_berita_id: berita.deskripsi_berita_id || '',
-            deskripsi_berita_en: berita.deskripsi_berita_en || '',
+            deskripsi_berita_id: berita.deskripsi_berita_id,
+            deskripsi_berita_en: berita.deskripsi_berita_en,
         });
-        setEditImg(null);
-    };
+        setEditImg(null);  // Reset gambar yang baru dipilih (jika perlu)
+        setEditId(berita.uuid);
+        setEditModal(true);
+    }
 
 
 

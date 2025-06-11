@@ -13,6 +13,7 @@ use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
+use App\Models\Alamat;
 use App\Models\Galeri;
 
 class readAdmin extends Controller
@@ -190,6 +191,15 @@ class readAdmin extends Controller
 
         return response()->json([
             "galeri" => $galeri
+        ], 200);
+    }
+
+    function readMaps()
+    {
+        $maps = Alamat::all();
+
+        return response()->json([
+            "maps" => $maps
         ], 200);
     }
 }

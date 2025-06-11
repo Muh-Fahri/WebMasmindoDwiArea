@@ -11,8 +11,6 @@ import Footer from "./fotter";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useTranslation } from "react-i18next";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import DOMPurify from 'dompurify';
 
 
@@ -87,6 +85,8 @@ function Home() {
     const position = [-3.4717, 120.1994];
     const [showCard, setShowCard] = useState(false);
     const { t, i18n } = useTranslation();
+    const [showInfo, setShowInfo] = useState(true);
+
 
 
     const handleMarkerClick = () => {
@@ -101,7 +101,12 @@ function Home() {
             duration: 1000, // durasi animasi dalam ms
             // once: true,
         });
+        const timer = setTimeout(() => {
+            setShowInfo(false);
+        }, 5000); // 10 detik
+        return () => clearTimeout(timer);
     }, []);
+
 
     const getBisnisData = async () => {
         try {
@@ -346,7 +351,7 @@ function Home() {
                             <h3 style={{ color: '#F16022' }} className="text-center text-uppercase fw-bold">{t('berita_terkini')}</h3>
                         </div>
                     </div>
-                    <div className="row gap-3 mt-5" data-aos="fade-right">
+                    <div className="row gap-3 mt-5 d-flex justify-content-center" data-aos="fade-right">
                         <div className="position-relative">
                             {/* Tombol kiri */}
                             <button
@@ -363,7 +368,7 @@ function Home() {
                             {beritaList.length > 0 ? (
                                 <div
                                     id="beritaSlider"
-                                    className="row flex-nowrap overflow-auto px-3"
+                                    className="row flex-nowrap overflow-auto px-3 justify-content-center"
                                     style={{ scrollBehavior: 'smooth' }}
                                 >
                                     {beritaList.map((berita) => (
@@ -390,9 +395,19 @@ function Home() {
 
                                                 {/* Deskripsi */}
                                                 <div className="px-3 py-2">
-                                                    <p className="text-secondary" style={{ fontSize: '0.9rem' }}>
+                                                    {/* <p className="text-secondary" style={{ fontSize: '0.9rem' }}>
                                                         {i18n.language === 'id' ? berita.deskripsi_berita_id.split(' ').slice(0, 30).join(' ') + '...' : berita.deskripsi_berita_en.split(' ').slice(0, 30).join(' ') + '...'}
-                                                    </p>
+                                                    </p> */}
+                                                    <p
+                                                        className="text-secondary"
+                                                        style={{ fontSize: '0.9rem' }}
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: i18n.language === 'id'
+                                                                ? DOMPurify.sanitize(berita.deskripsi_berita_id.split(' ').slice(0, 30).join(' ') + '...')
+                                                                : DOMPurify.sanitize(berita.deskripsi_berita_en.split(' ').slice(0, 30).join(' ') + '...')
+                                                        }}
+
+                                                    />
                                                 </div>
 
                                                 {/* Link */}

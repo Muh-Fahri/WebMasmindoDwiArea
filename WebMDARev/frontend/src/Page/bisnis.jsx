@@ -23,7 +23,6 @@ function Bisnis() {
             const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
             // Pastikan res.data.bisnisUser adalah array dan berisi data yang valid
             // Tambahkan logging untuk memeriksa data yang diterima
-            console.log("Data bisnis dari API:", res.data.bisnisUser);
             setBisnisList(res.data.bisnisUser);
         } catch (error) {
             console.error("Error fetching bisnis data:", error); // Log error lebih detail

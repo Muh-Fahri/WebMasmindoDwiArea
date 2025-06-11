@@ -30,6 +30,7 @@ function Galeri() {
                 }
             });
             setGaleriList(res.data.galeri);
+            getGaleriData();
         } catch (error) {
             alert('Opps Server Problem');
         }
@@ -93,6 +94,19 @@ function Galeri() {
         });
     }
 
+    const deleteGaleri = async (uuid) => {
+        try {
+            await axios.delete(`http://127.0.0.1:8000/api/admin/dokumentasi/delete/${uuid}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            getGaleriData();
+        } catch (error) {
+            alert(error);
+        }
+    }
+
 
 
 
@@ -119,6 +133,9 @@ function Galeri() {
                                     <div className="col">
                                         <div className="card p-3 text-white" style={{ backgroundColor: '#F16022' }}>
                                             <h3>Galeri</h3>
+                                        </div>
+                                        <div className="card p-5 mt-5" style={{ backgroundColor: '#115258' }}>
+                                            <p className="text-white m-0 p-0">Maksimal Panjang Karakter 255</p>
                                         </div>
                                         <div className="card mt-5 p-3">
                                             <h5>Create Data Galeri</h5>
@@ -216,7 +233,7 @@ function Galeri() {
                                                             <div className="row">
                                                                 <div className="col d-flex gap-2">
                                                                     <button className="btn btn-sm btn-warning" onClick={() => opendEditModal(gal)}>Edit</button>
-                                                                    <button className="btn btn-sm btn-danger">Delete</button>
+                                                                    <button className="btn btn-sm btn-danger" onClick={() => deleteGaleri(gal.uuid)}>Delete</button>
                                                                 </div>
                                                             </div>
                                                         </td>

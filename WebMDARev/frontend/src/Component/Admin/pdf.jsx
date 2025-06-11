@@ -98,9 +98,9 @@ function PDF() {
             <NavSide />
             <div className="flex-grow-p3">
                 <div className="container">
-                    <div className="row">
+                    <div className="row p-3">
                         <div className="col">
-                            <div className="card p-3 bg-info text-white">
+                            <div className="card p-3 text-white" style={{ backgroundColor: '#F16022' }}>
                                 <div className="mb-3">
                                     <h3>Laporan Keberlanjutan</h3>
                                 </div>
@@ -137,7 +137,7 @@ function PDF() {
 
                                     </div>
                                     <div className="mb-3">
-                                        <button className="btn btn-sm btn-primary">Tambahkan</button>
+                                        <button className="btn btn-sm p-3 text-white" style={{ backgroundColor: '#115258' }}>Tambahkan</button>
                                     </div>
                                 </form>
                             </div>
@@ -170,7 +170,7 @@ function PDF() {
                                                         <td>
                                                             <div className="row d-flex">
                                                                 <div className="col-auto">
-                                                                    <button onClick={() => downloadPdf(pdf.stored_name)} className="btn btn-sm btn-primary">
+                                                                    <button onClick={() => downloadPdf(pdf.stored_name)} className="btn btn-sm btn-warning">
                                                                         Download
                                                                     </button>
                                                                 </div>

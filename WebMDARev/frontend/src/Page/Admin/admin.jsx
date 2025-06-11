@@ -9,6 +9,7 @@ import Instagram from "../../Component/Admin/instagram";
 import Youtube from "../../Component/Admin/youtube";
 import PDF from "../../Component/Admin/pdf";
 import Galeri from "../../Component/Admin/galeri";
+import Alamat from "../../Component/Admin/alamat";
 
 function AdminPage() {
     return (
@@ -23,6 +24,7 @@ function AdminPage() {
                 <Route path="youtube" element={<Youtube />} />
                 <Route path="laporan_keberlanjutan" element={<PDF />} />
                 <Route path="galeri" element={<Galeri />} />
+                <Route path="alamat" element={<Alamat />} />
 
             </Routes>
         </div>

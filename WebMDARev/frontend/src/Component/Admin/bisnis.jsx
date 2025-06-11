@@ -108,7 +108,7 @@ function Bisnis() {
             getBisnisData(); // Refresh data
         } catch (error) {
             showNotification('Gagal Menambahkan Data', 'error');
-            console.error('Error adding data:', error);
+            // console.error('Error adding data:', error);
         }
     };
 
@@ -181,7 +181,6 @@ function Bisnis() {
                                 <div className="card p-3" style={{ backgroundColor: '#F16022' }}>
                                     <h3 className="text-white">{t('bisnis_page_header_title')}</h3>
                                 </div>
-
                                 {/* Form Card */}
                                 <div className="card mt-5 p-3 p-md-5">
                                     <h3>{t('create_bisnis_page_title')}</h3>

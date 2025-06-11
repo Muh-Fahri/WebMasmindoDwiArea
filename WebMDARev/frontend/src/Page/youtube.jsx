@@ -20,6 +20,7 @@ function Youtube() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/berita/youtube")
             setYtList(res.data.youtube);
+            getYtData();
         } catch (error) {
             alert("Gagal Mengambil Data");
         }

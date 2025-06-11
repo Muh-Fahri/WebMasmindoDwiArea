@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alamat;
 use App\Models\BeritaTerkini;
 use App\Models\Bisnis;
 use App\Models\DeskripLingkungan;
+use App\Models\Galeri;
 use App\Models\ImageLingkungan;
 use App\Models\Instagram;
 use App\Models\PDF;
@@ -137,6 +139,22 @@ class readUser extends Controller
 
         return response()->json([
             "laporan" => $laporan
+        ], 200);
+    }
+
+    function readDokumentasi()
+    {
+        $dokumentasi = Galeri::all();
+        return response()->json([
+            'galeri' => $dokumentasi
+        ], 200);
+    }
+
+    function readMaps()
+    {
+        $maps = Alamat::all();
+        return response()->json([
+            "maps" => $maps
         ], 200);
     }
 }

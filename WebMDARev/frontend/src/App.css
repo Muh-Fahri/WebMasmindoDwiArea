@@ -5,7 +5,8 @@
 
 
 .bg-login {
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.473), rgba(0, 0, 0, 0.473)), url('/public/Image/login.jpg');
+    backdrop-filter: blur(2px);
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.651), rgba(0, 0, 0, 0.651), rgba(0, 0, 0, 0.651)), url('/public/Image/Background/CampAwakMasJPEG.jpg');
     height: 100vh;
     background-size: cover;
     background-position: center;
@@ -78,6 +79,12 @@
 #dokEsg-slider::-webkit-scrollbar {
     display: none;
 }
+
+#thumbnailScroll::-webkit-scrollbar {
+    display: none;
+}
+
+
 
 /* Esg */
 .bg-card-lingkungan {
@@ -391,4 +398,122 @@
 
 .ck-editor__editable {
     min-height: 400px;
+}
+
+@media (max-width: 575.98px) {
+
+    /* Padding di row paling luar */
+    .row.p-5 {
+        padding: 1rem !important;
+        /* Mengurangi padding di mobile */
+    }
+
+    /* Ukuran font pada deskripsi foto utama */
+    .foto-utama-galeri-hp h5 {
+        font-size: 0.8rem !important;
+        /* Lebih kecil untuk mobile */
+        padding: 0.8rem !important;
+        /* Padding lebih kecil */
+    }
+
+    /* Tinggi div foto utama */
+    .foto-utama-galeri-hp {
+        height: 300px !important;
+        /* Tinggi lebih pendek di mobile */
+    }
+
+    /* Thumbnail scroll container */
+    #thumbnailScroll {
+        flex-direction: row !important;
+        /* Jadi horizontal di mobile */
+        overflow-x: auto !important;
+        /* Bisa scroll horizontal */
+        overflow-y: hidden !important;
+        /* Sembunyikan scroll vertikal */
+        white-space: nowrap !important;
+        /* Mencegah wrapping */
+        max-height: 120px !important;
+        /* Batasi tinggi container thumbnail di mobile */
+        width: 100% !important;
+        /* Lebar penuh di mobile */
+        padding: 0.5rem !important;
+        /* Padding lebih kecil */
+    }
+
+    /* Setiap card thumbnail */
+    #thumbnailScroll .card {
+        width: 120px !important;
+        /* Lebar tetap untuk setiap thumbnail di mobile */
+        flex-shrink: 0;
+        /* Penting untuk mencegah penciutan yang tidak diinginkan */
+    }
+
+    /* Card body dan title di thumbnail */
+    #thumbnailScroll .card-body {
+        padding: 0.3rem !important;
+        /* Padding lebih kecil */
+    }
+
+    #thumbnailScroll .card-title {
+        font-size: 0.6rem !important;
+        /* Ukuran font lebih kecil */
+    }
+}
+
+.card-login {
+    background-color: #ffffff31 !important;
+    /* bayangan agar lebih elegan */
+    backdrop-filter: blur(3px);
+    /* efek blur latar belakang */
+}
+
+.garis-cuaca {
+    background-color: #115258;
+    height: 30px;
+    width: 2px;
+}
+
+/* Gaya dasar untuk card saat tersembunyi */
+.weather-card-popup {
+    opacity: 0;
+    visibility: hidden;
+    /* Pointer-events none agar tidak mengganggu klik di bawahnya saat tidak terlihat */
+    pointer-events: none;
+    transition: opacity 0.3s ease-out, visibility 0.3s ease-out, transform 0.3s ease-out;
+    /* Optional: Efek geser dari bawah ke atas saat muncul */
+    transform: translateX(-50%) translateY(10px);
+    /* Posisi awal sedikit ke bawah */
+}
+
+/* Gaya untuk card saat terlihat */
+.weather-card-popup.is-visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    /* Bisa diinteraksi saat terlihat */
+    transform: translateX(-50%) translateY(0);
+    /* Posisi akhir */
+}
+
+@keyframes float {
+    0% {
+        transform: translateY(0px);
+    }
+
+    50% {
+        transform: translateY(-5px);
+    }
+
+    100% {
+        transform: translateY(0px);
+    }
+}
+
+.weather-icon-animated {
+    animation: float 3s ease-in-out infinite;
+}
+
+.card-cuaca {
+    background-color: rgba(255, 255, 255, 0.048) !important;
+    backdrop-filter: blur(10px);
 }

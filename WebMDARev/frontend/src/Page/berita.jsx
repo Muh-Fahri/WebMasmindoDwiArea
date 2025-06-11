@@ -28,44 +28,85 @@ function Berita() {
 
     const getBeritaData = async (keyword = "") => {
         setIsLoading(true);
-        setMessage("");
+        setMessage(""); // Reset pesan setiap kali fetch dimulai
+
         const trimmedKeyword = keyword.trim();
-        const url = trimmedKeyword === ""
-            ? "http://127.0.0.1:8000/api/user/berita"
-            : `http://127.0.0.1:8000/api/admin/berita/search_berita?q=${encodeURIComponent(trimmedKeyword)}`;
+        let url = "";
+
+        // Tentukan URL berdasarkan apakah ada keyword pencarian atau tidak
+        if (trimmedKeyword === "") {
+            // Jika tidak ada keyword, ambil semua berita dari endpoint user
+            url = "http://127.0.0.1:8000/api/user/berita";
+        } else {
+            // Jika ada keyword, gunakan endpoint pencarian yang Anda sediakan
+            url = `http://127.0.0.1:8000/api/admin/berita/search_berita?q=${encodeURIComponent(trimmedKeyword)}`;
+            // Catatan: Jika ini adalah halaman user, endpoint admin mungkin memerlukan penyesuaian izin di backend Anda.
+            // Pertimbangkan untuk membuat endpoint pencarian berita khusus user jika ada perbedaan akses.
+        }
+
         try {
             const res = await axios.get(url);
-            // console.log("Data received:", res.data);
-            setBeritaList(res.data.berita || []);
-            setMessage(res.data.message || "");
+            let processedBerita = [];
+
+            if (trimmedKeyword === "") {
+                // Jika tidak ada keyword, respons diharapkan memiliki properti 'berita'
+                processedBerita = res.data.berita || [];
+            } else {
+                // Jika ada keyword, respons diharapkan memiliki 'berita_id' dan 'berita_en'
+                const resultsId = res.data.berita_id || [];
+                const resultsEn = res.data.berita_en || [];
+
+                // Menggabungkan hasil dari kedua bahasa dan memastikan keunikan berdasarkan UUID
+                const uniqueBeritaMap = new Map();
+                resultsId.forEach(item => uniqueBeritaMap.set(item.uuid, item));
+                resultsEn.forEach(item => uniqueBeritaMap.set(item.uuid, item));
+
+                processedBerita = Array.from(uniqueBeritaMap.values());
+            }
+
+            setBeritaList(processedBerita);
+
+            // Menentukan pesan setelah data diproses
+            if (processedBerita.length === 0 && trimmedKeyword !== "") {
+                setMessage(t('news_no_results')); // Pesan jika tidak ada hasil pencarian
+            } else if (processedBerita.length === 0 && trimmedKeyword === "") {
+                setMessage(t('news_no_data_available')); // Pesan jika tidak ada data sama sekali (saat tidak mencari)
+            } else {
+                setMessage(""); // Kosongkan pesan jika ada data
+            }
+
         } catch (error) {
             console.error("Error fetching data:", error);
             setBeritaList([]);
-            setMessage("Gagal memuat berita.");
+            setMessage(t('news_fetch_error'));
             if (error.response && error.response.status === 404) {
-                setMessage("Endpoint tidak ditemukan atau ada masalah server.");
+                setMessage('No Data');
             }
         } finally {
             setIsLoading(false);
         }
     };
 
+    useEffect(() => {
+
+        getBeritaData();
+    }, []);
+
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
-        setSearchKeyword(value);
+        setSearchKeyword(value); // Update state keyword secara langsung
 
-
+        // Hapus timeout sebelumnya jika ada
         if (debounceTimeoutRef.current) {
             clearTimeout(debounceTimeoutRef.current);
         }
 
-
+        // Set timeout baru untuk memanggil getBeritaData setelah jeda
         debounceTimeoutRef.current = setTimeout(() => {
             getBeritaData(value);
-        }, 500);
-    };
-
+        }, 500); // Debounce 500ms
+    }
 
     return (
         <div>
@@ -124,7 +165,7 @@ function Berita() {
                                                         <div
                                                             className="img-berita"
                                                             style={{
-                                                                backgroundImage: `url(http://127.0.0.1:8000/Berita/${encodeURIComponent(berita.image_berita)})`,
+                                                                backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url(http://127.0.0.1:8000/Berita/${encodeURIComponent(berita.image_berita)})`,
                                                                 backgroundSize: "cover",
                                                                 backgroundPosition: "center",
                                                                 width: "100%",

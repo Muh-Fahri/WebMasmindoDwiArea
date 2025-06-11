@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\PDF;
+use App\Models\Alamat;
 use App\Models\Bisnis;
+use App\Models\Galeri;
 use App\Models\Sosial;
+use App\Models\Weather;
 use App\Models\Youtube;
 use App\Models\Instagram;
 use App\Models\Lingkungan;
@@ -13,8 +17,8 @@ use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
-use App\Models\Galeri;
-use App\Models\PDF;
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Validator;
 
 class createAdmin extends Controller
 {
@@ -233,6 +237,117 @@ class createAdmin extends Controller
 
         return response()->json([
             "galeri" => $galeri
+        ], 200);
+    }
+
+    function createWeather()
+    {
+        $weathers = \App\Models\Weather::all();
+        $sample_weather = $weathers->first();
+
+        $return_response = [];
+
+        if (now() > $sample_weather->updated_at->addHour()) {
+            try {
+                foreach ($weathers as $weather) {
+                    $response = Http::get('https://api.openweathermap.org/data/2.5/weather', [
+                        'id'    => $weather->city_id,
+                        'units' => 'metric',
+                        'appid' => env("OWM_API_KEY"),
+                    ]);
+
+                    if ($response->ok()) {
+                        $data = $response->json();
+
+                        $weather->temp         = $data['main']['temp'] ?? $weather->temp;
+                        $weather->humidity     = $data['main']['humidity'] ?? $weather->humidity;
+                        $weather->wind_speed   = $data['wind']['speed'] ?? $weather->wind_speed;
+                        $weather->cloudiness   = $data['clouds']['all'] ?? $weather->cloudiness;
+
+                        if (!empty($data['weather'][0])) {
+                            $weather->weather_id   = $data['weather'][0]['id'];
+                            $weather->weather_icon = $data['weather'][0]['icon'];
+                        } else {
+                            $weather->weather_id   = 800;
+                            $weather->weather_icon = "01d";
+                        }
+
+                        $weather->updated_at = now()->toDateTimeString();
+                        $weather->save();
+                    }
+                    $return_response[] = [
+                        "city_id"     => $weather->city_id,
+                        "city_name"   => $weather->city_name,
+                        "temp"        => $weather->temp,
+                        "humidity"    => $weather->humidity,
+                        "wind_speed"  => $weather->wind_speed,
+                        "cloudiness"  => $weather->cloudiness,
+                        "weather_id"  => $weather->weather_id,
+                        "weather_icon" => $weather->weather_icon,
+                    ];
+                }
+            } catch (\Exception $e) {
+                foreach ($weathers as $weather) {
+                    $return_response[] = [
+                        "city_id"     => $weather->city_id,
+                        "city_name"   => $weather->city_name,
+                        "temp"        => $weather->temp,
+                        "humidity"    => $weather->humidity,
+                        "wind_speed"  => $weather->wind_speed,
+                        "cloudiness"  => $weather->cloudiness,
+                        "weather_id"  => $weather->weather_id,
+                        "weather_icon" => $weather->weather_icon,
+                    ];
+                }
+            }
+        } else {
+            foreach ($weathers as $weather) {
+                $return_response[] = [
+                    "city_id"     => $weather->city_id,
+                    "city_name"   => $weather->city_name,
+                    "temp"        => $weather->temp,
+                    "humidity"    => $weather->humidity,
+                    "wind_speed"  => $weather->wind_speed,
+                    "cloudiness"  => $weather->cloudiness,
+                    "weather_id"  => $weather->weather_id,
+                    "weather_icon" => $weather->weather_icon,
+                ];
+            }
+        }
+
+        return response()->json([
+            "weather" => $return_response
+        ], 200);
+    }
+
+
+
+    function createMaps(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'nama_alamat_id' => 'nullable|string|max:255',
+            'nama_alamat_en' => 'nullable|string|max:255',
+            'link_alamat' => 'nullable|url|max:255',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors()
+            ], 422);
+        }
+        $filledInputs = collect($request->only([
+            'nama_alamat_id',
+            'nama_alamat_en',
+            'link_alamat'
+        ]))->filter(function ($value) {
+            return !is_null($value) && $value !== '';
+        });
+        $maps = Alamat::create($filledInputs->toArray());
+
+        return response()->json([
+            "maps" => $maps,
+            "message" => "Data berhasil disimpan"
         ], 200);
     }
 }

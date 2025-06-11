@@ -38,6 +38,11 @@ function NavSide() {
                             </NavLink>
                         </li>
                         <li>
+                            <NavLink to="/admin/alamat" className={({ isActive }) => "text-white text-decoration-none d-block py-2 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                                <FontAwesomeIcon icon={faChartBar} /> Alamat
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink to="/admin/bisnis" className={({ isActive }) => "text-white text-decoration-none d-block py-2 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
                                 <FontAwesomeIcon icon={faChartBar} /> {t('business')}
                             </NavLink>

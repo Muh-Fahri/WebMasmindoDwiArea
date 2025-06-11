@@ -10,11 +10,13 @@ use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
+use App\Models\Alamat;
 use App\Models\Galeri;
 use App\Models\Instagram;
 use App\Models\Youtube;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 use PhpParser\Node\Stmt\ElseIf_;
 
 class updateAdmin extends Controller
@@ -251,6 +253,33 @@ class updateAdmin extends Controller
 
         return response()->json([
             "galeri" => $galeri
+        ], 200);
+    }
+
+    function updateMaps(Request $request, $uuid)
+    {
+        $validator = Validator::make($request->all(), [
+            "nama_alamat_id" => "string|max:255",
+            "nama_alamat_en" => "string|max:255",
+            "link_alamat" => "url|max:255"
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'msg' => 'Validasi Gagal',
+                'error' => $validator->errors(),
+            ], 400);
+        }
+        $maps = Alamat::where('uuid', $uuid)->firstOrFail();
+
+        $maps->update([
+            "nama_alamat_id" => $request->nama_alamat_id,
+            "nama_alamat_en" => $request->nama_alamat_en,
+            "link_alamat" => $request->link_alamat
+        ]);
+
+        return response()->json([
+            "alamat" => $maps,
         ], 200);
     }
 }

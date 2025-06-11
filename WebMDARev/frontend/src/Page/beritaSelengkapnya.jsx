@@ -3,11 +3,12 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import NavbarHijau from "../Component/navbarHijau";
 import { useTranslation } from "react-i18next";
+import DOMPurify from 'dompurify'
 
 function BeritaSelengkapnya() {
     const { uuid } = useParams(); // ambil UUID dari URL
     const [berita, setBerita] = useState(null); // bukan array, tapi satu objek
-    const { i18n } = useTranslation();
+    const { t, i18n } = useTranslation();
 
     useEffect(() => {
         getSelengkapnyaData();
@@ -51,13 +52,21 @@ function BeritaSelengkapnya() {
                             <div className="col-md-4 d-flex flex-column justify-content-between">
                                 <div>
                                     <ul className="list-unstyled">
-                                        <li><a href="/berita" className="fs-1 text-decoration-none berita-active">Masmindo dalam berita</a></li>
+                                        <li><a href="/berita" className="fs-1 text-decoration-none berita-active">{t('news_in_masmindo')}</a></li>
                                         <li><a href="/instagram" className="fs-1 text-black text-decoration-none">Instagram</a></li>
-                                        <li><a href="" className="fs-1 text-black text-decoration-none">Youtube</a></li>
+                                        <li><a href="/youtube" className="fs-1 text-black text-decoration-none">Youtube</a></li>
+                                        <li><a href="/dokumentasi" className="fs-1 text-black text-decoration-none">{t('documentation_title')}</a></li>
                                     </ul>
                                 </div>
                                 <div className="mt-auto pt-4">
-                                    <p className="mb-1">{formatTanggal(berita.created_at)}</p>
+                                    <p className="mb-1">
+                                        {new Date(berita.created_at).toLocaleDateString(i18n.language, {
+                                            weekday: "long",
+                                            day: "numeric",
+                                            month: "long",
+                                            year: "numeric"
+                                        })}
+                                    </p>
                                     <h3 className="fw-bold display-6">{i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}</h3>
                                 </div>
                             </div>
@@ -75,7 +84,15 @@ function BeritaSelengkapnya() {
                         </div>
                         <div className="row p-5 d-flex justify-content-center">
                             <div className="col-12 col-md-8">
-                                <p style={{ whiteSpace: 'pre-line', textAlign: 'justify' }} className="fs-5 fs-md-3">{i18n.language === 'id' ? berita.deskripsi_berita_id : berita.deskripsi_berita_en}</p>
+                                <h4
+                                    className="fw-light"
+                                    dangerouslySetInnerHTML={{
+                                        __html: i18n.language === 'id'
+                                            ? DOMPurify.sanitize(berita.deskripsi_berita_id)
+                                            : DOMPurify.sanitize(berita.deskripsi_berita_en)
+
+                                    }}
+                                />
                             </div>
                         </div>
 

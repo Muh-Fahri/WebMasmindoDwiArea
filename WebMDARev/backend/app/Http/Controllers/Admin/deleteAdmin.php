@@ -12,6 +12,7 @@ use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
+use App\Models\Alamat;
 use App\Models\Galeri;
 use Illuminate\Support\Facades\File;
 
@@ -128,6 +129,16 @@ class deleteAdmin extends Controller
     {
         $galeri = Galeri::where('uuid', $uuid)->firstOrFail();
         $galeri->delete();
+
+        return response()->json([
+            "msg" => "Berhasil Menghapus Data"
+        ], 200);
+    }
+
+    function deleteMaps($uuid)
+    {
+        $maps = Alamat::where('uuid', $uuid)->firstOrFail();
+        $maps->forceDelete();
 
         return response()->json([
             "msg" => "Berhasil Menghapus Data"

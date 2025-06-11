@@ -38,6 +38,26 @@ function Dashboard() {
         }
     }
 
+    const handleLogout = async () => {
+        try {
+            await axios.post('http://127.0.0.1:8000/api/admin/logout', {}, {
+                headers: {
+                    Authorization: `Bearer ${token}`,
+                },
+            });
+
+            // Hapus token dari localStorage
+            localStorage.removeItem('token');
+
+            // Redirect ke halaman login
+            window.location.href = "/Login-admin-123";
+        } catch (error) {
+            console.error("Logout error:", error);
+            alert("Gagal logout");
+        }
+    };
+
+
 
     useEffect(() => {
         getDashboardData();
@@ -45,35 +65,30 @@ function Dashboard() {
 
     return (
         <div className="d-flex flex-column flex-md-row">
-            {/* Sidebar */}
             <div style={{ width: '260px', flexShrink: 0 }} className="flex-grow-1 flex-md-grow-0">
                 <NavSide />
             </div>
-
-            {/* Konten Utama */}
             <div className="flex-grow-1 content px-3 px-md-5 pt-5 mt-5" style={{ overflowX: 'hidden' }}>
                 <div className="row">
                     <div className="col">
-                        {/* Judul Dashboard yang Diterjemahkan */}
                         <h1>{t('dashboard_welcome_title')}</h1>
-                        {/* Paragraf Selamat Datang yang Diterjemahkan */}
                         <p>{t('dashboard_welcome_message')}</p>
+                        <div className="mb-3">
+                            <button className="btn btn-danger p-3" onClick={handleLogout}>
+                                LogOut
+                            </button>
+                        </div>
                     </div>
                 </div>
-
-                {/* 3 Box Atas */}
                 <div className="row gy-4 gx-4">
                     <div className="col-12 col-md-4">
                         <div className="card p-4 shadow h-100">
                             <div className="card-body m-0 p-0">
                                 <div className="row align-items-center">
                                     <div className="col">
-                                        {/* h5: Default (xs) fs-6, md ke atas fs-5 (ukuran normal h5) */}
-                                        {/* Terjemahkan judul card */}
                                         <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>
                                             {t('annual_report_card_title')}
                                         </h5>
-                                        {/* h1: Default (xs) display-6, md ke atas display-4 (ukuran normal h1) */}
                                         <h1 className="display-6 display-md-4">
                                             <CountUp
                                                 start={0}
@@ -85,7 +100,6 @@ function Dashboard() {
                                         </h1>
                                     </div>
                                     <div className="col-auto">
-                                        {/* Ikon: Default (xs) 50px, md ke atas 80px (ukuran normal) */}
                                         <FontAwesomeIcon icon={faBook} style={{ fontSize: "50px" }} className="fs-md-icon-80" />
                                     </div>
                                 </div>
@@ -97,7 +111,6 @@ function Dashboard() {
                             <div className="card-body m-0 p-0">
                                 <div className="row align-items-center">
                                     <div className="col">
-                                        {/* Terjemahkan judul card */}
                                         <h5 className="fs-6 fs-md-5" style={{ color: '#115258' }}>
                                             {t('news_uploaded_card_title')}
                                         </h5>
