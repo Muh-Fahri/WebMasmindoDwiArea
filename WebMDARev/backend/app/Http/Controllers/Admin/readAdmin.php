@@ -14,6 +14,7 @@ use App\Models\DeskripLingkungan;
 use Illuminate\Support\Facades\Log;
 use App\Http\Controllers\Controller;
 use App\Models\Alamat;
+use App\Models\Carousel;
 use App\Models\Galeri;
 
 class readAdmin extends Controller
@@ -159,12 +160,16 @@ class readAdmin extends Controller
 
     function dashboardAdmin()
     {
-        $laporan_tahunan = PDF::all();
+        $alamat = Alamat::all();
         $berita = BeritaTerkini::all();
-        $instagram = Instagram::all();
-        $youtube = Youtube::all();
-        $sosial = Sosial::all();
+        $bisnis = Bisnis::all();
+        $carousel = Carousel::all();
         $lingkungan_image = ImageLingkungan::all();
+        $galeri = Galeri::all();
+        $instagram = Instagram::all();
+        $laporan_tahunan = PDF::all();
+        $sosial = Sosial::all();
+        $youtube = Youtube::all();
 
         $hitung_laporan = $laporan_tahunan->count();
         $hitung_berita = $berita->count();
@@ -172,6 +177,12 @@ class readAdmin extends Controller
         $hitung_youtube = $youtube->count();
         $hitung_sosial = $sosial->count();
         $hitung_lingkungan = $lingkungan_image->count();
+        $hitung_alamat = $alamat->count();
+        $hitung_bisnis = $bisnis->count();
+        $hitung_carousel = $carousel->count();
+        $hitung_galeri = $galeri->count();
+
+
 
 
 
@@ -182,6 +193,10 @@ class readAdmin extends Controller
             'youtube' => $hitung_youtube,
             'lingkungan' => $hitung_lingkungan,
             'sosial' => $hitung_sosial,
+            'alamat' => $hitung_alamat,
+            'bisnis' => $hitung_bisnis,
+            'carousel' => $hitung_carousel,
+            'galeri' => $hitung_galeri,
         ], 200);
     }
 
@@ -200,6 +215,14 @@ class readAdmin extends Controller
 
         return response()->json([
             "maps" => $maps
+        ], 200);
+    }
+
+    function readCarousel()
+    {
+        $carousel = Carousel::all();
+        return response()->json([
+            "carousel" => $carousel
         ], 200);
     }
 }

@@ -131,23 +131,23 @@ function Alamat() {
                         <div className="row mb-5">
                             <div className="col">
                                 <div className="card p-3" style={{ backgroundColor: "#F16022" }}>
-                                    <h3 className="p-0 m-0 text-white">Halaman Alamat</h3>
+                                    <h3 className="p-0 m-0 text-white">{t('address_page_title')}</h3>
                                 </div>
                             </div>
                         </div>
                         <div className="row mb-5">
                             <div className="col">
                                 <div className="card p-3 mb-3" style={{ backgroundColor: "#115258" }}>
-                                    <h3 className="p-0 m-0 text-white">Masukkan Data</h3>
+                                    <h3 className="p-0 m-0 text-white">{t('input_data_title')}</h3>
                                 </div>
                                 <div className="card p-3">
                                     <form onSubmit={createAlamat}>
                                         <div className="mb-3">
-                                            <p>Masukkan Url</p>
+                                            <p>{t('input_url_label')}</p>
                                             <input type="text" className="form-control" value={linkAlamat} onChange={(e) => setLinkAlamat(e.target.value)} />
                                         </div>
                                         <div className="mb-3">
-                                            <p>Masukkan Alamat (Id)</p>
+                                            <p>{t('input_address_id_label')}</p>
                                             <CKEditor
                                                 editor={ClassicEditor}
                                                 data={namaAlamat_id}
@@ -158,7 +158,7 @@ function Alamat() {
                                             />
                                         </div>
                                         <div className="mb-3">
-                                            <p>Masukkan Alamat (En)</p>
+                                            <p>{t('input_address_en_label')}</p>
                                             <CKEditor
                                                 editor={ClassicEditor}
                                                 data={namaAlamat_en}
@@ -166,11 +166,10 @@ function Alamat() {
                                                     const data = editor.getData();
                                                     setNamaAlamat_en(data);
                                                 }}
-
                                             />
                                         </div>
                                         <div className="mb-3">
-                                            <button className="btn-sm btn text-white p-2" style={{ backgroundColor: "#115258" }}>Masukkan Data</button>
+                                            <button type="submit" className="btn-sm btn text-white p-2" style={{ backgroundColor: "#115258" }}>{t('add_data_button')}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -181,110 +180,136 @@ function Alamat() {
                         <div className="row">
                             <div className="col">
                                 <div className="card p-3" style={{ backgroundColor: "#F16022" }}>
-                                    <h3 className="p-0 m-0 text-white">Data</h3>
+                                    <h3 className="p-0 m-0 text-white">{t('data_title')}</h3>
                                 </div>
                             </div>
                         </div>
-                        <div className="row">
+                        <div className="row mt-3">
                             <div className="col">
-                                <table className="table">
-                                    <thead>
-                                        <tr>
-                                            <th>Nama Alamat (Id)</th>
-                                            <th>Nama Alamat (En)</th>
-                                            <th>Url Alamat</th>
-                                            <th>Aksi</th>
-                                        </tr>
-                                    </thead>
-                                    {alamatList.length > 0 ? (
-                                        alamatList.map((item) => (
-                                            <tbody>
-                                                <tr key={item.uuid}>
-                                                    <td>
-                                                        <p
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: DOMPurify.sanitize(item.nama_alamat_id)
-                                                            }}
-                                                        />
+                                <div className="table-responsive">
+                                    <table className="table table-bordered table-striped">
+                                        <thead className="table-light">
+                                            <tr>
+                                                <th>{t('table_address_name_id')}</th>
+                                                <th>{t('table_address_name_en')}</th>
+                                                <th>{t('table_address_url')}</th>
+                                                <th>{t('table_action')}</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            {alamatList.length > 0 ? (
+                                                alamatList.map((item) => (
+                                                    <tr key={item.uuid}>
+                                                        <td>
+                                                            <div className="text-truncate" style={{ maxWidth: '250px' }}
+                                                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.nama_alamat_id) }}
+                                                            />
+                                                        </td>
+                                                        <td>
+                                                            <div className="text-truncate" style={{ maxWidth: '250px' }}
+                                                                dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.nama_alamat_en) }}
+                                                            />
+                                                        </td>
+                                                        <td>
+                                                            <a href={item.link_alamat} target="_blank" rel="noopener noreferrer" className="text-truncate d-inline-block" style={{ maxWidth: '200px' }}>
+                                                                {item.link_alamat}
+                                                            </a>
+                                                        </td>
+                                                        <td>
+                                                            <div className="d-flex flex-column flex-md-row gap-2">
+                                                                <button
+                                                                    className="btn btn-sm btn-warning d-flex align-items-center justify-content-center gap-1"
+                                                                    onClick={() => openEditAlamatModal(item)}
+                                                                >
+                                                                    <span className="d-none d-md-inline">{t('edit_button')}</span>
+                                                                    <i className="fas fa-edit d-md-none"></i> {/* Contoh icon FontAwesome */}
+                                                                </button>
+                                                                <button
+                                                                    className="btn btn-sm btn-danger d-flex align-items-center justify-content-center gap-1"
+                                                                    onClick={() => deleteAlamat(item.uuid)}
+                                                                >
+                                                                    <span className="d-none d-md-inline">{t('delete_button')}</span>
+                                                                    <i className="fas fa-trash-alt d-md-none"></i> {/* Contoh icon FontAwesome */}
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    <td colSpan="4" className="text-center text-muted py-3">
+                                                        {t('no_address_data')}
                                                     </td>
-                                                    <td>
-                                                        <p
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: DOMPurify.sanitize(item.nama_alamat_en)
-                                                            }}
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <a href={item.link_alamat} target="_blank" rel="noopener noreferrer">
-                                                            {item.link_alamat}
-                                                        </a>
-                                                    </td>
-                                                    <td>
-                                                        <div className="d-flex gap-2">
-                                                            <button className="btn btn-sm btn-warning" onClick={() => openEditAlamatModal(item)}>Edit</button>
-                                                            <button className="btn btn-sm btn-danger" onClick={() => deleteAlamat(item.uuid)}>Delete</button>
-                                                        </div>
-                                                    </td>
-
                                                 </tr>
-                                            </tbody>
-                                        ))
-                                    ) : (
-                                        <p>No data</p>
-                                    )}
-                                </table>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </section>
-                    <section>
-                        {editModal && (
-                            <div className="modal show fade d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                                <div className="modal-dialog modal-dialog-centered modal-lg">
-                                    <div className="modal-content">
-                                        <form onSubmit={updateAlamat}>
-                                            <div className="modal-header">
-                                                <h5 className="modal-title">Edit Data Alamat</h5>
-                                                <button type="button" className="btn-close" onClick={() => setEditModal(false)}></button>
+
+                    {editModal && (
+                        <div className="modal show d-block" tabIndex="-1" role="dialog" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                            <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
+                                <div className="modal-content">
+                                    <form onSubmit={updateAlamat}>
+                                        <div className="modal-header">
+                                            <h5 className="modal-title">{t('edit_address_modal_title')}</h5>
+                                            <button type="button" className="btn-close" aria-label="Close" onClick={() => setEditModal(false)}></button>
+                                        </div>
+                                        <div className="modal-body">
+                                            <div className="mb-3">
+                                                <p>{t('edit_url_label')}</p>
+                                                <input
+                                                    type="text"
+                                                    className="form-control"
+                                                    value={editLinkAlamat}
+                                                    onChange={(e) => setEditLinkAlamat(e.target.value)}
+                                                />
                                             </div>
-                                            <div className="modal-body">
-                                                <div className="mb-3">
-                                                    <p>Nama Alamat (Id)</p>
-                                                    <CKEditor
-                                                        editor={ClassicEditor}
-                                                        data={editNamaAlamat.nama_alamat_id || ''}
-                                                        onChange={(event, editor) => {
-                                                            const data = editor.getData();
-                                                            setEditNamaAlamat((prev) => ({
-                                                                ...prev,
-                                                                nama_alamat_id: data,
-                                                            }));
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <p>Nama Alamat (En)</p>
-                                                    <CKEditor
-                                                        editor={ClassicEditor}
-                                                        data={editNamaAlamat.nama_alamat_en || ''}
-                                                        onChange={(event, editor) => {
-                                                            const data = editor.getData();
-                                                            setEditNamaAlamat((prev) => ({
-                                                                ...prev,
-                                                                nama_alamat_en: data,
-                                                            }));
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <button className="btn btn-sm text-white p-2" style={{ backgroundColor: "#F16022" }}>Edit Data</button>
-                                                </div>
+                                            <div className="mb-3">
+                                                <p>{t('edit_address_id_label')}</p>
+                                                <CKEditor
+                                                    editor={ClassicEditor}
+                                                    data={editNamaAlamat.nama_alamat_id || ''}
+                                                    onChange={(event, editor) => {
+                                                        const data = editor.getData();
+                                                        setEditNamaAlamat((prev) => ({
+                                                            ...prev,
+                                                            nama_alamat_id: data,
+                                                        }));
+                                                    }}
+                                                />
                                             </div>
-                                        </form>
-                                    </div>
+                                            <div className="mb-3">
+                                                <p>{t('edit_address_en_label')}</p>
+                                                <CKEditor
+                                                    editor={ClassicEditor}
+                                                    data={editNamaAlamat.nama_alamat_en || ''}
+                                                    onChange={(event, editor) => {
+                                                        const data = editor.getData();
+                                                        setEditNamaAlamat((prev) => ({
+                                                            ...prev,
+                                                            nama_alamat_en: data,
+                                                        }));
+                                                    }}
+                                                />
+                                            </div>
+                                        </div>
+                                        <div className="modal-footer">
+                                            <button type="button" className="btn btn-secondary" onClick={() => setEditModal(false)}>
+                                                {t('close_button')}
+                                            </button>
+                                            <button type="submit" className="btn text-white" style={{ backgroundColor: "#F16022" }}>
+                                                {t('save_changes_button')}
+                                            </button>
+                                        </div>
+                                    </form>
                                 </div>
                             </div>
-                        )}
-                    </section>
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

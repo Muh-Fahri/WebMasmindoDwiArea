@@ -5,11 +5,13 @@ import Footer from "./fotter";
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useTranslation } from 'react-i18next';
+import DOMPurify from 'dompurify';
 
 function Bisnis() {
     const { t, i18n } = useTranslation();
 
     const [bisnisList, setBisnisList] = useState([]);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getBisnisData();
@@ -20,13 +22,15 @@ function Bisnis() {
 
     const getBisnisData = async () => {
         try {
+            setIsLoading(true);
             const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
-            // Pastikan res.data.bisnisUser adalah array dan berisi data yang valid
-            // Tambahkan logging untuk memeriksa data yang diterima
             setBisnisList(res.data.bisnisUser);
         } catch (error) {
-            console.error("Error fetching bisnis data:", error); // Log error lebih detail
+            console.error("Error fetching bisnis data:", error);
             alert(t('error_display'));
+            setBisnisList([]);
+        } finally {
+            setIsLoading(false);
         }
     }
 
@@ -61,46 +65,62 @@ function Bisnis() {
                 </div>
             </section>
             <section>
-                <div className="container-fluid p-5">
+                <div className="container-fluid p-5 px-md-5 px-3">
                     <div className="row p-3 p-md-5 align-items-start">
-                        {/* Gambar */}
-                        <div className="col-12 col-md-auto mb-4 mb-md-0" data-aos="fade-right">
-                            <img
-                                className="img-fluid"
-                                src="/Image/AwakMasCol.png"
-                                alt="Logo"
-                                style={{ width: "300px", height: "auto" }}
-                            />
-                        </div>
-
-                        {/* Garis */}
-                        <div className="d-none d-md-block col-md-auto">
-                            <div className="garis-aw-p"></div>
-                        </div>
-
-                        {/* Deskripsi */}
-                        <div className="col-12 col-md" data-aos="fade-down">
-                            {bisnisList.length > 0 ? (
-                                bisnisList.map((bisnis) => (
-                                    <p style={{ whiteSpace: 'pre-line', textAlign: 'justify' }} key={bisnis.uuid} className="fs-3 fs-md-5">
-                                        {i18n.language === 'id' ? bisnis.deskripsi_bisnis_id : bisnis.deskripsi_bisnis_en}
-                                    </p>
-                                ))
-                            ) : (
-                                <h5>{t('no_data')}</h5>
-                            )}
-                        </div>
+                        {isLoading ? (
+                            <div className="col-12 text-center py-5">
+                                <h5>{t('loading_data')}</h5>
+                                <div className="spinner-border text-primary" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="col-12 col-md-auto mb-4 mb-md-0" data-aos="fade-right">
+                                    <img
+                                        className="img-fluid"
+                                        src="/Image/AwakMasCol.png"
+                                        alt="Logo"
+                                        style={{ width: "300px", height: "auto" }}
+                                    />
+                                </div>
+                                {!isLoading && (
+                                    <div className="d-none d-md-block col-md-auto">
+                                        <div className="garis-aw-p"></div>
+                                    </div>
+                                )}
+                                <div className="col-12 col-md" data-aos="fade-down">
+                                    {bisnisList && bisnisList.length > 0 ? (
+                                        bisnisList.map((bisnis) => (
+                                            <p
+                                                style={{ whiteSpace: 'pre-line', textAlign: 'justify' }}
+                                                key={bisnis.uuid}
+                                                className="fs-3 fs-md-5"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: i18n.language === 'id'
+                                                        ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id)
+                                                        : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en)
+                                                }}
+                                            />
+                                        ))
+                                    ) : (
+                                        <h5>{t('no_data')}</h5>
+                                    )}
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
-
             <section>
-                <div className="container mt-5 " data-aos="fade-down" >
+                <div className="container px-md-5 px-3 mt-5" data-aos="fade-down" >
                     <div className="row mt-4">
-                        {bisnisList.length > 0 ? (
-                            <div className="col p-5">
-                                {bisnisList.map((bisnis) => ( // <<< Perbaiki di sini (hapus satu kurung kurawal pembuka)
-                                    // Hanya render iframe jika link_video tidak null/undefined
+                        {isLoading ? (
+                            <div className="col text-center py-5">
+                            </div>
+                        ) : bisnisList && bisnisList.length > 0 ? (
+                            <div className="col p-5 px-md-5 px-3">
+                                {bisnisList.map((bisnis) => (
                                     bisnis.link_video ? (
                                         <div key={bisnis.uuid} className="responsive-iframe-container">
                                             <iframe
@@ -111,11 +131,11 @@ function Bisnis() {
                                                 allowFullScreen
                                             ></iframe>
                                         </div>
-                                    ) : null // Atau tampilkan pesan alternatif jika tidak ada video
-                                ))} {/* <<< Perbaiki di sini (hapus satu kurung kurawal penutup) */}
+                                    ) : null
+                                ))}
                             </div>
                         ) : (
-                            <div className="justify-content-center">
+                            <div className="col text-center">
                                 <h5>{t('no_data_yet')}</h5>
                             </div>
                         )}

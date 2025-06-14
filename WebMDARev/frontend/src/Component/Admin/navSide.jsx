@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from 'react-router-dom'; // Import NavLink untuk highlight aktif
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faChartBar, faNewspaper, faTree, faGlobe } from "@fortawesome/free-solid-svg-icons"; // Tambah faGlobe untuk icon bahasa
+import { faHouse, faChartBar, faNewspaper, faTree, faMapMarkerAlt, faImages, faVideo } from '@fortawesome/free-solid-svg-icons'; // Import ikon yang mungkin diperlukan
 import { useTranslation } from 'react-i18next'; // Import useTranslation
 
 function NavSide() {
@@ -14,32 +14,40 @@ function NavSide() {
 
     return (
         <div>
-            {/* Tombol toggle untuk mobile */}
-            <section >
+            <section>
                 <button className="btn btn-dark d-md-none m-2" onClick={() => setShowSidebar(!showSidebar)}>
-                    ☰ {t('menu_button')} {/* Terjemahkan teks tombol menu */}
+                    ☰ {t('menu_button')}
                 </button>
-
-                {/* Sidebar */}
                 <div className={`sidebar text-white p-3 ${showSidebar ? 'd-block' : 'd-none'} d-md-block`}
-                    style={{ width: '250px', height: '100vh', position: 'fixed', zIndex: 1050, overflowY: 'auto', backgroundColor: '#115258' }}> {/* Tambah overflowY */}
+                    style={{ width: '250px', height: '100vh', position: 'fixed', zIndex: 1050, overflowY: 'auto', backgroundColor: '#013233' }}>
 
                     <div className="row justify-content-center">
                         <div className="col-8">
-                            {/* Pastikan path gambar logo '/Image/LogoMasmindoGold.webp' benar */}
-                            <img className="w-100 img-fluid" src="/Image/LogoMasmindoGold.webp" alt="Logo" />
+                            {/* Logo */}
+                            <img
+                                className="w-100 img-fluid"
+                                src="/Image/AwakMasLogo.png"
+                                alt="Logo Masmindo Gold"
+                            />
                         </div>
                     </div>
                     <ul className="list-unstyled mt-4">
                         <li>
-                            {/* Gunakan NavLink untuk highlight halaman aktif */}
-                            <NavLink to="/admin" className={({ isActive }) => "text-white text-decoration-none d-block py-2 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                            <NavLink
+                                to="/admin"
+                                end
+                                className={({ isActive }) => "text-white text-decoration-none d-block py-2 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
                                 <FontAwesomeIcon icon={faHouse} /> {t('dashboard')}
                             </NavLink>
                         </li>
                         <li>
                             <NavLink to="/admin/alamat" className={({ isActive }) => "text-white text-decoration-none d-block py-2 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
-                                <FontAwesomeIcon icon={faChartBar} /> Alamat
+                                <FontAwesomeIcon icon={faMapMarkerAlt} /> {t('address')}
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/admin/carousel" className={({ isActive }) => "text-white text-decoration-none d-block py-2 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                                <FontAwesomeIcon icon={faChartBar} /> {t('carousel')}
                             </NavLink>
                         </li>
                         <li>
@@ -53,7 +61,6 @@ function NavSide() {
                             </NavLink>
                         </li>
                         <li>
-                            {/* Span untuk menu induk yang tidak memiliki rute sendiri */}
                             <span className="text-white text-decoration-none d-block py-2 px-3">
                                 <FontAwesomeIcon icon={faTree} /> {t('esg')}
                             </span>
@@ -69,7 +76,6 @@ function NavSide() {
                                     </NavLink>
                                 </li>
                                 <li>
-                                    {/* Perhatikan, ini sebelumnya mengarah ke /admin/esg/sosial, saya asumsikan harusnya ke /admin/esg/governance */}
                                     <NavLink to="/admin/esg/tata-kelola" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
                                         ▸ {t('governance_esg')}
                                     </NavLink>
@@ -83,7 +89,7 @@ function NavSide() {
                         </li>
                         <li>
                             <span className="text-white text-decoration-none d-block py-2 px-3">
-                                <FontAwesomeIcon icon={faTree} /> {t('media')}
+                                <FontAwesomeIcon icon={faImages} /> {t('media')}
                             </span>
                             <ul className="list-unstyled ps-4">
                                 <li>
@@ -100,17 +106,12 @@ function NavSide() {
                         </li>
                         <li>
                             <span className="text-white text-decoration-none d-block py-2 px-3">
-                                <FontAwesomeIcon icon={faTree} /> Galeri
+                                <FontAwesomeIcon icon={faImages} /> {t('sectionTitle')}
                             </span>
                             <ul className="list-unstyled ps-4">
                                 <li>
                                     <NavLink to="/admin/galeri" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
-                                        ▸ Dokumentasi
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/admin/youtube" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
-                                        ▸ Video
+                                        ▸ {t('documentation')}
                                     </NavLink>
                                 </li>
                             </ul>
@@ -118,7 +119,7 @@ function NavSide() {
                     </ul>
 
                     {/* Tombol EN dan ID di bagian bawah sidebar */}
-                    <div className="mt-auto p-3 border-top border-secondary"> {/* mt-auto untuk dorong ke bawah */}
+                    <div className="mt-auto p-3 border-top border-secondary">
                         <div className="d-flex justify-content-center gap-3">
                             <button
                                 onClick={() => changeLanguage('en')}
@@ -134,8 +135,7 @@ function NavSide() {
                             </button>
                         </div>
                     </div>
-
-                </div >
+                </div>
             </section>
         </div >
     );

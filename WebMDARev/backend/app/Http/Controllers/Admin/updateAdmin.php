@@ -11,6 +11,7 @@ use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
 use App\Models\Alamat;
+use App\Models\Carousel;
 use App\Models\Galeri;
 use App\Models\Instagram;
 use App\Models\Youtube;
@@ -280,6 +281,53 @@ class updateAdmin extends Controller
 
         return response()->json([
             "alamat" => $maps,
+        ], 200);
+    }
+
+    function updateCarousel(Request $request, $uuid)
+    {
+        $validator = Validator::make($request->all(), [
+            "image_carousel" => "nullable|image|mimes:jpg,jpeg,png|max:5120",
+            "text_carousel_id" => "required|string|max:255",
+            "text_carousel_en" => "required|string|max:255",
+            "body_text_id" => "required|string|max:255",
+            "body_text_en" => "required|string|max:255",
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()
+            ], 400);
+        }
+
+        $carousel = Carousel::where('uuid', $uuid)->firstOrFail();
+
+        $data = [
+            "text_carousel_id" => $request->text_carousel_id,
+            "text_carousel_en" => $request->text_carousel_en,
+            "body_text_id" => $request->body_text_id,
+            "body_text_en" => $request->body_text_en
+        ];
+
+        if ($request->hasFile('image_carousel')) {
+            // Hapus gambar lama jika ada
+            $oldPath = public_path('Carousel/' . $carousel->image_carousel);
+            if (File::exists($oldPath)) {
+                File::delete($oldPath);
+            }
+
+            // Simpan gambar baru
+            $image_name = time() . "_" . $request->file('image_carousel')->getClientOriginalName();
+            $request->file("image_carousel")->move(public_path("Carousel"), $image_name);
+
+            // Tambahkan ke data yang diupdate
+            $data["image_carousel"] = $image_name;
+        }
+
+        $carousel->update($data);
+
+        return response()->json([
+            "carousel" => $carousel
         ], 200);
     }
 }

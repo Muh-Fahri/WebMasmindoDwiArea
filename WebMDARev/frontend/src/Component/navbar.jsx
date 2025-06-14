@@ -30,9 +30,11 @@ function Navbar() {
         if (weatherId >= 300 && weatherId < 600) return "rain.mp4";
         if (weatherId >= 700 && weatherId < 800) return "fog.mp4";
         if (weatherId === 800) return "clear.mp4";
-        if (weatherId > 800) return "clouds.mp4";
+        if (weatherId === 801 || weatherId === 802) return "clouds.mp4";
+        if (weatherId === 803 || weatherId === 804) return "overcast.mp4";
         return "default.mp4";
     };
+
 
     const changeLanguage = (lng) => {
         i18n.changeLanguage(lng);
@@ -43,7 +45,7 @@ function Navbar() {
         try {
             const res = await axios.post('http://127.0.0.1:8000/api/admin/weather');
             setWeatherList(res.data.weather);
-            // getDataWeather();
+            getDataWeather();
         } catch (error) {
             alert(error);
         }
@@ -56,18 +58,16 @@ function Navbar() {
             return { label: "Gerimis" };
         } else if (id >= 500 && id <= 531) {
             return { label: "Hujan" };
-        } else if (id >= 600 && id <= 622) {
-            return { label: "Salju", };
         } else if (id >= 701 && id <= 781) {
             return { label: "Kabut" };
         } else if (id === 800) {
             return { label: "Cerah" };
-        } else if (id >= 801 && id <= 804) {
+        } else if (id === 801 || id === 802) {
             return { label: "Berawan" };
+        } else if (id === 803 || id === 804) {
+            return { label: "Mendung" };
         } else {
-            return {
-                label: "Tidak Diketahui "
-            };
+            return { label: "Tidak Diketahui" };
         }
     };
 
@@ -76,12 +76,12 @@ function Navbar() {
     }, []);
 
     useEffect(() => {
-        setIsFading(true); // mulai fade out
+        setIsFading(true);
         const timeout = setTimeout(() => {
-            setIsFading(false); // setelah animasi selesai, tampilkan full
-        }, 500); // durasi fade (ms)
+            setIsFading(false);
+        }, 500);
 
-        return () => clearTimeout(timeout); // bersihkan timeout saat unmount
+        return () => clearTimeout(timeout);
     }, [activeCityIndex]);
 
 
@@ -108,16 +108,13 @@ function Navbar() {
                                 <span className="navbar-toggler-icon"></span>
                             </button>
                             <div className="collapse navbar-collapse" id="navbarNav">
-                                {/* Menggunakan d-flex dan flex-wrap untuk membungkus dan mengontrol tata letak */}
                                 <ul className="navbar-nav gap-5 ms-auto d-flex flex-wrap flex-column flex-md-row justify-content-md-end align-items-md-center">
-
-                                    {/* Menu navigasi utama */}
                                     <li
                                         className='nav-item d-flex align-items-center gap-2 ms-md-auto mt-3 mt-md-0 position-relative'
                                         onMouseEnter={() => setShowWeatherCard(true)}
                                         onMouseLeave={() => setShowWeatherCard(false)}
                                     >
-                                        <h5 className='navbar-hijau m-0 p-0'>Info Cuaca</h5>
+                                        <h5 className='navbar-hijau m-0 p-0'>{t('info_cuaca')}</h5>
                                         <div
                                             className={`card shadow position-absolute m-0 p-3 weather-card-popup ${showWeatherCard ? 'is-visible' : ''}`}
                                             style={{
@@ -129,26 +126,28 @@ function Navbar() {
                                                 height: '378px',
                                                 position: 'relative',
                                                 overflow: 'hidden',
+                                                border: 'none',
+                                                outline: 'none',
+                                                boxShadow: 'none',
                                                 borderRadius: '0px',
                                                 padding: '1rem',
                                                 marginTop: '5px',
                                                 color: 'white',
+                                                backgroundColor: 'rgba(0,0,0,0.6)',
                                             }}
                                         >
-                                            {/* 🔥 Video background */}
+
                                             {weatherList[activeCityIndex] && (
                                                 <video
                                                     autoPlay
                                                     key={activeCityIndex}
                                                     loop
                                                     muted
-                                                    // playsInline
                                                     className="position-absolute m-0 p-0 top-0 start-0 w-100 h-100"
                                                     style={{
                                                         objectFit: 'cover',
                                                         zIndex: 0,
                                                         borderRadius: '0px',
-                                                        filter: 'brightness(0.5)',
                                                         transition: 'opacity 0.5s ease-in-out',
                                                         opacity: isFading ? 0 : 1,
                                                     }}
@@ -160,7 +159,6 @@ function Navbar() {
                                                 </video>
                                             )}
 
-                                            {/* 🔼 Konten utama, pastikan di atas video */}
                                             <div className="position-relative" style={{ zIndex: 1 }}>
                                                 {weatherList.length > 0 ? (
                                                     <div className="row h-100">
@@ -175,14 +173,14 @@ function Navbar() {
                                                                             <div className="card-body">
                                                                                 <div className='text-white'>
                                                                                     <h3 className='m-0 p-0'>{cuaca.city_name}</h3>
-                                                                                    <p className='m-0 p-0'><strong>Temperatur:</strong> <CountUp end={cuaca.temp} duration={1.5} decimals={1} />°C</p>
-                                                                                    <p className='m-0 p-0'><strong>Kelembaban:</strong> <CountUp end={cuaca.humidity} duration={1.5} />%</p>
-                                                                                    <p className='m-0 p-0'><strong>Kecepatan Angin:</strong> <CountUp end={cuaca.wind_speed} duration={1.5} decimals={1} /> m/s</p>
-                                                                                    <p className='m-0 p-0'><strong>Tutupan Awan:</strong> <CountUp end={cuaca.cloudiness} duration={1.5} />%</p>
-                                                                                    <p className='m-0 p-0'><strong>Kondisi:</strong> {condition.label}</p>
+                                                                                    <p className='m-0 p-0'><strong>{t('temperature_label')}</strong> <CountUp end={cuaca.temp} duration={1.5} decimals={1} />°C</p>
+                                                                                    <p className='m-0 p-0'><strong>{t('humidity_label')}</strong> <CountUp end={cuaca.humidity} duration={1.5} />%</p>
+                                                                                    <p className='m-0 p-0'><strong>{t('wind_speed_label')}</strong> <CountUp end={cuaca.wind_speed} duration={1.5} decimals={1} /> m/s</p>
+                                                                                    <p className='m-0 p-0'><strong>{t('cloudiness_label')}</strong> <CountUp end={cuaca.cloudiness} duration={1.5} />%</p>
+                                                                                    <p className='m-0 p-0'><strong>{t('condition_label')}</strong> {condition.label}</p>
                                                                                     <div className="d-flex justify-content-center gap-3 mt-3">
-                                                                                        <button onClick={prevCity} className="btn btn-light btn-sm">← Prev</button>
-                                                                                        <button onClick={nextCity} className="btn btn-light btn-sm">Next →</button>
+                                                                                        <button onClick={prevCity} className="btn btn-light btn-sm">{t('button_prev')}</button>
+                                                                                        <button onClick={nextCity} className="btn btn-light btn-sm">{t('button_next')}</button>
                                                                                     </div>
                                                                                 </div>
                                                                             </div>
@@ -198,8 +196,6 @@ function Navbar() {
                                                 )}
                                             </div>
                                         </div>
-
-
                                     </li>
                                     <li className="nav-item">
                                         <NavLink
@@ -262,8 +258,6 @@ function Navbar() {
                                             <h5 className="display-5 fw-medium fs-5 navbar-hijau">{t('contact')}</h5>
                                         </NavLink>
                                     </li>
-
-                                    {/* Tombol Bahasa */}
                                     <li className="nav-item d-flex flex-row gap-2 mt-3 mt-md-0">
                                         <button
                                             onClick={() => changeLanguage('en')}
@@ -280,9 +274,6 @@ function Navbar() {
                                             ID
                                         </button>
                                     </li>
-
-                                    {/* Container untuk Cuaca (sebagai trigger hover) dan Card Cuaca (yang akan muncul) */}
-                                    {/* Menggunakan position-relative agar card absolut bisa diposisikan di dalamnya */}
                                 </ul>
                             </div>
                         </div>

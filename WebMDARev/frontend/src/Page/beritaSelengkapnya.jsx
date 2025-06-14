@@ -6,8 +6,8 @@ import { useTranslation } from "react-i18next";
 import DOMPurify from 'dompurify'
 
 function BeritaSelengkapnya() {
-    const { uuid } = useParams(); // ambil UUID dari URL
-    const [berita, setBerita] = useState(null); // bukan array, tapi satu objek
+    const { uuid } = useParams();
+    const [berita, setBerita] = useState(null);
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -67,7 +67,7 @@ function BeritaSelengkapnya() {
                                             year: "numeric"
                                         })}
                                     </p>
-                                    <h3 className="fw-bold display-6">{i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}</h3>
+                                    <h3 className="fw-bold display-6" style={{ color: '#013233' }}>{i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}</h3>
                                 </div>
                             </div>
                             <div className="col-md-7">

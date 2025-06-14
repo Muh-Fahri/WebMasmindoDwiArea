@@ -18,13 +18,11 @@
 
 .carousel-item {
     height: 100vh;
-    /* Membuat carousel full layar */
     background-color: #000;
 }
 
 .carousel-item img {
     object-fit: cover;
-    /* Menjaga gambar agar sesuai dengan ukuran layar */
     height: 100%;
     width: 100%;
 }
@@ -58,7 +56,6 @@
     position: relative;
     width: 100%;
     padding-bottom: 56.25%;
-    /* 16:9 aspect ratio */
     height: 0;
     overflow: hidden;
 }
@@ -85,8 +82,6 @@
 }
 
 
-
-/* Esg */
 .bg-card-lingkungan {
 
     height: 100vh;
@@ -164,7 +159,6 @@
 .active-esg h1 {
     color: #115258 !important;
     font-weight: bold !important;
-    /* warna teks aktif */
 }
 
 .active-esg .garis-bawah-esg {
@@ -179,11 +173,6 @@
     background-color: rgb(0, 0, 0);
 }
 
-/* .card-berita {
-    filter: drop-shadow(5px 5px 5px rgb(196, 196, 196));
-}
-
-*/
 @media (max-width: 767.98px) {
 
     .navbar .row.align-items-center {
@@ -223,12 +212,10 @@
 
     .dokEsg-slider-item {
         width: 200px;
-        /* hp */
     }
 
     .card-custom {
         height: 250px;
-        /* hp */
     }
 
     .card.responsive-height {
@@ -253,25 +240,21 @@
 
 .deskripsi-lingkungan {
     font-size: 1.75rem;
-    /* default besar */
 }
 
 @media (max-width: 768px) {
     .deskripsi-lingkungan {
         font-size: 15px;
-        /* kecil untuk HP saja */
     }
 }
 
 .dokEsg-slider-item {
     width: 600px;
-    /* default desktop */
 }
 
 @media (max-width: 992px) {
     .dokEsg-slider-item {
         width: 450px;
-        /* tablet */
     }
 }
 
@@ -283,7 +266,6 @@
 
 .card-custom {
     height: 500px;
-    /* desktop */
 }
 
 .search-bar {
@@ -357,25 +339,17 @@
 
 
 .navbar .dropdown-menu {
-    /* Set state awal: tersembunyi */
     opacity: 0;
     visibility: hidden;
-    /* Sembunyikan sepenuhnya dari interaksi saat tidak terlihat */
     transform: translateY(20px);
-    /* Mulai dari posisi sedikit di bawah */
     transition: opacity 1.5s ease-in-out,
-        /* Transisi opacity selama 1.5 detik */
         transform 1.5s ease-in-out,
-        /* Transisi transform selama 1.5 detik */
         visibility 1.5s ease-in-out;
-    /* Transisi visibility juga */
     display: block;
-    /* Overrides Bootstrap's display: none; for transition */
     pointer-events: none;
-    /* Mencegah interaksi saat tersembunyi */
 }
 
-/* Aturan saat dropdown menu terbuka */
+
 .navbar .dropdown-menu {
     opacity: 0;
     visibility: hidden;
@@ -383,9 +357,7 @@
     transition: opacity 0.3s ease-in-out,
         transform 0.3s ease-in-out,
         visibility 0.3s ease-in-out;
-    /* Penting: tambahkan transition untuk visibility */
     display: block;
-    /* Overrides Bootstrap's display: none; for transition */
     pointer-events: none;
 }
 
@@ -401,70 +373,46 @@
 }
 
 @media (max-width: 575.98px) {
-
-    /* Padding di row paling luar */
     .row.p-5 {
         padding: 1rem !important;
-        /* Mengurangi padding di mobile */
     }
 
-    /* Ukuran font pada deskripsi foto utama */
     .foto-utama-galeri-hp h5 {
         font-size: 0.8rem !important;
-        /* Lebih kecil untuk mobile */
         padding: 0.8rem !important;
-        /* Padding lebih kecil */
     }
 
-    /* Tinggi div foto utama */
     .foto-utama-galeri-hp {
         height: 300px !important;
-        /* Tinggi lebih pendek di mobile */
     }
 
-    /* Thumbnail scroll container */
     #thumbnailScroll {
         flex-direction: row !important;
-        /* Jadi horizontal di mobile */
         overflow-x: auto !important;
-        /* Bisa scroll horizontal */
         overflow-y: hidden !important;
-        /* Sembunyikan scroll vertikal */
         white-space: nowrap !important;
-        /* Mencegah wrapping */
         max-height: 120px !important;
-        /* Batasi tinggi container thumbnail di mobile */
         width: 100% !important;
-        /* Lebar penuh di mobile */
         padding: 0.5rem !important;
-        /* Padding lebih kecil */
     }
 
-    /* Setiap card thumbnail */
     #thumbnailScroll .card {
         width: 120px !important;
-        /* Lebar tetap untuk setiap thumbnail di mobile */
         flex-shrink: 0;
-        /* Penting untuk mencegah penciutan yang tidak diinginkan */
     }
 
-    /* Card body dan title di thumbnail */
     #thumbnailScroll .card-body {
         padding: 0.3rem !important;
-        /* Padding lebih kecil */
     }
 
     #thumbnailScroll .card-title {
         font-size: 0.6rem !important;
-        /* Ukuran font lebih kecil */
     }
 }
 
 .card-login {
     background-color: #ffffff31 !important;
-    /* bayangan agar lebih elegan */
     backdrop-filter: blur(3px);
-    /* efek blur latar belakang */
 }
 
 .garis-cuaca {
@@ -473,26 +421,19 @@
     width: 2px;
 }
 
-/* Gaya dasar untuk card saat tersembunyi */
 .weather-card-popup {
     opacity: 0;
     visibility: hidden;
-    /* Pointer-events none agar tidak mengganggu klik di bawahnya saat tidak terlihat */
     pointer-events: none;
     transition: opacity 0.3s ease-out, visibility 0.3s ease-out, transform 0.3s ease-out;
-    /* Optional: Efek geser dari bawah ke atas saat muncul */
     transform: translateX(-50%) translateY(10px);
-    /* Posisi awal sedikit ke bawah */
 }
 
-/* Gaya untuk card saat terlihat */
 .weather-card-popup.is-visible {
     opacity: 1;
     visibility: visible;
     pointer-events: auto;
-    /* Bisa diinteraksi saat terlihat */
     transform: translateX(-50%) translateY(0);
-    /* Posisi akhir */
 }
 
 @keyframes float {
@@ -516,4 +457,29 @@
 .card-cuaca {
     background-color: rgba(255, 255, 255, 0.048) !important;
     backdrop-filter: blur(10px);
+}
+
+.bg-karir {
+    background: url("/public/Image/Background/CampAwakMasJPEG.jpg");
+    background-size: cover;
+    background-position: center;
+    height: 85vh;
+
+}
+
+.sidebar-active-link {
+    background-color: #F16022;
+    /* Warna latar belakang saat aktif */
+    color: white !important;
+    /* Pastikan teks putih, gunakan !important jika diperlukan untuk override */
+    border-radius: 5px;
+    /* Opsional: untuk tampilan yang lebih halus */
+}
+
+/* Styling untuk efek hover */
+.hover-bg:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+    /* Sedikit transparansi putih saat hover */
+    border-radius: 5px;
+    /* Opsional: untuk tampilan yang lebih halus */
 }

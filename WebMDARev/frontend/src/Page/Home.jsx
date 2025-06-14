@@ -25,7 +25,7 @@ function DisableScrollZoom() {
     const map = useMap();
 
     useEffect(() => {
-        map.scrollWheelZoom.disable(); // benar-benar matikan scroll zoom
+        map.scrollWheelZoom.disable();
     }, [map]);
 
     return null;
@@ -82,50 +82,71 @@ function InfoCard({ position, visible }) {
 function Home() {
     const [bisnisList, setBisnisList] = useState([]);
     const [beritaList, setBeritaList] = useState([]);
+    const [isLoadingBisnis, setIsLoadingBisnis] = useState(true);
+    const [isLoadingBerita, setIsLoadingBerita] = useState(true);
+    const [imageCarList, setImgCarList] = useState([]);
+
     const position = [-3.4717, 120.1994];
     const [showCard, setShowCard] = useState(false);
     const { t, i18n } = useTranslation();
     const [showInfo, setShowInfo] = useState(true);
 
-
-
     const handleMarkerClick = () => {
-        setShowCard((prevState) => !prevState); // Toggle visibility of the card
+        setShowCard((prevState) => !prevState);
     };
-
 
     useEffect(() => {
         getBisnisData();
         getBeritaData();
+        getCarouselData();
         AOS.init({
-            duration: 1000, // durasi animasi dalam ms
-            // once: true,
+            duration: 1000,
         });
+
+
         const timer = setTimeout(() => {
             setShowInfo(false);
-        }, 5000); // 10 detik
+        }, 5000);
         return () => clearTimeout(timer);
     }, []);
 
 
     const getBisnisData = async () => {
         try {
+            setIsLoadingBisnis(true);
             const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
             setBisnisList(res.data.bisnisUser);
-            getBisnisData();
         } catch (error) {
-            alert("Gagal Mengambil Data");
+            console.error("Error fetching bisnis data:", error);
+            alert(t('error_display'));
+            setBisnisList([]);
+        } finally {
+            setIsLoadingBisnis(false);
+        }
+    }
+
+    const getBeritaData = async () => {
+        try {
+            setIsLoadingBerita(true);
+            const res = await axios.get("http://127.0.0.1:8000/api/user/berita");
+            setBeritaList(res.data.berita);
+        } catch (error) {
+            console.error("Error fetching berita data:", error);
+            alert(t('error_display'));
+            setBeritaList([]);
+        } finally {
+            setIsLoadingBerita(false);
         }
     }
 
 
-    const getBeritaData = async () => {
+    const getCarouselData = async () => {
         try {
-            const res = await axios.get("http://127.0.0.1:8000/api/user/berita");
-            setBeritaList(res.data.berita);
-            getBeritaData();
+            const res = await axios.get("http://127.0.0.1:8000/api/user/carousel");
+            setImgCarList(res.data.carousel);
+            await getCarouselData();
         } catch (error) {
-            alert('Gagal Mengambil Data');
+            alert(error);
         }
     }
 
@@ -135,82 +156,48 @@ function Home() {
             <section>
                 <div id="carouselExampleIndicators" className="carousel slide" data-bs-ride="carousel">
                     <div className="carousel-indicators">
-                        <button
-                            type="button"
-                            data-bs-target="#carouselExampleIndicators"
-                            data-bs-slide-to="0"
-                            className="active"
-                            aria-current="true"
-                            aria-label="Slide 1"
-                        ></button>
-                        <button
-                            type="button"
-                            data-bs-target="#carouselExampleIndicators"
-                            data-bs-slide-to="1"
-                            aria-label="Slide 2"
-                        ></button>
-                        <button
-                            type="button"
-                            data-bs-target="#carouselExampleIndicators"
-                            data-bs-slide-to="2"
-                            aria-label="Slide 3"
-                        ></button>
+                        {imageCarList.map((_, index) => (
+                            <button
+                                key={index}
+                                type="button"
+                                data-bs-target="#carouselExampleIndicators"
+                                data-bs-slide-to={index}
+                                className={index === 0 ? "active" : ""}
+                                aria-current={index === 0 ? "true" : undefined}
+                                aria-label={`Slide ${index + 1}`}
+                            ></button>
+                        ))}
                     </div>
                     <div className="carousel-inner">
-                        <div className="carousel-item active">
-                            <div className="bg-carousel-1 d-flex align-items-center" style={{ height: "100vh" }}>
-                                <div className="container">
-                                    <div className="row" data-aos="fade-right">
-                                        <div className="col-md-6">
-                                            <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>{t("produser_emas")}</h1>
-                                            <h4 className="display-3" style={{ color: "#115258" }}>{t('di_indonesia_berikutnya')}</h4>
-                                            <div className="row mt-4">
-                                                <div className="col-md-5">
-                                                    <Link to={'/bisnis'}>
-                                                        <button className="w-100 btn btn-carousel-1 rounded-5 btn-outline-dark shadow-none btn-sm">{t('button_bisnis_kami')}</button>
-                                                    </Link>
+                        {imageCarList.map((item, index) => (
+                            <div key={item.uuid} className={`carousel-item ${index === 0 ? "active" : ""}`}>
+                                <div
+                                    className="d-flex align-items-center"
+                                    style={{
+                                        backgroundImage: `url(http://localhost:8000/Carousel/${encodeURIComponent(item.image_carousel)})`,
+                                        backgroundSize: "cover",
+                                        backgroundPosition: "center",
+                                        height: "100vh",
+                                    }}
+                                >
+                                    <div className="container">
+                                        <div className="row" data-aos="fade-right">
+                                            <div className="col-md-8">
+                                                <h1 className="display-1 fw-bold m-0 p-0" style={{ color: '#F16022' }}>
+                                                    {i18n.language === 'id' ? item.text_carousel_id : item.text_carousel_en}
+                                                </h1>
+                                                <p className="display-1 m-0 p-0" style={{ color: '#115258' }}>
+                                                    {i18n.language === 'id' ? item.body_text_id : item.body_text_en}
+                                                </p>
+                                                <div className="row mt-4">
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
+
                                 </div>
                             </div>
-                        </div>
-                        <div className="carousel-item">
-                            <div className="bg-carousel-2 d-flex align-items-center" style={{ height: "100vh" }}>
-                                <div className="container">
-                                    <div className="row" data-aos="fade-right">
-                                        <div className="col-md-9">
-                                            <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>{t('kami_memelihara')}</h1>
-                                            <h4 className="display-3" style={{ color: "#115258" }}>{t('generasi_berikutnya')}</h4>
-                                            <div className="row mt-4">
-                                                <div className="col-md-3">
-                                                    <button className="w-100 btn btn-carousel-1 rounded-5 btn-outline-dark shadow-none btn-sm">{t('karir_button')}</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div className="carousel-item">
-                            <div className="bg-carousel-3 d-flex align-items-center" style={{ height: "100vh" }}>
-                                <div className="container">
-                                    <div className="row" data-aos="fade-right">
-                                        <div className="col-md-8">
-                                            <h1>Renov</h1>
-                                            <h1 className="display-2 fw-bold" style={{ color: "#F16022" }}>{t('bangkit_bersama')}</h1>
-                                            <h4 className="display-3" style={{ color: "#115258" }}>{t('masyarakat')}</h4>
-                                            <div className="row mt-4">
-                                                <div className="col-md-5">
-                                                    <button className="w-100 btn btn-carousel-1 rounded-5 btn-outline-light shadow-none btn-sm">{t('bisnis_kami_button')}</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        ))}
                     </div>
                 </div>
             </section>
@@ -257,61 +244,73 @@ function Home() {
                                 </h3>
                             </div>
                         </div>
-
-                        <div className="row mt-3" data-aos="fade-right">
-                            <div className="col">
-                                {bisnisList.length > 0 ? (
-                                    bisnisList.map((bisnis) => (
-                                        <div className="" key={bisnis.uuid}>
-                                            <p
-                                                className="text-white"
-                                                dangerouslySetInnerHTML={{
-                                                    __html: i18n.language === 'id'
-                                                        ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id.split(' ').slice(0, 100).join(' ') + '...')
-                                                        : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en.split(' ').slice(0, 100).join(' ') + '...')
-                                                }} />
-                                        </div>
-                                    ))
-                                ) : (
-                                    <div className="text-center text-white">
-                                        <h5>No Data</h5>
+                        {isLoadingBisnis ? (
+                            <div className="row mt-3 text-center py-5">
+                                <div className="col">
+                                    <h5>{t('loading_data')}</h5>
+                                    <div className="spinner-border text-white" role="status">
+                                        <span className="visually-hidden">Loading...</span>
                                     </div>
-                                )}
-                                <Link to={'/bisnis'} style={{ color: '#F16022' }} className="text-decoration-none fs-4 fs-md-3 fw-bold">
-                                    {t('bisnis_kami_btn')} <FontAwesomeIcon icon={faArrowRight} />
-                                </Link>
+                                </div>
                             </div>
-                        </div>
-
-                        <div className="container mt-5">
-                            <div className="row mt-4" data-aos="zoom-in">
-                                {bisnisList.length > 0 ? (
+                        ) : (
+                            <>
+                                <div className="row mt-3" data-aos="fade-right">
                                     <div className="col">
-                                        {bisnisList.map((bisnis) => (
-                                            <div key={bisnis.uuid} className="responsive-iframe-container mb-4">
-                                                <iframe
-                                                    className="rounded-5 w-100"
-                                                    style={{ aspectRatio: "16 / 9" }}
-                                                    src={bisnis.link_video}
-                                                    title="YouTube video player"
-                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                    allowFullScreen
-                                                ></iframe>
+                                        {bisnisList.length > 0 ? (
+                                            bisnisList.map((bisnis) => (
+                                                <div className="" key={bisnis.uuid}>
+                                                    <p
+                                                        className="text-white"
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: i18n.language === 'id'
+                                                                ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id.split(' ').slice(0, 100).join(' ') + '...')
+                                                                : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en.split(' ').slice(0, 100).join(' ') + '...')
+                                                        }} />
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <div className="text-center text-white">
+                                                <h5>{t('no_data')}</h5>
                                             </div>
-                                        ))}
+                                        )}
+                                        <Link to={'/bisnis'} style={{ color: '#F16022' }} className="text-decoration-none fs-4 fs-md-3 fw-bold">
+                                            {t('bisnis_kami_btn')} <FontAwesomeIcon icon={faArrowRight} />
+                                        </Link>
                                     </div>
-                                ) : (
-                                    <div className="text-center text-white">
-                                        <h5>{t('no_data')}</h5>
+                                </div>
+                                <div className="container mt-5">
+                                    <div className="row mt-4" data-aos="zoom-in">
+                                        {bisnisList.length > 0 ? (
+                                            <div className="col m-0 p-0">
+                                                {bisnisList.map((bisnis) => (
+                                                    bisnis.link_video ? (
+                                                        <div key={bisnis.uuid} className="responsive-iframe-container mb-4">
+                                                            <iframe
+                                                                className="rounded-5 w-100"
+                                                                style={{ aspectRatio: "16 / 9" }}
+                                                                src={bisnis.link_video}
+                                                                title="YouTube video player"
+                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                                allowFullScreen
+                                                            ></iframe>
+                                                        </div>
+                                                    ) : null
+                                                ))}
+                                            </div>
+                                        ) : (
+                                            <div className="text-center text-white">
+                                                <h5>{t('no_data')}</h5>
+                                            </div>
+                                        )}
                                     </div>
-                                )}
-                            </div>
-                        </div>
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
             <section>
-                {/* PETA */}
                 <div data-aos="fade-right" style={{ position: 'relative' }}>
                     <MapContainer
                         center={position}
@@ -320,8 +319,7 @@ function Home() {
                         attributionControl={false}
                         style={{ height: '60vh', width: '100%' }}
                     >
-                        <DisableScrollZoom /> {/* Tambahkan ini */}
-
+                        <DisableScrollZoom />
                         <TileLayer
                             attribution='&copy; <a href="https://carto.com/">Carto</a>'
                             url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
@@ -344,7 +342,6 @@ function Home() {
                 </div>
             </section>
             <section>
-                {/* berita */}
                 <div className="container-fluid">
                     <div className="row" data-aos="fade-down">
                         <div className="col p-5" data-aos="fade-down">
@@ -353,7 +350,6 @@ function Home() {
                     </div>
                     <div className="row gap-3 mt-5 d-flex justify-content-center" data-aos="fade-right">
                         <div className="position-relative">
-                            {/* Tombol kiri */}
                             <button
                                 className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
                                 style={{ zIndex: 10 }}
@@ -363,8 +359,6 @@ function Home() {
                             >
                                 &#10094;
                             </button>
-
-                            {/* Konten berita */}
                             {beritaList.length > 0 ? (
                                 <div
                                     id="beritaSlider"
@@ -387,17 +381,11 @@ function Home() {
                                                         }}
                                                     />
                                                 </div>
-
-                                                {/* Judul */}
                                                 <div className="px-3 pt-3">
-                                                    <h5 className="fw-bold text-center">{i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}</h5>
+                                                    <h5 className="fw-bold text-center" style={{ color: '#013233' }}>{i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}</h5>
                                                 </div>
-
-                                                {/* Deskripsi */}
                                                 <div className="px-3 py-2">
-                                                    {/* <p className="text-secondary" style={{ fontSize: '0.9rem' }}>
-                                                        {i18n.language === 'id' ? berita.deskripsi_berita_id.split(' ').slice(0, 30).join(' ') + '...' : berita.deskripsi_berita_en.split(' ').slice(0, 30).join(' ') + '...'}
-                                                    </p> */}
+
                                                     <p
                                                         className="text-secondary"
                                                         style={{ fontSize: '0.9rem' }}
@@ -409,8 +397,6 @@ function Home() {
 
                                                     />
                                                 </div>
-
-                                                {/* Link */}
                                                 <div className="pb-4 text-center">
                                                     <Link
                                                         to={`/berita/selengkapnya/${berita.uuid}`}
@@ -428,8 +414,6 @@ function Home() {
                                     <h5>No Data</h5>
                                 </div>
                             )}
-
-                            {/* Tombol kanan */}
                             <button
                                 className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
                                 style={{ zIndex: 10 }}
@@ -443,19 +427,16 @@ function Home() {
                     </div>
                 </div>
             </section>
-
             <section>
-                {/* Esg */}
-                <div className="container-fluid p-5">
+                <div className="container-fluid p-5 px-md-5 px-3">
                     <div className="row">
                         <div className="col p-3" data-aos="fade-right">
                             <h3 style={{ color: '#F16022' }} className="text-center fw-bold">
-                                {t('esg_title')} {/* Menggunakan terjemahan */}
+                                {t('esg_title')}
                             </h3>
                         </div>
                     </div>
                     <div className="d-flex justify-content-center gap-4 flex-wrap" data-aos="fade-down">
-                        {/* Kartu Lingkungan Hidup */}
                         <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
                             <div
                                 className="card"
@@ -482,11 +463,11 @@ function Home() {
                                     >
                                         <div className="text-center p-5">
                                             <h1 className="text-white fw-bold fs-4 fs-md-2">
-                                                {t('environment_title')} {/* Menggunakan terjemahan */}
+                                                {t('environment_title')}
                                             </h1>
                                             <Link to="/ESG" className="text-decoration-none">
                                                 <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">
-                                                    {t('read_more')} {/* Menggunakan terjemahan */}
+                                                    {t('read_more')}
                                                 </h4>
                                             </Link>
                                         </div>
@@ -494,8 +475,6 @@ function Home() {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Kartu Sosial */}
                         <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
                             <div
                                 className="card"
@@ -522,11 +501,11 @@ function Home() {
                                     >
                                         <div className="text-center p-5">
                                             <h1 className="text-white fw-bold fs-4 fs-md-2">
-                                                {t('social_title')} {/* Menggunakan terjemahan */}
+                                                {t('social_title')}
                                             </h1>
                                             <Link className="text-decoration-none" to={'/ESG/sosial'}>
                                                 <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">
-                                                    {t('read_more')} {/* Menggunakan terjemahan */}
+                                                    {t('read_more')}
                                                 </h4>
                                             </Link>
                                         </div>
@@ -534,8 +513,6 @@ function Home() {
                                 </div>
                             </div>
                         </div>
-
-                        {/* Kartu Tata Kelola */}
                         <div style={{ flex: '1 1 30%', maxWidth: '500px' }}>
                             <div
                                 className="card"
@@ -562,11 +539,11 @@ function Home() {
                                     >
                                         <div className="text-center p-5">
                                             <h1 className="text-white fw-bold fs-4 fs-md-2">
-                                                {t('governance_title')} {/* Menggunakan terjemahan */}
+                                                {t('governance_title')}
                                             </h1>
                                             <Link className="text-decoration-none">
                                                 <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">
-                                                    {t('read_more')} {/* Menggunakan terjemahan */}
+                                                    {t('read_more')}
                                                 </h4>
                                             </Link>
                                         </div>
@@ -600,7 +577,6 @@ function Home() {
                 </div>
             </section>
             <section>
-                {/* footer */}
                 <Footer />
             </section>
         </div >

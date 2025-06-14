@@ -31,6 +31,7 @@ Route::get('/user/esg/pdf/download/{stored_name}', [readUser::class, 'downloadPd
 Route::get('/admin/berita/search_berita', [readAdmin::class, 'readSearchBerita']);
 Route::get('/user/dokumentasi', [readUser::class, 'readDokumentasi']);
 Route::get('/user/maps', [readUser::class, 'readMaps']);
+Route::get('/user/carousel', [readUser::class, 'readCarousel']);
 
 
 
@@ -103,9 +104,15 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('/admin/youtube/{uuid}', [updateAdmin::class, 'updateYoutube']);
     Route::delete('/admin/youtube/delete/{uuid}', [deleteAdmin::class, 'deleteYoutube']);
 
-    //maps
+    //alamat
     Route::post('/admin/maps', [createAdmin::class, 'createMaps']);
     Route::get('/admin/maps', [readAdmin::class, 'readMaps']);
     Route::post('/admin/maps/{uuid}', [updateAdmin::class, 'updateMaps']);
     Route::delete('/admin/maps/{uuid}', [deleteAdmin::class, 'deleteMaps']);
+
+    // carousel
+    Route::post('/admin/carousel', [createAdmin::class, 'createCarousel']);
+    Route::get('/admin/carousel', [readAdmin::class, 'readCarousel']);
+    Route::post('/admin/carousel/{uuid}', [updateAdmin::class, 'updateCarousel']);
+    Route::delete('/admin/carousel/{uuid}', [deleteAdmin::class, 'deleteCarousel']);
 });

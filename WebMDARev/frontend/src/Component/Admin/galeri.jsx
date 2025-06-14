@@ -3,6 +3,7 @@ import NavSide from "./navSide";
 import axios from "axios";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import { useTranslation } from "react-i18next";
 
 function Galeri() {
 
@@ -11,6 +12,7 @@ function Galeri() {
     const [img_galeri, set_img_galeri] = useState("");
     const [galeriList, setGaleriList] = useState([]);
     const token = localStorage.getItem('token');
+    const [t, i18n] = useTranslation();
 
 
     const [editModal, setEditModal] = useState(false);
@@ -132,16 +134,16 @@ function Galeri() {
                                 <div className="row">
                                     <div className="col">
                                         <div className="card p-3 text-white" style={{ backgroundColor: '#F16022' }}>
-                                            <h3>Galeri</h3>
+                                            <h3>{t("sectionTitle")}</h3>
                                         </div>
                                         <div className="card p-5 mt-5" style={{ backgroundColor: '#115258' }}>
-                                            <p className="text-white m-0 p-0">Maksimal Panjang Karakter 255</p>
+                                            <p className="text-white m-0 p-0">{t("maxLengthInfo")}</p>
                                         </div>
                                         <div className="card mt-5 p-3">
-                                            <h5>Create Data Galeri</h5>
+                                            <h5>{t("createDataTitle")}</h5>
                                             <form onSubmit={addGaleriData} encType="multipart/form-data">
                                                 <div className="p-2">
-                                                    <p>Masukkan Deskripsi Singkat Foto (id)</p>
+                                                    <p>{t("descFotoIdLabel")}</p>
                                                     <div className="custom-editor">
                                                         <CKEditor
                                                             editor={ClassicEditor}
@@ -153,10 +155,9 @@ function Galeri() {
                                                             required
                                                         />
                                                     </div>
-
                                                 </div>
                                                 <div className="p-2">
-                                                    <p>Masukkan Deskripsi Singkat Foto (en)</p>
+                                                    <p>{t("descFotoEnLabel")}</p>
                                                     <div className="custom-editor">
                                                         <CKEditor
                                                             editor={ClassicEditor}
@@ -164,15 +165,13 @@ function Galeri() {
                                                             onChange={(event, editor) => {
                                                                 const data = editor.getData();
                                                                 set_deskripsi_en(data);
-
                                                             }}
                                                             required
                                                         />
                                                     </div>
-
                                                 </div>
                                                 <div className="p-2">
-                                                    <p>Upload Foto</p>
+                                                    <p>{t("uploadFotoLabel")}</p>
                                                     <input
                                                         type="file"
                                                         className="form-control"
@@ -181,7 +180,7 @@ function Galeri() {
                                                     />
                                                 </div>
                                                 <div className="p-2">
-                                                    <button className="btn btn-sm text-white" style={{ backgroundColor: '#115258' }}>Add Data</button>
+                                                    <button className="btn btn-sm text-white" style={{ backgroundColor: '#115258' }}>{t("addDataButton")}</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -195,55 +194,64 @@ function Galeri() {
                                     <div className="card mt-5 p-3 text-white" style={{ backgroundColor: '#115258' }}>
                                         <div className="row">
                                             <div className="col">
-                                                <h3>Data</h3>
+                                                <h3>{t("tableDataTitle")}</h3>
                                             </div>
                                         </div>
                                     </div>
-                                    <table className="table">
-                                        {galeriList.length > 0 && (
-                                            <thead>
+                                    <div className="table-responsive">
+                                        <table className="table">
+                                            <thead className="table-light">
                                                 <tr>
-                                                    <th>No</th>
-                                                    <th>Deskripsi (id)</th>
-                                                    <th>Deskripsi (en)</th>
-                                                    <th>Foto</th>
-                                                    <th>Aksi</th>
+                                                    <th>{t("tableHeaderNo")}</th>
+                                                    <th>{t("tableHeaderDescId")}</th>
+                                                    <th>{t("tableHeaderDescEn")}</th>
+                                                    <th>{t("tableHeaderFoto")}</th>
+                                                    <th>{t("tableHeaderAksi")}</th>
                                                 </tr>
                                             </thead>
-                                        )}
-                                        <tbody>
-                                            {galeriList.length > 0 ? (
-                                                galeriList.map((gal, index) => (
-                                                    <tr key={gal.uuid}>
-                                                        <td>{index + 1}</td>
-                                                        <td>
-                                                            <div dangerouslySetInnerHTML={{ __html: gal.deskrip_id }} />
-                                                        </td>
-                                                        <td>
-                                                            <div dangerouslySetInnerHTML={{ __html: gal.deskrip_en }} />
-                                                        </td>
-                                                        <td>
-                                                            <img
-                                                                src={`http://localhost:8000/Galeri/${encodeURIComponent(gal.foto_galeri)}`}
-                                                                alt=""
-                                                                style={{ width: '100px', objectFit: 'cover' }}
-                                                            />
-                                                        </td>
-                                                        <td>
-                                                            <div className="row">
-                                                                <div className="col d-flex gap-2">
-                                                                    <button className="btn btn-sm btn-warning" onClick={() => opendEditModal(gal)}>Edit</button>
-                                                                    <button className="btn btn-sm btn-danger" onClick={() => deleteGaleri(gal.uuid)}>Delete</button>
+                                            <tbody>
+                                                {galeriList.length > 0 ? (
+                                                    galeriList.map((gal, index) => (
+                                                        <tr key={gal.uuid}>
+                                                            <td>{index + 1}</td>
+                                                            <td style={{ maxWidth: '200px' }}>
+                                                                <div className="text-truncate" dangerouslySetInnerHTML={{ __html: gal.deskrip_id }} />
+                                                            </td>
+                                                            <td style={{ maxWidth: '200px' }}>
+                                                                <div className="text-truncate" dangerouslySetInnerHTML={{ __html: gal.deskrip_en }} />
+                                                            </td>
+                                                            <td className="text-center">
+                                                                <img
+                                                                    src={`http://localhost:8000/Galeri/${encodeURIComponent(gal.foto_galeri)}`}
+                                                                    alt={`Galeri ${gal.deskrip_id}`}
+                                                                    style={{ width: '80px', height: 'auto', objectFit: 'cover', borderRadius: '4px' }}
+                                                                    className="img-fluid"
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                <div className="d-flex flex-column flex-md-row gap-1">
+                                                                    <button className="btn btn-sm btn-warning d-flex align-items-center justify-content-center gap-1" onClick={() => opendEditModal(gal)}>
+                                                                        <span className="d-none d-md-inline">{t("tableActionEdit")}</span>
+                                                                        <i className="fas fa-edit d-md-none"></i>
+                                                                    </button>
+                                                                    <button className="btn btn-sm btn-danger d-flex align-items-center justify-content-center gap-1" onClick={() => deleteGaleri(gal.uuid)}>
+                                                                        <span className="d-none d-md-inline">{t("tableActionDelete")}</span>
+                                                                        <i className="fas fa-trash d-md-none"></i>
+                                                                    </button>
                                                                 </div>
-                                                            </div>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        <td colSpan="5" className="text-center text-muted py-3">
+                                                            {t("noDataMessage")}
                                                         </td>
                                                     </tr>
-                                                ))
-                                            ) : (
-                                                <p>No Data</p>
-                                            )}
-                                        </tbody>
-                                    </table>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </section>
@@ -257,7 +265,7 @@ function Galeri() {
                             <div className="modal-content">
                                 <form onSubmit={editGaleriData}>
                                     <div className="modal-header">
-                                        <h5 className="modal-title">Edit</h5>
+                                        <h5 className="modal-title">{t("editModalTitle")}</h5>
                                         <button
                                             type="button"
                                             onClick={() => setEditModal(false)}
@@ -266,7 +274,7 @@ function Galeri() {
                                     </div>
                                     <div className="modal-body">
                                         <div className="mb-3">
-                                            <p>Deskripsi (ID)</p>
+                                            <p>{t("editDescIdLabel")}</p>
                                             <CKEditor
                                                 editor={ClassicEditor}
                                                 data={editDeskrip.deskripsi_id || ''}
@@ -279,9 +287,8 @@ function Galeri() {
                                                 }}
                                             />
                                         </div>
-
                                         <div className="mb-3">
-                                            <p>Deskripsi (EN)</p>
+                                            <p>{t("editDescEnLabel")}</p>
                                             <CKEditor
                                                 editor={ClassicEditor}
                                                 data={editDeskrip.deskripsi_en || ""}
@@ -294,18 +301,16 @@ function Galeri() {
                                                 }}
                                             />
                                         </div>
-
                                         <div className="mb-3">
-                                            <p>Upload Gambar Baru (opsional)</p>
+                                            <p>{t("uploadNewFotoOptional")}</p>
                                             <input
                                                 type="file"
                                                 className="form-control"
                                                 onChange={(e) => set_edit_img_galeri(e.target.files[0])}
                                             />
                                         </div>
-
                                         <div className="mt-3">
-                                            <button className="btn btn-sm btn-primary">Simpan Perubahan</button>
+                                            <button className="btn btn-sm btn-primary">{t("saveChangesButton")}</button>
                                         </div>
                                     </div>
                                 </form>

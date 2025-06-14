@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Alamat;
 use App\Models\BeritaTerkini;
 use App\Models\Bisnis;
+use App\Models\Carousel;
 use App\Models\DeskripLingkungan;
 use App\Models\Galeri;
 use App\Models\ImageLingkungan;
@@ -155,6 +156,15 @@ class readUser extends Controller
         $maps = Alamat::all();
         return response()->json([
             "maps" => $maps
+        ], 200);
+    }
+
+    function readCarousel()
+    {
+        $carousel = Carousel::all();
+
+        return response()->json([
+            "carousel" => $carousel
         ], 200);
     }
 }

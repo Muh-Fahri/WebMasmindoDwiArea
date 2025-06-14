@@ -6,6 +6,7 @@ import AOS from "aos";
 import { NavLink } from "react-router-dom";
 import Laporan from "./laporan";
 import { useTranslation } from "react-i18next";
+import DOMPurify from 'dompurify';
 
 
 
@@ -13,6 +14,8 @@ function ESG() {
 
     const [deskripLingkunganList, setDeskripLingkunganList] = useState([]);
     const [imgLingList, setImgLingList] = useState([]);
+    const [isLoadingDeskripLingkungan, setIsLoadingDeskripLingkungan] = useState(true); // <--- TAMBAHKAN INI
+    const [isLoadingImgLing, setIsLoadingImgLing] = useState(true);
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -20,30 +23,35 @@ function ESG() {
         getImgLingData();
         AOS.init({
             duration: 1000,
-        })
+        });
     }, []);
-
-
     const getdeskripLingkungan = async () => {
+        console.log("getdeskripLingkungan: Memulai fetch...");
+        setIsLoadingDeskripLingkungan(true);
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/lingkungan/deskripLingkungan");
             setDeskripLingkunganList(res.data.deskripLingkunan);
-            getdeskripLingkungan();
         } catch (error) {
-            alert("Error Pada Pengambilan Data Deskripsi Lingkungan");
+            console.error("Error Pada Pengambilan Data Deskripsi Lingkungan:", error);
+            alert(t("error_fetch_description"));
+            setDeskripLingkunganList([]);
+        } finally {
+            console.log("getdeskripLingkungan: Selesai fetch. isLoadingDeskripLingkungan diset ke false.");
+            setIsLoadingDeskripLingkungan(false);
         }
     }
-
     const getImgLingData = async () => {
         try {
+            setIsLoadingImgLing(true);
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/lingkungan/imgLingkungan");
             setImgLingList(res.data.imgLing);
-            getImgLingData();
         } catch (error) {
-            alert("Error Pada Pengambilan Data Gambar")
+            alert(t("error_fetch_images"));
+            setImgLingList([]);
+        } finally {
+            setIsLoadingImgLing(false);
         }
     }
-
 
     return (
         <div>
@@ -91,10 +99,8 @@ function ESG() {
                 </div>
             </section>
             <section>
-                <div className="container-fluid p-5">
-                    {/* isi */}
+                <div className="container-fluid p-5 px-md-5 px-3">
                     <div className="row" data-aos="fade-right">
-                        {/* Gambar versi besar */}
                         <div className="col p-5 d-none d-sm-block">
                             <img
                                 className="img-fluid rounded-5 w-100"
@@ -103,8 +109,6 @@ function ESG() {
                                 alt=""
                             />
                         </div>
-
-                        {/* Gambar versi mobile */}
                         <div className="d-block d-sm-none">
                             <img
                                 className="img-fluid rounded-5 w-100 h-auto"
@@ -112,47 +116,60 @@ function ESG() {
                                 alt=""
                             />
                         </div>
-
                     </div>
+
                     <div className="row">
                         <div className="col-auto ">
-                            {/* judul */}
                             <div className="row d-flex justify-content-center p-5">
                                 <div className="col-md-5" data-aos="fade-right">
-                                    <h1 className="display-5 fw-bold" style={{ color: ' #F16022' }}>Kebijakan <span style={{ color: '#115258' }}>Lingkungan</span></h1>
+                                    <h1 className="display-5 fw-bold">
+                                        <span style={{ color: '#F16022' }}>{t('environmental_policy_title_part1')}</span>{' '}
+                                        <span style={{ color: '#115258' }}>{t('environmental_policy_title_part2')}</span>
+                                    </h1>
                                 </div>
                             </div>
                         </div>
-                        <div className="col-auto d-none d-sm-block">
-                            {/* garis */}
-                            <div className="garis-esg"></div>
-                        </div>
-                        <div className="col" data-aos="fade-down">
-                            {
-                                deskripLingkunganList.length > 0 ? (
-                                    deskripLingkunganList.map((deskripLing) => (
-                                        <div className="col" key={deskripLing.uuid}>
-                                            {/* isi deskrip lingkungan */}
-                                            <p style={{ whiteSpace: 'pre-line' }} className="deskripsi-lingkungan">
-                                                {i18n.language === 'id' ? deskripLing.deskripsi_halaman_id : deskripLing.deskripsi_halaman_en}
-                                            </p>
-
-
-                                        </div>
-                                    ))
-                                ) : (
-                                    <h5>No data</h5>
-                                )
-                            }
-                        </div>
+                        {isLoadingDeskripLingkungan ? (
+                            <div className="col-12 text-center py-5">
+                                <h5>{t('loading_data')}</h5>
+                                <div className="spinner-border text-primary" role="status">
+                                    <span className="visually-hidden">Loading...</span>
+                                </div>
+                            </div>
+                        ) : (
+                            <>
+                                <div className="col-auto d-none d-sm-block">
+                                    <div className="garis-esg"></div>
+                                </div>
+                                <div className="col" data-aos="fade-down">
+                                    {
+                                        deskripLingkunganList.length > 0 ? (
+                                            deskripLingkunganList.map((deskripLing) => (
+                                                <div className="col" key={deskripLing.uuid}> {/* <-- Kemungkinan di sini */}
+                                                    <p
+                                                        style={{ whiteSpace: 'pre-line' }}
+                                                        className="deskripsi-lingkungan"
+                                                        dangerouslySetInnerHTML={{
+                                                            __html: i18n.language === 'id'
+                                                                ? DOMPurify.sanitize(deskripLing.deskripsi_halaman_id)
+                                                                : DOMPurify.sanitize(deskripLing.deskripsi_halaman_en)
+                                                        }}
+                                                    />
+                                                </div>
+                                            ))
+                                        ) : (
+                                            <h5>{t('no_data')}</h5>
+                                        )
+                                    }
+                                </div>
+                            </>
+                        )}
                     </div>
                 </div>
             </section>
             <section className="pt-5" data-aos="fade-right">
-                <div className="container-fluid" data-aos="fade-right">
-                    {/* Wrapper tombol dan slider */}
+                <div className="container-fluid " data-aos="fade-right">
                     <div className="position-relative">
-                        {/* Tombol Kiri */}
                         <button
                             className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
                             onClick={() => {
@@ -165,36 +182,34 @@ function ESG() {
                         </button>
                         <div
                             id="dokEsg-slider"
-                            className="d-flex gap-3 flex-nowrap overflow-auto px-5"
+                            className="overflow-auto px-5"
                             style={{ scrollBehavior: "smooth" }}
                         >
-                            {
-                                imgLingList.length > 0 ? (
-                                    imgLingList.map((imgLing) => (
-                                        <div
-                                            className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
-                                            // style width dihapus, diganti CSS nanti
-                                            style={{ maxWidth: "600px" }}
-                                            key={imgLing.uuid}
-                                        >
-                                            <div className="card rounded-5 responsive-height"
-                                                style={{ height: "400px", overflow: "hidden" }}>
-                                                <img
-                                                    src={`http://localhost:8000/Lingkungan/${imgLing.image_lingkungan}`}
-                                                    alt="Laporan 2020"
-                                                    className="w-100 h-100 object-fit-cover"
-                                                    style={{ objectFit: "cover" }}
-                                                />
+                            <div className="d-flex justify-content-center gap-3 flex-nowrap">
+                                {
+                                    imgLingList.length > 0 ? (
+                                        imgLingList.map((imgLing) => (
+                                            <div
+                                                className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
+                                                style={{ maxWidth: "600px" }}
+                                                key={imgLing.uuid}
+                                            >
+                                                <div className="card rounded-5 responsive-height"
+                                                    style={{ height: "400px", overflow: "hidden" }}>
+                                                    <img
+                                                        src={`http://localhost:8000/Lingkungan/${imgLing.image_lingkungan}`}
+                                                        alt="Laporan 2020"
+                                                        className="w-100 h-100 object-fit-cover"
+                                                        style={{ objectFit: "cover" }}
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
-
-                                    ))
-                                ) : (
-                                    <h5>
-                                        No Data
-                                    </h5>
-                                )
-                            }
+                                        ))
+                                    ) : (
+                                        <h5></h5>
+                                    )
+                                }
+                            </div>
                         </div>
                         <button
                             className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"

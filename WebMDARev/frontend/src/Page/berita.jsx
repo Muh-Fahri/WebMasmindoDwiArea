@@ -28,20 +28,14 @@ function Berita() {
 
     const getBeritaData = async (keyword = "") => {
         setIsLoading(true);
-        setMessage(""); // Reset pesan setiap kali fetch dimulai
+        setMessage("");
 
         const trimmedKeyword = keyword.trim();
         let url = "";
-
-        // Tentukan URL berdasarkan apakah ada keyword pencarian atau tidak
         if (trimmedKeyword === "") {
-            // Jika tidak ada keyword, ambil semua berita dari endpoint user
             url = "http://127.0.0.1:8000/api/user/berita";
         } else {
-            // Jika ada keyword, gunakan endpoint pencarian yang Anda sediakan
             url = `http://127.0.0.1:8000/api/admin/berita/search_berita?q=${encodeURIComponent(trimmedKeyword)}`;
-            // Catatan: Jika ini adalah halaman user, endpoint admin mungkin memerlukan penyesuaian izin di backend Anda.
-            // Pertimbangkan untuk membuat endpoint pencarian berita khusus user jika ada perbedaan akses.
         }
 
         try {
@@ -49,30 +43,22 @@ function Berita() {
             let processedBerita = [];
 
             if (trimmedKeyword === "") {
-                // Jika tidak ada keyword, respons diharapkan memiliki properti 'berita'
                 processedBerita = res.data.berita || [];
             } else {
-                // Jika ada keyword, respons diharapkan memiliki 'berita_id' dan 'berita_en'
                 const resultsId = res.data.berita_id || [];
                 const resultsEn = res.data.berita_en || [];
-
-                // Menggabungkan hasil dari kedua bahasa dan memastikan keunikan berdasarkan UUID
                 const uniqueBeritaMap = new Map();
                 resultsId.forEach(item => uniqueBeritaMap.set(item.uuid, item));
                 resultsEn.forEach(item => uniqueBeritaMap.set(item.uuid, item));
-
                 processedBerita = Array.from(uniqueBeritaMap.values());
             }
-
             setBeritaList(processedBerita);
-
-            // Menentukan pesan setelah data diproses
             if (processedBerita.length === 0 && trimmedKeyword !== "") {
-                setMessage(t('news_no_results')); // Pesan jika tidak ada hasil pencarian
+                setMessage(t('news_no_results'));
             } else if (processedBerita.length === 0 && trimmedKeyword === "") {
-                setMessage(t('news_no_data_available')); // Pesan jika tidak ada data sama sekali (saat tidak mencari)
+                setMessage(t('news_no_data_available'));
             } else {
-                setMessage(""); // Kosongkan pesan jika ada data
+                setMessage("");
             }
 
         } catch (error) {
@@ -86,7 +72,6 @@ function Berita() {
             setIsLoading(false);
         }
     };
-
     useEffect(() => {
 
         getBeritaData();
@@ -95,19 +80,14 @@ function Berita() {
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
-        setSearchKeyword(value); // Update state keyword secara langsung
-
-        // Hapus timeout sebelumnya jika ada
+        setSearchKeyword(value);
         if (debounceTimeoutRef.current) {
             clearTimeout(debounceTimeoutRef.current);
         }
-
-        // Set timeout baru untuk memanggil getBeritaData setelah jeda
         debounceTimeoutRef.current = setTimeout(() => {
             getBeritaData(value);
-        }, 500); // Debounce 500ms
+        }, 500);
     }
-
     return (
         <div>
             <NavbarHijau />
@@ -123,7 +103,6 @@ function Berita() {
                             <div className="garis-berita"></div>
                         </div>
                         <div className="col-md-4">
-                            {/* Nav */}
                             <ul className="list-unstyled">
                                 <li>
                                     <a href="/berita" className="fs-1 text-decoration-none berita-active">{t('news_in_masmindo')}</a>
@@ -145,7 +124,7 @@ function Berita() {
                                     type="text"
                                     placeholder={t('news_search_placeholder')}
                                     value={searchKeyword}
-                                    onChange={handleSearchChange} // Pastikan handleSearchChange didefinisikan
+                                    onChange={handleSearchChange}
                                     className="search-bar p-3 form-control mb-5 rounded-5"
                                 />
                             </div>
@@ -200,7 +179,6 @@ function Berita() {
                                         ) : (
                                             <div className="justify-content-center">
                                                 <div className="col text-center">
-                                                    {/* Menggunakan t('no_data') atau t('no_data_yet') sesuai kebutuhan */}
                                                     <h1>{message || t('no_data')}</h1>
                                                 </div>
                                             </div>

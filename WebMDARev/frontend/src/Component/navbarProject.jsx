@@ -1,6 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Link, NavLink } from "react-router-dom"; // <<< Import NavLink
 import { useTranslation } from 'react-i18next'; // <<< Import useTranslation hook
+import axios from "axios";
+import CountUp from "react-countup";
 
 function NavbarProject() {
     const { t, i18n } = useTranslation(); // Dapatkan fungsi t dan instance i18n
@@ -9,10 +11,85 @@ function NavbarProject() {
         i18n.changeLanguage(lng); // Fungsi untuk mengubah bahasa
     };
 
+    const [isFading, setIsFading] = useState(false);
+    const [showWeatherCard, setShowWeatherCard] = useState(false);
+    const [weatherList, setWeatherList] = useState([]);
+    const [activeCityIndex, setActiveCityIndex] = useState(0);
+    const nextCity = () => {
+        setActiveCityIndex((prevIndex) =>
+            prevIndex === weatherList.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+
+
+
+    const prevCity = () => {
+        setActiveCityIndex((prevIndex) =>
+            prevIndex === 0 ? weatherList.length - 1 : prevIndex - 1
+        );
+    };
+
+    const getWeatherVideo = (weatherId) => {
+        if (weatherId >= 200 && weatherId < 300) return "thunderStorm.mp4";
+        if (weatherId >= 300 && weatherId < 600) return "rain.mp4";
+        if (weatherId >= 700 && weatherId < 800) return "fog.mp4";
+        if (weatherId === 800) return "clear.mp4";
+        if (weatherId === 801 || weatherId === 802) return "clouds.mp4";
+        if (weatherId === 803 || weatherId === 804) return "overcast.mp4";
+        return "default.mp4";
+    };
+
+    const getDataWeather = async () => {
+        try {
+            const res = await axios.post('http://127.0.0.1:8000/api/admin/weather');
+            setWeatherList(res.data.weather);
+            getDataWeather();
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+
+    const getWeatherCondition = (id) => {
+        if (id >= 200 && id <= 232) {
+            return { label: "Badai Petir" };
+        } else if (id >= 300 && id <= 321) {
+            return { label: "Gerimis" };
+        } else if (id >= 500 && id <= 531) {
+            return { label: "Hujan" };
+        } else if (id >= 701 && id <= 781) {
+            return { label: "Kabut" };
+        } else if (id === 800) {
+            return { label: "Cerah" };
+        } else if (id === 801 || id === 802) {
+            return { label: "Berawan" };
+        } else if (id === 803 || id === 804) {
+            return { label: "Mendung" };
+        } else {
+            return { label: "Tidak Diketahui" };
+        }
+    };
+
+    useEffect(() => {
+        setIsFading(true); // mulai fade out
+        const timeout = setTimeout(() => {
+            setIsFading(false); // setelah animasi selesai, tampilkan full
+        }, 500); // durasi fade (ms)
+
+        return () => clearTimeout(timeout); // bersihkan timeout saat unmount
+    }, [activeCityIndex]);
+
+
+
+    useEffect(() => {
+        getDataWeather();
+    }, []);
+
+
+
     return (
         <div>
-            {/* Ubah ini jika Anda ingin navbar ini fixed/absolute seperti contoh sebelumnya */}
-            <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#115258" }}>
+            <nav className="navbar navbar-expand-lg" style={{ backgroundColor: "#013233" }}>
                 <div className="container-fluid p-5">
                     <div className="row align-items-center w-100">
                         <div className="col-md-2">
@@ -34,6 +111,96 @@ function NavbarProject() {
                             </button>
                             <div className="collapse navbar-collapse" id="navbarNav">
                                 <ul className="navbar-nav gap-5"> {/* Menghilangkan ms-auto di sini karena sudah di col-md-auto */}
+                                    <li
+                                        className='nav-item d-flex align-items-center gap-2 ms-md-auto mt-3 mt-md-0 position-relative'
+                                        onMouseEnter={() => setShowWeatherCard(true)}
+                                        onMouseLeave={() => setShowWeatherCard(false)}
+                                    >
+                                        <h5 className='text-white m-0 p-0'>{t('info_cuaca')}</h5>
+                                        <div
+                                            className={`card shadow position-absolute m-0 p-3 weather-card-popup ${showWeatherCard ? 'is-visible' : ''}`}
+                                            style={{
+                                                top: '100%',
+                                                left: '50%',
+                                                transform: 'translateX(-50%)',
+                                                zIndex: '1000',
+                                                width: '900px',
+                                                height: '378px',
+                                                position: 'relative',
+                                                overflow: 'hidden',
+                                                border: 'none',
+                                                outline: 'none',
+                                                boxShadow: 'none',
+                                                borderRadius: '0px',
+                                                padding: '1rem',
+                                                marginTop: '5px',
+                                                color: 'white',
+                                                backgroundColor: 'rgba(0,0,0,0.6)',
+                                            }}
+                                        >
+
+                                            {weatherList[activeCityIndex] && (
+                                                <video
+                                                    autoPlay
+                                                    key={activeCityIndex}
+                                                    loop
+                                                    muted
+                                                    // playsInline
+                                                    className="position-absolute m-0 p-0 top-0 start-0 w-100 h-100"
+                                                    style={{
+                                                        objectFit: 'cover',
+                                                        zIndex: 0,
+                                                        borderRadius: '0px',
+                                                        // filter: 'brightness(0.5)',
+                                                        transition: 'opacity 0.5s ease-in-out',
+                                                        opacity: isFading ? 0 : 1,
+                                                    }}
+                                                >
+                                                    <source
+                                                        src={`/weather/${getWeatherVideo(weatherList[activeCityIndex].weather_id)}`}
+                                                        type="video/mp4"
+                                                    />
+                                                </video>
+                                            )}
+
+                                            <div className="position-relative" style={{ zIndex: 1 }}>
+                                                {weatherList.length > 0 ? (
+                                                    <div className="row h-100">
+                                                        <div className="col p-2 d-flex justify-content-center align-items-center h-100">
+                                                            {(() => {
+                                                                const cuaca = weatherList[activeCityIndex];
+                                                                const condition = getWeatherCondition(cuaca.weather_id);
+
+                                                                return (
+                                                                    <div className="mb-3 d-flex align-items-center gap-3" key={activeCityIndex}>
+                                                                        <div className="card shadow card-cuaca p-5">
+                                                                            <div className="card-body">
+                                                                                <div className='text-white'>
+                                                                                    <h3 className='m-0 p-0'>{cuaca.city_name}</h3>
+                                                                                    <p className='m-0 p-0'><strong>{t('temperature_label')}</strong> <CountUp end={cuaca.temp} duration={1.5} decimals={1} />°C</p>
+                                                                                    <p className='m-0 p-0'><strong>{t('humidity_label')}</strong> <CountUp end={cuaca.humidity} duration={1.5} />%</p>
+                                                                                    <p className='m-0 p-0'><strong>{t('wind_speed_label')}</strong> <CountUp end={cuaca.wind_speed} duration={1.5} decimals={1} /> m/s</p>
+                                                                                    <p className='m-0 p-0'><strong>{t('cloudiness_label')}</strong> <CountUp end={cuaca.cloudiness} duration={1.5} />%</p>
+                                                                                    <p className='m-0 p-0'><strong>{t('condition_label')}</strong> {condition.label}</p>
+                                                                                    <div className="d-flex justify-content-center gap-3 mt-3">
+                                                                                        <button onClick={prevCity} className="btn btn-light btn-sm">{t('button_prev')}</button>
+                                                                                        <button onClick={nextCity} className="btn btn-light btn-sm">{t('button_next')}</button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                );
+                                                            })()}
+                                                        </div>
+
+                                                    </div>
+                                                ) : (
+                                                    <p className="text-center">Tidak ada data cuaca</p>
+                                                )}
+                                            </div>
+                                        </div>
+                                    </li>
                                     <li className="nav-item">
                                         <NavLink
                                             to="/tentang"

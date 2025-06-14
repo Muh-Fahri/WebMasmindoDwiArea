@@ -10,6 +10,9 @@ import Youtube from "../../Component/Admin/youtube";
 import PDF from "../../Component/Admin/pdf";
 import Galeri from "../../Component/Admin/galeri";
 import Alamat from "../../Component/Admin/alamat";
+import Carousel from "../../Component/Admin/carousel";
+
+
 
 function AdminPage() {
     return (
@@ -25,6 +28,7 @@ function AdminPage() {
                 <Route path="laporan_keberlanjutan" element={<PDF />} />
                 <Route path="galeri" element={<Galeri />} />
                 <Route path="alamat" element={<Alamat />} />
+                <Route path="carousel" element={<Carousel />} />
 
             </Routes>
         </div>

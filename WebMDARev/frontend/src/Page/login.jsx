@@ -30,12 +30,6 @@ function Login() {
             alert('Maaf Login Anda Gagal Periksa Kembali Inputan Anda dan Pastikan Benar');
         }
     }
-
-
-
-
-
-
     return (
         <div>
             <div className="bg-login">
@@ -48,7 +42,7 @@ function Login() {
                                         <div className="col">
                                             <div className="row p-3 justify-content-center">
                                                 <div className="col-md-7 p-3">
-                                                    <img className="w-100 text-center h-100" src="/Image/LoogMasmindo.webp" alt="Masmindo Logo" />
+                                                    <img className="w-100 text-center h-100" src="/Image/MasmindoWhiteTxt.png" alt="Masmindo Logo" />
                                                 </div>
                                             </div>
                                             <form onSubmit={handleLogin}>

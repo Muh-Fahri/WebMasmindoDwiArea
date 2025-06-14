@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavbarHijau from "../Component/navbarHijau";
 import { useTranslation } from "react-i18next";
-import Footer from "./fotter";
+import Footer from "./fotter"; // Typo: 'fotter' should be 'footer'
 import axios from "axios";
 import DOMPurify from 'dompurify';
 
@@ -10,29 +10,33 @@ function GaleriUser() {
 
     const [t, i18n] = useTranslation();
     const [galeriList, setGaleriList] = useState([]);
-    // const [selectedImage, setSelectedImage] = useState(null);
-    const [selectedCaption, setSelectedCaption] = useState("");
+    const [selectedCaption, setSelectedCaption] = useState(""); // This state is not used, consider removing
     const [selectedData, setSelectedData] = useState(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     const getGaleriData = async () => {
+        setIsLoading(true);
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/user/dokumentasi');
             setGaleriList(res.data.galeri);
-            getGaleriData();
         } catch (error) {
-            alert('Server Error');
+            console.error('Error fetching gallery data:', error);
+            alert('Server Error: Gagal mengambil data galeri.');
+            setGaleriList([]);
+        } finally {
+            setIsLoading(false);
         }
     }
 
     useEffect(() => {
         getGaleriData();
     }, []);
+
     useEffect(() => {
         if (galeriList.length > 0 && !selectedData) {
             setSelectedData(galeriList[0]);
         }
     }, [galeriList]);
-
 
     return (
         <div>
@@ -44,13 +48,13 @@ function GaleriUser() {
                             <h2 className="text-uppercase fw-bold" style={{ color: '#115258' }}>{t('news_title')}</h2>
                         </div>
                     </div>
-                    <div className="row p-5"> {/* p-5 tetap untuk desktop, akan di-override di CSS jika perlu */}
-                        <div className="col-12 col-md-3"> {/* col-12: di HP akan 100% lebar, col-md-3: di desktop 3 kolom */}
+                    {/* PERUBAHAN DI SINI: SESUAIKAN LEBAR KOLOM BOOTSTRAP */}
+                    <div className="row p-5">
+                        <div className="col-12 col-md-4"> {/* Mengubah dari col-md-3 menjadi col-md-4 */}
                             <div className="d-flex align-items-start">
                                 <div className="garis-berita me-3"></div>
                                 <ul className="list-unstyled">
                                     <li>
-                                        {/* fs-1: ukuran default untuk desktop, fs-3: override untuk mobile */}
                                         <a href="/berita" className="fs-1 text-black text-decoration-none fs-sm-3">{t('news_in_masmindo')}</a>
                                     </li>
                                     <li>
@@ -65,24 +69,25 @@ function GaleriUser() {
                                 </ul>
                             </div>
                         </div>
-
-                        {/* foto */}
-                        <div className="col-12 col-md-9"> {/* col-12: di HP akan 100% lebar, col-md-9: di desktop 9 kolom */}
-                            {galeriList.length > 0 ? (
+                        <div className="col-12 col-md-8"> {/* Mengubah dari col-md-9 menjadi col-md-8 */}
+                            {isLoading ? (
+                                <div className="text-center py-5">
+                                    <div className="spinner-border text-primary" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                    <p className="mt-2 text-muted">Memuat data galeri...</p>
+                                </div>
+                            ) : galeriList.length > 0 ? (
                                 <div className="row">
-                                    {/* col-12: di HP akan 100% lebar, col-md-7: di desktop 7 kolom */}
                                     <div className="col-12 col-md-7 mb-4 p-0">
                                         <div className="position-relative foto-utama-galeri-hp" style={{ width: '100%', height: '500px' }}>
-                                            {/* Tinggi 500px tetap untuk desktop, akan di-override oleh CSS di media query untuk HP */}
                                             {selectedData && (
                                                 <>
                                                     <div
                                                         className="w-100 h-100"
                                                         style={{
                                                             backgroundImage:
-                                                                `linear-gradient(to right, rgba(241, 96, 34, 0.73), rgba(241, 96, 34, 0)),
-                                                     url('http://localhost:8000/Galeri/${encodeURIComponent(selectedData.foto_galeri)}')
-                                                    `,
+                                                                `url('http://localhost:8000/Galeri/${encodeURIComponent(selectedData.foto_galeri)}')`,
                                                             backgroundSize: 'cover',
                                                             backgroundPosition: 'center',
                                                             transition: 'opacity 0.5s ease-in-out',
@@ -109,32 +114,32 @@ function GaleriUser() {
                                             )}
                                         </div>
                                     </div>
-                                    <div className="col-12 col-md-5 mt-4 mt-md-0"> {/* mt-4: margin-top di HP, mt-md-0: hilangkan margin di desktop */}
+                                    <div className="col-12 col-md-5 mt-4 mt-md-0">
                                         <div
                                             id="thumbnailScroll"
-                                            className="d-flex flex-md-column px-3 py-2 overflow-auto" // overflow-auto untuk scroll di HP
+                                            className="d-flex flex-md-column px-3 py-2 overflow-auto"
                                             style={{
-                                                // Atur properti untuk desktop secara default
-                                                overflowY: 'auto', // Untuk desktop (vertikal)
-                                                overflowX: 'hidden', // Untuk desktop
+                                                overflowY: 'auto',
+                                                overflowX: 'hidden',
                                                 scrollBehavior: 'smooth',
-                                                whiteSpace: 'normal', // Untuk desktop
+                                                whiteSpace: 'normal',
                                                 gap: '0.5rem',
-                                                maxHeight: '450px', // Untuk desktop
-                                                width: '260px', // Untuk desktop
+                                                maxHeight: '450px',
+                                                // Hapus atau ubah width: '260px' jika masih ada
+                                                // Untuk memastikan thumbnail mengikuti lebar kolom, biarkan width: '100%' pada .card flex-shrink-0
                                             }}
                                         >
                                             {galeriList.map((item, index) => (
                                                 <div
                                                     className="card flex-shrink-0"
-                                                    style={{ width: '100%', flexShrink: 0 }} // Lebar 100% untuk desktop, akan di-override di CSS untuk HP
+                                                    style={{ width: '100%', flexShrink: 0 }}
                                                     key={index}
                                                 >
                                                     <img
                                                         src={`http://localhost:8000/Galeri/${encodeURIComponent(item.foto_galeri)}`}
                                                         className="card-img-top"
                                                         alt={`Foto ${index + 1}`}
-                                                        style={{ objectFit: 'cover', height: '80px', cursor: 'pointer' }}
+                                                        style={{ objectFit: 'cover', height: '100px', cursor: 'pointer' }}
                                                         onClick={() => setSelectedData(item)}
                                                     />
                                                     <div
@@ -160,7 +165,9 @@ function GaleriUser() {
                                     </div>
                                 </div>
                             ) : (
-                                <h1>No data</h1>
+                                <div className="text-center py-5">
+                                    <h1 className="text-muted">Tidak ada data galeri yang tersedia.</h1>
+                                </div>
                             )}
                         </div>
                     </div>

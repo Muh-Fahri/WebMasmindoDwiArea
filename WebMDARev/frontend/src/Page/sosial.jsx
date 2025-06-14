@@ -33,8 +33,8 @@ function Sosial() {
 
 
     const getMasyarakatData = async () => {
-        // setLoading(true);
-        // setError(nul)
+        setLoading(true);
+        setError(null)
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/sosial/pengembanganMasyarakat");
             setMasyarakatList(res.data.sosialMasyarakat);
@@ -156,29 +156,31 @@ function Sosial() {
                 </div>
                 <div className="container-fluid pt-5">
                     <div className="position-relative">
-                        <button
-                            className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
-                            onClick={() => {
-                                document
-                                    .getElementById("dokEsg-slider")
-                                    .scrollBy({ left: -300, behavior: "smooth" });
-                            }}
-                        >
-                            &#10094;
-                        </button>
+                        {masyarakatList.length > 0 && (
+                            <button
+                                className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
+                                onClick={() => {
+                                    document
+                                        .getElementById("dokEsg-slider")
+                                        .scrollBy({ left: -300, behavior: "smooth" });
+                                }}
+                            >
+                                &#10094;
+                            </button>
+                        )}
                         <div
                             id="dokEsg-slider"
-                            className="d-flex gap-3 flex-nowrap overflow-auto px-5"
+                            className="overflow-auto px-5"
                             style={{ scrollBehavior: "smooth" }}
                         >
-                            {
-                                masyarakatList.length > 0 ? (
+                            <div className="d-flex justify-content-center gap-3 flex-nowrap">
+                                {
                                     masyarakatList.map((masyarakat) => (
                                         <div
                                             key={masyarakat.uuid}
                                             className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
                                             data-aos="fade-right"
-                                            style={{ maxWidth: "600px" }}
+                                            style={{ maxWidth: "600px", minWidth: "300px" }}
                                         >
                                             <div
                                                 className="card rounded-5 responsive-height"
@@ -186,35 +188,29 @@ function Sosial() {
                                             >
                                                 <img
                                                     src={`http://127.0.0.1:8000/Sosial/${masyarakat.imageSosial}`}
-                                                    alt="Laporan 2020" // Consider translating "Laporan 2020" if it's static
+                                                    alt="Laporan 2020"
                                                     className="w-100 h-100 object-fit-cover"
                                                 />
                                             </div>
-
                                         </div>
-
                                     ))
-                                ) : (
-                                    <div className="container-fluid">
-                                        <div className="row justify-content-center">
-                                            <div className="col">
-                                                <NoData /> {/* Assuming NoData component handles its own translation */}
-                                            </div>
-                                        </div>
-                                    </div>
-                                )
-                            }
+                                }
+                            </div>
                         </div>
-                        <button
-                            className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
-                            onClick={() => {
-                                document
-                                    .getElementById("dokEsg-slider")
-                                    .scrollBy({ left: 300, behavior: "smooth" });
-                            }}
-                        >
-                            &#10095;
-                        </button>
+                        {
+                            setMasyarakatList.length > 0 && (
+                                <button
+                                    className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
+                                    onClick={() => {
+                                        document
+                                            .getElementById("dokEsg-slider")
+                                            .scrollBy({ left: 300, behavior: "smooth" });
+                                    }}
+                                >
+                                    &#10095;
+                                </button>
+                            )
+                        }
                     </div>
                 </div>
             </section>
@@ -238,49 +234,56 @@ function Sosial() {
                 </div>
                 <div className="container-fluid pt-5">
                     <div className="position-relative">
-                        <button
-                            className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
-                            onClick={() => {
-                                document
-                                    .getElementById("dokEsg-slider")
-                                    .scrollBy({ left: -300, behavior: "smooth" });
-                            }}
-                        >
-                            &#10094;
-                        </button>
+                        {kesehatanList.length > 0 && (
+                            <button
+                                className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
+                                onClick={() => {
+                                    document
+                                        .getElementById("dokEsg-slider")
+                                        .scrollBy({ left: -300, behavior: "smooth" });
+                                }}
+                            >
+                                &#10094;
+                            </button>
+                        )}
                         <div
                             id="dokEsg-slider"
-                            className="d-flex gap-3 flex-nowrap overflow-auto px-5"
+                            className="overflow-auto px-5"
                             style={{ scrollBehavior: "smooth" }}
                         >
-                            {
-                                kesehatanList.length > 0 ? ( // Menggunakan nama variabel yang sesuai, dalam contoh Anda adalah 'kesehatanList'
-                                    kesehatanList.map((kesehatan) => (
-                                        <div key={kesehatan.uuid}
-                                            className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
-                                            data-aos="fade-right"
-                                            style={{ maxWidth: "600px" }}>
-                                            <div className="card rounded-5 responsive-height"
-                                                style={{ height: "400px", overflow: "hidden" }}>
-                                                <img src={`http://127.0.0.1:8000/Sosial/${kesehatan.imageSosial}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
+                            <div className="d-flex justify-content-center gap-3 flex-nowrap">
+                                {
+                                    kesehatanList.length > 0 ? (
+                                        kesehatanList.map((kesehatan) => (
+                                            <div key={kesehatan.uuid}
+                                                className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
+                                                data-aos="fade-right"
+                                                style={{ maxWidth: "600px" }}>
+                                                <div className="card rounded-5 responsive-height"
+                                                    style={{ height: "400px", overflow: "hidden" }}>
+                                                    <img src={`http://127.0.0.1:8000/Sosial/${kesehatan.imageSosial}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <NoData />
-                                )
-                            }
+                                        ))
+                                    ) : (
+                                        <div></div>
+                                    )
+                                }
+                            </div>
                         </div>
-                        <button
-                            className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
-                            onClick={() => {
-                                document
-                                    .getElementById("dokEsg-slider")
-                                    .scrollBy({ left: 300, behavior: "smooth" });
-                            }}
-                        >
-                            &#10095;
-                        </button>
+
+                        {kesehatanList.length > 0 && (
+                            <button
+                                className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
+                                onClick={() => {
+                                    document
+                                        .getElementById("dokEsg-slider")
+                                        .scrollBy({ left: 300, behavior: "smooth" });
+                                }}
+                            >
+                                &#10095;
+                            </button>
+                        )}
                     </div>
                 </div>
             </section>
@@ -304,50 +307,66 @@ function Sosial() {
                 </div>
                 <div className="container-fluid pt-5">
                     <div className="position-relative">
-                        <button
-                            className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
-                            onClick={() => {
-                                document
-                                    .getElementById("dokEsg-slider")
-                                    .scrollBy({ left: -300, behavior: "smooth" });
-                            }}
-                        >
-                            &#10094;
-                        </button>
+                        {infraList.length > 0 && (
+                            <button
+                                className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
+                                onClick={() => {
+                                    document
+                                        .getElementById("dokEsg-slider")
+                                        .scrollBy({ left: -300, behavior: "smooth" });
+                                }}
+                            >
+                                &#10094;
+                            </button>
+                        )}
                         <div
                             id="dokEsg-slider"
-                            className="d-flex gap-3 flex-nowrap overflow-auto px-5"
+                            className="overflow-auto px-5"
                             style={{ scrollBehavior: "smooth" }}
                         >
-                            {
-                                infraList.length > 0 ? (
-                                    infraList.map((infra) => (
-                                        <div key={infra.uuid}
-                                            className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
-                                            style={{ maxWidth: "600px" }}
-                                            data-aos="fade-right">
-                                            <div className="card rounded-5 responsive-height"
-                                                style={{ height: "400px", overflow: "hidden" }}
+                            <div className="d-flex justify-content-center gap-3 flex-nowrap">
+                                {
+                                    infraList.length > 0 ? (
+                                        infraList.map((infra) => (
+                                            <div
+                                                key={infra.uuid}
+                                                className="flex-shrink-0 col-lg-6 col-md-8 col-sm-10 col-11"
+                                                style={{ maxWidth: "600px" }}
+                                                data-aos="fade-right"
                                             >
-                                                <img src={`http://127.0.0.1:8000/Sosial/${infra.imageSosial}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
+                                                <div
+                                                    className="card rounded-5 responsive-height"
+                                                    style={{ height: "400px", overflow: "hidden" }}
+                                                >
+                                                    <img
+                                                        src={`http://127.0.0.1:8000/Sosial/${infra.imageSosial}`}
+                                                        alt="Laporan 2020"
+                                                        className="w-100 h-100 object-fit-cover"
+                                                    />
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))
-                                ) : (
-                                    <NoData />
-                                )
-                            }
+                                        ))
+                                    ) : (
+                                        <div></div>
+                                    )
+                                }
+                            </div>
                         </div>
-                        <button
-                            className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
-                            onClick={() => {
-                                document
-                                    .getElementById("dokEsg-slider")
-                                    .scrollBy({ left: 300, behavior: "smooth" });
-                            }}
-                        >
-                            &#10095;
-                        </button>
+
+                        {
+                            infraList.length > 0 && (
+                                <button
+                                    className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
+                                    onClick={() => {
+                                        document
+                                            .getElementById("dokEsg-slider")
+                                            .scrollBy({ left: 300, behavior: "smooth" });
+                                    }}
+                                >
+                                    &#10095;
+                                </button>
+                            )
+                        }
                     </div>
                 </div>
             </section>
@@ -356,8 +375,10 @@ function Sosial() {
                     <div className="row" data-aos="fade-down">
                         <div className="col-md-4">
                             <div className="row d-flex justify-content-center p-2">
-                                <div className="col-md-8" >
-                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>{t('community_empowerment_program_title_part1')} <span style={{ color: '#115258' }}>{t('community_empowerment_program_title_part2')}</span></h1>
+                                <div className="col-md-8">
+                                    <h1 className="display-5 fw-bold" style={{ color: '#F16022' }}>
+                                        {t('community_empowerment_program_title_part1')} <span style={{ color: '#115258' }}>{t('community_empowerment_program_title_part2')}</span>
+                                    </h1>
                                 </div>
                             </div>
                         </div>
@@ -369,24 +390,24 @@ function Sosial() {
                         </div>
                     </div>
                 </div>
-                <div className="container-fluid pt-5 position-relative">
-                    {/* Tombol navigasi kiri */}
-                    <button
-                        className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
-                        style={{ zIndex: 10 }}
-                        onClick={() => {
-                            document
-                                .getElementById("dokEsg-slider")
-                                .scrollBy({ left: -300, behavior: "smooth" });
-                        }}
-                    >
-                        &#10094;
-                    </button>
 
-                    {/* Slider container */}
+                <div className="container-fluid pt-5 position-relative">
+                    {pemberdayaanList.length > 0 && (
+                        <button
+                            className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
+                            style={{ zIndex: 10 }}
+                            onClick={() => {
+                                document.getElementById("dokEsg-slider")
+                                    .scrollBy({ left: -300, behavior: "smooth" });
+                            }}
+                        >
+                            &#10094;
+                        </button>
+                    )}
+
                     <div
                         id="dokEsg-slider"
-                        className="d-flex gap-3 flex-nowrap overflow-auto px-5"
+                        className="d-flex gap-3 justify-content-center flex-nowrap overflow-auto px-5"
                         style={{ scrollBehavior: "smooth" }}
                     >
                         {
@@ -404,31 +425,33 @@ function Sosial() {
                                         >
                                             <img
                                                 src={`http://127.0.0.1:8000/Sosial/${pemberdayaan.imageSosial}`}
-                                                alt="Laporan 2020" // Consider translating this if it's a fixed text.
-                                                className="w-100 h-100 object-fit-cover"
+                                                alt="Laporan 2020"
+                                                className="w-100 h-100"
                                                 style={{ objectFit: "cover" }}
                                             />
                                         </div>
                                     </div>
                                 ))
                             ) : (
-                                <NoData />
+                                <div className="text-center w-100">
+
+                                </div>
                             )
                         }
                     </div>
 
-                    {/* Tombol navigasi kanan */}
-                    <button
-                        className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
-                        style={{ zIndex: 10 }}
-                        onClick={() => {
-                            document
-                                .getElementById("dokEsg-slider")
-                                .scrollBy({ left: 300, behavior: "smooth" });
-                        }}
-                    >
-                        &#10095;
-                    </button>
+                    {pemberdayaanList.length > 0 && (
+                        <button
+                            className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
+                            style={{ zIndex: 10 }}
+                            onClick={() => {
+                                document.getElementById("dokEsg-slider")
+                                    .scrollBy({ left: 300, behavior: "smooth" });
+                            }}
+                        >
+                            &#10095;
+                        </button>
+                    )}
                 </div>
             </section>
             <section className="pt-5">

@@ -45,7 +45,6 @@ function Instagram() {
                         <div className="garis-berita"></div>
                     </div>
                     <div className="col-md-4">
-                        {/* Nav */}
                         <ul className="list-unstyled">
                             <li>
                                 <a href="/berita" className="fs-1 text-black text-decoration-none">{t('news_in_masmindo')}</a>

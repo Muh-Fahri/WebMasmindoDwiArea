@@ -28,13 +28,11 @@ function Berita() {
     const [editId, setEditId] = useState("");
     const [editJudul, setEditJudul] = useState({ judul_berita_id: '', judul_berita_en: '' });
     const [editDeskrip, setEditDeskrip] = useState({ deskripsi_berita_id: '', deskripsi_berita_en: '' });
-    const [editImg, setEditImg] = useState(null); // file object
+    const [editImg, setEditImg] = useState(null);
 
 
 
     const getBeritaData = async () => {
-
-
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/admin/berita/', {
                 headers: {
@@ -238,61 +236,100 @@ function Berita() {
                                         </div>
                                     </div>
                                 </div>
-                                <table className="table">
-                                    {beritaList.length > 0 && (
-                                        <thead>
+                                <div className="table-responsive"> {/* Tambahkan wrapper table-responsive di sini */}
+                                    <table className="table mt-5">
+                                        {/* Thead seharusnya selalu ada untuk struktur tabel yang valid */}
+                                        <thead className="table-light"> {/* Opsional: tambahkan table-light untuk styling header */}
                                             <tr>
-                                                <th>{t('table_no')}</th> {/* Menggunakan kunci yang sudah ada */}
+                                                <th>{t('table_no')}</th>
                                                 <th>{t('table_berita_title_id')}</th>
                                                 <th>{t('table_berita_title_en')}</th>
                                                 <th>{t('table_berita_content_id')}</th>
                                                 <th>{t('table_berita_content_en')}</th>
                                                 <th>{t('table_berita_photo')}</th>
-                                                <th>{t('table_action')}</th> {/* Menggunakan kunci yang sudah ada */}
+                                                <th>{t('table_action')}</th>
                                             </tr>
                                         </thead>
-                                    )}
-                                    <tbody>
-                                        {beritaList.length > 0 ? (
-                                            beritaList.map((berita, index) => (
-                                                <tr key={berita.uuid}>
-                                                    <td>{index + 1}</td>
-                                                    <td>{berita.judul_berita_id}</td>
-                                                    <td>{berita.judul_berita_en}</td>
-                                                    <td>
-                                                        <div dangerouslySetInnerHTML={{ __html: berita.deskripsi_berita_id }} />
-                                                    </td>
-                                                    <td>
-                                                        <div dangerouslySetInnerHTML={{ __html: berita.deskripsi_berita_en }} />
-                                                    </td>
-                                                    <td>
-                                                        <img
-                                                            src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
-                                                            alt={t('alt_text_news_image')}
-                                                            style={{ width: "100px", objectFit: "cover" }}
-                                                        />
-                                                    </td>
-                                                    <td>
-                                                        <div className="d-flex gap-2">
-                                                            <button className="btn btn-sm btn-warning" onClick={() => openEditModal(berita)}>
-                                                                {t('edit_button')} <FontAwesomeIcon icon={faPencilAlt} />
-                                                            </button>
-                                                            <button className="btn btn-sm btn-danger" onClick={() => deleteBeritaData(berita.uuid)}>
-                                                                {t('delete_button')} <FontAwesomeIcon icon={faTrash} />
-                                                            </button>
-                                                        </div>
+                                        <tbody>
+                                            {beritaList.length > 0 ? (
+                                                beritaList.map((berita, index) => (
+                                                    <tr key={berita.uuid}>
+                                                        <td>{index + 1}</td>
+                                                        {/* Judul: gunakan text-truncate untuk menjaga lebar kolom */}
+                                                        <td style={{ maxWidth: '150px' }}> {/* Contoh max-width */}
+                                                            <div className="text-truncate">{berita.judul_berita_id}</div>
+                                                        </td>
+                                                        <td style={{ maxWidth: '150px' }}> {/* Contoh max-width */}
+                                                            <div className="text-truncate">{berita.judul_berita_en}</div>
+                                                        </td>
+                                                        {/* Deskripsi: sangat penting untuk membatasi panjangnya di tabel */}
+                                                        <td style={{ maxWidth: '200px' }}> {/* Contoh max-width */}
+                                                            <div
+                                                                className="text-truncate" // Tambahkan text-truncate
+                                                                style={{
+                                                                    maxHeight: '3.6em', // Batasi hingga sekitar 2-3 baris (tergantung line-height)
+                                                                    overflow: 'hidden',
+                                                                    textOverflow: 'ellipsis',
+                                                                    whiteSpace: 'normal', // Izinkan wrap, tapi truncate setelah tinggi tertentu
+                                                                    display: '-webkit-box',
+                                                                    WebkitLineClamp: 3, // Batasi 3 baris
+                                                                    WebkitBoxOrient: 'vertical'
+                                                                }}
+                                                                dangerouslySetInnerHTML={{ __html: berita.deskripsi_berita_id }}
+                                                            />
+                                                        </td>
+                                                        <td style={{ maxWidth: '200px' }}> {/* Contoh max-width */}
+                                                            <div
+                                                                className="text-truncate" // Tambahkan text-truncate
+                                                                style={{
+                                                                    maxHeight: '3.6em', // Batasi hingga sekitar 2-3 baris
+                                                                    overflow: 'hidden',
+                                                                    textOverflow: 'ellipsis',
+                                                                    whiteSpace: 'normal',
+                                                                    display: '-webkit-box',
+                                                                    WebkitLineClamp: 3,
+                                                                    WebkitBoxOrient: 'vertical'
+                                                                }}
+                                                                dangerouslySetInnerHTML={{ __html: berita.deskripsi_berita_en }}
+                                                            />
+                                                        </td>
+                                                        <td>
+                                                            <img
+                                                                src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
+                                                                alt={t('alt_text_news_image')}
+                                                                style={{ width: "80px", height: "auto", objectFit: "cover" }}
+                                                            />
+                                                        </td>
+                                                        <td>
+                                                            <div className="d-flex flex-column flex-md-row gap-1"> {/* Tombol akan menumpuk di HP */}
+                                                                <button className="btn btn-sm btn-warning d-flex align-items-center justify-content-center gap-1" onClick={() => openEditModal(berita)}>
+                                                                    <span className="d-none d-md-inline">{t('edit_button')}</span>
+                                                                    {/* Asumsi FontAwesomeIcon diimport */}
+                                                                    {/* <FontAwesomeIcon icon={faPencilAlt} /> */}
+                                                                    <i className="fas fa-edit d-md-none"></i> {/* Contoh ikon untuk mobile */}
+                                                                </button>
+                                                                <button className="btn btn-sm btn-danger d-flex align-items-center justify-content-center gap-1" onClick={() => deleteBeritaData(berita.uuid)}>
+                                                                    <span className="d-none d-md-inline">{t('delete_button')}</span>
+                                                                    {/* Asumsi FontAwesomeIcon diimport */}
+                                                                    {/* <FontAwesomeIcon icon={faTrash} /> */}
+                                                                    <i className="fas fa-trash d-md-none"></i> {/* Contoh ikon untuk mobile */}
+                                                                </button>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <tr>
+                                                    {/* colSpan harus sesuai dengan jumlah kolom di thead (saat ini 7) */}
+                                                    <td colSpan="7" className="text-center text-muted py-3">
+                                                        <NoData /> {/* Komponen NoData atau teks langsung */}
+                                                        {`Tidak ada data berita yang tersedia.`} {/* Tambahkan fallback text */}
                                                     </td>
                                                 </tr>
-                                            ))
-                                        ) : (
-                                            <tr>
-                                                <td colSpan="7" className="text-center">
-                                                    <NoData /> {/* Komponen ini bisa kamu custom juga tampilkan teks biasa jika belum ada datanya */}
-                                                </td>
-                                            </tr>
-                                        )}
-                                    </tbody>
-                                </table>
+                                            )}
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
                         </div>
                     </section>

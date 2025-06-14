@@ -13,6 +13,7 @@ use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
 use App\Models\Alamat;
+use App\Models\Carousel;
 use App\Models\Galeri;
 use Illuminate\Support\Facades\File;
 
@@ -142,6 +143,25 @@ class deleteAdmin extends Controller
 
         return response()->json([
             "msg" => "Berhasil Menghapus Data"
+        ], 200);
+    }
+
+    function deleteCarousel($uuid)
+    {
+        $carousel = Carousel::where('uuid', $uuid)->firstOrFail();
+
+        if (!empty($carousel->image)) {
+            $imagePath = public_path('Carousel/' . $carousel->image);
+
+            if (file_exists($imagePath) && is_file($imagePath)) {
+                unlink($imagePath);
+            }
+        }
+
+        $carousel->delete();
+
+        return response()->json([
+            "msg" => "Data Terhapus"
         ], 200);
     }
 }

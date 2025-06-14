@@ -17,6 +17,7 @@ use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
+use App\Models\Carousel;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -348,6 +349,43 @@ class createAdmin extends Controller
         return response()->json([
             "maps" => $maps,
             "message" => "Data berhasil disimpan"
+        ], 200);
+    }
+
+    function createCarousel(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            "image_carousel" => "required|image|mimes:jpg,jpeg,png|max:5120",
+            "text_carousel_id" => "required|string|max:255",
+            "text_carousel_en" => "required|string|max:255",
+            "body_text_id" => "required|string|max:255",
+            "body_text_en" => "required|string|max:255",
+        ]);
+
+
+        if ($validator->fails()) {
+            return response()->json([
+                "error" => $validator->errors()
+            ], 422);
+        }
+
+        if ($request->hasFile('image_carousel')) {
+            $imageName = time() . "_" . $request->file('image_carousel')->getClientOriginalName();
+            $simpan = public_path('Carousel');
+            $request->file('image_carousel')->move($simpan, $imageName);
+        }
+
+
+        $carousel = Carousel::create([
+            "image_carousel" => $imageName,
+            "text_carousel_id" => $request->text_carousel_id,
+            "text_carousel_en" => $request->text_carousel_en,
+            "body_text_id" => $request->body_text_id,
+            "body_text_en" => $request->body_text_en
+        ]);
+
+        return response()->json([
+            "carousel" => $carousel
         ], 200);
     }
 }

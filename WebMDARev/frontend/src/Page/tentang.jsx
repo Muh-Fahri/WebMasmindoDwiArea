@@ -39,7 +39,6 @@ function Tentang() {
                                 <div className="col">
                                     <h3 className="text-md-start text-center d-none d-md-block">{t('mda_spirit_contribution')}</h3>
                                     <h3 className="text-center d-md-none fs-6">{t('mda_spirit_contribution')}</h3>
-
                                     <h1
                                         className="text-uppercase fw-bold display-3 d-none d-md-block"
                                         style={{ color: "#B9A34B" }}
@@ -57,12 +56,9 @@ function Tentang() {
 
                             <div className="row mt-4 mt-md-5">
                                 <div className="col">
-                                    {/* Desktop Paragraph */}
                                     <p className="fs-4 d-none d-md-block">
                                         {t('mda_project_desc')}
                                     </p>
-
-                                    {/* Mobile Paragraph */}
                                     <p className="fs-6 d-md-none text-center">
                                         {t('mda_project_desc')}
                                     </p>
@@ -73,11 +69,9 @@ function Tentang() {
                 </div>
             </section>
             <section style={{ backgroundColor: "#B9A34B" }}>
-                <div className="container-fluid p-5">
+                <div className="container-fluid p-5 px-md-5 px-3">
                     <div className="row">
                         <div className="col p-5" data-aos="fade-down">
-
-                            {/* Desktop besar */}
                             <div className="d-none d-lg-flex row">
                                 <div className="col-lg-4 p-3 text-start">
                                     <h1 className="text-white display-3 fw-bold m-0">
@@ -90,8 +84,6 @@ function Tentang() {
                                     </p>
                                 </div>
                             </div>
-
-                            {/* Tablet dan mobile */}
                             <div className="d-lg-none">
                                 <h3 className="text-white fw-bold mb-3 text-start">
                                     {t('best_mining_practices_title')}
@@ -100,15 +92,13 @@ function Tentang() {
                                     {t('best_mining_practices_desc')}
                                 </p>
                             </div>
-
                         </div>
                     </div>
                 </div>
             </section>
             <section>
-                <div className="container-fluid p-5" style={{ backgroundColor: '#f8f9fa' }}>
+                <div className="container-fluid p-5 px-md-5 px-3" style={{ backgroundColor: '#f8f9fa' }}>
                     <div className="container">
-                        {/* Teks judul - lebarnya sama dengan cards */}
                         <div className="row justify-content-center mb-4">
                             <div className="col-md-9">
                                 <h5 className="fw-semibold text-secondary">
@@ -116,8 +106,6 @@ function Tentang() {
                                 </h5>
                             </div>
                         </div>
-
-                        {/* Cards */}
                         <div className="row justify-content-center g-4">
                             <div className="col-md-4">
                                 <div

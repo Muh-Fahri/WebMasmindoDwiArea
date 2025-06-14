@@ -2,24 +2,26 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import NavSide from "./navSide";
 import handleUnauthorized from "./unouthorized";
+import { useTranslation } from "react-i18next";
 
 function Youtube() {
     const [listYt, setListYt] = useState([]);
-    const [createLinkYt, setCreateLinkYt] = useState("");
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
     const token = localStorage.getItem('token');
-
-
-    // modal
+    const { t } = useTranslation();
+    const [createLinkYt, setCreateLinkYt] = useState("");
     const [editYtModal, setEditYtModal] = useState(false);
     const [editId, setEditId] = useState("");
     const [editLinkYt, setEditLinkYt] = useState("");
 
-
     useEffect(() => {
         getYtData();
-    }, []);
+    }, [token]);
 
     const getYtData = async () => {
+        setLoading(true);
+        setError(null);
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/admin/youtube", {
                 headers: {
@@ -27,26 +29,35 @@ function Youtube() {
                 }
             });
             setListYt(res.data.youtube);
-        } catch (error) {
-            handleUnauthorized(error);
+        } catch (err) {
+            console.error("Error fetching YouTube data:", err);
+            setError(err);
+            handleUnauthorized(err);
+        } finally {
+            setLoading(false);
         }
     };
 
     const createYtData = async (e) => {
         e.preventDefault();
+        if (!createLinkYt.trim()) {
+            alert(t('invalid_youtube_link'));
+            return;
+        }
         try {
-            await axios.post("http://127.0.0.1:8000/api/admin/youtube", {
-                linkYoutube: createLinkYt
-            }, {
+            await axios.post("http://127.0.0.1:8000/api/admin/youtube", { linkYoutube: createLinkYt }, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 }
             });
-            setCreateLinkYt("")
+            setCreateLinkYt("");
             getYtData();
-            alert("Berhasil Menambahkan Data");
-        } catch (error) {
-            alert("Gagal Menambahkan data");
+            alert(t('add_youtube_success'));
+        } catch (err) {
+            console.error("Error creating YouTube data:", err);
+            alert(t('add_youtube_error'));
+            handleUnauthorized(err);
         }
     };
 
@@ -58,40 +69,47 @@ function Youtube() {
 
     const editYtData = async (e) => {
         e.preventDefault();
+        if (!editLinkYt.trim()) {
+            alert(t('invalid_youtube_link'));
+            return;
+        }
         try {
-            await axios.post(`http://127.0.0.1:8000/api/admin/youtube/${editId}`, {
-                linkYoutube: editLinkYt
-            }, {
+            await axios.put(`http://127.0.0.1:8000/api/admin/youtube/update/${editId}`, { linkYoutube: editLinkYt }, {
                 headers: {
-                    Authorization: `Bearer ${token}`
+                    Authorization: `Bearer ${token}`,
+                    'Content-Type': 'application/json'
                 }
             });
             setEditYtModal(false);
             getYtData();
-            alert('Berhasil Edit Data');
-        } catch (error) {
-            alert("Gagal Mengedit Data");
+            alert(t('update_youtube_success'));
+        } catch (err) {
+            console.error("Error updating YouTube data:", err);
+            alert(t('update_youtube_error'));
+            handleUnauthorized(err);
         }
     };
 
     const deleteDataYt = async (uuid) => {
-        try {
-            await axios.delete(`http://127.0.0.1:8000/api/admin/youtube/delete/${uuid}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
-            });
-            getYtData();
-            alert("Berhasil Menghapus Data");
-        } catch (error) {
-            alert('Gagal Menghapus Data');
+        if (window.confirm(t('delete_youtube_confirm'))) {
+            try {
+                await axios.delete(`http://127.0.0.1:8000/api/admin/youtube/delete/${uuid}`, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                getYtData();
+                alert(t('delete_youtube_success'));
+            } catch (err) {
+                console.error("Error deleting YouTube data:", err);
+                alert(t('delete_youtube_error'));
+                handleUnauthorized(err);
+            }
         }
     };
 
-
-
     return (
-        <div>
+        <div style={{ display: 'flex' }}>
             <NavSide />
             <div className="flex-grow-1 p-3">
                 <section>
@@ -99,7 +117,7 @@ function Youtube() {
                         <div className="row">
                             <div className="col">
                                 <div className="card text-white p-3" style={{ backgroundColor: '#F16022' }}>
-                                    <h3>Halaman Youtube</h3>
+                                    <h3>{t('youtube_page_title')}</h3>
                                 </div>
                             </div>
                         </div>
@@ -107,15 +125,23 @@ function Youtube() {
                             <div className="col">
                                 <div className="card p-3">
                                     <div className="mb-3">
-                                        <h3 className="text-success">Create Data</h3>
+                                        <h3 className="text-success">{t('create_youtube_data_title')}</h3>
                                     </div>
                                     <form onSubmit={createYtData}>
                                         <div className="mb-3">
-                                            <label className="form-label">Link Frame Youtube</label>
-                                            <input value={createLinkYt} onChange={(e) => setCreateLinkYt(e.target.value)} type="text" className="form-control" required />
+                                            <label htmlFor="youtubeFrameLink" className="form-label">{t('youtube_link_frame_label')}</label>
+                                            <input
+                                                value={createLinkYt}
+                                                onChange={(e) => setCreateLinkYt(e.target.value)}
+                                                type="text"
+                                                className="form-control"
+                                                id="youtubeFrameLink"
+                                                placeholder="e.g., https://www.youtube.com/embed/VIDEO_ID"
+                                                required
+                                            />
                                         </div>
                                         <div className="mb-3">
-                                            <button className="btn btn-sm p-2 text-white" style={{ backgroundColor: '#115258' }}>Add Data</button>
+                                            <button type="submit" className="btn btn-sm p-2 text-white" style={{ backgroundColor: '#115258' }}>{t('add_youtube_data_button')}</button>
                                         </div>
                                     </form>
                                 </div>
@@ -123,23 +149,54 @@ function Youtube() {
                         </div>
                     </div>
                 </section>
-                {/* menampilkan data */}
                 <section>
                     <div className="container mt-3">
                         <div className="row">
                             <div className="col">
                                 <div className="card p-3">
-                                    <h3 className="text-secondary">Data</h3>
+                                    <h3 className="text-secondary">{t('youtube_video_data_title')}</h3>
                                     <div className="mt-3">
-                                        {listYt.length > 0 ? (
-                                            <div className="row">
+                                        {loading ? (
+                                            <div className="text-center py-5">
+                                                <i className="fas fa-spinner fa-spin me-2"></i>
+                                                {t('loading_message')}
+                                            </div>
+                                        ) : error ? (
+                                            <div className="alert alert-danger">{error.message || "Failed to load data."}</div>
+                                        ) : listYt.length > 0 ? (
+                                            <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                                                 {listYt.map((youtube) => (
                                                     <div key={youtube.uuid} className="col">
-                                                        <iframe width="560" height="315" src={youtube.linkYoutube} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-                                                        <div className="row">
-                                                            <div className="col mb-3 d-flex gap-2">
-                                                                <button className="btn-sm btn-warning btn" onClick={() => openEditModal(youtube)}>Edit</button>
-                                                                <button className="btn btn-sm btn-danger" onClick={() => deleteDataYt(youtube.uuid)} >Delete</button>
+                                                        <div className="card h-100">
+                                                            <div className="embed-responsive embed-responsive-16by9" style={{ height: '200px' }}>
+                                                                <iframe
+                                                                    className="embed-responsive-item"
+                                                                    src={youtube.linkYoutube.includes("watch?v=") ? youtube.linkYoutube.replace("watch?v=", "embed/") : youtube.linkYoutube}
+                                                                    title="YouTube video player"
+                                                                    frameBorder="0"
+                                                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                                    referrerPolicy="strict-origin-when-cross-origin"
+                                                                    allowFullScreen
+                                                                    style={{ width: '100%', height: '100%' }}
+                                                                ></iframe>
+                                                            </div>
+                                                            <div className="card-body">
+                                                                <div className="d-flex flex-column flex-md-row gap-2 mt-2">
+                                                                    <button
+                                                                        className="btn btn-sm btn-warning d-flex align-items-center justify-content-center gap-1"
+                                                                        onClick={() => openEditModal(youtube)}
+                                                                    >
+                                                                        <span className="d-none d-md-inline">{t('edit_button')}</span>
+                                                                        <i className="fas fa-edit d-md-none"></i>
+                                                                    </button>
+                                                                    <button
+                                                                        className="btn btn-sm btn-danger d-flex align-items-center justify-content-center gap-1"
+                                                                        onClick={() => deleteDataYt(youtube.uuid)}
+                                                                    >
+                                                                        <span className="d-none d-md-inline">{t('delete_button_short')}</span>
+                                                                        <i className="fas fa-trash d-md-none"></i>
+                                                                    </button>
+                                                                </div>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -147,49 +204,52 @@ function Youtube() {
                                             </div>
                                         ) : (
                                             <div className="row">
-                                                <div className="col">
-                                                    <h1>no Dta</h1>
+                                                <div className="col text-center text-muted py-5">
+                                                    <h4>{t('no_youtube_data')}</h4>
                                                 </div>
                                             </div>
                                         )}
-
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </section>
-                <section>
-                    {/* edit */}
-                    {
-                        editYtModal && (
-                            <div className="modal show fade d-block" tabIndex="-1">
-                                <div className="modal-dialog">
-                                    <div className="modal-content">
-                                        <form onSubmit={editYtData}>
-                                            <div className="modal-header">
-                                                <h5>Edit Link Youtube</h5>
-                                                <button type="button" onClick={() => setEditYtModal(false)} className="btn-close"></button>
-                                            </div>
-                                            <div className="modal-body">
-                                                <div className="mb-3">
-                                                    <label className="label-form">Link Youtube</label>
-                                                    <input value={editLinkYt} onChange={(e) => setEditLinkYt(e.target.value)} type="text" className="form-control" />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <button className="btn btn-primary btn-sm">Add Data</button>
-                                                </div>
-                                            </div>
-                                        </form>
+                {editYtModal && (
+                    <div className="modal show fade d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>
+                        <div className="modal-dialog">
+                            <div className="modal-content">
+                                <form onSubmit={editYtData}>
+                                    <div className="modal-header">
+                                        <h5 className="modal-title">{t('edit_youtube_link_title')}</h5>
+                                        <button type="button" onClick={() => setEditYtModal(false)} className="btn-close"></button>
                                     </div>
-                                </div>
+                                    <div className="modal-body">
+                                        <div className="mb-3">
+                                            <label htmlFor="modalYoutubeLink" className="label-form">{t('youtube_link_frame_label')}</label>
+                                            <input
+                                                value={editLinkYt}
+                                                onChange={(e) => setEditLinkYt(e.target.value)}
+                                                type="text"
+                                                className="form-control"
+                                                id="modalYoutubeLink"
+                                                placeholder="e.g., https://www.youtube.com/embed/VIDEO_ID"
+                                                required
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="modal-footer">
+                                        <button type="submit" className="btn btn-primary btn-sm">{t('update_button')}</button>
+                                        <button type="button" className="btn btn-secondary btn-sm" onClick={() => setEditYtModal(false)}>{t('close_button')}</button>
+                                    </div>
+                                </form>
                             </div>
-                        )
-                    }
-                </section>
+                        </div>
+                    </div>
+                )}
             </div>
         </div>
-    )
+    );
 }
 
 export default Youtube;

@@ -279,8 +279,9 @@ function Lingkungan() {
                             <div className="col">
                                 <div className="card p-3 mt-5 text-secondary">
                                     <h3>{t('page_description_data_title')}</h3>
-                                    <table className="table">
-                                        {deskripList.length > 0 && (
+                                    <div className="table-responsive"> {/* Tambahkan wrapper table-responsive di sini */}
+                                        <table className="table">
+                                            {/* Thead seharusnya selalu ada untuk struktur tabel yang valid */}
                                             <thead>
                                                 <tr>
                                                     <th>{t('page_description_id_label')}</th>
@@ -288,26 +289,43 @@ function Lingkungan() {
                                                     <th>{t('action_label')}</th>
                                                 </tr>
                                             </thead>
-                                        )}
-                                        <tbody>
-                                            {deskripList.length > 0 ? (
-                                                deskripList.map((deskrLing) => (
-                                                    <tr key={deskrLing.uuid}>
-                                                        <td>
-                                                            <div
-                                                                style={{ whiteSpace: 'pre-line' }}
-                                                                dangerouslySetInnerHTML={{ __html: deskrLing.deskripsi_halaman_id }}
-                                                            />
-                                                        </td>
-                                                        <td>
-                                                            <div
-                                                                style={{ whiteSpace: 'pre-line' }}
-                                                                dangerouslySetInnerHTML={{ __html: deskrLing.deskripsi_halaman_en }}
-                                                            />
-                                                        </td>
-                                                        <td>
-                                                            <div className="row">
-                                                                <div className="col d-flex gap-2">
+                                            <tbody>
+                                                {deskripList.length > 0 ? (
+                                                    deskripList.map((deskrLing) => (
+                                                        <tr key={deskrLing.uuid}>
+                                                            {/* Kolom Deskripsi ID */}
+                                                            <td style={{ maxWidth: '300px' }}> {/* Atur maxWidth agar kolom tidak terlalu lebar */}
+                                                                <div
+                                                                    style={{
+                                                                        whiteSpace: 'normal', /* Biarkan teks membungkus */
+                                                                        maxHeight: '4.5em', /* Contoh batasan tinggi (misal 3 baris dengan line-height 1.5) */
+                                                                        overflow: 'hidden', /* Sembunyikan overflow */
+                                                                        textOverflow: 'ellipsis', /* Tambahkan elipsis jika terpotong */
+                                                                        display: '-webkit-box',
+                                                                        WebkitLineClamp: 3, /* Batasi jumlah baris (untuk browser Webkit) */
+                                                                        WebkitBoxOrient: 'vertical'
+                                                                    }}
+                                                                    dangerouslySetInnerHTML={{ __html: deskrLing.deskripsi_halaman_id }}
+                                                                />
+                                                            </td>
+                                                            {/* Kolom Deskripsi EN */}
+                                                            <td style={{ maxWidth: '300px' }}> {/* Atur maxWidth agar kolom tidak terlalu lebar */}
+                                                                <div
+                                                                    style={{
+                                                                        whiteSpace: 'normal', /* Biarkan teks membungkus */
+                                                                        maxHeight: '4.5em', /* Contoh batasan tinggi */
+                                                                        overflow: 'hidden', /* Sembunyikan overflow */
+                                                                        textOverflow: 'ellipsis', /* Tambahkan elipsis jika terpotong */
+                                                                        display: '-webkit-box',
+                                                                        WebkitLineClamp: 3, /* Batasi jumlah baris */
+                                                                        WebkitBoxOrient: 'vertical'
+                                                                    }}
+                                                                    dangerouslySetInnerHTML={{ __html: deskrLing.deskripsi_halaman_en }}
+                                                                />
+                                                            </td>
+                                                            <td>
+                                                                {/* Tombol aksi akan menumpuk di layar kecil */}
+                                                                <div className="d-flex flex-column flex-md-row gap-1">
                                                                     <button
                                                                         onClick={() => openEditModal(deskrLing)}
                                                                         className="btn btn-warning btn-sm"
@@ -321,15 +339,21 @@ function Lingkungan() {
                                                                         {t('button_delete')}
                                                                     </button>
                                                                 </div>
-                                                            </div>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        {/* colSpan harus sesuai dengan jumlah kolom di thead (saat ini 3) */}
+                                                        <td colSpan="3" className="text-center text-muted py-3">
+                                                            {/* Menampilkan komponen NoData atau teks fallback */}
+                                                            {typeof NoData === 'function' ? <NoData /> : 'Tidak ada data deskripsi halaman.'}
                                                         </td>
                                                     </tr>
-                                                ))
-                                            ) : (
-                                                <NoData />
-                                            )}
-                                        </tbody>
-                                    </table>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
 
                                 </div>
                             </div>
@@ -408,9 +432,10 @@ function Lingkungan() {
                             <div className="col">
                                 <div className="card p-3 mt-5 text-secondary">
                                     <h3>{t('activity_documentation_data_title')}</h3>
-                                    <table className="table">
-                                        {imgList.length > 0 && (
-                                            <thead>
+                                    <div className="table-responsive"> {/* Tambahkan wrapper table-responsive di sini */}
+                                        <table className="table">
+                                            {/* Thead seharusnya selalu ada untuk struktur tabel yang valid */}
+                                            <thead className="table-light"> {/* Opsional: tambahkan table-light untuk styling header */}
                                                 <tr>
                                                     <th>{t('documentation_label')}</th>
                                                     <th>{t('created_at_label')}</th>
@@ -418,35 +443,58 @@ function Lingkungan() {
                                                     <th>{t('action_label')}</th>
                                                 </tr>
                                             </thead>
-                                        )}
-                                        <tbody>
-                                            {imgList.length > 0 ? (
-                                                imgList.map((dok) => (
-                                                    <tr key={dok.uuid}>
-                                                        <td>
-                                                            <img src={`http://localhost:8000/Lingkungan/${dok.image_lingkungan}`} alt={t('documentation_alt_text')} style={{ maxWidth: "20%" }} />
-                                                        </td>
-                                                        <td className="text-success">{moment(dok.created_at).format('DD-MM-YYYY')}</td>
-                                                        <td className="text-success">{moment(dok.updated_at).format('DD-MM-YYYY')}</td>
-                                                        <td>
-                                                            <div className="row">
-                                                                <div className="col d-flex gap-2">
-                                                                    <button className="btn btn-sm btn-warning" onClick={() => opendEditModal(dok)}>
+                                            <tbody>
+                                                {imgList.length > 0 ? (
+                                                    imgList.map((dok) => (
+                                                        <tr key={dok.uuid}>
+                                                            <td>
+                                                                <img
+                                                                    src={`http://localhost:8000/Lingkungan/${dok.image_lingkungan}`}
+                                                                    alt={t('documentation_alt_text')}
+                                                                    style={{ maxWidth: "100px", height: "auto", objectFit: "contain" }} /* Sesuaikan ukuran gambar */
+                                                                    className="img-fluid" /* Pastikan gambar responsif dalam kolom */
+                                                                />
+                                                            </td>
+                                                            {/* Gunakan nowrap agar tanggal tidak putus baris jika terlalu panjang, dan tambahkan class untuk ukuran font responsif */}
+                                                            <td className="text-success text-nowrap fs-7 fs-md-6">{moment(dok.created_at).format('DD-MM-YYYY')}</td>
+                                                            <td className="text-success text-nowrap fs-7 fs-md-6">{moment(dok.updated_at).format('DD-MM-YYYY')}</td>
+                                                            <td>
+                                                                {/* Tombol aksi akan menumpuk di layar kecil */}
+                                                                <div className="d-flex flex-column flex-md-row gap-1">
+                                                                    <button
+                                                                        onClick={() => opendEditModal(dok)}
+                                                                        className="btn btn-warning btn-sm"
+                                                                    >
                                                                         {t('button_edit')}
+                                                                        {/* Opsional: Tambahkan ikon untuk layar kecil jika t('button_edit') terlalu panjang */}
+                                                                        {/* <span className="d-none d-md-inline">{t('button_edit')}</span>
+                                    <i className="fas fa-edit d-md-none"></i> */}
                                                                     </button>
-                                                                    <button className="btn btn-sm btn-danger" onClick={() => deleteDokumentasi(dok.uuid)}>
+                                                                    <button
+                                                                        onClick={() => deleteDokumentasi(dok.uuid)}
+                                                                        className="btn btn-danger btn-sm"
+                                                                    >
                                                                         {t('button_delete')}
+                                                                        {/* Opsional: Tambahkan ikon untuk layar kecil jika t('button_delete') terlalu panjang */}
+                                                                        {/* <span className="d-none d-md-inline">{t('button_delete')}</span>
+                                    <i className="fas fa-trash d-md-none"></i> */}
                                                                     </button>
                                                                 </div>
-                                                            </div>
+                                                            </td>
+                                                        </tr>
+                                                    ))
+                                                ) : (
+                                                    <tr>
+                                                        {/* colSpan harus sesuai dengan jumlah kolom di thead (saat ini 4) */}
+                                                        <td colSpan="4" className="text-center text-muted py-3">
+                                                            {/* Menampilkan komponen NoData atau teks fallback */}
+                                                            {typeof NoData === 'function' ? <NoData /> : 'Tidak ada data dokumentasi.'}
                                                         </td>
                                                     </tr>
-                                                ))
-                                            ) : (
-                                                <NoData />
-                                            )}
-                                        </tbody>
-                                    </table>
+                                                )}
+                                            </tbody>
+                                        </table>
+                                    </div>
                                 </div>
                             </div>
                         </div>
