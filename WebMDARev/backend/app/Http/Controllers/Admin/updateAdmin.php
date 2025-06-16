@@ -14,6 +14,7 @@ use App\Models\Alamat;
 use App\Models\Carousel;
 use App\Models\Galeri;
 use App\Models\Instagram;
+use App\Models\Karir;
 use App\Models\Youtube;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -328,6 +329,50 @@ class updateAdmin extends Controller
 
         return response()->json([
             "carousel" => $carousel
+        ], 200);
+    }
+
+    public function updateKarir(Request $request, $uuid)
+    {
+        $karir = Karir::where('uuid', $uuid)->firstOrFail();
+
+        $validator = Validator::make($request->all(), [
+            'category' => "nullable|in:profesional,magang",
+            'nama_perusahaan' => 'nullable|string|max:255',
+            'posisi_id' => 'nullable|string|max:255',
+            'posisi_en' => 'nullable|string|max:255',
+            'lokasi_id' => 'nullable|string|max:255',
+            'lokasi_en' => 'nullable|string|max:255',
+            'syarat_id' => 'nullable|string',
+            'syarat_en' => 'nullable|string',
+            'deskripsi_id' => 'nullable|string',
+            'deskripsi_en' => 'nullable|string',
+            'deadline' => 'nullable|date|after_or_equal:today',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "msg" => $validator->errors(),
+            ], 422);
+        }
+
+        // Update field hanya jika request memiliki nilainya
+        $karir->update([
+            'category' => $request->category ?? $karir->category,
+            'nama_perusahaan' => $request->nama_perusahaan ?? $karir->nama_perusahaan,
+            'posisi_id' => $request->posisi_id ?? $karir->posisi_id,
+            'posisi_en' => $request->posisi_en ?? $karir->posisi_en,
+            'lokasi_id' => $request->lokasi_id ?? $karir->lokasi_id,
+            'lokasi_en' => $request->lokasi_en ?? $karir->lokasi_en,
+            'syarat_id' => $request->syarat_id ?? $karir->syarat_id,
+            'syarat_en' => $request->syarat_en ?? $karir->syarat_en,
+            'deskripsi_id' => $request->deskripsi_id ?? $karir->deskripsi_id,
+            'deskripsi_en' => $request->deskripsi_en ?? $karir->deskripsi_en,
+            'deadline' => $request->deadline ?? $karir->deadline,
+        ]);
+
+        return response()->json([
+            "karir" => $karir,
         ], 200);
     }
 }

@@ -565,12 +565,14 @@ function Home() {
                                 <p className="fs-6 text-white">
                                     {t('professional_inspirational_desc')}
                                 </p>
-                                <button
-                                    className="btn rounded-5 fw-bold shadow-none fs-6 fs-md-3 mt-4 px-4 py-2 text-white"
-                                    style={{ backgroundColor: "#F16022" }}
-                                >
-                                    {t('career_button')}
-                                </button>
+                                <a href="/karir">
+                                    <button
+                                        className="btn rounded-5 fw-bold shadow-none fs-6 fs-md-3 mt-4 px-4 py-2 text-white"
+                                        style={{ backgroundColor: "#F16022" }}
+                                    >
+                                        {t('career_button')}
+                                    </button>
+                                </a>
                             </div>
                         </div>
                     </div>

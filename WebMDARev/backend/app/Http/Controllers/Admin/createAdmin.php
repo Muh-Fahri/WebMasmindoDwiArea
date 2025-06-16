@@ -18,6 +18,7 @@ use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
 use App\Models\Carousel;
+use App\Models\Karir;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -386,6 +387,48 @@ class createAdmin extends Controller
 
         return response()->json([
             "carousel" => $carousel
+        ], 200);
+    }
+
+    public function createKarir(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'category' => "required|in:profesional,magang",
+            'nama_perusahaan' => 'required|string|max:255',
+            'posisi_id' => 'required|string|max:255',
+            'posisi_en' => 'required|string|max:255',
+            'lokasi_id' => 'required|string|max:255',
+            'lokasi_en' => 'required|string|max:255',
+            'syarat_id' => 'required|string',
+            'syarat_en' => 'required|string',
+            'deskripsi_id' => 'required|string',
+            'deskripsi_en' => 'required|string',
+            'deadline' => 'required|date|after_or_equal:today',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                "msg" => $validator->errors(),
+            ], 422);
+        }
+
+        $karir = Karir::create([
+            'uuid' => Str::uuid(),
+            'category' => $request->category,
+            'nama_perusahaan' => $request->nama_perusahaan,
+            'posisi_id' => $request->posisi_id,
+            'posisi_en' => $request->posisi_en,
+            'lokasi_id' => $request->lokasi_id,
+            'lokasi_en' => $request->lokasi_en,
+            'syarat_id' => $request->syarat_id,
+            'syarat_en' => $request->syarat_en,
+            'deskripsi_id' => $request->deskripsi_id,
+            'deskripsi_en' => $request->deskripsi_en,
+            'deadline' => $request->deadline,
+        ]);
+
+        return response()->json([
+            "karir" => $karir
         ], 200);
     }
 }

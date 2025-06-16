@@ -32,6 +32,9 @@ Route::get('/admin/berita/search_berita', [readAdmin::class, 'readSearchBerita']
 Route::get('/user/dokumentasi', [readUser::class, 'readDokumentasi']);
 Route::get('/user/maps', [readUser::class, 'readMaps']);
 Route::get('/user/carousel', [readUser::class, 'readCarousel']);
+Route::get('/user/karir', [readUser::class, 'readKarir']);
+Route::get('/user/magang', [readUser::class, 'readMagang']);
+Route::get('/user/karir/selengkapnya/{uuid}', [readUser::class, 'readKarirSelengkapnya']);
 
 
 
@@ -115,4 +118,10 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/admin/carousel', [readAdmin::class, 'readCarousel']);
     Route::post('/admin/carousel/{uuid}', [updateAdmin::class, 'updateCarousel']);
     Route::delete('/admin/carousel/{uuid}', [deleteAdmin::class, 'deleteCarousel']);
+
+    //karir
+    Route::post('/admin/karir', [createAdmin::class, 'createKarir']);
+    Route::get('/admin/karir', [readAdmin::class, 'readKarir']);
+    Route::post('/admin/karir/{uuid}', [updateAdmin::class, 'updateKarir']);
+    Route::delete('/admin/karir/delete/{uuid}', [deleteAdmin::class, 'deleteKarir']);
 });

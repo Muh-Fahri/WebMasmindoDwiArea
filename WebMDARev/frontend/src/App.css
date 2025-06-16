@@ -460,26 +460,36 @@
 }
 
 .bg-karir {
-    background: url("/public/Image/Background/CampAwakMasJPEG.jpg");
+    background: linear-gradient(to top, rgba(0, 0, 0, 0.829), rgba(1, 50, 51, 0.705), rgba(1, 50, 51, 0.644)),
+        url("/public/Image/Background/bg-karir.webp");
     background-size: cover;
     background-position: center;
-    height: 85vh;
-
+    height: 60vh;
 }
 
 .sidebar-active-link {
     background-color: #F16022;
-    /* Warna latar belakang saat aktif */
     color: white !important;
-    /* Pastikan teks putih, gunakan !important jika diperlukan untuk override */
     border-radius: 5px;
-    /* Opsional: untuk tampilan yang lebih halus */
 }
 
 /* Styling untuk efek hover */
 .hover-bg:hover {
     background-color: rgba(255, 255, 255, 0.1);
-    /* Sedikit transparansi putih saat hover */
     border-radius: 5px;
-    /* Opsional: untuk tampilan yang lebih halus */
+
+}
+
+.zoom-card {
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.zoom-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.zoom-card:hover {
+    transform: scale(1.05);
 }

@@ -10,6 +10,7 @@ use App\Models\DeskripLingkungan;
 use App\Models\Galeri;
 use App\Models\ImageLingkungan;
 use App\Models\Instagram;
+use App\Models\Karir;
 use App\Models\PDF;
 use App\Models\Sosial;
 use App\Models\Youtube;
@@ -165,6 +166,31 @@ class readUser extends Controller
 
         return response()->json([
             "carousel" => $carousel
+        ], 200);
+    }
+
+    function readKarir()
+    {
+        $karir = Karir::where('category', 'profesional')->get();
+        return response()->json([
+            "karir" => $karir
+        ], 200);
+    }
+
+    function readMagang()
+    {
+        $karir = Karir::where('category', 'magang')->get();
+        return response()->json([
+            "karir" => $karir
+        ], 200);
+    }
+
+    function readKarirSelengkapnya($uuid)
+    {
+        $karirSelengkapnya = Karir::where('uuid', $uuid)->firstOrFail();
+
+        return response()->json([
+            "karir" => $karirSelengkapnya,
         ], 200);
     }
 }

@@ -14,8 +14,10 @@ import Instagram from "./Page/instagram";
 import Youtube from "./Page/youtube";
 import GaleriUser from "./Page/galeriUser";
 import Karir from "./Page/karir";
-
-
+import Profesional from "./Page/profesional";
+import DetailProfesi from "./Page/detailProfesi";
+import Magang from "./Page/magang";
+// import DetailMagang from "./Page/detailMagang";
 
 function AppRouter() {
     return (
@@ -42,7 +44,10 @@ function AppRouter() {
                     <Route path="youtube" element={<Youtube />} />
                     <Route path="dokumentasi" element={<GaleriUser />} />
                     <Route path="karir" element={<Karir />} />
-
+                    <Route path="profesional" element={<Profesional />} />
+                    <Route path="magang" element={<Magang />} />
+                    <Route path="karir/detail/:uuid" element={<DetailProfesi />} />
+                    {/* <Route path="magang/detail/:uuid" element={<DetailMagang />} /> */}
                 </Routes>
             </Router>
         </div>

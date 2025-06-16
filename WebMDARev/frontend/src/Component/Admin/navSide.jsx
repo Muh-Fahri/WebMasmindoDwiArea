@@ -116,6 +116,18 @@ function NavSide() {
                                 </li>
                             </ul>
                         </li>
+                        <li>
+                            <span className="text-white text-decoration-none d-block py-2 px-3">
+                                <FontAwesomeIcon icon={faImages} /> {t('sectionTitle')}
+                            </span>
+                            <ul className="list-unstyled ps-4">
+                                <li>
+                                    <NavLink to="/admin/karir" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                                        ▸ Karir
+                                    </NavLink>
+                                </li>
+                            </ul>
+                        </li>
                     </ul>
 
                     {/* Tombol EN dan ID di bagian bawah sidebar */}

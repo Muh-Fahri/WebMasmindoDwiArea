@@ -26,7 +26,6 @@ function Bisnis() {
             const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
             setBisnisList(res.data.bisnisUser);
         } catch (error) {
-            console.error("Error fetching bisnis data:", error);
             alert(t('error_display'));
             setBisnisList([]);
         } finally {

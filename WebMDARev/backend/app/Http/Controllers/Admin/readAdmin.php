@@ -16,6 +16,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Alamat;
 use App\Models\Carousel;
 use App\Models\Galeri;
+use App\Models\Karir;
 
 class readAdmin extends Controller
 {
@@ -223,6 +224,14 @@ class readAdmin extends Controller
         $carousel = Carousel::all();
         return response()->json([
             "carousel" => $carousel
+        ], 200);
+    }
+
+    function readKarir()
+    {
+        $karir = Karir::all();
+        return response()->json([
+            "karir" => $karir
         ], 200);
     }
 }

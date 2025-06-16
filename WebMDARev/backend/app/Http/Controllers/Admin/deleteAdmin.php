@@ -15,6 +15,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Alamat;
 use App\Models\Carousel;
 use App\Models\Galeri;
+use App\Models\Karir;
 use Illuminate\Support\Facades\File;
 
 class deleteAdmin extends Controller
@@ -162,6 +163,16 @@ class deleteAdmin extends Controller
 
         return response()->json([
             "msg" => "Data Terhapus"
+        ], 200);
+    }
+
+    function deleteKarir($uuid)
+    {
+        $karir = Karir::where('uuid', $uuid);
+        $karir->delete();
+
+        return response()->json([
+            "msg" => "Berhasil di hapus"
         ], 200);
     }
 }
