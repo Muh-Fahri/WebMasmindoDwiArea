@@ -119,11 +119,6 @@ function NavSide() {
                                 </li>
                             </ul>
                         </li>
-                        <li>
-                            <span className="text-white text-decoration-none d-block py-2 px-3">
-                                <FontAwesomeIcon icon={faImages} /> {t('sectionTitle')}
-                            </span>
-                        </li>
                     </ul>
                     <div className="mt-auto p-3 border-top border-secondary">
                         <div className="d-flex justify-content-center gap-3">

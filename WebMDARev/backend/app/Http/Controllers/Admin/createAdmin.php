@@ -27,9 +27,9 @@ class createAdmin extends Controller
     function createBisnis(Request $request)
     {
         $request->validate([
-            'link_video' => 'required',
-            'deskripsi_bisnis_id' => 'required',
-            'deskripsi_bisnis_en' => 'nullable',
+            'link_video' => ['required', 'regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/'], // atau regex khusus YouTube jika perlu
+            'deskripsi_bisnis_id' => ['required', 'string', 'max:5000'],
+            'deskripsi_bisnis_en' => ['nullable', 'string', 'max:5000'],
         ]);
 
         $bisnis = Bisnis::create([
@@ -51,7 +51,7 @@ class createAdmin extends Controller
             'judul_berita_en' => 'nullable|string|max:255',
             'deskripsi_berita_id' => 'required|string',
             'deskripsi_berita_en' => 'nullable|string',
-            'image_berita' => 'required|image|mimes:jpeg,png,jpg', // optional sesuai kebutuhan
+            'image_berita' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         if ($request->hasFile('image_berita')) {
@@ -60,7 +60,6 @@ class createAdmin extends Controller
         } else {
             $imageName = null;
         }
-
         $berita = BeritaTerkini::create([
             'judul_berita_id' => $request->input('judul_berita_id'),
             'judul_berita_en' => $request->input('judul_berita_en'),
@@ -106,7 +105,7 @@ class createAdmin extends Controller
     function createImgLing(Request $request)
     {
         $request->validate([
-            'image_lingkungan' => 'required|image|mimes:png,jpg,jpeg|', // Max file size 10MB
+            'image_lingkungan' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
 
         if ($request->hasFile('image_lingkungan')) {
@@ -129,7 +128,7 @@ class createAdmin extends Controller
     function createSosial(Request $request)
     {
         $request->validate([
-            'imageSosial' => 'required|image|mimes:png,jpg,jpeg',
+            'imageSosial' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'category' => 'required|in:pengembanganMasyarakat,pendidikan,kesehatan,infrastruktur,pemberdayaan'
         ]);
 
@@ -153,13 +152,16 @@ class createAdmin extends Controller
     function createInstagram(Request $request)
     {
         $request->validate([
-            'linkInstagram' => 'required|string|min:10'
+            'linkInstagram' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^https?:\/\/(www\.)?instagram\.com\/(reel|p|tv)\/[a-zA-Z0-9_-]+(\/)?(\?.*)?$/'
+            ]
         ]);
-
         $instagram = Instagram::create([
             'linkInstagram' => $request->linkInstagram
         ]);
-
         return response()->json([
             'msg' => 'Berhasil Menambahkann Data',
             'instagram' => $instagram
@@ -169,7 +171,7 @@ class createAdmin extends Controller
     function createYoutube(Request $request)
     {
         $request->validate([
-            'linkYoutube' => 'required|string|min:10'
+            'linkYoutube' => 'regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/|required'
         ]);
 
         $youtube = Youtube::create([
@@ -218,10 +220,11 @@ class createAdmin extends Controller
     function createDokumentasi(Request $request)
     {
         $request->validate([
-            "foto_galeri" => "required|mimes:jpg,png,jpeg|image",
-            "deskrip_id" => "required|max:255|",
-            "deskrip_en" => "nullable|max:255"
+            "foto_galeri" => "required|image|mimes:jpg,jpeg,png,webp|max:10240",
+            "deskrip_id" => "required|string|max:255",
+            "deskrip_en" => "nullable|string|max:255"
         ]);
+
 
         if ($request->hasFile('foto_galeri')) {
             $imageName = time() . '_' . $request->file('foto_galeri')->getClientOriginalName();
@@ -329,8 +332,14 @@ class createAdmin extends Controller
         $validator = Validator::make($request->all(), [
             'nama_alamat_id' => 'nullable|string|max:255',
             'nama_alamat_en' => 'nullable|string|max:255',
-            'link_alamat' => 'nullable|url|max:255',
+            'link_alamat' => [
+                'nullable',
+                'url',
+                'max:255',
+                'regex:/^https?:\/\/maps\.app\.goo\.gl/'
+            ],
         ]);
+
 
         if ($validator->fails()) {
             return response()->json([

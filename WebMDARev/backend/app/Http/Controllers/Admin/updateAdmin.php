@@ -26,9 +26,9 @@ class updateAdmin extends Controller
     {
 
         $request->validate([
-            'link_video' => 'required|string',
-            'deskripsi_bisnis_id' => 'required|string',
-            'deskripsi_bisnis_en' => 'nullable',
+            'link_video' => ['required', 'regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/'], // atau regex khusus YouTube jika perlu
+            'deskripsi_bisnis_id' => ['required', 'string', 'max:5000'],
+            'deskripsi_bisnis_en' => ['nullable', 'string', 'max:5000'],
         ]);
 
         $bisnis = Bisnis::where('uuid', $uuid)->firstOrFail();
@@ -48,11 +48,11 @@ class updateAdmin extends Controller
     function editBerita(Request $request, $uuid)
     {
         $request->validate([
-            'judul_berita_id' => 'sometimes|required|string|max:255',
-            'judul_berita_en' => 'sometimes|required|string|max:255',
-            'deskripsi_berita_id' => 'sometimes|required|string',
-            'deskripsi_berita_en' => 'sometimes|required|string',
-            'image_berita' => 'sometimes|image|mimes:jpeg,png,jpg',
+            'judul_berita_id' => 'required|string|max:255',
+            'judul_berita_en' => 'nullable|string|max:255',
+            'deskripsi_berita_id' => 'required|string',
+            'deskripsi_berita_en' => 'nullable|string',
+            'image_berita' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $berita = BeritaTerkini::where('uuid', $uuid)->firstOrFail();
@@ -110,7 +110,7 @@ class updateAdmin extends Controller
     function updateImgLing(Request $request, $uuid)
     {
         $request->validate([
-            'image_lingkungan' => 'required|image|mimes:png,jpg,jpeg'
+            'image_lingkungan' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
         ]);
         $imgLing = ImageLingkungan::where('uuid', $uuid)->firstOrFail();
         $oldImagePath = public_path('Lingkungan/' . $imgLing->image_lingkungan);
@@ -133,7 +133,7 @@ class updateAdmin extends Controller
     function updateSosial(Request $request, $uuid)
     {
         $request->validate([
-            'imageSosial' => 'nullable|image|mimes:png,jpg,jpeg',
+            'imageSosial' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
             'category' => 'nullable|in:pendidikan,kesehatan,pengembanganMasyarakat,infrastruktur,pemberdayaan'
         ]);
         $sosial = Sosial::where('uuid', $uuid)->firstOrFail();
@@ -162,7 +162,12 @@ class updateAdmin extends Controller
     function updateInstagram(Request $request, $uuid)
     {
         $request->validate([
-            'linkInstagram' => 'nullable|string|min:10'
+            'linkInstagram' => [
+                'required',
+                'string',
+                'max:255',
+                'regex:/^https?:\/\/(www\.)?instagram\.com\/(reel|p|tv)\/[a-zA-Z0-9_-]+(\/)?(\?.*)?$/'
+            ]
         ]);
         $instagram = Instagram::where('uuid', $uuid)->firstOrFail();
         if ($request->filled('linkInstagram')) {
@@ -180,7 +185,7 @@ class updateAdmin extends Controller
     function updateYoutube(Request $request, $uuid)
     {
         $request->validate([
-            'linkYoutube' => 'nullable|string|min:10'
+            'linkYoutube' => 'regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/|required'
         ]);
         $youtube = Youtube::where('uuid', $uuid)->firstOrFail();
         if ($request->has('linkYoutube') && $request->filled('linkYoutube')) {
@@ -197,10 +202,11 @@ class updateAdmin extends Controller
     function updateDokumentasi(Request $request, $uuid)
     {
         $request->validate([
-            "foto_galeri" => "nullable|image|mimes:jpg,png,jpeg",
-            "deskrip_id" => "required",
-            "deskrip_en" => "required",
+            "foto_galeri" => "required|image|mimes:jpg,jpeg,png,webp|max:10240",
+            "deskrip_id" => "required|string|max:255",
+            "deskrip_en" => "nullable|string|max:255"
         ]);
+
 
         $galeri = Galeri::where('uuid', $uuid)->firstOrFail();
 
@@ -229,10 +235,16 @@ class updateAdmin extends Controller
     function updateMaps(Request $request, $uuid)
     {
         $validator = Validator::make($request->all(), [
-            "nama_alamat_id" => "string|max:255",
-            "nama_alamat_en" => "string|max:255",
-            "link_alamat" => "url|max:255"
+            'nama_alamat_id' => 'nullable|string|max:255',
+            'nama_alamat_en' => 'nullable|string|max:255',
+            'link_alamat' => [
+                'nullable',
+                'url',
+                'max:255',
+                'regex:/^https?:\/\/(www\.)?google\.[a-z.]+\/maps/'
+            ],
         ]);
+
 
         if ($validator->fails()) {
             return response()->json([
