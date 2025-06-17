@@ -9,11 +9,7 @@ function Sosial() {
     const [sosialList, setSosialList] = useState([]);
     const [imageSosial, setImageSosial] = useState("");
     const [kategori, setKategori] = useState("");
-
     const token = localStorage.getItem('token');
-
-
-    // modal
     const [editSosialModal, setEditSosialModal] = useState(false);
     const [editId, setEditid] = useState("");
     const [editImg, setEditImg] = useState(null);
@@ -111,7 +107,6 @@ function Sosial() {
         <div>
             <NavSide />
             <div className="flex-grow-1 p-3">
-                {/* form membuat data */}
                 <section>
                     <div className="container">
                         <div className="row">
@@ -151,7 +146,6 @@ function Sosial() {
                         </div>
                     </div>
                 </section>
-                {/* menampilkan data */}
                 <section>
                     <div className="container mt-5">
                         <div className="row">
@@ -160,13 +154,12 @@ function Sosial() {
                                     <div className="mb-3">
                                         <h3 className="text-secondary">Data</h3>
                                     </div>
-                                    <div className="table-responsive"> {/* Tambahkan wrapper table-responsive di sini */}
+                                    <div className="table-responsive">
                                         <table className="table">
-                                            {/* Thead seharusnya selalu ada untuk struktur tabel yang valid */}
-                                            <thead className="table-light"> {/* Opsional: tambahkan table-light untuk styling header */}
+                                            <thead className="table-light">
                                                 <tr>
                                                     <th>No</th>
-                                                    <th style={{ width: "100px" }}>Dokumentasi</th> {/* Pertahankan width di sini atau sesuaikan */}
+                                                    <th style={{ width: "100px" }}>Dokumentasi</th>
                                                     <th>Kategori</th>
                                                     <th>Dibuat Pada</th>
                                                     <th>Diubah Pada</th>
@@ -180,37 +173,30 @@ function Sosial() {
                                                             <td>{index + 1}</td>
                                                             <td className="text-center">
                                                                 <img
-                                                                    src={`http://localhost:8000/Sosial/${sosial.imageSosial}`}
+                                                                    src={`http://localhost:8000/Sosial/${encodeURIComponent(sosial.imageSosial)}`}
                                                                     alt={`Dokumentasi kategori ${sosial.category}`}
                                                                     style={{ width: "80px", height: "auto", objectFit: "cover", borderRadius: "4px" }}
-                                                                    className="img-fluid" /* Pastikan gambar responsif dalam kolom */
+                                                                    className="img-fluid"
                                                                 />
                                                             </td>
-                                                            {/* Kategori bisa panjang, tambahkan text-truncate jika memungkinkan (tergantung konten) */}
                                                             <td className="text-nowrap">{sosial.category}</td>
-                                                            {/* Tanggal: gunakan text-nowrap agar tidak terpotong baris, dan sesuaikan font size */}
                                                             <td className="text-nowrap fs-7 fs-md-6">{moment(sosial.created_at).format('DD-MM-YYYY')}</td>
                                                             <td className="text-nowrap fs-7 fs-md-6">{moment(sosial.updated_at).format('DD-MM-YYYY')}</td>
                                                             <td>
-                                                                {/* Tombol aksi akan menumpuk di layar kecil */}
                                                                 <div className="d-flex flex-column flex-md-row gap-1">
                                                                     <button
                                                                         className="btn btn-warning btn-sm d-flex align-items-center justify-content-center gap-1"
                                                                         onClick={() => openEditSosialModal(sosial)}
                                                                     >
                                                                         <span className="d-none d-md-inline">Edit</span>
-                                                                        {/* Asumsi FontAwesomeIcon diimport, atau gunakan ikon Bootstrap/SVG */}
-                                                                        {/* <FontAwesomeIcon icon={faPencilAlt} /> */}
-                                                                        <i className="fas fa-edit d-md-none"></i> {/* Contoh ikon untuk mobile */}
+                                                                        <i className="fas fa-edit d-md-none"></i>
                                                                     </button>
                                                                     <button
                                                                         className="btn btn-danger btn-sm d-flex align-items-center justify-content-center gap-1"
                                                                         onClick={() => deleteSosialData(sosial.uuid)}
                                                                     >
                                                                         <span className="d-none d-md-inline">Delete</span>
-                                                                        {/* Asumsi FontAwesomeIcon diimport, atau gunakan ikon Bootstrap/SVG */}
-                                                                        {/* <FontAwesomeIcon icon={faTrash} /> */}
-                                                                        <i className="fas fa-trash d-md-none"></i> {/* Contoh ikon untuk mobile */}
+                                                                        <i className="fas fa-trash d-md-none"></i>
                                                                     </button>
                                                                 </div>
                                                             </td>
@@ -218,9 +204,7 @@ function Sosial() {
                                                     ))
                                                 ) : (
                                                     <tr>
-                                                        {/* colSpan harus sesuai dengan jumlah kolom di thead (saat ini 6) */}
                                                         <td colSpan="6" className="text-center text-muted py-3">
-                                                            {/* Menampilkan komponen NoData atau teks fallback */}
                                                             {typeof NoData === 'function' ? <NoData /> : 'Tidak ada data sosial.'}
                                                         </td>
                                                     </tr>

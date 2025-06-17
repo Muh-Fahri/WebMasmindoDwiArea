@@ -37,11 +37,9 @@ class deleteAdmin extends Controller
         if ($berita->image_berita) {
             $imagePath = public_path('Berita/' . $berita->image_berita);
             if (file_exists($imagePath)) {
-                unlink($imagePath); // hapus file fisik
+                unlink($imagePath);
             }
         }
-
-        // Hapus data dari database
         $berita->delete();
 
         return response()->json([
@@ -76,10 +74,13 @@ class deleteAdmin extends Controller
         ], 200);
     }
 
-    function deleteSosial($uuid)
+    public function deleteSosial($uuid)
     {
         $sosial = Sosial::where('uuid', $uuid)->firstOrFail();
-
+        $imagePath = public_path('sosial/' . $sosial->imageSosial);
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
         $sosial->delete();
 
         return response()->json([
@@ -110,26 +111,25 @@ class deleteAdmin extends Controller
     function deletePdf($uuid)
     {
         $pdf = PDF::where('uuid', $uuid)->firstOrFail();
-
-        // Path lengkap file di folder public/pdf
         $filePath = public_path('pdf/' . $pdf->stored_name);
 
 
         if (File::exists($filePath)) {
             File::delete($filePath);
         }
-
-        // Hapus data dari database
         $pdf->delete();
-
         return response()->json([
             "msg" => "Berhasil Menghapus Data"
         ], 200);
     }
 
-    function deleteDokumentasi($uuid)
+    public function deleteDokumentasi($uuid)
     {
         $galeri = Galeri::where('uuid', $uuid)->firstOrFail();
+        $imagePath = public_path('Galeri/' . $galeri->foto_galeri);
+        if (File::exists($imagePath)) {
+            File::delete($imagePath);
+        }
         $galeri->delete();
 
         return response()->json([

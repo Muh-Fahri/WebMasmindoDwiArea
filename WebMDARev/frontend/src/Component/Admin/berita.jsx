@@ -39,7 +39,6 @@ function Berita() {
                     Authorization: `Bearer ${token}`,
                 }
             });
-            // console.log(response.data);
             setBeritaList(response.data.berita);
         } catch (error) {
             handleUnauthorized(error);
@@ -66,8 +65,6 @@ function Berita() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-
-            // Reset form
             setJudulBerita("");
             setJudulBeritaEn("");
             setDeskripBerita("");
@@ -101,8 +98,6 @@ function Berita() {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-
-            // Reset form dan tutup modal
             setEditJudul({ judul_berita_id: '', judul_berita_en: '' });
             setEditDeskrip({ deskripsi_berita_id: '', deskripsi_berita_en: '' });
             setEditImg(null);
@@ -143,7 +138,7 @@ function Berita() {
             deskripsi_berita_id: berita.deskripsi_berita_id,
             deskripsi_berita_en: berita.deskripsi_berita_en,
         });
-        setEditImg(null);  // Reset gambar yang baru dipilih (jika perlu)
+        setEditImg(null);
         setEditId(berita.uuid);
         setEditModal(true);
     }
@@ -236,10 +231,9 @@ function Berita() {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="table-responsive"> {/* Tambahkan wrapper table-responsive di sini */}
+                                <div className="table-responsive">
                                     <table className="table mt-5">
-                                        {/* Thead seharusnya selalu ada untuk struktur tabel yang valid */}
-                                        <thead className="table-light"> {/* Opsional: tambahkan table-light untuk styling header */}
+                                        <thead className="table-light">
                                             <tr>
                                                 <th>{t('table_no')}</th>
                                                 <th>{t('table_berita_title_id')}</th>
@@ -255,34 +249,32 @@ function Berita() {
                                                 beritaList.map((berita, index) => (
                                                     <tr key={berita.uuid}>
                                                         <td>{index + 1}</td>
-                                                        {/* Judul: gunakan text-truncate untuk menjaga lebar kolom */}
-                                                        <td style={{ maxWidth: '150px' }}> {/* Contoh max-width */}
+                                                        <td style={{ maxWidth: '150px' }}>
                                                             <div className="text-truncate">{berita.judul_berita_id}</div>
                                                         </td>
-                                                        <td style={{ maxWidth: '150px' }}> {/* Contoh max-width */}
+                                                        <td style={{ maxWidth: '150px' }}>
                                                             <div className="text-truncate">{berita.judul_berita_en}</div>
                                                         </td>
-                                                        {/* Deskripsi: sangat penting untuk membatasi panjangnya di tabel */}
-                                                        <td style={{ maxWidth: '200px' }}> {/* Contoh max-width */}
+                                                        <td style={{ maxWidth: '200px' }}>
                                                             <div
-                                                                className="text-truncate" // Tambahkan text-truncate
+                                                                className="text-truncate"
                                                                 style={{
-                                                                    maxHeight: '3.6em', // Batasi hingga sekitar 2-3 baris (tergantung line-height)
+                                                                    maxHeight: '3.6em',
                                                                     overflow: 'hidden',
                                                                     textOverflow: 'ellipsis',
-                                                                    whiteSpace: 'normal', // Izinkan wrap, tapi truncate setelah tinggi tertentu
+                                                                    whiteSpace: 'normal',
                                                                     display: '-webkit-box',
-                                                                    WebkitLineClamp: 3, // Batasi 3 baris
+                                                                    WebkitLineClamp: 3,
                                                                     WebkitBoxOrient: 'vertical'
                                                                 }}
                                                                 dangerouslySetInnerHTML={{ __html: berita.deskripsi_berita_id }}
                                                             />
                                                         </td>
-                                                        <td style={{ maxWidth: '200px' }}> {/* Contoh max-width */}
+                                                        <td style={{ maxWidth: '200px' }}>
                                                             <div
-                                                                className="text-truncate" // Tambahkan text-truncate
+                                                                className="text-truncate"
                                                                 style={{
-                                                                    maxHeight: '3.6em', // Batasi hingga sekitar 2-3 baris
+                                                                    maxHeight: '3.6em',
                                                                     overflow: 'hidden',
                                                                     textOverflow: 'ellipsis',
                                                                     whiteSpace: 'normal',
@@ -301,18 +293,14 @@ function Berita() {
                                                             />
                                                         </td>
                                                         <td>
-                                                            <div className="d-flex flex-column flex-md-row gap-1"> {/* Tombol akan menumpuk di HP */}
+                                                            <div className="d-flex flex-column flex-md-row gap-1">
                                                                 <button className="btn btn-sm btn-warning d-flex align-items-center justify-content-center gap-1" onClick={() => openEditModal(berita)}>
                                                                     <span className="d-none d-md-inline">{t('edit_button')}</span>
-                                                                    {/* Asumsi FontAwesomeIcon diimport */}
-                                                                    {/* <FontAwesomeIcon icon={faPencilAlt} /> */}
-                                                                    <i className="fas fa-edit d-md-none"></i> {/* Contoh ikon untuk mobile */}
+                                                                    <i className="fas fa-edit d-md-none"></i>
                                                                 </button>
                                                                 <button className="btn btn-sm btn-danger d-flex align-items-center justify-content-center gap-1" onClick={() => deleteBeritaData(berita.uuid)}>
                                                                     <span className="d-none d-md-inline">{t('delete_button')}</span>
-                                                                    {/* Asumsi FontAwesomeIcon diimport */}
-                                                                    {/* <FontAwesomeIcon icon={faTrash} /> */}
-                                                                    <i className="fas fa-trash d-md-none"></i> {/* Contoh ikon untuk mobile */}
+                                                                    <i className="fas fa-trash d-md-none"></i>
                                                                 </button>
                                                             </div>
                                                         </td>
@@ -320,10 +308,8 @@ function Berita() {
                                                 ))
                                             ) : (
                                                 <tr>
-                                                    {/* colSpan harus sesuai dengan jumlah kolom di thead (saat ini 7) */}
                                                     <td colSpan="7" className="text-center text-muted py-3">
-                                                        <NoData /> {/* Komponen NoData atau teks langsung */}
-                                                        {`Tidak ada data berita yang tersedia.`} {/* Tambahkan fallback text */}
+                                                        <NoData />
                                                     </td>
                                                 </tr>
                                             )}
@@ -345,7 +331,6 @@ function Berita() {
                                                 <button type="button" onClick={() => setEditModal(false)} className="btn-close"></button>
                                             </div>
                                             <div className="modal-body">
-                                                {/* Judul Bahasa Indonesia */}
                                                 <div className="mb-3">
                                                     <label className="form-label">{t('news_title_id_label')}</label>
                                                     <input
@@ -356,8 +341,6 @@ function Berita() {
                                                         required
                                                     />
                                                 </div>
-
-                                                {/* Judul Bahasa Inggris */}
                                                 <div className="mb-3">
                                                     <label className="form-label">{t('news_title_en_label')}</label>
                                                     <input
@@ -368,8 +351,6 @@ function Berita() {
                                                         required
                                                     />
                                                 </div>
-
-                                                {/* Deskripsi Bahasa Indonesia (CKEditor) */}
                                                 <div className="mb-3">
                                                     <label className="form-label">{t('news_description_id_label')}</label>
                                                     <CKEditor
@@ -381,8 +362,6 @@ function Berita() {
                                                         }}
                                                     />
                                                 </div>
-
-                                                {/* Deskripsi Bahasa Inggris (CKEditor) */}
                                                 <div className="mb-3">
                                                     <label className="form-label">{t('news_description_en_label')}</label>
                                                     <CKEditor
@@ -394,8 +373,6 @@ function Berita() {
                                                         }}
                                                     />
                                                 </div>
-
-                                                {/* Gambar Baru */}
                                                 <div className="mb-3">
                                                     <label className="form-label">{t('news_image_label_edit')}</label>
                                                     <input
@@ -404,8 +381,6 @@ function Berita() {
                                                         className="form-control"
                                                     />
                                                 </div>
-
-                                                {/* Preview Gambar Lama */}
                                                 {editJudul.image_berita && (
                                                     <div className="mb-3">
                                                         <label className="form-label">{t('current_image_label')}</label><br />

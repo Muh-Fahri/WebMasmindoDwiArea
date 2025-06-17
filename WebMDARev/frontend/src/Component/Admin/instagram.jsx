@@ -11,13 +11,9 @@ function Instagram() {
     const [linkIg, setLinkIg] = useState("");
     const token = localStorage.getItem('token');
     const { t, i18n } = useTranslation();
-
-    // modal
     const [editIgModal, setEditIgModal] = useState(false);
     const [editId, setEditId] = useState("");
     const [modlLinkIg, setModlLinkIg] = useState("");
-
-    // Tambah state untuk loading dan error (optional)
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState(null);
 
@@ -31,7 +27,6 @@ function Instagram() {
         getInstagramData();
     }, []);
 
-    // Fungsi untuk handle error 401
 
     const createInstagramData = async (e) => {
         e.preventDefault();
@@ -116,7 +111,6 @@ function Instagram() {
             }
         }
     };
-
     return (
         <div>
             <NavSide />
@@ -156,7 +150,6 @@ function Instagram() {
                             </div>
                         </div>
                     </section>
-
                     <section>
                         <div className="container">
                             <div className="row mt-3">
@@ -172,7 +165,7 @@ function Instagram() {
                                                 {instagramList.map((instagram) => (
                                                     <div key={instagram.uuid} className="col-md-4 mb-4">
                                                         <EmbedInstagram url={instagram.linkInstagram} />
-                                                        <div className="mt-2 d-flex gap-2"> {/* Added d-flex gap-2 for button spacing */}
+                                                        <div className="mt-2 d-flex gap-2">
                                                             <button className="btn btn-sm btn-warning" onClick={() => openEditModalIg(instagram)}>{t('edit_button')}</button>
                                                             <button className="btn btn-sm btn-danger" onClick={() => deleteInstagramData(instagram.uuid)}>{t('delete_button_short')}</button>
                                                         </div>

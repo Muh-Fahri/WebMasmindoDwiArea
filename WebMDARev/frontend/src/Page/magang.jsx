@@ -67,20 +67,13 @@ function Magang() {
                                                         <h5 className="text-muted">{magang.nama_perusahaan}</h5>
                                                         <p className="fs-2">{currentLang === 'en' ? magang.posisi_en : magang.posisi_id}</p>
                                                         <h5 className="text-muted">{currentLang === 'en' ? magang.lokasi_en : magang.lokasi_id}</h5>
-                                                        {/* {magang.deskripsi_id && (
-                                                            <div
-                                                                dangerouslySetInnerHTML={{
-                                                                    __html: DOMPurify.sanitize(currentLang === 'en' ? magang.deskripsi_en : magang.deskripsi_id)
-                                                                }}
-                                                            ></div>
-                                                        )} */}
                                                     </div>
                                                 </div>
                                             </a>
                                         </div>
                                     ))
                                 ) : (
-                                    <h5>{t('no_data')}</h5>
+                                    <h5 className="text-muted text-center">{t('no_data_magang')}</h5>
                                 )}
                             </>
                         )}

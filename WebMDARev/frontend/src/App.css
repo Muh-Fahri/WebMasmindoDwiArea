@@ -473,7 +473,6 @@
     border-radius: 5px;
 }
 
-/* Styling untuk efek hover */
 .hover-bg:hover {
     background-color: rgba(255, 255, 255, 0.1);
     border-radius: 5px;

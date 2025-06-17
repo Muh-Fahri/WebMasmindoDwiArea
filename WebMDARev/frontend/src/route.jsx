@@ -17,7 +17,6 @@ import Karir from "./Page/karir";
 import Profesional from "./Page/profesional";
 import DetailProfesi from "./Page/detailProfesi";
 import Magang from "./Page/magang";
-// import DetailMagang from "./Page/detailMagang";
 
 function AppRouter() {
     return (
@@ -30,9 +29,6 @@ function AppRouter() {
                         element={<ProtectedRoute allowedroles={['admin']}>
                             <AdminPage />
                         </ProtectedRoute>} />
-
-
-                    {/* user */}
                     <Route path="/" element={<Home />} />
                     <Route path="tentang" element={<Tentang />} />
                     <Route path="bisnis" element={<Bisnis />} />
@@ -47,7 +43,6 @@ function AppRouter() {
                     <Route path="profesional" element={<Profesional />} />
                     <Route path="magang" element={<Magang />} />
                     <Route path="karir/detail/:uuid" element={<DetailProfesi />} />
-                    {/* <Route path="magang/detail/:uuid" element={<DetailMagang />} /> */}
                 </Routes>
             </Router>
         </div>

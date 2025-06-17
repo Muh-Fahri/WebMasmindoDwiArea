@@ -63,54 +63,45 @@ function Bisnis() {
                     </div>
                 </div>
             </section>
-            <section>
-                <div className="container-fluid p-5 px-md-5 px-3">
-                    <div className="row p-3 p-md-5 align-items-start">
-                        {isLoading ? (
-                            <div className="col-12 text-center py-5">
-                                <h5>{t('loading_data')}</h5>
-                                <div className="spinner-border text-primary" role="status">
-                                    <span className="visually-hidden">Loading...</span>
-                                </div>
+            {bisnisList && bisnisList.length > 0 ? (
+                <>
+                    <div className="col-12 col-md-auto mb-4 mb-md-0" data-aos="fade-right">
+                        <img
+                            className="img-fluid"
+                            src="/Image/AwakMasCol.png"
+                            alt="Logo"
+                            style={{ width: "300px", height: "auto" }}
+                        />
+                    </div>
+                    <div className="d-none d-md-block col-md-auto">
+                        <div className="garis-aw-p"></div>
+                    </div>
+                    <div className="col-12 col-md" data-aos="fade-down">
+                        {bisnisList.map((bisnis) => (
+                            <p
+                                style={{ whiteSpace: 'pre-line', textAlign: 'justify' }}
+                                key={bisnis.uuid}
+                                className="fs-3 fs-md-5"
+                                dangerouslySetInnerHTML={{
+                                    __html: i18n.language === 'id'
+                                        ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id)
+                                        : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en)
+                                }}
+                            />
+                        ))}
+                    </div>
+                </>
+            ) : (
+                <div className="col text-center">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col p-5">
+                                <h5 className="text-center text-muted">{t('data_empty')}</h5>
                             </div>
-                        ) : (
-                            <>
-                                <div className="col-12 col-md-auto mb-4 mb-md-0" data-aos="fade-right">
-                                    <img
-                                        className="img-fluid"
-                                        src="/Image/AwakMasCol.png"
-                                        alt="Logo"
-                                        style={{ width: "300px", height: "auto" }}
-                                    />
-                                </div>
-                                {!isLoading && (
-                                    <div className="d-none d-md-block col-md-auto">
-                                        <div className="garis-aw-p"></div>
-                                    </div>
-                                )}
-                                <div className="col-12 col-md" data-aos="fade-down">
-                                    {bisnisList && bisnisList.length > 0 ? (
-                                        bisnisList.map((bisnis) => (
-                                            <p
-                                                style={{ whiteSpace: 'pre-line', textAlign: 'justify' }}
-                                                key={bisnis.uuid}
-                                                className="fs-3 fs-md-5"
-                                                dangerouslySetInnerHTML={{
-                                                    __html: i18n.language === 'id'
-                                                        ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id)
-                                                        : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en)
-                                                }}
-                                            />
-                                        ))
-                                    ) : (
-                                        <h5>{t('no_data')}</h5>
-                                    )}
-                                </div>
-                            </>
-                        )}
+                        </div>
                     </div>
                 </div>
-            </section>
+            )}
             <section>
                 <div className="container px-md-5 px-3 mt-5" data-aos="fade-down" >
                     <div className="row mt-4">
@@ -135,7 +126,7 @@ function Bisnis() {
                             </div>
                         ) : (
                             <div className="col text-center">
-                                <h5>{t('no_data_yet')}</h5>
+                                <h5></h5>
                             </div>
                         )}
                     </div>

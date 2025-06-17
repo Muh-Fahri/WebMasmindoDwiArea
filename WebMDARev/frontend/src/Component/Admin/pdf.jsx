@@ -1,19 +1,17 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-import NavSide from "./navSide"; // Assuming this is your navigation component
-import handleUnauthorized from "./unouthorized"; // Assuming this handles unauthorized API responses
-import { useTranslation } from "react-i18next"; // Correct hook for i18n
+import NavSide from "./navSide";
+import handleUnauthorized from "./unouthorized";
+import { useTranslation } from "react-i18next";
 
 function PDF() {
     const [pdfList, setPdfList] = useState([]);
     const token = localStorage.getItem('token');
-    const { t, i18n } = useTranslation(); // Destructure i18n to get current language
+    const { t, i18n } = useTranslation();
 
     const [tahunList, setTahunList] = useState("");
     const fileInputRef = useRef(null);
-
-    // Function to fetch PDF data from the API
-    const getPdfData = async () => { // Removed { currentLanguage } from parameters, use i18n.language directly
+    const getPdfData = async () => {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/admin/pdf/", {
                 headers: {
@@ -23,56 +21,44 @@ function PDF() {
             setPdfList(res.data.pdf);
         } catch (error) {
             console.error("Error fetching PDF data:", error);
-            handleUnauthorized(error); // Assuming this function handles redirection/alert for unauthorized access
+            handleUnauthorized(error);
         }
     };
-
-    // Fetch data on component mount
     useEffect(() => {
         getPdfData();
-    }, [token]); // Add token to dependency array if it can change
-
-    // Function to format date based on the current language
+    }, [token]);
     const formatTanggal = (dateString) => {
         if (!dateString) return '';
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
-        // Use i18n.language to dynamically get the current language from react-i18next
         return new Date(dateString).toLocaleDateString(i18n.language, options);
     };
-
-    // Function to download a PDF file
-    const downloadPdf = async (storedName, originalName) => { // Added originalName for better downloaded file name
+    const downloadPdf = async (storedName, originalName) => {
         try {
             const response = await axios.get(`http://localhost:8000/api/admin/pdf/download_pdf/${encodeURIComponent(storedName)}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
-                responseType: 'blob', // Important for downloading files
+                responseType: 'blob',
             });
-
-            // Create a blob URL and trigger download
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
-            // Use originalName for the downloaded file name if available, otherwise fallback to storedName
             link.setAttribute('download', originalName || storedName);
             document.body.appendChild(link);
             link.click();
             link.remove();
-            window.URL.revokeObjectURL(url); // Clean up the URL object
+            window.URL.revokeObjectURL(url);
         } catch (error) {
             console.error('Download error:', error);
-            alert(t('download_error_message')); // Use translation for error message
+            alert(t('download_error_message'));
         }
     };
-
-    // Function to create/upload a new PDF
     const createPdfData = async (e) => {
-        e.preventDefault(); // Prevent default form submission
-        const file = fileInputRef.current.files[0]; // Access file from ref
+        e.preventDefault();
+        const file = fileInputRef.current.files[0];
 
         if (!file) {
-            alert(t('please_select_pdf')); // Use translation
+            alert(t('please_select_pdf'));
             return;
         }
 
@@ -84,26 +70,24 @@ function PDF() {
             await axios.post("http://127.0.0.1:8000/api/admin/pdf", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
-                    'Content-Type': 'multipart/form-data' // Important for file uploads
+                    'Content-Type': 'multipart/form-data'
                 }
             });
-            getPdfData(); // Refresh the list after successful upload
-            setTahunList(""); // Clear the year input
+            getPdfData();
+            setTahunList("");
             if (fileInputRef.current) {
-                fileInputRef.current.value = ""; // Clear the file input
+                fileInputRef.current.value = "";
             }
-            alert(t('add_pdf_success')); // Use translation
+            alert(t('add_pdf_success'));
         } catch (error) {
             console.error("Upload error:", error);
-            alert(t('add_pdf_error')); // Use translation
-            handleUnauthorized(error); // Handle potential unauthorized errors
+            alert(t('add_pdf_error'));
+            handleUnauthorized(error);
         }
     };
-
-    // Function to delete a PDF
     const deletePdfData = async (uuid) => {
-        if (!window.confirm(t('confirm_delete_pdf'))) { // Use translation for confirmation
-            return; // If user cancels, stop
+        if (!window.confirm(t('confirm_delete_pdf'))) {
+            return;
         }
 
         try {
@@ -112,12 +96,12 @@ function PDF() {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getPdfData(); // Refresh the list after successful deletion
-            alert(t('delete_pdf_success')); // Use translation
+            getPdfData();
+            alert(t('delete_pdf_success'));
         } catch (error) {
             console.error('Delete error:', error);
-            alert(t('delete_pdf_error')); // Use translation
-            handleUnauthorized(error); // Handle potential unauthorized errors
+            alert(t('delete_pdf_error'));
+            handleUnauthorized(error);
         }
     };
 
@@ -159,7 +143,7 @@ function PDF() {
                                             placeholder={t('year_placeholder')}
                                             required
                                             min="1900"
-                                            max={new Date().getFullYear() + 5} // Allow a few years into the future for flexibility
+                                            max={new Date().getFullYear() + 5}
                                         />
                                     </div>
                                     <div className="mb-3">
@@ -171,8 +155,6 @@ function PDF() {
                             </div>
                         </div>
                     </div>
-
-                    {/* Tabel Data PDF */}
                     <div className="row mb-5">
                         <div className="col">
                             <div className="card p-3">
@@ -205,14 +187,14 @@ function PDF() {
                                                                     className="btn btn-sm btn-warning d-flex align-items-center justify-content-center gap-1"
                                                                 >
                                                                     <span className="d-none d-md-inline">{t('download_button')}</span>
-                                                                    <i className="fas fa-download d-md-none"></i> {/* FontAwesome icon */}
+                                                                    <i className="fas fa-download d-md-none"></i>
                                                                 </button>
                                                                 <button
                                                                     className="btn btn-sm btn-danger d-flex align-items-center justify-content-center gap-1"
                                                                     onClick={() => deletePdfData(pdf.uuid)}
                                                                 >
                                                                     <span className="d-none d-md-inline">{t('delete_button')}</span>
-                                                                    <i className="fas fa-trash-alt d-md-none"></i> {/* FontAwesome icon */}
+                                                                    <i className="fas fa-trash-alt d-md-none"></i>
                                                                 </button>
                                                             </div>
                                                         </td>
@@ -221,7 +203,7 @@ function PDF() {
                                             ) : (
                                                 <tr>
                                                     <td colSpan="5" className="text-center text-muted py-3">
-                                                        {t('no_pdf_data')}
+                                                        {t('data_empty')}
                                                     </td>
                                                 </tr>
                                             )}

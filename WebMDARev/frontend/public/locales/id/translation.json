@@ -294,5 +294,8 @@
     "not_specified": "Tidak ditentukan",
     "send_cv": "Kirim CV Anda ke:",
     "data_not_found": "Data tidak ditemukan.",
-    "internship_program": "Program Magang"
+    "internship_program": "Program Magang",
+    "no_data_magang": "Belum Ada Lowongan",
+    "data_empty": "Data Kosong",
+    "karir_navside": "Karir"
 }

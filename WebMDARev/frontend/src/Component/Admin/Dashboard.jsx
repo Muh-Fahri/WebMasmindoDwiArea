@@ -8,16 +8,13 @@ import handleUnauthorized from './unouthorized';
 import CountUp from 'react-countup';
 import { useTranslation } from 'react-i18next';
 import { useNavigate } from 'react-router-dom';
-
-// Import komponen grafik dari react-chartjs-2
 import { Bar, Doughnut } from 'react-chartjs-2';
-// Penting: Daftarkan semua elemen Chart.js yang dibutuhkan
 import {
     Chart as ChartJS,
     CategoryScale,
     LinearScale,
     BarElement,
-    ArcElement, // Untuk Doughnut/Pie
+    ArcElement,
     Tooltip,
     Legend
 } from 'chart.js';
@@ -88,19 +85,19 @@ function Dashboard() {
         getDashboardData();
     }, []);
 
-    // Data untuk Bar Chart (Perbandingan Laporan, Berita, Media)
+
     const barChartData = {
         labels: [t('sustainability_report_sidebar'), t('news'), t('instagram'), t('youtube'), t('documentation')],
         datasets: [
             {
                 label: t('total_items'),
-                data: [laporanList, beritaList, instagramList + youtubeList, galeriList], // Menggabungkan Instagram dan Youtube sebagai 'Media' untuk contoh
+                data: [laporanList, beritaList, instagramList + youtubeList, galeriList],
                 backgroundColor: [
-                    '#F16022', // success
-                    '#115258', // primary
-                    '#013233', // danger
-                    '#056426', // warning
-                    '#F16022' // secondary
+                    '#F16022',
+                    '#115258',
+                    '#013233',
+                    '#056426',
+                    '#F16022'
                 ],
                 borderColor: [
                     'rgba(25, 135, 84, 1)',
@@ -113,8 +110,6 @@ function Dashboard() {
             },
         ],
     };
-
-    // Data untuk Doughnut Chart (Perbandingan ESG - Lingkungan vs Sosial)
     const doughnutChartData = {
         labels: [t('environment_esg'), t('social_esg')],
         datasets: [
@@ -122,8 +117,8 @@ function Dashboard() {
                 label: t('esg_items'),
                 data: [lingkunganList, sosialList],
                 backgroundColor: [
-                    'rgba(40, 167, 69, 0.7)', // success for environment
-                    'rgba(23, 162, 184, 0.7)'  // info for social
+                    'rgba(40, 167, 69, 0.7)',
+                    'rgba(23, 162, 184, 0.7)'
                 ],
                 borderColor: [
                     'rgba(40, 167, 69, 1)',
@@ -133,8 +128,6 @@ function Dashboard() {
             },
         ],
     };
-
-    // Opsi grafik
     const chartOptions = {
         responsive: true,
         plugins: {
@@ -142,7 +135,7 @@ function Dashboard() {
                 position: 'top',
             },
             title: {
-                display: false, // Judul sudah ada di <h4>
+                display: false,
             },
         },
     };
@@ -160,8 +153,6 @@ function Dashboard() {
                 </div>
                 <h3>{t('dashboard')}</h3>
                 <hr className="mb-4" />
-
-                {/* Bagian Kartu Statistik */}
                 <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4 mb-5">
                     <div className="col">
                         <div className="card bg-primary text-white shadow-sm">
@@ -231,7 +222,7 @@ function Dashboard() {
                     <div className="col">
                         <div className="card bg-secondary text-white shadow-sm">
                             <div className="card-body d-flex align-items-center">
-                                <FontAwesomeIcon icon={faHandshake} size="2x" className="me-3" /> {/* Menggunakan ikon hand shake untuk sosial */}
+                                <FontAwesomeIcon icon={faHandshake} size="2x" className="me-3" />
                                 <div>
                                     <h6 className="card-title mb-0">{t('social_esg')}</h6>
                                     <div className="display-6">
@@ -294,16 +285,14 @@ function Dashboard() {
                         </div>
                     </div>
                 </div>
-
-                {/* Bagian Grafik */}
                 <div className="row g-4 mb-5">
-                    <div className="col-lg-8"> {/* Lebar lebih besar untuk Bar Chart */}
+                    <div className="col-lg-8">
                         <div className="card shadow-sm p-4">
                             <h4>{t('content_overview_chart')}</h4>
                             <Bar data={barChartData} options={chartOptions} />
                         </div>
                     </div>
-                    <div className="col-lg-4"> {/* Lebar lebih kecil untuk Doughnut Chart */}
+                    <div className="col-lg-4">
                         <div className="card shadow-sm p-4">
                             <h4>{t('esg_breakdown_chart')}</h4>
                             <Doughnut data={doughnutChartData} options={chartOptions} />

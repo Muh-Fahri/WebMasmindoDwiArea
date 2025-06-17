@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import NavSide from "./navSide";
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPencilAlt, faTrash, faTimes } from '@fortawesome/free-solid-svg-icons';
 import NoData from "../Error/NoData";
 import handleUnauthorized from "./unouthorized";
 import { useTranslation } from "react-i18next";
@@ -216,16 +214,14 @@ function Bisnis() {
                             <section>
                                 <div className="card p-3">
                                     <h3 className="mb-3">Data</h3>
-                                    {/* Tambahkan div dengan className="table-responsive" di sini */}
                                     <div className="table-responsive">
                                         <table className="table mt-5">
-                                            {/* Thead seharusnya selalu ada, terlepas dari data */}
-                                            <thead className="table-light"> {/* Tambahkan table-light untuk warna header */}
+                                            <thead className="table-light">
                                                 <tr>
-                                                    <th className="fs-7 fs-md-5">No</th> {/* t('table_no') */}
-                                                    <th className="fs-7 fs-md-5">Link YouTube</th> {/* t('table_youtube_link') */}
-                                                    <th className="fs-7 fs-md-5">Deskripsi Halaman</th> {/* t('table_page_description') */}
-                                                    <th className="fs-7 fs-md-5">Aksi</th> {/* t('table_action') */}
+                                                    <th className="fs-7 fs-md-5">No</th>
+                                                    <th className="fs-7 fs-md-5">Link YouTube</th>
+                                                    <th className="fs-7 fs-md-5">Deskripsi Halaman</th>
+                                                    <th className="fs-7 fs-md-5">Aksi</th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -234,8 +230,7 @@ function Bisnis() {
                                                         <tr key={bisnisItem.uuid}>
                                                             <td className="fs-7 fs-md-5">{index + 1}</td>
                                                             <td>
-                                                                {/* Mempertahankan iframe dengan maxWidth yang kecil agar tidak terlalu memakan tempat */}
-                                                                <div className="ratio ratio-16x9 mx-auto" style={{ maxWidth: '120px' }}> {/* Sedikit perbesar agar thumbnail video lebih jelas */}
+                                                                <div className="ratio ratio-16x9 mx-auto" style={{ maxWidth: '120px' }}>
                                                                     <iframe
                                                                         src={
                                                                             bisnisItem.link_video
@@ -250,7 +245,6 @@ function Bisnis() {
                                                                 </div>
                                                             </td>
                                                             <td>
-                                                                {/* Pastikan text-truncate-custom dan description-limit diatur di CSS Anda */}
                                                                 <div
                                                                     className="text-truncate-custom fs-7 fs-md-5 description-limit"
                                                                     dangerouslySetInnerHTML={{
@@ -261,17 +255,13 @@ function Bisnis() {
                                                                 />
                                                             </td>
                                                             <td>
-                                                                {/* Tombol aksi akan menumpuk di layar kecil, itu sudah cukup baik */}
                                                                 <div className="d-flex flex-column flex-md-row gap-1">
                                                                     <button
                                                                         className="btn btn-warning btn-sm d-flex align-items-center justify-content-center gap-1"
                                                                         onClick={() => openEditModal(bisnisItem)}
                                                                     >
                                                                         <span className="d-none d-md-inline">{t('edit_button')}</span>
-                                                                        {/* Asumsi FontAwesomeIcon diimport */}
-                                                                        {/* <FontAwesomeIcon icon={faPencilAlt} /> */}
-                                                                        {/* Jika tidak ada FontAwesome, bisa pakai teks singkat atau ikon SVG */}
-                                                                        <i className="fas fa-edit d-md-none"></i> {/* Contoh ikon untuk mobile */}
+                                                                        <i className="fas fa-edit d-md-none"></i>
                                                                     </button>
 
                                                                     <button
@@ -279,9 +269,7 @@ function Bisnis() {
                                                                         onClick={() => handleDeleteClick(bisnisItem.uuid)}
                                                                     >
                                                                         <span className="d-none d-md-inline">{t('delete_button')}</span>
-                                                                        {/* Asumsi FontAwesomeIcon diimport */}
-                                                                        {/* <FontAwesomeIcon icon={faTrash} /> */}
-                                                                        <i className="fas fa-trash d-md-none"></i> {/* Contoh ikon untuk mobile */}
+                                                                        <i className="fas fa-trash d-md-none"></i>
                                                                     </button>
                                                                 </div>
                                                             </td>
@@ -289,10 +277,8 @@ function Bisnis() {
                                                     ))
                                                 ) : (
                                                     <tr>
-                                                        {/* colSpan harus sesuai dengan jumlah kolom di thead (saat ini 4) */}
                                                         <td colSpan="4" className="text-center text-muted py-3">
-                                                            <NoData /> {/* Asumsi NoData adalah komponen */}
-                                                            {`Tidak ada data bisnis. `} {/* Tambahkan fallback text */}
+                                                            <NoData />
                                                         </td>
                                                     </tr>
                                                 )}
@@ -304,7 +290,6 @@ function Bisnis() {
                         </div>
                     </div>
                 </section>
-
                 <section>
                     {editModal && (
                         <div className="modal show fade d-block" tabIndex="-1" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }}>

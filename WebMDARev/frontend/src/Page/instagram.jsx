@@ -70,7 +70,7 @@ function Instagram() {
                                         </div>
                                     ))
                                 ) : (
-                                    <h1>Loading...</h1>
+                                    <p className="text-muted">{t('data_empty')}</p>
                                 )
                             }
                         </div>

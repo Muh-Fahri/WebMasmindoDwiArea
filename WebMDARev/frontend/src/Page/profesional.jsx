@@ -72,7 +72,7 @@ function Profesional() {
                                         </div>
                                     ))
                                 ) : (
-                                    <h5>{t('no_data')}</h5>
+                                    <h5 className="text-muted text-center">{t('no_data_magang')}</h5>
                                 )}
                             </>
                         )}

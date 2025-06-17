@@ -294,5 +294,8 @@
     "not_specified": "Not specified",
     "send_cv": "Send your CV to:",
     "data_not_found": "Data not found.",
-    "internship_program": "Internship Program"
+    "internship_program": "Internship Program",
+    "no_data_magang": "There are no vacancies yet",
+    "data_empty": "Data empty",
+    "karir_navside": "Career"
 }

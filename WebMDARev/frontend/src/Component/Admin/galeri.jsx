@@ -64,8 +64,8 @@ function Galeri() {
     const editGaleriData = async (e) => {
         e.preventDefault();
         const formData = new FormData();
-        formData.append('deskrip_id', editDeskrip.deskripsi_id); // ✅ ambil dari state editDeskrip
-        formData.append('deskrip_en', editDeskrip.deskripsi_en); // ✅ ambil dari state editDeskrip
+        formData.append('deskrip_id', editDeskrip.deskripsi_id);
+        formData.append('deskrip_en', editDeskrip.deskripsi_en);
         if (edit_img_galeri) {
             formData.append('foto_galeri', edit_img_galeri);
         }
@@ -78,9 +78,9 @@ function Galeri() {
                 }
             });
             set_edit_img_galeri(null);
-            setEditDeskrip({ deskripsi_id: '', deskripsi_en: '' }); // aman
-            setEditModal(false); // tutup modal setelah edit
-            getGaleriData(); // refresh data
+            setEditDeskrip({ deskripsi_id: '', deskripsi_en: '' });
+            setEditModal(false);
+            getGaleriData();
         } catch (error) {
             alert('Gagal mengubah data');
         }
@@ -92,7 +92,7 @@ function Galeri() {
         set_edit_img_galeri(null);
         setEditDeskrip({
             deskripsi_id: gal.deskrip_id || '',
-            deskripsi_en: gal.deskrip_en || '', // ✅ ini benar
+            deskripsi_en: gal.deskrip_en || '',
         });
     }
 

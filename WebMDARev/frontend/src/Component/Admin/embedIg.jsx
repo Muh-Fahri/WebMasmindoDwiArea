@@ -21,7 +21,7 @@ export default function EmbedInstagram({ url }) {
                     margin: "1rem auto",
                     width: "100%",
                     maxWidth: "100%",
-                    minWidth: "326px", // sesuai minimum embed Instagram
+                    minWidth: "326px",
                 }}
             />
         </div>

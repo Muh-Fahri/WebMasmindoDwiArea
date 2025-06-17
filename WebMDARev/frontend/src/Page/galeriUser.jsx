@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import NavbarHijau from "../Component/navbarHijau";
 import { useTranslation } from "react-i18next";
-import Footer from "./fotter"; // Typo: 'fotter' should be 'footer'
+import Footer from "./fotter";
 import axios from "axios";
 import DOMPurify from 'dompurify';
 
@@ -10,7 +10,7 @@ function GaleriUser() {
 
     const [t, i18n] = useTranslation();
     const [galeriList, setGaleriList] = useState([]);
-    const [selectedCaption, setSelectedCaption] = useState(""); // This state is not used, consider removing
+    const [selectedCaption, setSelectedCaption] = useState("");
     const [selectedData, setSelectedData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
 
@@ -48,9 +48,8 @@ function GaleriUser() {
                             <h2 className="text-uppercase fw-bold" style={{ color: '#115258' }}>{t('news_title')}</h2>
                         </div>
                     </div>
-                    {/* PERUBAHAN DI SINI: SESUAIKAN LEBAR KOLOM BOOTSTRAP */}
                     <div className="row p-5">
-                        <div className="col-12 col-md-4"> {/* Mengubah dari col-md-3 menjadi col-md-4 */}
+                        <div className="col-12 col-md-4">
                             <div className="d-flex align-items-start">
                                 <div className="garis-berita me-3"></div>
                                 <ul className="list-unstyled">
@@ -69,7 +68,7 @@ function GaleriUser() {
                                 </ul>
                             </div>
                         </div>
-                        <div className="col-12 col-md-8"> {/* Mengubah dari col-md-9 menjadi col-md-8 */}
+                        <div className="col-12 col-md-8">
                             {isLoading ? (
                                 <div className="text-center py-5">
                                     <div className="spinner-border text-primary" role="status">
@@ -125,8 +124,6 @@ function GaleriUser() {
                                                 whiteSpace: 'normal',
                                                 gap: '0.5rem',
                                                 maxHeight: '450px',
-                                                // Hapus atau ubah width: '260px' jika masih ada
-                                                // Untuk memastikan thumbnail mengikuti lebar kolom, biarkan width: '100%' pada .card flex-shrink-0
                                             }}
                                         >
                                             {galeriList.map((item, index) => (

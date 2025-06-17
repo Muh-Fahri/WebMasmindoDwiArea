@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { Link, NavLink } from 'react-router-dom'; // Import NavLink untuk highlight aktif
+import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faChartBar, faNewspaper, faTree, faMapMarkerAlt, faImages, faVideo } from '@fortawesome/free-solid-svg-icons'; // Import ikon yang mungkin diperlukan
-import { useTranslation } from 'react-i18next'; // Import useTranslation
+import { faHouse, faChartBar, faNewspaper, faTree, faMapMarkerAlt, faImages, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { useTranslation } from 'react-i18next';
 
 function NavSide() {
     const [showSidebar, setShowSidebar] = useState(false);
-    const { t, i18n } = useTranslation(); // Inisialisasi useTranslation
-
+    const { t, i18n } = useTranslation();
     const changeLanguage = (lang) => {
         i18n.changeLanguage(lang);
     };
@@ -23,7 +22,6 @@ function NavSide() {
 
                     <div className="row justify-content-center">
                         <div className="col-8">
-                            {/* Logo */}
                             <img
                                 className="w-100 img-fluid"
                                 src="/Image/AwakMasLogo.png"
@@ -43,6 +41,11 @@ function NavSide() {
                         <li>
                             <NavLink to="/admin/alamat" className={({ isActive }) => "text-white text-decoration-none d-block py-2 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
                                 <FontAwesomeIcon icon={faMapMarkerAlt} /> {t('address')}
+                            </NavLink>
+                        </li>
+                        <li>
+                            <NavLink to="/admin/karir" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                                <FontAwesomeIcon icon={faUserPlus} />{t('karir_navside')}
                             </NavLink>
                         </li>
                         <li>
@@ -120,17 +123,8 @@ function NavSide() {
                             <span className="text-white text-decoration-none d-block py-2 px-3">
                                 <FontAwesomeIcon icon={faImages} /> {t('sectionTitle')}
                             </span>
-                            <ul className="list-unstyled ps-4">
-                                <li>
-                                    <NavLink to="/admin/karir" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
-                                        ▸ Karir
-                                    </NavLink>
-                                </li>
-                            </ul>
                         </li>
                     </ul>
-
-                    {/* Tombol EN dan ID di bagian bawah sidebar */}
                     <div className="mt-auto p-3 border-top border-secondary">
                         <div className="d-flex justify-content-center gap-3">
                             <button

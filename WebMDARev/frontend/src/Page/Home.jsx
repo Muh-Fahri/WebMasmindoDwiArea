@@ -194,7 +194,6 @@ function Home() {
                                             </div>
                                         </div>
                                     </div>
-
                                 </div>
                             </div>
                         ))}
@@ -258,25 +257,27 @@ function Home() {
                                 <div className="row mt-3" data-aos="fade-right">
                                     <div className="col">
                                         {bisnisList.length > 0 ? (
-                                            bisnisList.map((bisnis) => (
-                                                <div className="" key={bisnis.uuid}>
-                                                    <p
-                                                        className="text-white"
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: i18n.language === 'id'
-                                                                ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id.split(' ').slice(0, 100).join(' ') + '...')
-                                                                : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en.split(' ').slice(0, 100).join(' ') + '...')
-                                                        }} />
-                                                </div>
-                                            ))
+                                            <>
+                                                {bisnisList.map((bisnis) => (
+                                                    <div className="" key={bisnis.uuid}>
+                                                        <p
+                                                            className="text-white"
+                                                            dangerouslySetInnerHTML={{
+                                                                __html: i18n.language === 'id'
+                                                                    ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id.split(' ').slice(0, 100).join(' ') + '...')
+                                                                    : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en.split(' ').slice(0, 100).join(' ') + '...')
+                                                            }} />
+                                                    </div>
+                                                ))}
+                                                <Link to={'/bisnis'} style={{ color: '#F16022' }} className="text-decoration-none fs-4 fs-md-3 fw-bold">
+                                                    {t('bisnis_kami_btn')} <FontAwesomeIcon icon={faArrowRight} />
+                                                </Link>
+                                            </>
                                         ) : (
                                             <div className="text-center text-white">
-                                                <h5>{t('no_data')}</h5>
+                                                <h5 className="text-secondary">{t('data_empty')}</h5>
                                             </div>
                                         )}
-                                        <Link to={'/bisnis'} style={{ color: '#F16022' }} className="text-decoration-none fs-4 fs-md-3 fw-bold">
-                                            {t('bisnis_kami_btn')} <FontAwesomeIcon icon={faArrowRight} />
-                                        </Link>
                                     </div>
                                 </div>
                                 <div className="container mt-5">
@@ -299,9 +300,7 @@ function Home() {
                                                 ))}
                                             </div>
                                         ) : (
-                                            <div className="text-center text-white">
-                                                <h5>{t('no_data')}</h5>
-                                            </div>
+                                            <div></div>
                                         )}
                                     </div>
                                 </div>
@@ -341,92 +340,80 @@ function Home() {
 
                 </div>
             </section>
-            <section>
-                <div className="container-fluid">
-                    <div className="row" data-aos="fade-down">
-                        <div className="col p-5" data-aos="fade-down">
-                            <h3 style={{ color: '#F16022' }} className="text-center text-uppercase fw-bold">{t('berita_terkini')}</h3>
-                        </div>
-                    </div>
-                    <div className="row gap-3 mt-5 d-flex justify-content-center" data-aos="fade-right">
-                        <div className="position-relative">
-                            <button
-                                className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
-                                style={{ zIndex: 10 }}
-                                onClick={() => {
-                                    document.getElementById("beritaSlider").scrollBy({ left: -300, behavior: 'smooth' });
-                                }}
-                            >
-                                &#10094;
-                            </button>
-                            {beritaList.length > 0 ? (
-                                <div
-                                    id="beritaSlider"
-                                    className="row flex-nowrap overflow-auto px-3 justify-content-center"
-                                    style={{ scrollBehavior: 'smooth' }}
-                                >
-                                    {beritaList.map((berita) => (
-                                        <div key={berita.uuid} className="col-10 col-sm-6 col-md-4 col-lg-3 me-3">
-                                            <div className="card rounded-3 border-0 shadow-sm" style={{ height: '100%' }}>
-                                                {/* Gambar responsif */}
-                                                <div className="card-body p-0">
-                                                    <img
-                                                        src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
-                                                        alt="foto"
-                                                        className="img-fluid rounded-3 w-100"
-                                                        style={{
-                                                            objectFit: 'cover',
-                                                            height: '200px',
-                                                            width: '100%',
-                                                        }}
-                                                    />
-                                                </div>
-                                                <div className="px-3 pt-3">
-                                                    <h5 className="fw-bold text-center" style={{ color: '#013233' }}>{i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}</h5>
-                                                </div>
-                                                <div className="px-3 py-2">
-
-                                                    <p
-                                                        className="text-secondary"
-                                                        style={{ fontSize: '0.9rem' }}
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: i18n.language === 'id'
-                                                                ? DOMPurify.sanitize(berita.deskripsi_berita_id.split(' ').slice(0, 30).join(' ') + '...')
-                                                                : DOMPurify.sanitize(berita.deskripsi_berita_en.split(' ').slice(0, 30).join(' ') + '...')
-                                                        }}
-
-                                                    />
-                                                </div>
-                                                <div className="pb-4 text-center">
-                                                    <Link
-                                                        to={`/berita/selengkapnya/${berita.uuid}`}
-                                                        className="text-secondary fw-bold text-decoration-none"
-                                                    >
-                                                        Lebih Lanjut
-                                                    </Link>
-                                                </div>
-                                            </div>
+            <div className="position-relative">
+                {beritaList.length > 0 ? (
+                    <>
+                        <button
+                            className="btn btn-light position-absolute start-0 top-50 translate-middle-y z-3"
+                            style={{ zIndex: 10 }}
+                            onClick={() => {
+                                document.getElementById("beritaSlider").scrollBy({ left: -300, behavior: 'smooth' });
+                            }}
+                        >
+                            &#10094;
+                        </button>
+                        <div
+                            id="beritaSlider"
+                            className="row flex-nowrap overflow-auto px-3 justify-content-center"
+                            style={{ scrollBehavior: 'smooth' }}
+                        >
+                            {beritaList.map((berita) => (
+                                <div key={berita.uuid} className="col-10 col-sm-6 col-md-4 col-lg-3 me-3">
+                                    <div className="card rounded-3 border-0 shadow-sm" style={{ height: '100%' }}>
+                                        <div className="card-body p-0">
+                                            <img
+                                                src={`http://localhost:8000/Berita/${encodeURIComponent(berita.image_berita)}`}
+                                                alt="foto"
+                                                className="img-fluid rounded-3 w-100"
+                                                style={{
+                                                    objectFit: 'cover',
+                                                    height: '200px',
+                                                    width: '100%',
+                                                }}
+                                            />
                                         </div>
-                                    ))}
+                                        <div className="px-3 pt-3">
+                                            <h5 className="fw-bold text-center" style={{ color: '#013233' }}>
+                                                {i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}
+                                            </h5>
+                                        </div>
+                                        <div className="px-3 py-2">
+                                            <p
+                                                className="text-secondary"
+                                                style={{ fontSize: '0.9rem' }}
+                                                dangerouslySetInnerHTML={{
+                                                    __html: i18n.language === 'id'
+                                                        ? DOMPurify.sanitize(berita.deskripsi_berita_id.split(' ').slice(0, 30).join(' ') + '...')
+                                                        : DOMPurify.sanitize(berita.deskripsi_berita_en.split(' ').slice(0, 30).join(' ') + '...')
+                                                }}
+                                            />
+                                        </div>
+                                        <div className="pb-4 text-center">
+                                            <Link
+                                                to={`/berita/selengkapnya/${berita.uuid}`}
+                                                className="text-secondary fw-bold text-decoration-none"
+                                            >
+                                                Lebih Lanjut
+                                            </Link>
+                                        </div>
+                                    </div>
                                 </div>
-                            ) : (
-                                <div className="text-center">
-                                    <h5>No Data</h5>
-                                </div>
-                            )}
-                            <button
-                                className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
-                                style={{ zIndex: 10 }}
-                                onClick={() => {
-                                    document.getElementById("beritaSlider").scrollBy({ left: 300, behavior: 'smooth' });
-                                }}
-                            >
-                                &#10095;
-                            </button>
+                            ))}
                         </div>
-                    </div>
-                </div>
-            </section>
+                        <button
+                            className="btn btn-light position-absolute end-0 top-50 translate-middle-y z-3"
+                            style={{ zIndex: 10 }}
+                            onClick={() => {
+                                document.getElementById("beritaSlider").scrollBy({ left: 300, behavior: 'smooth' });
+                            }}
+                        >
+                            &#10095;
+                        </button>
+                    </>
+                ) : (
+                    <div></div>
+                )}
+            </div>
             <section>
                 <div className="container-fluid p-5 px-md-5 px-3">
                     <div className="row">

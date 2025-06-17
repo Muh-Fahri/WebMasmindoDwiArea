@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import DOMPurify from "dompurify"
 import { useTranslation } from "react-i18next";
-import { event } from "jquery";
+
 
 
 
@@ -74,7 +74,7 @@ function Alamat() {
         try {
             await axios.post(`http://127.0.0.1:8000/api/admin/maps/${editId}`, {
                 link_alamat: editLinkAlamat,
-                nama_alamat_id: editNamaAlamat.nama_alamat_id, // ambil dari CKEditor
+                nama_alamat_id: editNamaAlamat.nama_alamat_id,
                 nama_alamat_en: editNamaAlamat.nama_alamat_en,
             }, {
                 headers: {
@@ -93,8 +93,6 @@ function Alamat() {
         setEditModal(true);
         setEditId(item.uuid);
         setEditLinkAlamat(item.link_alamat);
-
-        // penting: pastikan struktur item benar dan sesuai API
         setEditNamaAlamat({
             nama_alamat_id: item.nama_alamat_id || '',
             nama_alamat_en: item.nama_alamat_en || '',
@@ -222,14 +220,14 @@ function Alamat() {
                                                                     onClick={() => openEditAlamatModal(item)}
                                                                 >
                                                                     <span className="d-none d-md-inline">{t('edit_button')}</span>
-                                                                    <i className="fas fa-edit d-md-none"></i> {/* Contoh icon FontAwesome */}
+                                                                    <i className="fas fa-edit d-md-none"></i>
                                                                 </button>
                                                                 <button
                                                                     className="btn btn-sm btn-danger d-flex align-items-center justify-content-center gap-1"
                                                                     onClick={() => deleteAlamat(item.uuid)}
                                                                 >
                                                                     <span className="d-none d-md-inline">{t('delete_button')}</span>
-                                                                    <i className="fas fa-trash-alt d-md-none"></i> {/* Contoh icon FontAwesome */}
+                                                                    <i className="fas fa-trash-alt d-md-none"></i>
                                                                 </button>
                                                             </div>
                                                         </td>

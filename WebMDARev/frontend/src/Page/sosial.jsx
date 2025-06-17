@@ -187,7 +187,7 @@ function Sosial() {
                                                 style={{ height: "400px", overflow: "hidden" }}
                                             >
                                                 <img
-                                                    src={`http://127.0.0.1:8000/Sosial/${masyarakat.imageSosial}`}
+                                                    src={`http://127.0.0.1:8000/Sosial/${encodeURIComponent(masyarakat.imageSosial)}`}
                                                     alt="Laporan 2020"
                                                     className="w-100 h-100 object-fit-cover"
                                                 />
@@ -261,7 +261,7 @@ function Sosial() {
                                                 style={{ maxWidth: "600px" }}>
                                                 <div className="card rounded-5 responsive-height"
                                                     style={{ height: "400px", overflow: "hidden" }}>
-                                                    <img src={`http://127.0.0.1:8000/Sosial/${kesehatan.imageSosial}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
+                                                    <img src={`http://127.0.0.1:8000/Sosial/${encodeURIComponent(kesehatan.imageSosial)}`} alt="Laporan 2020" className="w-100 h-100 object-fit-cover" />
                                                 </div>
                                             </div>
                                         ))
@@ -339,7 +339,7 @@ function Sosial() {
                                                     style={{ height: "400px", overflow: "hidden" }}
                                                 >
                                                     <img
-                                                        src={`http://127.0.0.1:8000/Sosial/${infra.imageSosial}`}
+                                                        src={`http://127.0.0.1:8000/Sosial/${encodeURIComponent(infra.imageSosial)}`}
                                                         alt="Laporan 2020"
                                                         className="w-100 h-100 object-fit-cover"
                                                     />
@@ -424,7 +424,7 @@ function Sosial() {
                                             style={{ height: "400px", overflow: "hidden" }}
                                         >
                                             <img
-                                                src={`http://127.0.0.1:8000/Sosial/${pemberdayaan.imageSosial}`}
+                                                src={`http://127.0.0.1:8000/Sosial/${encodeURIComponent(pemberdayaan.imageSosial)}`}
                                                 alt="Laporan 2020"
                                                 className="w-100 h-100"
                                                 style={{ objectFit: "cover" }}

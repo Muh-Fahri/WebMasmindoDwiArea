@@ -19,7 +19,6 @@ use App\Models\Youtube;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
-use PhpParser\Node\Stmt\ElseIf_;
 
 class updateAdmin extends Controller
 {
@@ -57,8 +56,6 @@ class updateAdmin extends Controller
         ]);
 
         $berita = BeritaTerkini::where('uuid', $uuid)->firstOrFail();
-
-        // Kalau ada gambar baru yang dikirim
         if ($request->hasFile('image_berita')) {
             if ($berita->image_berita) {
                 Storage::delete('public/Berita/' . $berita->image_berita);
@@ -115,21 +112,14 @@ class updateAdmin extends Controller
         $request->validate([
             'image_lingkungan' => 'required|image|mimes:png,jpg,jpeg'
         ]);
-
         $imgLing = ImageLingkungan::where('uuid', $uuid)->firstOrFail();
-
-        // Hapus gambar lama dari folder public/Lingkungan jika ada
         $oldImagePath = public_path('Lingkungan/' . $imgLing->image_lingkungan);
         if (File::exists($oldImagePath)) {
             File::delete($oldImagePath);
         }
-
-        // Upload gambar baru
         $imageFile = $request->file('image_lingkungan');
         $imageName = time() . '_' . $imageFile->getClientOriginalName();
         $imageFile->move(public_path('Lingkungan'), $imageName);
-
-        // Update database dengan nama file baru
         $imgLing->update([
             'image_lingkungan' => $imageName
         ]);
@@ -146,24 +136,16 @@ class updateAdmin extends Controller
             'imageSosial' => 'nullable|image|mimes:png,jpg,jpeg',
             'category' => 'nullable|in:pendidikan,kesehatan,pengembanganMasyarakat,infrastruktur,pemberdayaan'
         ]);
-
         $sosial = Sosial::where('uuid', $uuid)->firstOrFail();
-
-        $imageName = $sosial->imageSosial; // default nama gambar lama
-
+        $imageName = $sosial->imageSosial;
         if ($request->hasFile('imageSosial')) {
-            // Hapus gambar lama jika ada
             $oldPath = public_path('Sosial/' . $sosial->imageSosial);
             if (File::exists($oldPath)) {
                 File::delete($oldPath);
             }
-
-            // Simpan gambar baru
             $imageName = time() . '_' . $request->file('imageSosial')->getClientOriginalName();
             $request->file('imageSosial')->move(public_path('Sosial'), $imageName);
         }
-
-        // Jika kategori tidak diisi, pakai yang lama
         $category = $request->filled('category') ? $request->category : $sosial->category;
 
         $sosial->update([
@@ -182,10 +164,7 @@ class updateAdmin extends Controller
         $request->validate([
             'linkInstagram' => 'nullable|string|min:10'
         ]);
-
         $instagram = Instagram::where('uuid', $uuid)->firstOrFail();
-
-        // Update hanya jika field dikirim
         if ($request->filled('linkInstagram')) {
             $instagram->linkInstagram = $request->linkInstagram;
         }
@@ -203,16 +182,10 @@ class updateAdmin extends Controller
         $request->validate([
             'linkYoutube' => 'nullable|string|min:10'
         ]);
-
-        // Cari data berdasarkan UUID, jika tidak ada akan error 404
         $youtube = Youtube::where('uuid', $uuid)->firstOrFail();
-
-        // Hanya update jika ada inputan baru
         if ($request->has('linkYoutube') && $request->filled('linkYoutube')) {
             $youtube->linkYoutube = $request->linkYoutube;
         }
-
-        // Simpan data meski tidak ada perubahan juga tidak masalah
         $youtube->save();
 
         return response()->json([
@@ -224,7 +197,7 @@ class updateAdmin extends Controller
     function updateDokumentasi(Request $request, $uuid)
     {
         $request->validate([
-            "foto_galeri" => "nullable|image|mimes:jpg,png,jpeg", // ← Ubah jadi nullable
+            "foto_galeri" => "nullable|image|mimes:jpg,png,jpeg",
             "deskrip_id" => "required",
             "deskrip_en" => "required",
         ]);
@@ -237,17 +210,12 @@ class updateAdmin extends Controller
         ];
 
         if ($request->hasFile('foto_galeri')) {
-            // Hapus gambar lama
             $oldPath = public_path('Galeri/' . $galeri->foto_galeri);
             if (File::exists($oldPath)) {
                 File::delete($oldPath);
             }
-
-            // Simpan gambar baru
             $image_name_new = time() . "-" . $request->file('foto_galeri')->getClientOriginalName();
             $request->file('foto_galeri')->move(public_path("Galeri"), $image_name_new);
-
-            // Tambahkan ke data update
             $dataUpdate['foto_galeri'] = $image_name_new;
         }
 
@@ -302,7 +270,6 @@ class updateAdmin extends Controller
         }
 
         $carousel = Carousel::where('uuid', $uuid)->firstOrFail();
-
         $data = [
             "text_carousel_id" => $request->text_carousel_id,
             "text_carousel_en" => $request->text_carousel_en,
@@ -311,22 +278,15 @@ class updateAdmin extends Controller
         ];
 
         if ($request->hasFile('image_carousel')) {
-            // Hapus gambar lama jika ada
             $oldPath = public_path('Carousel/' . $carousel->image_carousel);
             if (File::exists($oldPath)) {
                 File::delete($oldPath);
             }
-
-            // Simpan gambar baru
             $image_name = time() . "_" . $request->file('image_carousel')->getClientOriginalName();
             $request->file("image_carousel")->move(public_path("Carousel"), $image_name);
-
-            // Tambahkan ke data yang diupdate
             $data["image_carousel"] = $image_name;
         }
-
         $carousel->update($data);
-
         return response()->json([
             "carousel" => $carousel
         ], 200);
@@ -341,8 +301,8 @@ class updateAdmin extends Controller
             'nama_perusahaan' => 'nullable|string|max:255',
             'posisi_id' => 'nullable|string|max:255',
             'posisi_en' => 'nullable|string|max:255',
-            'lokasi_id' => 'nullable|string|max:255',
-            'lokasi_en' => 'nullable|string|max:255',
+            'lokasi_id' => 'nullable|string',
+            'lokasi_en' => 'nullable|string',
             'syarat_id' => 'nullable|string',
             'syarat_en' => 'nullable|string',
             'deskripsi_id' => 'nullable|string',
@@ -355,8 +315,6 @@ class updateAdmin extends Controller
                 "msg" => $validator->errors(),
             ], 422);
         }
-
-        // Update field hanya jika request memiliki nilainya
         $karir->update([
             'category' => $request->category ?? $karir->category,
             'nama_perusahaan' => $request->nama_perusahaan ?? $karir->nama_perusahaan,
@@ -370,7 +328,6 @@ class updateAdmin extends Controller
             'deskripsi_en' => $request->deskripsi_en ?? $karir->deskripsi_en,
             'deadline' => $request->deadline ?? $karir->deadline,
         ]);
-
         return response()->json([
             "karir" => $karir,
         ], 200);

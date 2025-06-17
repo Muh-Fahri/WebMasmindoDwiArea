@@ -56,7 +56,7 @@ function Berita() {
             if (processedBerita.length === 0 && trimmedKeyword !== "") {
                 setMessage(t('news_no_results'));
             } else if (processedBerita.length === 0 && trimmedKeyword === "") {
-                setMessage(t('news_no_data_available'));
+                setMessage(t('data_empty'));
             } else {
                 setMessage("");
             }
@@ -129,14 +129,13 @@ function Berita() {
                                 />
                             </div>
                             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-
                                 {
                                     isLoading ? (
                                         <div className="col text-center">{t('news_loading')}</div>
                                     ) : (
                                         beritaList.length > 0 ? (
                                             beritaList.map((berita) => (
-                                                <div key={berita.uuid} className="col">
+                                                <div key={berita.uuid} className="col d-flex justify-content-center">
                                                     <div
                                                         className="card rounded-5 overflow-hidden position-relative card-berita"
                                                         style={{ width: "100%", maxWidth: "500px", height: "500px" }}
@@ -177,10 +176,8 @@ function Berita() {
                                                 </div>
                                             ))
                                         ) : (
-                                            <div className="justify-content-center">
-                                                <div className="col text-center">
-                                                    <h1>{message || t('no_data')}</h1>
-                                                </div>
+                                            <div className="col d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
+                                                <p className="text-center text-muted">{message || t('no_data')}</p>
                                             </div>
                                         )
                                     )

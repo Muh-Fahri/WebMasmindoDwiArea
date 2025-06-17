@@ -11,7 +11,7 @@ import PDF from "../../Component/Admin/pdf";
 import Galeri from "../../Component/Admin/galeri";
 import Alamat from "../../Component/Admin/alamat";
 import Carousel from "../../Component/Admin/carousel";
-import AdminKarir from "../adminKarir";
+import AdminKarir from "../../Component/Admin/adminKarir";
 
 
 

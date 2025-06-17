@@ -2,11 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavSide from "./navSide";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
-import { faL } from "@fortawesome/free-solid-svg-icons";
-import { CKEditor } from "@ckeditor/ckeditor5-react";
-import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
-import { event } from "jquery";
-import DOMPurify from 'dompurify';
+
 
 
 
@@ -68,9 +64,9 @@ function Carousel() {
         }
 
         const formData = new FormData();
-        formData.append("text_carousel_id", judulId);     // GANTI INI
+        formData.append("text_carousel_id", judulId);
         formData.append("body_text_id", bodyId);
-        formData.append("text_carousel_en", judulEn);     // GANTI INI
+        formData.append("text_carousel_en", judulEn);
         formData.append("body_text_en", bodyEn);
         formData.append("image_carousel", imageCarousel);
 
@@ -106,7 +102,7 @@ function Carousel() {
             alert('Success')
         } catch (error) {
             if (error.response && error.response.data) {
-                console.log(error.response.data.errors); // Menampilkan detail error validasi
+                console.log(error.response.data.errors);
                 alert(JSON.stringify(error.response.data.errors));
             } else {
                 alert("Terjadi kesalahan lain");
@@ -122,7 +118,7 @@ function Carousel() {
         formData.append("body_text_id", editText.body_text_id); // WAJIB
         formData.append("body_text_en", editText.body_text_en); // WAJIB
         if (editImg) {
-            formData.append("image_carousel", editImg); // WAJIB sesuai validasi
+            formData.append("image_carousel", editImg);
         }
 
         try {
@@ -306,7 +302,7 @@ function Carousel() {
                                                                     onClick={() => deleteCarouselData(carousel.uuid)}
                                                                 >
                                                                     <span className="d-none d-md-inline">{t('delete_button')}</span>
-                                                                    <i className="fas fa-trash-alt d-md-none"></i> {/* Contoh icon FontAwesome */}
+                                                                    <i className="fas fa-trash-alt d-md-none"></i>
                                                                 </button>
                                                             </div>
                                                         </td>
@@ -336,7 +332,6 @@ function Carousel() {
                                             <button type="button" className="btn-close" aria-label="Close" onClick={() => setEditModal(false)}></button>
                                         </div>
                                         <div className="modal-body">
-                                            {/* Judul ID */}
                                             <div className="mb-3">
                                                 <label>{t('edit_head_id_label')}</label>
                                                 <input
@@ -346,7 +341,6 @@ function Carousel() {
                                                     onChange={(e) => setEditText(prev => ({ ...prev, text_carousel_id: e.target.value }))}
                                                 />
                                             </div>
-                                            {/* Deskripsi ID */}
                                             <div className="mb-3">
                                                 <label>{t('edit_body_id_label')}</label>
                                                 <textarea
@@ -356,7 +350,6 @@ function Carousel() {
                                                     onChange={(e) => setEditText(prev => ({ ...prev, body_text_id: e.target.value }))}
                                                 ></textarea>
                                             </div>
-                                            {/* Judul EN */}
                                             <div className="mb-3">
                                                 <label>{t('edit_head_en_label')}</label>
                                                 <input
@@ -366,7 +359,6 @@ function Carousel() {
                                                     onChange={(e) => setEditText(prev => ({ ...prev, text_carousel_en: e.target.value }))}
                                                 />
                                             </div>
-                                            {/* Deskripsi EN */}
                                             <div className="mb-3">
                                                 <label>{t('edit_body_en_label')}</label>
                                                 <textarea
@@ -379,8 +371,6 @@ function Carousel() {
                                                     }))}
                                                 ></textarea>
                                             </div>
-
-                                            {/* Gambar */}
                                             <div className="mb-3">
                                                 <label>{t('change_image_optional_label')}</label>
                                                 <input

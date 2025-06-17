@@ -15,7 +15,6 @@ function Youtube() {
             duration: 1000,
         })
     }, [])
-
     const getYtData = async () => {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/berita/youtube")
@@ -25,8 +24,6 @@ function Youtube() {
             alert("Gagal Mengambil Data");
         }
     }
-
-
     return (
         <div>
             <NavbarHijau />
@@ -41,7 +38,6 @@ function Youtube() {
                         <div className="garis-berita"></div>
                     </div>
                     <div className="col-md-4">
-                        {/* Nav */}
                         <ul className="list-unstyled">
                             <li>
                                 <a href="/berita" className="fs-1 text-black text-decoration-none">{t('news_in_masmindo')}</a>
@@ -86,7 +82,7 @@ function Youtube() {
 
                                         ))
                                     ) : (
-                                        <h1>Loading</h1>
+                                        <p className="text-muted">{t('data_empty')}</p>
                                     )
                                 }
                             </div>

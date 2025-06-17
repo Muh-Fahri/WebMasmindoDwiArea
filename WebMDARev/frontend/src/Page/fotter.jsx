@@ -36,14 +36,14 @@ function Footer() {
                         <div className="col-12 col-md-6 mb-4 mb-md-0">
                             <div className="row">
                                 <div className="col-12">
-                                    <h3 className="text-uppercase text-white fs-4 fs-md-3 mb-4">PT Masmindo Dwi Area</h3> {/* Perkecil font di mobile, normal di md ke atas */}
+                                    <h3 className="text-uppercase text-white fs-4 fs-md-3 mb-4">PT Masmindo Dwi Area</h3>
                                 </div>
                             </div>
                             <div className="row">
                                 {alamatDataList.length > 0 ? (
                                     alamatDataList.map((alamat) => (
                                         <div className="col-12 col-md-6 mb-3">
-                                            <Link className="text-white text-decoration-none" to={alamat.link_alamat} target="_blank" rel="noopener noreferrer"> {/* Ganti dengan link Google Maps asli */}
+                                            <Link className="text-white text-decoration-none" to={alamat.link_alamat} target="_blank" rel="noopener noreferrer">
                                                 <p
                                                     className="m-4"
                                                     dangerouslySetInnerHTML={{
@@ -56,7 +56,7 @@ function Footer() {
                                         </div>
                                     ))
                                 ) : (
-                                    <p>No Data</p>
+                                    <div></div>
                                 )}
                             </div>
                         </div>
