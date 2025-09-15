@@ -63,32 +63,47 @@ function Bisnis() {
                     </div>
                 </div>
             </section>
+
             {bisnisList && bisnisList.length > 0 ? (
                 <>
-                    <div className="col-12 col-md-auto mb-4 mb-md-0" data-aos="fade-right">
-                        <img
-                            className="img-fluid"
-                            src="/Image/AwakMasCol.png"
-                            alt="Logo"
-                            style={{ width: "300px", height: "auto" }}
-                        />
-                    </div>
-                    <div className="d-none d-md-block col-md-auto">
-                        <div className="garis-aw-p"></div>
-                    </div>
-                    <div className="col-12 col-md" data-aos="fade-down">
-                        {bisnisList.map((bisnis) => (
-                            <p
-                                style={{ whiteSpace: 'pre-line', textAlign: 'justify' }}
-                                key={bisnis.uuid}
-                                className="fs-3 fs-md-5"
-                                dangerouslySetInnerHTML={{
-                                    __html: i18n.language === 'id'
-                                        ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id)
-                                        : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en)
-                                }}
-                            />
-                        ))}
+                    {/* Kontainer untuk logo dan garis, serta deskripsi */}
+                    <div className="container px-3 px-md-5 py-4"> {/* Tambahkan container untuk padding */}
+                        {/* Row untuk Logo dan Garis (bersamaan di desktop, logo di atas garis di mobile) */}
+                        <div className="row align-items-center mb-4"> {/* mb-4 agar ada jarak dengan deskripsi di bawahnya */}
+                            {/* Logo */}
+                            <div className="col-12 col-md-auto d-flex justify-content-center align-items-center mb-3 mb-md-0" data-aos="fade-right">
+                                <img
+                                    className="img-fluid"
+                                    src="/Image/AwakMasCol.png"
+                                    alt="Logo"
+                                    style={{ width: "300px", height: "auto" }}
+                                />
+                            </div>
+
+                            {/* Garis Pemisah */}
+                            <div className="col-12 col-md-auto d-flex justify-content-center align-items-center">
+                                {/* Memberi tinggi pada garis agar terlihat, dan margin horizontal di desktop */}
+                                <div className="garis-aw-p" style={{ height: "100px", width: "2px", backgroundColor: "#E0E0E0", margin: "0 1.5rem" }}></div>
+                            </div>
+                        </div>
+
+                        {/* Row terpisah untuk Deskripsi Bisnis */}
+                        <div className="row">
+                            <div className="col-12" data-aos="fade-down">
+                                {bisnisList.map((bisnis) => (
+                                    <p
+                                        style={{ whiteSpace: 'pre-line', textAlign: 'justify' }}
+                                        key={bisnis.uuid}
+                                        className="fs-3 fs-md-5"
+                                        dangerouslySetInnerHTML={{
+                                            __html: i18n.language === 'id'
+                                                ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id)
+                                                : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en)
+                                        }}
+                                    />
+                                ))}
+                            </div>
+                        </div>
                     </div>
                 </>
             ) : (
@@ -102,11 +117,13 @@ function Bisnis() {
                     </div>
                 </div>
             )}
+
             <section>
                 <div className="container px-md-5 px-3 mt-5" data-aos="fade-down" >
                     <div className="row mt-4">
                         {isLoading ? (
                             <div className="col text-center py-5">
+                                {/* Placeholder for loading */}
                             </div>
                         ) : bisnisList && bisnisList.length > 0 ? (
                             <div className="col p-5 px-md-5 px-3">
@@ -126,7 +143,7 @@ function Bisnis() {
                             </div>
                         ) : (
                             <div className="col text-center">
-                                <h5></h5>
+                                <h5></h5> {/* Consider adding a message here if no video */}
                             </div>
                         )}
                     </div>
