@@ -171,7 +171,6 @@ class readAdmin extends Controller
         $laporan_tahunan = PDF::all();
         $sosial = Sosial::all();
         $youtube = Youtube::all();
-
         $hitung_laporan = $laporan_tahunan->count();
         $hitung_berita = $berita->count();
         $hitung_instagram = $instagram->count();

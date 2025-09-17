@@ -15,19 +15,15 @@ return new class extends Migration
             $table->bigIncrements('id');
             $table->integer('city_id');
             $table->string('city_name');
-            $table->decimal('temp', 5, 2); // misal: 27.74
-            $table->integer('humidity');   // baru
-            $table->decimal('wind_speed', 5, 2); // baru
-            $table->integer('cloudiness'); // baru
+            $table->decimal('temp', 5, 2);
+            $table->integer('humidity');
+            $table->decimal('wind_speed', 5, 2);
+            $table->integer('cloudiness');
             $table->integer('weather_id');
             $table->string('weather_icon');
             $table->timestamps();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
     public function down(): void
     {
         Schema::dropIfExists('weather');

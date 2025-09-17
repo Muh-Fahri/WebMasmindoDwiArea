@@ -171,8 +171,12 @@ class createAdmin extends Controller
     function createYoutube(Request $request)
     {
         $request->validate([
-            'linkYoutube' => 'regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/|required'
+            'linkYoutube' => [
+                'required',
+                'regex:/^(https?\:\/\/)?(www\.youtube\.com\/(watch\?v=|embed\/)|youtu\.be\/).+$/'
+            ]
         ]);
+
 
         $youtube = Youtube::create([
             'linkYoutube' => $request->linkYoutube

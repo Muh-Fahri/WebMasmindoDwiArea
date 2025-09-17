@@ -7,13 +7,11 @@ import DOMPurify from 'dompurify';
 
 
 function GaleriUser() {
-
     const [t, i18n] = useTranslation();
     const [galeriList, setGaleriList] = useState([]);
     const [selectedCaption, setSelectedCaption] = useState("");
     const [selectedData, setSelectedData] = useState(null);
     const [isLoading, setIsLoading] = useState(true);
-
     const getGaleriData = async () => {
         setIsLoading(true);
         try {
@@ -27,7 +25,6 @@ function GaleriUser() {
             setIsLoading(false);
         }
     }
-
     useEffect(() => {
         getGaleriData();
     }, []);

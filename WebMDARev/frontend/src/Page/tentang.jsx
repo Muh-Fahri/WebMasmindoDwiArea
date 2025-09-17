@@ -53,7 +53,6 @@ function Tentang() {
                                     </h1>
                                 </div>
                             </div>
-
                             <div className="row mt-4 mt-md-5">
                                 <div className="col">
                                     <p className="fs-4 d-none d-md-block">

@@ -184,7 +184,6 @@ function ESG() {
                             >
                                 &#10094;
                             </button>
-
                             <div
                                 id="dokEsg-slider"
                                 className="overflow-auto px-5"
