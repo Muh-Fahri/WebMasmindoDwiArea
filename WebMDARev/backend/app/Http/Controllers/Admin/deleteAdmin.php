@@ -16,6 +16,7 @@ use App\Models\Alamat;
 use App\Models\Carousel;
 use App\Models\Galeri;
 use App\Models\Karir;
+use App\Models\Kontak;
 use Illuminate\Support\Facades\File;
 
 class deleteAdmin extends Controller
@@ -173,6 +174,16 @@ class deleteAdmin extends Controller
 
         return response()->json([
             "msg" => "Berhasil di hapus"
+        ], 200);
+    }
+
+    function deleteKontak($uuid)
+    {
+        $kontak = Kontak::where('uuid', $uuid);
+        $kontak->delete();
+
+        return response()->json([
+            'msg' => 'Data Berhasil di Hapus',
         ], 200);
     }
 }

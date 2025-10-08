@@ -15,6 +15,7 @@ use App\Models\Carousel;
 use App\Models\Galeri;
 use App\Models\Instagram;
 use App\Models\Karir;
+use App\Models\Kontak;
 use App\Models\Youtube;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -185,14 +186,16 @@ class updateAdmin extends Controller
     function updateYoutube(Request $request, $uuid)
     {
         $request->validate([
-            'linkYoutube' => 'regex:/^(https?\:\/\/)?(www\.youtube\.com|youtu\.?be)\/.+$/|required'
+            'linkYoutube' => [
+                'required',
+                'regex:/^(https?\:\/\/)?(www\.youtube\.com\/(watch\?v=|embed\/)|youtu\.be\/).+$/'
+            ]
         ]);
         $youtube = Youtube::where('uuid', $uuid)->firstOrFail();
         if ($request->has('linkYoutube') && $request->filled('linkYoutube')) {
             $youtube->linkYoutube = $request->linkYoutube;
         }
         $youtube->save();
-
         return response()->json([
             'msg' => 'Berhasil Mengubah data',
             'youtube' => $youtube
@@ -304,7 +307,7 @@ class updateAdmin extends Controller
         ], 200);
     }
 
-    public function updateKarir(Request $request, $uuid)
+    function updateKarir(Request $request, $uuid)
     {
         $karir = Karir::where('uuid', $uuid)->firstOrFail();
 
@@ -342,6 +345,42 @@ class updateAdmin extends Controller
         ]);
         return response()->json([
             "karir" => $karir,
+        ], 200);
+    }
+
+    function updateKontak(Request $request, $uuid)
+    {
+        // Ubah validator: gunakan 'nullable|string'
+        $validate = Validator::make($request->all(), [
+            'noTelp' => [
+                'nullable',
+                'string',
+                'max:20',
+                'regex:/^\+?[0-9\s\-]{8,20}$/'
+            ],
+            'name' => 'nullable|string|max:250',
+            'kepada' => 'nullable|string|max:250',
+            'subject' => 'nullable|string|max:300',
+            'pesan' => 'nullable|string',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'error' => $validate->errors(),
+            ], 422);
+        }
+
+        $kontak = Kontak::where('uuid', $uuid)->firstOrFail();
+        $kontak->update([
+            'name'    => $request->filled('name') ? $request->name : $kontak->name,
+            'kepada'  => $request->filled('kepada') ? $request->kepada : $kontak->kepada,
+            'noTelp'  => $request->filled('noTelp') ? $request->noTelp : $kontak->noTelp,
+            'subject' => $request->filled('subject') ? $request->subject : $kontak->subject,
+            'pesan'   => $request->filled('pesan') ? $request->pesan : $kontak->pesan,
+        ]);
+
+        return response()->json([
+            'kontak' => $kontak
         ], 200);
     }
 }

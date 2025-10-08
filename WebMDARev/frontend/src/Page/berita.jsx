@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 import Aos from "aos";
 import { useTranslation } from "react-i18next";
+import Footer from "./fotter";
 
 
 function Berita() {
@@ -186,6 +187,9 @@ function Berita() {
                         </div>
                     </div>
                 </div>
+            </section>
+            <section>
+                <Footer />
             </section>
         </div>
     );

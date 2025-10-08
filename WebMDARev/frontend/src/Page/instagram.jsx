@@ -4,6 +4,7 @@ import NavbarHijau from "../Component/navbarHijau";
 import EmbedInstagram from "../Component/Admin/embedIg";
 import Aos from "aos";
 import { useTranslation } from "react-i18next";
+import Footer from "./fotter";
 
 
 
@@ -77,6 +78,11 @@ function Instagram() {
                     </div>
                 </div>
             </div>
+            <section>
+                <section>
+                    <Footer />
+                </section>
+            </section>
         </div>
     )
 }

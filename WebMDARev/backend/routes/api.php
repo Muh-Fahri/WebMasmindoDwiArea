@@ -124,4 +124,10 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/admin/karir', [readAdmin::class, 'readKarir']);
     Route::post('/admin/karir/{uuid}', [updateAdmin::class, 'updateKarir']);
     Route::delete('/admin/karir/delete/{uuid}', [deleteAdmin::class, 'deleteKarir']);
+
+    // kontak
+    Route::post('/admin/kontak', [createAdmin::class, 'createkontak']);
+    Route::get('/admin/kontak', [readAdmin::class, 'readKontak']);
+    Route::post('/admin/kontak/{uuid}', [updateAdmin::class, 'updateKontak']);
+    Route::delete('/admin/kontak/delete/{uuid}', [deleteAdmin::class, 'deleteKontak']);
 });

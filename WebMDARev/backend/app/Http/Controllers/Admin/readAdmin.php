@@ -17,6 +17,7 @@ use App\Models\Alamat;
 use App\Models\Carousel;
 use App\Models\Galeri;
 use App\Models\Karir;
+use App\Models\Kontak;
 
 class readAdmin extends Controller
 {
@@ -231,6 +232,14 @@ class readAdmin extends Controller
         $karir = Karir::all();
         return response()->json([
             "karir" => $karir
+        ], 200);
+    }
+
+    function readKontak()
+    {
+        $kontak = Kontak::all();
+        return response()->json([
+            'kontak' => $kontak
         ], 200);
     }
 }

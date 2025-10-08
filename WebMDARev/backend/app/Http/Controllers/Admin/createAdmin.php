@@ -19,6 +19,7 @@ use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
 use App\Models\Carousel;
 use App\Models\Karir;
+use App\Models\Kontak;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -176,12 +177,9 @@ class createAdmin extends Controller
                 'regex:/^(https?\:\/\/)?(www\.youtube\.com\/(watch\?v=|embed\/)|youtu\.be\/).+$/'
             ]
         ]);
-
-
         $youtube = Youtube::create([
             'linkYoutube' => $request->linkYoutube
         ]);
-
         return response()->json([
             'msg' => 'Berhasil Menambahkan Data',
             'youtube' => $youtube
@@ -403,7 +401,7 @@ class createAdmin extends Controller
         ], 200);
     }
 
-    public function createKarir(Request $request)
+    function createKarir(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'category' => "required|in:profesional,magang",
@@ -442,6 +440,34 @@ class createAdmin extends Controller
 
         return response()->json([
             "karir" => $karir
+        ], 200);
+    }
+
+    function createkontak(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:250',
+            'kepada' => 'required|string|max:250',
+            'noTelp' => 'required|string|max:20',
+            'subject' => 'required|string|max:300',
+            'pesan' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()
+            ], 422);
+        }
+        $kontak = Kontak::create([
+            'name' => $request->name,
+            'kepada' => $request->kepada,
+            'noTelp' => $request->noTelp,
+            'subject' => $request->subject,
+            'pesan' => $request->pesan,
+        ]);
+
+        return response()->json([
+            'kontak' => $kontak
         ], 200);
     }
 }

@@ -3,6 +3,7 @@ import axios from "axios";
 import NavbarHijau from "../Component/navbarHijau";
 import Aos from "aos";
 import { useTranslation } from "react-i18next";
+import Footer from "./fotter";
 
 function Youtube() {
 
@@ -89,6 +90,9 @@ function Youtube() {
                         </div>
                     </div>
                 </div>
+            </div>
+            <div>
+                <Footer />
             </div>
         </div>
     )
