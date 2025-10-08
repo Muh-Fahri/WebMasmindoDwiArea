@@ -20,6 +20,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Carousel;
 use App\Models\Karir;
 use App\Models\Kontak;
+use App\Models\TataKelola;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -468,6 +469,40 @@ class createAdmin extends Controller
 
         return response()->json([
             'kontak' => $kontak
+        ], 200);
+    }
+
+    function createTataKelola(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'deskripsiHalaman' => 'required|string',
+            'fotoSampul' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'pdf' => 'nullable|mimes:pdf|max:10240',
+            'deskripKebijakan' => 'required|string',
+        ]);
+        if ($validate->fails()) {
+            return response()->json([
+                'error' => $validate->errors(),
+            ], 422);
+        }
+        if ($request->hasFile('fotoSampul')) {
+            $namaFoto = time() . '_' . $request->file('fotoSampul')->getClientOriginalName();
+            $lokasiPath = public_path('TataKelola/image');
+            $request->file('fotoSampul')->move($lokasiPath, $namaFoto);
+        }
+        if ($request->hasFile('pdf')) {
+            $namaFile = time() . '_' . $request->file('pdf')->getClientOriginalName();
+            $tempatSimpan = public_path('TataKelola/pdf');
+            $request->file('pdf')->move($tempatSimpan, $namaFile);
+        }
+        $tataKelola = TataKelola::create([
+            'deskripsiHalaman'  => $request->deskripsiHalaman,
+            'fotoSampul'        => $namaFoto,
+            'pdf'               => $namaFile,
+            'deskripKebijakan'  => $request->deskripKebijakan,
+        ]);
+        return response()->json([
+            'tataKelola' => $tataKelola,
         ], 200);
     }
 }
