@@ -18,6 +18,7 @@ use App\Models\Carousel;
 use App\Models\Galeri;
 use App\Models\Karir;
 use App\Models\Kontak;
+use App\Models\TataKelola;
 
 class readAdmin extends Controller
 {
@@ -240,6 +241,14 @@ class readAdmin extends Controller
         $kontak = Kontak::all();
         return response()->json([
             'kontak' => $kontak
+        ], 200);
+    }
+
+    function readTataKelola()
+    {
+        $tataKelola = TataKelola::all();
+        return response()->json([
+            'tataKelola' => $tataKelola,
         ], 200);
     }
 }

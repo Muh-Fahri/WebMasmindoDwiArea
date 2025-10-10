@@ -16,6 +16,7 @@ use App\Models\Galeri;
 use App\Models\Instagram;
 use App\Models\Karir;
 use App\Models\Kontak;
+use App\Models\TataKelola;
 use App\Models\Youtube;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -381,6 +382,55 @@ class updateAdmin extends Controller
 
         return response()->json([
             'kontak' => $kontak
+        ], 200);
+    }
+
+    function updateTataKelola(Request $request, $uuid)
+    {
+        // Validasi
+        $validate = Validator::make($request->all(), [
+            'deskripsiHalaman' => 'nullable|string',
+            'fotoSampul'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
+            'pdf'              => 'nullable|mimes:pdf|max:10240',
+            'deskripKebijakan' => 'nullable|string',
+        ]);
+
+        if ($validate->fails()) {
+            return response()->json([
+                'error' => $validate->errors()
+            ], 422);
+        }
+        $tataKelola = TataKelola::where('uuid', $uuid)->firstOrFail();
+        if ($request->hasFile('fotoSampul')) {
+            $pathLama = public_path('TataKelola/image/' . $tataKelola->fotoSampul);
+            if ($tataKelola->fotoSampul && File::exists($pathLama)) {
+                File::delete($pathLama);
+            }
+            $nama_image = time() . "_" . $request->file('fotoSampul')->getClientOriginalName();
+            $request->file('fotoSampul')->move(public_path('TataKelola/image'), $nama_image);
+        } else {
+            $nama_image = $tataKelola->fotoSampul;
+        }
+        if ($request->hasFile('pdf')) {
+            $pathLama = public_path('TataKelola/pdf/' . $tataKelola->pdf);
+            if ($tataKelola->pdf && File::exists($pathLama)) {
+                File::delete($pathLama);
+            }
+            $pdf_name = time() . '_' . $request->file('pdf')->getClientOriginalName();
+            $request->file('pdf')->move(public_path('TataKelola/pdf'), $pdf_name);
+        } else {
+            $pdf_name = $tataKelola->pdf;
+        }
+        $tataKelola->update([
+            'deskripsiHalaman' => $request->filled('deskripsiHalaman') ? $request->deskripsiHalaman : $tataKelola->deskripsiHalaman,
+            'deskripKebijakan' => $request->filled('deskripKebijakan') ? $request->deskripKebijakan : $tataKelola->deskripKebijakan,
+            'fotoSampul'       => $nama_image,
+            'pdf'              => $pdf_name,
+        ]);
+
+        return response()->json([
+            'message' => 'Data berhasil diupdate',
+            'tataKelola' => $tataKelola
         ], 200);
     }
 }

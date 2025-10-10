@@ -133,4 +133,7 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
 
     // tata kelola
     Route::post('/admin/tataKelola', [createAdmin::class, 'createTataKelola']);
+    Route::get('/admin/tataKelola', [readAdmin::class, 'readTataKelola']);
+    Route::post('/admin/tataKelola/{uuid}', [updateAdmin::class, 'updateTataKelola']);
+    Route::delete('/admin/tataKelola/delete/{uuid}', [deleteAdmin::class, 'deleteTataKelola']);
 });

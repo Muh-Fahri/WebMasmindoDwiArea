@@ -17,6 +17,7 @@ use App\Models\Carousel;
 use App\Models\Galeri;
 use App\Models\Karir;
 use App\Models\Kontak;
+use App\Models\TataKelola;
 use Illuminate\Support\Facades\File;
 
 class deleteAdmin extends Controller
@@ -184,6 +185,27 @@ class deleteAdmin extends Controller
 
         return response()->json([
             'msg' => 'Data Berhasil di Hapus',
+        ], 200);
+    }
+
+    function deleteTataKelola($uuid)
+    {
+        $tataKelola = TataKelola::where('uuid', $uuid)->firstOrFail();
+        if ($tataKelola->fotoSampul) {
+            $nama_path = public_path('TataKelola/image/' . $tataKelola->fotoSampul);
+            if (File::exists($nama_path)) {
+                File::delete($nama_path);
+            }
+        }
+        if ($tataKelola->pdf) {
+            $nama_path_pdf = public_path('TataKelola/pdf/' . $tataKelola->pdf);
+            if (File::exists($nama_path_pdf)) {
+                File::delete($nama_path_pdf);
+            }
+        }
+        $tataKelola->delete();
+        return response()->json([
+            'tataKelola' => $tataKelola
         ], 200);
     }
 }
