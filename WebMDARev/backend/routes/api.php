@@ -35,6 +35,7 @@ Route::get('/user/carousel', [readUser::class, 'readCarousel']);
 Route::get('/user/karir', [readUser::class, 'readKarir']);
 Route::get('/user/magang', [readUser::class, 'readMagang']);
 Route::get('/user/karir/selengkapnya/{uuid}', [readUser::class, 'readKarirSelengkapnya']);
+Route::post('/user/kontakUser', [readUser::class, 'kirimKontak']);
 
 
 

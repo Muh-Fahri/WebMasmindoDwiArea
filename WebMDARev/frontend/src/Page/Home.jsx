@@ -144,7 +144,6 @@ function Home() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/carousel");
             setImgCarList(res.data.carousel);
-            await getCarouselData();
         } catch (error) {
             alert(error);
         }

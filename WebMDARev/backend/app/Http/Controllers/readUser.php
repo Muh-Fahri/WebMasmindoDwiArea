@@ -2,19 +2,21 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alamat;
-use App\Models\BeritaTerkini;
-use App\Models\Bisnis;
-use App\Models\Carousel;
-use App\Models\DeskripLingkungan;
-use App\Models\Galeri;
-use App\Models\ImageLingkungan;
-use App\Models\Instagram;
-use App\Models\Karir;
 use App\Models\PDF;
+use App\Models\Karir;
+use App\Models\Alamat;
+use App\Models\Bisnis;
+use App\Models\Galeri;
+use App\Models\Kontak;
 use App\Models\Sosial;
 use App\Models\Youtube;
+use App\Models\Carousel;
+use App\Models\Instagram;
 use Illuminate\Http\Request;
+use App\Models\BeritaTerkini;
+use App\Models\ImageLingkungan;
+use App\Models\DeskripLingkungan;
+use Illuminate\Support\Facades\Validator;
 
 class readUser extends Controller
 {
@@ -191,6 +193,32 @@ class readUser extends Controller
 
         return response()->json([
             "karir" => $karirSelengkapnya,
+        ], 200);
+    }
+
+    function kirimKontak(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string|max:250',
+            'noTelp' => 'required|string|max:20',
+            'subject' => 'required|string|max:300',
+            'pesan' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'error' => $validator->errors()
+            ], 422);
+        }
+        $kontak = Kontak::create([
+            'name' => $request->name,
+            'noTelp' => $request->noTelp,
+            'subject' => $request->subject,
+            'pesan' => $request->pesan,
+        ]);
+
+        return response()->json([
+            'kontak' => $kontak
         ], 200);
     }
 }

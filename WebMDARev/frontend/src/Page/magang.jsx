@@ -72,8 +72,8 @@ function Magang() {
                                             </a>
                                         </div>
                                     ))
-                                ) : (
-                                    <h5 className="text-muted text-center">{t('no_data_magang')}</h5>
+                                    ) : (
+                                        <h5 className="text-muted text-center">{t('no_data_magang')}</h5>
                                 )}
                             </>
                         )}

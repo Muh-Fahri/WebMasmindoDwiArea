@@ -15,7 +15,6 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->string('name');
-            $table->string('kepada');
             $table->string('noTelp');
             $table->string('subject');
             $table->text('pesan');
