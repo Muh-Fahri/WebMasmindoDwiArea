@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import NavbarProject from "../Component/navbarProject";
 import Footer from "./fotter";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircleArrowRight } from "@fortawesome/free-solid-svg-icons";
 
 function Kontak() {
 
@@ -109,9 +111,14 @@ function Kontak() {
                                                 ></textarea>
 
                                                 <div className="mt-4 text-center">
-                                                    <button type="submit" className="btn btn-warning px-4 fw-bold">
-                                                        Kirim Pesan
-                                                    </button>
+                                                    <div className="row">
+                                                        <div className="col  d-flex align-items-center">
+                                                            <button type="submit" className="btn rounded-circle">
+                                                                <FontAwesomeIcon className="submit fs-1" style={{ 'color': '#115258' }} icon={faCircleArrowRight} />
+                                                            </button>
+
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>

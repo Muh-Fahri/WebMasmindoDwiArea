@@ -12,6 +12,7 @@ import Galeri from "../../Component/Admin/galeri";
 import Alamat from "../../Component/Admin/alamat";
 import Carousel from "../../Component/Admin/carousel";
 import AdminKarir from "../../Component/Admin/adminKarir";
+import AdminKontak from "../../Component/Admin/adminKontak";
 
 
 
@@ -31,6 +32,7 @@ function AdminPage() {
                 <Route path="alamat" element={<Alamat />} />
                 <Route path="carousel" element={<Carousel />} />
                 <Route path='karir' element={<AdminKarir />} />
+                <Route path="kontak" element={<AdminKontak />} />
 
             </Routes>
         </div>

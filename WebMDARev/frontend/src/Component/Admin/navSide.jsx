@@ -59,6 +59,11 @@ function NavSide() {
                             </NavLink>
                         </li>
                         <li>
+                            <NavLink to="/admin/kontak" className={({ isActive }) => "text-white text-decoration-none d-block py-2 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                                Kontak
+                            </NavLink>
+                        </li>
+                        <li>
                             <NavLink to="/admin/berita" className={({ isActive }) => "text-white text-decoration-none d-block py-2 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
                                 <FontAwesomeIcon icon={faNewspaper} /> {t('news')}
                             </NavLink>
