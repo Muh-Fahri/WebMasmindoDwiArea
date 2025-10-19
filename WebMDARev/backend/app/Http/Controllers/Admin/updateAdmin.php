@@ -175,7 +175,6 @@ class updateAdmin extends Controller
         if ($request->filled('linkInstagram')) {
             $instagram->linkInstagram = $request->linkInstagram;
         }
-
         $instagram->save();
 
         return response()->json([
@@ -210,15 +209,11 @@ class updateAdmin extends Controller
             "deskrip_id" => "required|string|max:255",
             "deskrip_en" => "nullable|string|max:255"
         ]);
-
-
         $galeri = Galeri::where('uuid', $uuid)->firstOrFail();
-
         $dataUpdate = [
             "deskrip_id" => $request->deskrip_id,
             "deskrip_en" => $request->deskrip_en,
         ];
-
         if ($request->hasFile('foto_galeri')) {
             $oldPath = public_path('Galeri/' . $galeri->foto_galeri);
             if (File::exists($oldPath)) {
@@ -228,7 +223,6 @@ class updateAdmin extends Controller
             $request->file('foto_galeri')->move(public_path("Galeri"), $image_name_new);
             $dataUpdate['foto_galeri'] = $image_name_new;
         }
-
         $galeri->update($dataUpdate);
 
         return response()->json([
@@ -248,8 +242,6 @@ class updateAdmin extends Controller
                 'regex:/^https?:\/\/(www\.)?google\.[a-z.]+\/maps/'
             ],
         ]);
-
-
         if ($validator->fails()) {
             return response()->json([
                 'msg' => 'Validasi Gagal',
@@ -257,7 +249,6 @@ class updateAdmin extends Controller
             ], 400);
         }
         $maps = Alamat::where('uuid', $uuid)->firstOrFail();
-
         $maps->update([
             "nama_alamat_id" => $request->nama_alamat_id,
             "nama_alamat_en" => $request->nama_alamat_en,
@@ -268,7 +259,6 @@ class updateAdmin extends Controller
             "alamat" => $maps,
         ], 200);
     }
-
     function updateCarousel(Request $request, $uuid)
     {
         $validator = Validator::make($request->all(), [
@@ -351,7 +341,6 @@ class updateAdmin extends Controller
 
     function updateKontak(Request $request, $uuid)
     {
-        // Ubah validator: gunakan 'nullable|string'
         $validate = Validator::make($request->all(), [
             'noTelp' => [
                 'nullable',
@@ -387,9 +376,7 @@ class updateAdmin extends Controller
 
     function updateTataKelola(Request $request, $uuid)
     {
-        // Validasi
         $validate = Validator::make($request->all(), [
-            'deskripsiHalaman' => 'nullable|string',
             'fotoSampul'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'pdf'              => 'nullable|mimes:pdf|max:10240',
             'deskripKebijakan' => 'nullable|string',
@@ -422,7 +409,6 @@ class updateAdmin extends Controller
             $pdf_name = $tataKelola->pdf;
         }
         $tataKelola->update([
-            'deskripsiHalaman' => $request->filled('deskripsiHalaman') ? $request->deskripsiHalaman : $tataKelola->deskripsiHalaman,
             'deskripKebijakan' => $request->filled('deskripKebijakan') ? $request->deskripKebijakan : $tataKelola->deskripKebijakan,
             'fotoSampul'       => $nama_image,
             'pdf'              => $pdf_name,

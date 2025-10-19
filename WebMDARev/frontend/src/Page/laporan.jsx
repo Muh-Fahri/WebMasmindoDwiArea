@@ -20,7 +20,6 @@ function Laporan() {
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/laporan");
             setLaporanList(res.data.laporan);
-            getLaporan();
         } catch (error) {
             alert("Oops Terjadi suatu kesalahan pada server");
         }

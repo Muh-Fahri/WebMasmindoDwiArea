@@ -16,6 +16,7 @@ use Illuminate\Http\Request;
 use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
+use App\Models\TataKelola;
 use Illuminate\Support\Facades\Validator;
 
 class readUser extends Controller
@@ -219,6 +220,30 @@ class readUser extends Controller
 
         return response()->json([
             'kontak' => $kontak
+        ], 200);
+    }
+
+    function readKodeEtik()
+    {
+        $kodeEtik = TataKelola::where('category', 'kodeEtik')->firstOrFail();
+        return response()->json([
+            'kodeEtik' => $kodeEtik
+        ], 200);
+    }
+
+    function kebijakanPelapor()
+    {
+        $kebijakanPelapor = TataKelola::where('category', 'kebijakanPelapor')->firstOrFail();
+        return response()->json([
+            'kebijakanPelapor' => $kebijakanPelapor
+        ], 200);
+    }
+
+    function kebijakanKeberagaman()
+    {
+        $keberagaman = TataKelola::where('category', 'kebijakanKeberagaman');
+        return response()->json([
+            'keberagaman' => $keberagaman
         ], 200);
     }
 }

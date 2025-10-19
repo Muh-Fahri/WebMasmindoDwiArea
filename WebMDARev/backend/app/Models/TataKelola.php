@@ -9,10 +9,10 @@ class TataKelola extends Model
 {
     protected $table = 'tataKelola';
     protected $fillable = [
-        'deskripsiHalaman',
         'fotoSampul',
         'pdf',
         'deskripKebijakan',
+        'category',
     ];
 
     public static function boot()

@@ -18,6 +18,7 @@ import Profesional from "./Page/profesional";
 import DetailProfesi from "./Page/detailProfesi";
 import Magang from "./Page/magang";
 import Kontak from "./Page/kontak";
+import TataKelola from "./Page/tataKelola";
 
 function AppRouter() {
     return (
@@ -45,6 +46,7 @@ function AppRouter() {
                     <Route path="magang" element={<Magang />} />
                     <Route path="karir/detail/:uuid" element={<DetailProfesi />} />
                     <Route path="kontak" element={<Kontak />} />
+                    <Route path="tata-kelola" element={<TataKelola />} />
                 </Routes>
             </Router>
         </div>

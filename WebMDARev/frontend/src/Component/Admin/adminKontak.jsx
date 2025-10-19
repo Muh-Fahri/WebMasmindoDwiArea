@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import NavSide from "./navSide";
 import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 
 function AdminKontak() {
     const Token = localStorage.getItem('token');
@@ -19,18 +21,36 @@ function AdminKontak() {
         }
     }
 
+    const deleteKontakData = async (uuid) => {
+        try {
+            await axios.delete(`http://127.0.0.1:8000/api/admin/kontak/delete/${uuid}`, {
+                headers: {
+                    Authorization: `Bearer ${Token}`
+                }
+            });
+            getKontakData();
+        } catch (error) {
+            alert('gagal menghapus data');
+        }
+    }
+
     useEffect(() => {
         getKontakData();
+
+        const interval = setInterval(() => {
+            getKontakData();
+        }, 1000);
+
+        return () => clearInterval(interval);
+
     }, []);
     return (
         <div>
             <div className="d-flex flex-column flex-md-row">
                 <NavSide />
             </div>
-
             <div className="container py-4">
                 <section>
-                    {/* Header */}
                     <div className="row">
                         <div className="col pt-3">
                             <div className="card border-0 shadow-none" style={{ backgroundColor: '#F16022' }}>
@@ -44,9 +64,10 @@ function AdminKontak() {
                         kontakList.map((kontak, index) => (
                             <div className="row mt-3" key={index}>
                                 <div className="col">
-                                    <div className="card border-0 rounded-4 shadow-sm">
+                                    <div className="card border-0 rounded-4 shadow-sm position-relative">
                                         <div className="card-body">
                                             <div className="row align-items-center gy-3">
+                                                {/* Foto profil */}
                                                 <div className="col-12 col-sm-auto d-flex justify-content-center justify-content-sm-start">
                                                     <div
                                                         style={{
@@ -57,7 +78,7 @@ function AdminKontak() {
                                                         }}
                                                     >
                                                         <img
-                                                            src="/Image/Background/CampAwakMasJPEG.jpg"
+                                                            src="/Image/Profile/userProfile.png"
                                                             alt="Profil"
                                                             className="w-100 h-100"
                                                             style={{ objectFit: "cover" }}
@@ -73,6 +94,34 @@ function AdminKontak() {
                                                         <small>No Telp: {kontak.noTelp}</small>
                                                     </p>
                                                     <p className="mb-0">{kontak.pesan}</p>
+                                                </div>
+
+                                                {/* Tombol titik tiga (dropdown menu) */}
+                                                <div className="col-auto ms-auto">
+                                                    <div className="dropdown">
+                                                        <button
+                                                            className="btn btn-danger btn-sm"
+                                                            type="button"
+                                                            data-bs-toggle="dropdown"
+                                                            aria-expanded="false"
+
+
+                                                        >
+                                                            <FontAwesomeIcon className="submit fs-5" icon={faTrash} />
+                                                        </button>
+                                                        <ul className="dropdown-menu dropdown-menu-end">
+                                                            <li>
+                                                                <button
+                                                                    className="dropdown-item text-danger"
+                                                                    onMouseDown={(e) => e.stopPropagation()}
+                                                                    onClick={() => deleteKontakData(kontak.uuid)}
+                                                                >
+                                                                    <i className="bi bi-trash me-2"></i> Hapus
+                                                                </button>
+
+                                                            </li>
+                                                        </ul>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
