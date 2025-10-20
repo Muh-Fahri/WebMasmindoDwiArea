@@ -231,7 +231,7 @@ class readUser extends Controller
         ], 200);
     }
 
-    function kebijakanPelapor()
+    function readkebijakanPelapor()
     {
         $kebijakanPelapor = TataKelola::where('category', 'kebijakanPelapor')->firstOrFail();
         return response()->json([
@@ -239,11 +239,19 @@ class readUser extends Controller
         ], 200);
     }
 
-    function kebijakanKeberagaman()
+    function readkebijakanKeberagaman()
     {
-        $keberagaman = TataKelola::where('category', 'kebijakanKeberagaman');
+        $keberagaman = TataKelola::where('category', 'kebijakanKeberagaman')->firstOrFail();
         return response()->json([
             'keberagaman' => $keberagaman
+        ], 200);
+    }
+
+    function readAntiSuap()
+    {
+        $antiSuap = TataKelola::where('category', 'antiSuapAntiKorupsi')->firstOrFail();
+        return response()->json([
+            'antiSuap' => $antiSuap
         ], 200);
     }
 }

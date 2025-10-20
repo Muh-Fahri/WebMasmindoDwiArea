@@ -380,6 +380,7 @@ class updateAdmin extends Controller
             'fotoSampul'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'pdf'              => 'nullable|mimes:pdf|max:10240',
             'deskripKebijakan' => 'nullable|string',
+            'category'         => 'nullable|in:kodeEtik,kebijakanPelapor,KebijakanKeberagaman,antiSuapAntiKorupsi'
         ]);
 
         if ($validate->fails()) {
@@ -412,6 +413,7 @@ class updateAdmin extends Controller
             'deskripKebijakan' => $request->filled('deskripKebijakan') ? $request->deskripKebijakan : $tataKelola->deskripKebijakan,
             'fotoSampul'       => $nama_image,
             'pdf'              => $pdf_name,
+            'category'         => $request->filled('category') ? $request->category : $tataKelola->category,
         ]);
 
         return response()->json([

@@ -32,11 +32,9 @@ function ESG() {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/lingkungan/deskripLingkungan");
             setDeskripLingkunganList(res.data.deskripLingkunan);
         } catch (error) {
-            console.error("Error Pada Pengambilan Data Deskripsi Lingkungan:", error);
             alert(t("error_fetch_description"));
             setDeskripLingkunganList([]);
         } finally {
-            console.log("getdeskripLingkungan: Selesai fetch. isLoadingDeskripLingkungan diset ke false.");
             setIsLoadingDeskripLingkungan(false);
         }
     }

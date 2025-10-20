@@ -1,15 +1,64 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import NavbarHijau from "../Component/navbarHijau";
 import Laporan from "./laporan";
 import { NavLink } from "react-router-dom";
 import DOMPurify from 'dompurify';
 import { useTranslation } from "react-i18next";
 import Footer from "./fotter";
+import axios from "axios";
+import { data } from "jquery";
 
 
 
 function TataKelola() {
+    const [kodeEtikList, setKodeEtik] = useState([]);
+    const [kebijakanPelaporList, setKebijakanPelapor] = useState([]);
+    const [keberagamanList, setKeberagaman] = useState([]);
+    const [antiSuapList, setAntiSuap] = useState([]);
 
+    const getDataKodeEtik = async () => {
+        try {
+            const res = await axios.get('http://127.0.0.1:8000/api/user/tataKelola/kodeEtik');
+            setKodeEtik(res.data.kodeEtik);
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+    const getDataKebijakanPelapor = async () => {
+        try {
+            const res = await axios.get('http://127.0.0.1:8000/api/user/tataKelola/kebijakanPelapor');
+            setKebijakanPelapor(res.data.kebijakanPelapor);
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+    const getDataKebijakanKeberagaman = async () => {
+        try {
+            const res = await axios.get('http://127.0.0.1:8000/api/user/tataKelola/kebijakanKeberagaman');
+            setKeberagaman(res.data.keberagaman);
+        } catch (error) {
+
+        }
+    }
+
+    const getDataAntiSuap = async () => {
+        try {
+            const res = await axios.get('http://127.0.0.1:8000/api/user/tataKelola/antiSuap');
+            setAntiSuap(res.data.antiSuap);
+        } catch (error) {
+            alert(error);
+        }
+    }
+
+
+    useEffect(() => {
+        getDataKodeEtik();
+        getDataKebijakanPelapor();
+        getDataKebijakanKeberagaman();
+        getDataAntiSuap();
+    }, [])
 
     const { t, i18n } = useTranslation();
     return (
@@ -74,161 +123,169 @@ function TataKelola() {
                 </section>
                 <section>
                     <div className="container">
-                        <div className="row align-items-center">
-                            <div className="col-md-6 d-flex justify-content-center">
-                                <div
-                                    className="card shadow-sm border-0"
-                                    style={{
-                                        width: "300px",
-                                        height: "300px",
-                                        overflow: "hidden",
-                                    }}
-                                >
-                                    <img
-                                        src="/Image/Background/bg-karir.webp"
-                                        alt="Kode Etik"
-                                        className="w-100 h-100"
-                                        style={{ objectFit: "cover" }}
-                                    />
+                        {kodeEtikList ? (
+                            <div className="row align-items-center mb-5">
+                                <div className="col-md-6 d-flex justify-content-center">
+                                    <div
+                                        className="card shadow-sm border-0"
+                                        style={{ width: "300px", height: "300px", overflow: "hidden" }}
+                                    >
+                                        <img
+                                            src={`http://127.0.0.1:8000/TataKelola/image/${kodeEtikList.fotoSampul}`}
+                                            alt="Kode Etik"
+                                            className="w-100 h-100"
+                                            style={{ objectFit: "cover" }}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="col-md-6">
+                                    <h1 className="fw-bold" style={{ color: "#F16022" }}>
+                                        Kode Etik
+                                    </h1>
+                                    <p>{kodeEtikList.deskripKebijakan}</p>
+                                    <a
+                                        href={`http://127.0.0.1:8000/TataKelola/pdf/${kodeEtikList.pdf}`}
+                                        className="btn btn-secondary rounded-5 border-0 shadow-none"
+                                        target="_blank"
+                                        style={{ backgroundColor: '#F16022' }}
+                                    >
+                                        Lihat PDF
+                                    </a>
                                 </div>
                             </div>
+                        ) : (
+                            <div className="row">
+                                <div className="col">
 
-                            <div className="col-md-6">
-                                <h1 className="fw-bold" style={{ color: "#F16022" }}>
-                                    Kode Etik
-                                </h1>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti
-                                    voluptatum, repellat impedit minima fuga ut aspernatur. Consectetur
-                                    expedita laboriosam, saepe corporis commodi debitis quisquam
-                                    reprehenderit consequatur, dolorem eum incidunt? Voluptas dolorem
-                                    atque alias laborum! Quod, minus? Repudiandae deserunt cumque
-                                    doloribus fuga, nam illo a. Recusandae corrupti quibusdam est eaque
-                                    iusto.
-                                </p>
-                                <a href="#" className="btn btn-secondary rounded-5">
-                                    Download PDF
-                                </a>
-                            </div>
-                        </div>
-                        <div className="row align-items-center">
-                            <div className="col-md-6 d-flex justify-content-center">
-                                <div
-                                    className="card shadow-sm border-0"
-                                    style={{
-                                        width: "300px",
-                                        height: "300px",
-                                        overflow: "hidden",
-                                    }}
-                                >
-                                    <img
-                                        src="/Image/Background/bg-karir.webp"
-                                        alt="Kode Etik"
-                                        className="w-100 h-100"
-                                        style={{ objectFit: "cover" }}
-                                    />
                                 </div>
                             </div>
+                        )}
 
-                            <div className="col-md-6">
-                                <h1 className="fw-bold" style={{ color: "#F16022" }}>
-                                    Kebijakan Pelapor
-                                </h1>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti
-                                    voluptatum, repellat impedit minima fuga ut aspernatur. Consectetur
-                                    expedita laboriosam, saepe corporis commodi debitis quisquam
-                                    reprehenderit consequatur, dolorem eum incidunt? Voluptas dolorem
-                                    atque alias laborum! Quod, minus? Repudiandae deserunt cumque
-                                    doloribus fuga, nam illo a. Recusandae corrupti quibusdam est eaque
-                                    iusto.
-                                </p>
-                                <a href="#" className="btn btn-secondary rounded-5">
-                                    Download PDF
-                                </a>
-                            </div>
-                        </div>
-                        <div className="row align-items-center">
-                            <div className="col-md-6 d-flex justify-content-center">
-                                <div
-                                    className="card shadow-sm border-0"
-                                    style={{
-                                        width: "300px",
-                                        height: "300px",
-                                        overflow: "hidden",
-                                    }}
-                                >
-                                    <img
-                                        src="/Image/Background/bg-karir.webp"
-                                        alt="Kode Etik"
-                                        className="w-100 h-100"
-                                        style={{ objectFit: "cover" }}
-                                    />
+
+
+                        {/* kebijakan pelapor */}
+                        {kebijakanPelaporList ? (
+                            <div className="row align-items-center mb-5">
+                                <div className="col-md-6 d-flex justify-content-center">
+                                    <div
+                                        className="card shadow-sm border-0"
+                                        style={{
+                                            width: "300px",
+                                            height: "300px",
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        <img
+                                            src={`http://127.0.0.1:8000/TataKelola/image/${kebijakanPelaporList.fotoSampul}`}
+                                            alt="Kode Etik"
+                                            className="w-100 h-100"
+                                            style={{ objectFit: "cover" }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                    <h1 className="fw-bold" style={{ color: "#F16022" }}>
+                                        Kebijakan Pelapor
+                                    </h1>
+                                    <p>{kebijakanPelaporList.deskripKebijakan}</p>
+                                    <a href={`http://127.0.0.1:8000/TataKelola/pdf/${kebijakanPelaporList.pdf}`} className="btn btn-secondary rounded-5 shadow-none border-0" style={{ backgroundColor: '#F16022' }}>
+                                        Lihat PDF
+                                    </a>
                                 </div>
                             </div>
-
-                            <div className="col-md-6">
-                                <h1 className="fw-bold" style={{ color: "#F16022" }}>
-                                    Kebijakan Keberagaman
-                                </h1>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti
-                                    voluptatum, repellat impedit minima fuga ut aspernatur. Consectetur
-                                    expedita laboriosam, saepe corporis commodi debitis quisquam
-                                    reprehenderit consequatur, dolorem eum incidunt? Voluptas dolorem
-                                    atque alias laborum! Quod, minus? Repudiandae deserunt cumque
-                                    doloribus fuga, nam illo a. Recusandae corrupti quibusdam est eaque
-                                    iusto.
-                                </p>
-                                <a href="#" className="btn btn-secondary rounded-5">
-                                    Download PDF
-                                </a>
-                            </div>
-                        </div>
-                        <div className="row align-items-center">
-                            <div className="col-md-6 d-flex justify-content-center">
-                                <div
-                                    className="card shadow-sm border-0"
-                                    style={{
-                                        width: "300px",
-                                        height: "300px",
-                                        overflow: "hidden",
-                                    }}
-                                >
-                                    <img
-                                        src="/Image/Background/bg-karir.webp"
-                                        alt="Kode Etik"
-                                        className="w-100 h-100"
-                                        style={{ objectFit: "cover" }}
-                                    />
+                        ) : (
+                            <div className="row">
+                                <div className="col">
                                 </div>
                             </div>
+                        )}
 
-                            <div className="col-md-6">
-                                <h1 className="fw-bold" style={{ color: "#F16022" }}>
-                                    Kebijakan Anti Suap dan Anti Korupsi
-                                </h1>
-                                <p>
-                                    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Corrupti
-                                    voluptatum, repellat impedit minima fuga ut aspernatur. Consectetur
-                                    expedita laboriosam, saepe corporis commodi debitis quisquam
-                                    reprehenderit consequatur, dolorem eum incidunt? Voluptas dolorem
-                                    atque alias laborum! Quod, minus? Repudiandae deserunt cumque
-                                    doloribus fuga, nam illo a. Recusandae corrupti quibusdam est eaque
-                                    iusto.
-                                </p>
-                                <a href="#" className="btn btn-secondary rounded-5">
-                                    Download PDF
-                                </a>
+                        {/* kebijakan keberagaman */}
+                        {keberagamanList ? (
+                            <div className="row align-items-center mb-5">
+                                <div className="col-md-6 d-flex justify-content-center">
+                                    <div
+                                        className="card shadow-sm border-0"
+                                        style={{
+                                            width: "300px",
+                                            height: "300px",
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        <img
+                                            src={`http://127.0.0.1:8000/TataKelola/image/${keberagamanList.fotoSampul}`}
+                                            alt="Kode Etik"
+                                            className="w-100 h-100"
+                                            style={{ objectFit: "cover" }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                    <h1 className="fw-bold" style={{ color: "#F16022" }}>
+                                        Kebijakan Keberagaman
+                                    </h1>
+                                    <p>{keberagamanList.deskripKebijakan}</p>
+                                    <a href={`http://127.0.0.1:8000/TataKelola/pdf/${keberagamanList.pdf}`} className="btn btn-secondary rounded-5 shadow-none border-0" style={{ backgroundColor: '#F16022' }}>
+                                        Lihat PDF
+                                    </a>
+                                </div>
                             </div>
-                        </div>
+                        ) : (
+                            <div className="row">
+                                <div className="col">
+
+                                </div>
+                            </div>
+                        )}
+
+
+                        {/* Kebijakan anti suap dan anti korupsi */}
+                        {antiSuapList ? (
+                            <div className="row align-items-center">
+                                <div className="col-md-6 d-flex justify-content-center">
+                                    <div
+                                        className="card shadow-sm border-0"
+                                        style={{
+                                            width: "300px",
+                                            height: "300px",
+                                            overflow: "hidden",
+                                        }}
+                                    >
+                                        <img
+                                            src={`http://127.0.0.1:8000/TataKelola/image/${antiSuapList.fotoSampul}`}
+                                            alt="Kode Etik"
+                                            className="w-100 h-100"
+                                            style={{ objectFit: "cover" }}
+                                        />
+                                    </div>
+                                </div>
+
+                                <div className="col-md-6">
+                                    <h1 className="fw-bold" style={{ color: "#F16022" }}>
+                                        Kebijakan Anti Suap dan Anti Korupsi
+                                    </h1>
+                                    <p>{antiSuapList.deskripKebijakan}</p>
+                                    <a href={`http://127.0.0.1:8000/TataKelola/pdf/${antiSuapList.pdf}`} className="btn btn-secondary rounded-5 shadow-none border-0" style={{ backgroundColor: '#F16022' }}>
+                                        Lihat PDF
+                                    </a>
+                                </div>
+                            </div>
+                        ) : (
+                            <div className="row">
+                                <div className="col">
+
+                                </div>
+                            </div>
+                        )}
                     </div>
                 </section>
                 <section className="pt-5">
                     <Footer />
                 </section>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 

@@ -478,7 +478,7 @@ class createAdmin extends Controller
             'fotoSampul' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'pdf' => 'nullable|mimes:pdf|max:10240',
             'deskripKebijakan' => 'required|string',
-            'category' => 'required|in:kodeEtik, kebijakanPelapor, kebijakanKeberagaman, antiSuapAntiKorupsi',
+            'category' => 'required|in:kodeEtik,kebijakanPelapor,kebijakanKeberagaman,antiSuapAntiKorupsi',
         ]);
         if ($validate->fails()) {
             return response()->json([
