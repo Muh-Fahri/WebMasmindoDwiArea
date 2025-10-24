@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('tataKelola', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->text('deskripsiHalaman');
             $table->string('fotoSampul');
             $table->string('pdf')->nullable();
             $table->text('deskripKebijakan');
+            $table->enum('category', ['kodeEtik', 'kebijakanPelapor', 'kebijakanKeberagaman', 'antiSuap']);
             $table->timestamps();
         });
     }

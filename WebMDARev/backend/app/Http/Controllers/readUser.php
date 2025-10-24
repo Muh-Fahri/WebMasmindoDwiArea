@@ -12,6 +12,7 @@ use App\Models\Sosial;
 use App\Models\Youtube;
 use App\Models\Carousel;
 use App\Models\Instagram;
+use App\Models\TataKelola;
 use Illuminate\Http\Request;
 use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
@@ -219,6 +220,37 @@ class readUser extends Controller
 
         return response()->json([
             'kontak' => $kontak
+        ], 200);
+    }
+    function readKodeEtik()
+    {
+        $kodeEtik = TataKelola::where('category', 'kodeEtik')->get();
+        return response()->json([
+            'kodeEtik' => $kodeEtik
+        ], 200);
+    }
+
+    function readkebijakanPelapor()
+    {
+        $kebijakanPelapor = TataKelola::where('category', 'kebijakanPelapor')->get();
+        return response()->json([
+            'kebijakanPelapor' => $kebijakanPelapor
+        ], 200);
+    }
+
+    function readkebijakanKeberagaman()
+    {
+        $keberagaman = TataKelola::where('category', 'kebijakanKeberagaman')->get();
+        return response()->json([
+            'keberagaman' => $keberagaman
+        ], 200);
+    }
+
+    function readAntiSuap()
+    {
+        $antiSuap = TataKelola::where('category', 'antiSuapAntiKorupsi')->get();
+        return response()->json([
+            'antiSuap' => $antiSuap
         ], 200);
     }
 }

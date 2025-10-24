@@ -37,6 +37,14 @@ Route::get('/user/magang', [readUser::class, 'readMagang']);
 Route::get('/user/karir/selengkapnya/{uuid}', [readUser::class, 'readKarirSelengkapnya']);
 Route::post('/user/kontakUser', [readUser::class, 'kirimKontak']);
 
+// tata kelola
+Route::get('/user/tataKelola/kebijakanPelapor', [readUser::class, 'readKebijakanPelapor']);
+Route::get('/user/tataKelola/kebijakanKeberagaman', [readUser::class, 'readKebijakanKeberagaman']);
+Route::get('/user/tataKelola/antiSuap', [readUser::class, 'readAntiSuap']);
+Route::get('/user/tataKelola/kodeEtik', [readUser::class, 'readKodeEtik']);
+
+
+
 
 
 Route::post('/admin/weather', [createAdmin::class, 'createWeather']);

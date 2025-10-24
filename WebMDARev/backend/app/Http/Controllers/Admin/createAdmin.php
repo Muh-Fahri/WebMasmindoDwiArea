@@ -475,7 +475,7 @@ class createAdmin extends Controller
     function createTataKelola(Request $request)
     {
         $validate = Validator::make($request->all(), [
-            'deskripsiHalaman' => 'required|string',
+            'category' => 'required|in:kodeEtik,kebijakanPelapor,kebijakanKeberagaman,antiSuap',
             'fotoSampul' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'pdf' => 'nullable|mimes:pdf|max:10240',
             'deskripKebijakan' => 'required|string',
@@ -496,7 +496,7 @@ class createAdmin extends Controller
             $request->file('pdf')->move($tempatSimpan, $namaFile);
         }
         $tataKelola = TataKelola::create([
-            'deskripsiHalaman'  => $request->deskripsiHalaman,
+            'category'          => $request->category,
             'fotoSampul'        => $namaFoto,
             'pdf'               => $namaFile,
             'deskripKebijakan'  => $request->deskripKebijakan,

@@ -389,7 +389,7 @@ class updateAdmin extends Controller
     {
         // Validasi
         $validate = Validator::make($request->all(), [
-            'deskripsiHalaman' => 'nullable|string',
+            'category'         => 'nullable|in:kebijakanPelapor,kebijakanKeberagaman,antiSuap',
             'fotoSampul'       => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:5120',
             'pdf'              => 'nullable|mimes:pdf|max:10240',
             'deskripKebijakan' => 'nullable|string',
@@ -422,7 +422,7 @@ class updateAdmin extends Controller
             $pdf_name = $tataKelola->pdf;
         }
         $tataKelola->update([
-            'deskripsiHalaman' => $request->filled('deskripsiHalaman') ? $request->deskripsiHalaman : $tataKelola->deskripsiHalaman,
+            'deskripsiHalaman' => $request->filled('category')         ? $request->category : $tataKelola->category,
             'deskripKebijakan' => $request->filled('deskripKebijakan') ? $request->deskripKebijakan : $tataKelola->deskripKebijakan,
             'fotoSampul'       => $nama_image,
             'pdf'              => $pdf_name,
