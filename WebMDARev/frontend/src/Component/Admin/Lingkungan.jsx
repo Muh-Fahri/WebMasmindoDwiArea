@@ -61,6 +61,7 @@ function Lingkungan() {
                 }
             });
             setImgList(imgLing.data.imgLing);
+            getImgLingData();
         } catch (error) {
             handleUnauthorized(error);
         }

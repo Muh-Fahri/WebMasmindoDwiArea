@@ -7,9 +7,9 @@ import { event } from "jquery";
 
 
 function AdminTataKelola() {
-    const Token = localStorage.getItem('Token');
-    const [setTataKelola, tataKelolaList] = useState([]);
-
+    const Token = localStorage.getItem('token');
+    const [tataKelolaList, setTataKelola] = useState([]);
+    // list lalu set
     const [desKebijakan, setDesKebijakan] = useState('');
     const [imgTataKelola, setImgTataKelola] = useState('');
     const [filePdf, setFilePdf] = useState('');
@@ -42,11 +42,11 @@ function AdminTataKelola() {
         formData.append('deskripKebijakan', desKebijakan);
         formData.append('fotoSampul', imgTataKelola);
         formData.append('category', kategory);
+        formData.append('pdf', file);
         try {
             await axios.post('http://127.0.0.1:8000/api/admin/tataKelola', formData, {
                 headers: {
                     Authorization: `Bearer ${Token}`,
-                    'Content-Type': 'multipart/form-data'
                 }
             });
             setDesKebijakan('');
@@ -56,6 +56,7 @@ function AdminTataKelola() {
             getTataKelolaData();
         } catch (error) {
             alert(error);
+            console.log("Isi token di localStorage:", localStorage.getItem("Token"));
 
         }
     }
@@ -66,6 +67,7 @@ function AdminTataKelola() {
     }
 
     useEffect(() => {
+
         getTataKelolaData();
     }, []);
 
@@ -91,7 +93,7 @@ function AdminTataKelola() {
                                 <h3 className="text-white">Masukkan Data</h3>
                             </div>
                             <div className="card p-3">
-                                <form action="">
+                                <form onSubmit={createTataKelola} encType="multipart/form-data">
                                     <div className="mb-3">
                                         <p>Masukkan Deskripsi</p>
                                         <CKEditor
@@ -105,15 +107,18 @@ function AdminTataKelola() {
 
                                         />
                                     </div>
-                                    <div className="mb-3">
-                                        <select name="" id="" className="form-control">
-                                            <option value="">--Silahkan Pilih Kategori--</option>
-                                            <option value="">Kode Etik</option>
-                                            <option value="">Kebijakan Pelapor</option>
-                                            <option value="">Kebijakan Keberagaman</option>
-                                            <option value="">Kebijakan Anti Suap dan Anti Korupsi</option>
-                                        </select>
-                                    </div>
+                                    <select
+                                        className="form-control"
+                                        value={kategory}
+                                        onChange={(e) => setKategory(e.target.value)}
+                                    >
+                                        <option value="">--Silahkan Pilih Kategori--</option>
+                                        <option value="kodeEtik">Kode Etik</option>
+                                        <option value="kebijakanPelapor">Kebijakan Pelapor</option>
+                                        <option value="kebijakanKeberagaman">Kebijakan Keberagaman</option>
+                                        <option value="antiSuap">Kebijakan Anti Suap dan Anti Korupsi</option>
+                                    </select>
+
                                     <div className="mb-3">
                                         <p>Masukkan file PDF (Jika ada)</p>
                                         <input type="file" className="form-control" ref={fileInputPdf} accept=".pdf" required />
@@ -143,44 +148,52 @@ function AdminTataKelola() {
                                             <th>Opsi</th>
                                         </thead>
                                         <tbody>
-                                            <tr>
-                                                <td>1</td>
-                                                <td>
-                                                    Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                                                    Sequi ad aut quam ratione exercitationem illum cupiditate
-                                                    iusto voluptatum repellendus quibusdam!
-                                                </td>
-                                                <td>Kode Etik</td>
-                                                <td>wkwkwkwkwkwkwk</td>
-                                                <td>
-                                                    <div
-                                                        style={{
-                                                            width: "80px",
-                                                            height: "80px",
-                                                            overflow: "hidden",
-                                                            borderRadius: "8px",
-                                                        }}
-                                                    >
-                                                        <img
-                                                            src="/Image/Background/profesional.webp"
-                                                            alt="Preview"
-                                                            style={{
-                                                                width: "100%",
-                                                                height: "100%",
-                                                                objectFit: "cover",
-                                                            }}
-                                                        />
-                                                    </div>
-                                                </td>
-                                                <td>
+                                            {tataKelolaList.length > 0 ? (
+                                                tataKelolaList.map((data, index) => (
+                                                    <tr key={data.uuid}>
+                                                        <td>{index + 1}</td>
+                                                        <td>{data.deskripKebijakan}</td>
+                                                        <td>{data.category}</td>
+                                                        <td>{data.pdf}</td>
+                                                        <td>
+                                                            <div
+                                                                style={{
+                                                                    width: "80px",
+                                                                    height: "80px",
+                                                                    overflow: "hidden",
+                                                                    borderRadius: "8px",
+                                                                }}
+                                                            >
+                                                                <img
+                                                                    src={`http://127.0.0.1:8000/TataKelola/image/${data.fotoSampul}`}
+                                                                    alt="Preview"
+                                                                    style={{
+                                                                        width: "100%",
+                                                                        height: "100%",
+                                                                        objectFit: "cover",
+                                                                    }}
+                                                                />
+                                                            </div>
+                                                        </td>
+                                                        <td>
+                                                            <div className="row">
+                                                                <div className="col d-flex gap-3">
+                                                                    <a href="" className="btn btn-sm btn-warning">Edit</a>
+                                                                    <a href="" className="btn btn-sm btn-danger">Delete</a>
+                                                                </div>
+                                                            </div>
+                                                        </td>
+                                                    </tr>
+                                                ))
+                                            ) : (
+                                                <div className="container">
                                                     <div className="row">
-                                                        <div className="col d-flex gap-3">
-                                                            <a href="" className="btn btn-sm btn-warning">Edit</a>
-                                                            <a href="" className="btn btn-sm btn-danger">Delete</a>
+                                                        <div className="col">
+                                                            <td>Tidak ada data</td>
                                                         </div>
                                                     </div>
-                                                </td>
-                                            </tr>
+                                                </div>
+                                            )}
                                         </tbody>
                                     </table>
                                 </div>
