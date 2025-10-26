@@ -1,8 +1,6 @@
 import React, { useState, useEffect } from "react";
 import NavSide from "./navSide";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencilAlt, faTrash } from "@fortawesome/free-solid-svg-icons";
 import NoData from "../Error/NoData";
 import handleUnauthorized from "./unouthorized";
 import { useTranslation } from "react-i18next";
@@ -319,7 +317,6 @@ function Berita() {
                             </div>
                         </div>
                     </section>
-
                     <section>
                         {editModal && (
                             <div className="modal show fade d-block" tabIndex="-1">

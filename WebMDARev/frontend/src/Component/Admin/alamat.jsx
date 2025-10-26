@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import DOMPurify from "dompurify"
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 
 
 
@@ -33,16 +34,28 @@ function Alamat() {
 
 
     const getAlamatData = async () => {
+        Swal.fire({
+            title: 'Loading...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/admin/maps', {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
+            Swal.close();
             setAlamatList(res.data.maps);
-            getAlamatData();
         } catch (error) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
 
@@ -50,6 +63,14 @@ function Alamat() {
     const createAlamat = async (e) => {
         e.preventDefault();
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post('http://127.0.0.1:8000/api/admin/maps', {
                 nama_alamat_id: namaAlamat_id,
                 nama_alamat_en: namaAlamat_en,
@@ -63,9 +84,21 @@ function Alamat() {
             setNamaAlamat_Id("");
             setNamaAlamat_en("");
             setLinkAlamat("");
-            alert('Success');
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data tata kelola berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
+
         } catch (error) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
     }
 

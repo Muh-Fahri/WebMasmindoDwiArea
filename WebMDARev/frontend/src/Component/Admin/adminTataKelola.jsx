@@ -3,73 +3,210 @@ import NavSide from "./navSide";
 import { CKEditor } from "@ckeditor/ckeditor5-react";
 import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
 import axios from "axios";
-import { event } from "jquery";
+import Swal from 'sweetalert2';
+
 
 
 function AdminTataKelola() {
     const Token = localStorage.getItem('token');
     const [tataKelolaList, setTataKelola] = useState([]);
-    // list lalu set
     const [desKebijakan, setDesKebijakan] = useState('');
     const [imgTataKelola, setImgTataKelola] = useState('');
     const [filePdf, setFilePdf] = useState('');
     const [kategory, setKategory] = useState('');
     const fileInputPdf = useRef(null);
 
+    // modal
+    const [editModal, setEditModal] = useState(false);
+    const [editId, setEditid] = useState("");
+    const [editDesKebijakan, setEditDesKeb] = useState({ deskripKebijakan: '' });
+    const [editImgTakel, setEditImgTakel] = useState(null);
+    const [editCategory, setEditCategory] = useState({ category: '' });
+    const [editFilePdf, setEditPdf] = useState(null);
+    const [editFileName, setEditFileName] = useState(""); // untuk tampilkan nama file PDF lama
+    const [editOldImage, setEditOldImage] = useState(""); // untuk gambar lama
+
+
 
     const getTataKelolaData = async () => {
+        // Tampilkan loading
+        Swal.fire({
+            title: 'Memuat data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/admin/tataKelola', {
                 headers: {
-                    Authorization: `Bearer ${Token}`
-                }
+                    Authorization: `Bearer ${Token}`,
+                },
             });
+            Swal.close();
             setTataKelola(res.data.tataKelola);
-        } catch (error) {
 
+            // Tampilkan notifikasi sukses
+            // Swal.fire({
+            //     icon: 'success',
+            //     title: 'Data berhasil dimuat!',
+            //     showConfirmButton: false,
+            //     timer: 1500, // auto close dalam 1,5 detik
+            // });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
         }
-    }
+    };
+
 
     const createTataKelola = async (e) => {
         e.preventDefault();
+
         const file = fileInputPdf.current.files[0];
 
         if (!file) {
-            alert('Silahkan Masukkan PDF anda');
+            Swal.fire({
+                icon: 'warning',
+                title: 'File PDF belum dipilih!',
+                text: 'Silahkan masukkan file PDF sebelum menyimpan data.',
+                confirmButtonColor: '#3085d6',
+            });
             return;
         }
+
         const formData = new FormData();
         formData.append('deskripKebijakan', desKebijakan);
         formData.append('fotoSampul', imgTataKelola);
         formData.append('category', kategory);
         formData.append('pdf', file);
+
         try {
+            // tampilkan loading sementara request berlangsung
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
             await axios.post('http://127.0.0.1:8000/api/admin/tataKelola', formData, {
                 headers: {
                     Authorization: `Bearer ${Token}`,
                 }
             });
+
+            // reset form
             setDesKebijakan('');
             setImgTataKelola('');
             setFilePdf('');
             setKategory('');
-            getTataKelolaData();
-        } catch (error) {
-            alert(error);
-            console.log("Isi token di localStorage:", localStorage.getItem("Token"));
 
+            // ambil ulang data
+            getTataKelolaData();
+
+            // tampilkan notifikasi sukses
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data tata kelola berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
+
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
-    }
+    };
+
+    const handleUpdateTataKelola = async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData();
+        formData.append("deskripKebijakan", editDesKebijakan.deskripKebijakan);
+        formData.append("category", editCategory.category);
+        if (editFilePdf) formData.append("pdf", editFilePdf);
+        if (editImgTakel) formData.append("fotoSampul", editImgTakel);
+
+        try {
+
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
+            await axios.post(
+                `http://127.0.0.1:8000/api/admin/tataKelola/${editId}`,
+                formData,
+                {
+                    headers: {
+                        Authorization: `Bearer ${Token}`,
+                        "Content-Type": "multipart/form-data",
+                    },
+                }
+            );
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data berhasil diperbarui.',
+                showConfirmButton: false,
+                timer: 2000
+            });
+
+            setEditModal(false);
+            getTataKelolaData();
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal!',
+                text: 'Terjadi kesalahan saat memperbarui data.',
+            });
+        }
+    };
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
         setImgTataKelola(file)
     }
 
-    useEffect(() => {
+    const handleEditFileChange = (e) => {
+        const file = e.target.files[0];
+        setEditImgTakel(file);
+    };
 
+    useEffect(() => {
         getTataKelolaData();
     }, []);
+
+    function openEditModal(data) {
+        setEditid(data.uuid);
+        setEditDesKeb({ deskripKebijakan: data.deskripKebijakan });
+        setEditCategory({ category: data.category });
+        setEditImgTakel(null);
+        setEditPdf(null);
+        setEditFileName(data.pdf); // untuk tampilkan nama file lama
+        setEditOldImage(data.fotoSampul); // untuk tampilkan gambar lama
+        setEditModal(true);
+    }
+
 
     return (
         <div>
@@ -98,15 +235,14 @@ function AdminTataKelola() {
                                         <p>Masukkan Deskripsi</p>
                                         <CKEditor
                                             editor={ClassicEditor}
-                                            data={desKebijakan}
+                                            data={desKebijakan}  // ✅ ubah ini
                                             onChange={(event, editor) => {
                                                 const data = editor.getData();
-                                                setDesKebijakan(data);
+                                                setDesKebijakan(data); // ✅ tetap ini
                                             }}
-
-
                                         />
                                     </div>
+
                                     <select
                                         className="form-control"
                                         value={kategory}
@@ -123,15 +259,149 @@ function AdminTataKelola() {
                                         <p>Masukkan file PDF (Jika ada)</p>
                                         <input type="file" className="form-control" ref={fileInputPdf} accept=".pdf" required />
                                     </div>
+
                                     <div className="mb-3">
-                                        <p>Masukkan Gambar Ssampul</p>
+                                        <p>Masukkan Gambar Sampul</p>
                                         <input type="file" className="form-control" onChange={handleFileChange} />
                                     </div>
+
                                     <button className="btn btn-secondary">Tambahkan Data</button>
                                 </form>
+
                             </div>
                         </div>
                     </div>
+                </section>
+                {/* modal edit */}
+                <section>
+                    {editModal && (
+                        <div className="modal show fade d-block" tabIndex="-1">
+                            <div className="modal-dialog modal-lg">
+                                <div className="modal-content">
+                                    <form
+                                        encType="multipart/form-data"
+                                        onSubmit={handleUpdateTataKelola}
+                                    >
+                                        <div className="modal-header">
+                                            <h5 className="modal-title">Edit Data Tata Kelola</h5>
+                                            <button
+                                                type="button"
+                                                className="btn-close"
+                                                onClick={() => setEditModal(false)}
+                                            ></button>
+                                        </div>
+
+                                        <div className="modal-body">
+                                            {/* DESKRIPSI */}
+                                            <div className="mb-3">
+                                                <p>Masukkan Deskripsi</p>
+                                                <CKEditor
+                                                    editor={ClassicEditor}
+                                                    data={editDesKebijakan.deskripKebijakan}
+                                                    onChange={(event, editor) => {
+                                                        const data = editor.getData();
+                                                        setEditDesKeb({ deskripKebijakan: data });
+                                                    }}
+                                                />
+                                            </div>
+
+                                            {/* KATEGORI */}
+                                            <div className="mb-3">
+                                                <p>Pilih Kategori</p>
+                                                <select
+                                                    className="form-control"
+                                                    value={editCategory.category}
+                                                    onChange={(e) =>
+                                                        setEditCategory({ category: e.target.value })
+                                                    }
+                                                >
+                                                    <option value="">--Silahkan Pilih Kategori--</option>
+                                                    <option value="kodeEtik">Kode Etik</option>
+                                                    <option value="kebijakanPelapor">Kebijakan Pelapor</option>
+                                                    <option value="kebijakanKeberagaman">Kebijakan Keberagaman</option>
+                                                    <option value="antiSuap">Kebijakan Anti Suap dan Anti Korupsi</option>
+                                                </select>
+                                            </div>
+
+                                            {/* FILE PDF */}
+                                            <div className="mb-3">
+                                                <p>File PDF (opsional jika ingin ubah)</p>
+                                                <input
+                                                    type="file"
+                                                    className="form-control"
+                                                    accept=".pdf"
+                                                    onChange={(e) => setEditPdf(e.target.files[0])}
+                                                />
+                                                {editFileName && (
+                                                    <small className="text-muted">
+                                                        File lama: <strong>{editFileName}</strong>
+                                                    </small>
+                                                )}
+                                            </div>
+
+                                            {/* GAMBAR SAMPUL */}
+                                            <div className="mb-3">
+                                                <p>Gambar Sampul (opsional jika ingin ubah)</p>
+                                                <input
+                                                    type="file"
+                                                    className="form-control"
+                                                    accept="image/*"
+                                                    onChange={handleEditFileChange}
+                                                />
+
+                                                {/* Preview gambar lama */}
+                                                {!editImgTakel && editOldImage && (
+                                                    <div className="mt-3 text-center">
+                                                        <p className="text-muted mb-1">Gambar saat ini:</p>
+                                                        <img
+                                                            src={`http://127.0.0.1:8000/TataKelola/image/${editOldImage}`}
+                                                            alt="Gambar Lama"
+                                                            style={{
+                                                                width: "200px",
+                                                                borderRadius: "10px",
+                                                                objectFit: "cover",
+                                                            }}
+                                                        />
+                                                    </div>
+                                                )}
+
+                                                {/* Preview gambar baru */}
+                                                {editImgTakel && (
+                                                    <div className="mt-3 text-center">
+                                                        <p className="text-muted mb-1">Gambar baru:</p>
+                                                        <img
+                                                            src={URL.createObjectURL(editImgTakel)}
+                                                            alt="Preview Baru"
+                                                            style={{
+                                                                width: "200px",
+                                                                borderRadius: "10px",
+                                                                objectFit: "cover",
+                                                            }}
+                                                        />
+                                                        <p className="text-muted mt-1">{editImgTakel.name}</p>
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </div>
+
+                                        <div className="modal-footer">
+                                            <button
+                                                type="button"
+                                                className="btn btn-secondary"
+                                                onClick={() => setEditModal(false)}
+                                            >
+                                                Batal
+                                            </button>
+                                            <button type="submit" className="btn btn-primary">
+                                                Simpan Perubahan
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                 </section>
                 <section>
                     <div className="container">
@@ -140,19 +410,33 @@ function AdminTataKelola() {
                                 <div className="table-responsive">
                                     <table className="table table-bordered table-striped">
                                         <thead className="table-light">
-                                            <th>No</th>
-                                            <th>Deskripsi</th>
-                                            <th>Kategori</th>
-                                            <th>PDF</th>
-                                            <th>Foto Sampul</th>
-                                            <th>Opsi</th>
+                                            <tr>
+                                                <th>No</th>
+                                                <th>Deskripsi</th>
+                                                <th>Kategori</th>
+                                                <th>PDF</th>
+                                                <th>Foto Sampul</th>
+                                                <th>Opsi</th>
+                                            </tr>
                                         </thead>
                                         <tbody>
                                             {tataKelolaList.length > 0 ? (
                                                 tataKelolaList.map((data, index) => (
                                                     <tr key={data.uuid}>
                                                         <td>{index + 1}</td>
-                                                        <td>{data.deskripKebijakan}</td>
+                                                        <td>
+                                                            <div
+                                                                className="text-truncate"
+                                                                style={{
+                                                                    display: '-webkit-box',
+                                                                    WebkitLineClamp: 3,
+                                                                    WebkitBoxOrient: 'vertical',
+                                                                    overflow: 'hidden',
+                                                                }}
+                                                            >
+                                                                <div dangerouslySetInnerHTML={{ __html: data.deskripKebijakan }} />
+                                                            </div>
+                                                        </td>
                                                         <td>{data.category}</td>
                                                         <td>{data.pdf}</td>
                                                         <td>
@@ -178,7 +462,7 @@ function AdminTataKelola() {
                                                         <td>
                                                             <div className="row">
                                                                 <div className="col d-flex gap-3">
-                                                                    <a href="" className="btn btn-sm btn-warning">Edit</a>
+                                                                    <button className="btn btn-warning" onClick={() => openEditModal(data)}>Edit</button>
                                                                     <a href="" className="btn btn-sm btn-danger">Delete</a>
                                                                 </div>
                                                             </div>
@@ -186,13 +470,11 @@ function AdminTataKelola() {
                                                     </tr>
                                                 ))
                                             ) : (
-                                                <div className="container">
-                                                    <div className="row">
-                                                        <div className="col">
-                                                            <td>Tidak ada data</td>
-                                                        </div>
-                                                    </div>
-                                                </div>
+                                                <tr>
+                                                    <td>
+
+                                                    </td>
+                                                </tr>
                                             )}
                                         </tbody>
                                     </table>

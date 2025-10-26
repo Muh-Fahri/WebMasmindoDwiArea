@@ -12,6 +12,7 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useTranslation } from "react-i18next";
 import DOMPurify from 'dompurify';
+import Swal from "sweetalert2";
 
 
 delete L.Icon.Default.prototype._getIconUrl;
@@ -82,8 +83,6 @@ function InfoCard({ position, visible }) {
 function Home() {
     const [bisnisList, setBisnisList] = useState([]);
     const [beritaList, setBeritaList] = useState([]);
-    const [isLoadingBisnis, setIsLoadingBisnis] = useState(true);
-    const [isLoadingBerita, setIsLoadingBerita] = useState(true);
     const [imageCarList, setImgCarList] = useState([]);
 
     const position = [-3.4717, 120.1994];
@@ -96,9 +95,7 @@ function Home() {
     };
 
     useEffect(() => {
-        getBisnisData();
-        getBeritaData();
-        getCarouselData();
+        getAllData();
         AOS.init({
             duration: 1000,
         });
@@ -111,43 +108,55 @@ function Home() {
     }, []);
 
 
-    const getBisnisData = async () => {
+    const getAllData = async () => {
+        Swal.fire({
+            title: 'Memuat data...',
+            text: 'Harap tunggu sebentar, sedang mengambil semua informasi.',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
         try {
-            setIsLoadingBisnis(true);
-            const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
-            setBisnisList(res.data.bisnisUser);
+            // Jalankan semua request API secara paralel
+            const [bisnisRes, beritaRes, carouselRes] = await Promise.all([
+                axios.get("http://127.0.0.1:8000/api/user/bisnis"),
+                axios.get("http://127.0.0.1:8000/api/user/berita"),
+                axios.get("http://127.0.0.1:8000/api/user/carousel")
+            ]);
+
+            // Simpan ke state
+            setBisnisList(bisnisRes.data.bisnisUser);
+            setBeritaList(beritaRes.data.berita);
+            setImgCarList(carouselRes.data.carousel);
+
+            // Tutup loading
+            Swal.close();
+
+            // Tampilkan notifikasi sukses
+            Swal.fire({
+                icon: 'success',
+                title: 'Data berhasil dimuat!',
+                text: `Berhasil memuat ${beritaRes.data.berita.length} berita dan ${bisnisRes.data.bisnisUser.length} bisnis.`,
+                showConfirmButton: false,
+                timer: 1500,
+            });
+
         } catch (error) {
-            console.error("Error fetching bisnis data:", error);
-            alert(t('error_display'));
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.message,
+            });
+
+            // Kalau error, kosongkan datanya supaya UI tetap aman
             setBisnisList([]);
-        } finally {
-            setIsLoadingBisnis(false);
-        }
-    }
-
-    const getBeritaData = async () => {
-        try {
-            setIsLoadingBerita(true);
-            const res = await axios.get("http://127.0.0.1:8000/api/user/berita");
-            setBeritaList(res.data.berita);
-            getBisnisData();
-        } catch (error) {
-            console.error("Error fetching berita data:", error);
-            alert(t('error_display'));
             setBeritaList([]);
-        } finally {
-            setIsLoadingBerita(false);
+            setImgCarList([]);
         }
-    }
+    };
 
-    const getCarouselData = async () => {
-        try {
-            const res = await axios.get("http://127.0.0.1:8000/api/user/carousel");
-            setImgCarList(res.data.carousel);
-        } catch (error) {
-            alert(error);
-        }
-    }
     return (
         <div>
             <Navbar />
@@ -240,69 +249,56 @@ function Home() {
                                 </h3>
                             </div>
                         </div>
-                        {isLoadingBisnis ? (
-                            <div className="row mt-3 text-center py-5">
-                                <div className="col">
-                                    <h5>{t('loading_data')}</h5>
-                                    <div className="spinner-border text-white" role="status">
-                                        <span className="visually-hidden">Loading...</span>
+                        <div className="row mt-3" data-aos="fade-right">
+                            <div className="col">
+                                {bisnisList.length > 0 ? (
+                                    <>
+                                        {bisnisList.map((bisnis) => (
+                                            <div className="" key={bisnis.uuid}>
+                                                <p
+                                                    className="text-white"
+                                                    dangerouslySetInnerHTML={{
+                                                        __html: i18n.language === 'id'
+                                                            ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id.split(' ').slice(0, 100).join(' ') + '...')
+                                                            : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en.split(' ').slice(0, 100).join(' ') + '...')
+                                                    }} />
+                                            </div>
+                                        ))}
+                                        <Link to={'/bisnis'} style={{ color: '#F16022' }} className="text-decoration-none fs-4 fs-md-3 fw-bold">
+                                            {t('bisnis_kami_btn')} <FontAwesomeIcon icon={faArrowRight} />
+                                        </Link>
+                                    </>
+                                ) : (
+                                    <div className="text-center text-white">
+                                        <h5 className="text-secondary">{t('data_empty')}</h5>
                                     </div>
-                                </div>
+                                )}
                             </div>
-                        ) : (
-                            <>
-                                <div className="row mt-3" data-aos="fade-right">
-                                    <div className="col">
-                                        {bisnisList.length > 0 ? (
-                                            <>
-                                                {bisnisList.map((bisnis) => (
-                                                    <div className="" key={bisnis.uuid}>
-                                                        <p
-                                                            className="text-white"
-                                                            dangerouslySetInnerHTML={{
-                                                                __html: i18n.language === 'id'
-                                                                    ? DOMPurify.sanitize(bisnis.deskripsi_bisnis_id.split(' ').slice(0, 100).join(' ') + '...')
-                                                                    : DOMPurify.sanitize(bisnis.deskripsi_bisnis_en.split(' ').slice(0, 100).join(' ') + '...')
-                                                            }} />
-                                                    </div>
-                                                ))}
-                                                <Link to={'/bisnis'} style={{ color: '#F16022' }} className="text-decoration-none fs-4 fs-md-3 fw-bold">
-                                                    {t('bisnis_kami_btn')} <FontAwesomeIcon icon={faArrowRight} />
-                                                </Link>
-                                            </>
-                                        ) : (
-                                            <div className="text-center text-white">
-                                                <h5 className="text-secondary">{t('data_empty')}</h5>
-                                            </div>
-                                        )}
+                        </div>
+                        <div className="container mt-5">
+                            <div className="row mt-4" data-aos="zoom-in">
+                                {bisnisList.length > 0 ? (
+                                    <div className="col m-0 p-0">
+                                        {bisnisList.map((bisnis) => (
+                                            bisnis.link_video ? (
+                                                <div key={bisnis.uuid} className="responsive-iframe-container mb-4">
+                                                    <iframe
+                                                        className="rounded-5 w-100"
+                                                        style={{ aspectRatio: "16 / 9" }}
+                                                        src={bisnis.link_video}
+                                                        title="YouTube video player"
+                                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                                        allowFullScreen
+                                                    ></iframe>
+                                                </div>
+                                            ) : null
+                                        ))}
                                     </div>
-                                </div>
-                                <div className="container mt-5">
-                                    <div className="row mt-4" data-aos="zoom-in">
-                                        {bisnisList.length > 0 ? (
-                                            <div className="col m-0 p-0">
-                                                {bisnisList.map((bisnis) => (
-                                                    bisnis.link_video ? (
-                                                        <div key={bisnis.uuid} className="responsive-iframe-container mb-4">
-                                                            <iframe
-                                                                className="rounded-5 w-100"
-                                                                style={{ aspectRatio: "16 / 9" }}
-                                                                src={bisnis.link_video}
-                                                                title="YouTube video player"
-                                                                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                                                                allowFullScreen
-                                                            ></iframe>
-                                                        </div>
-                                                    ) : null
-                                                ))}
-                                            </div>
-                                        ) : (
-                                            <div></div>
-                                        )}
-                                    </div>
-                                </div>
-                            </>
-                        )}
+                                ) : (
+                                    <div></div>
+                                )}
+                            </div>
+                        </div>
                     </div>
                 </div>
             </section>

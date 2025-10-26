@@ -248,7 +248,7 @@ class readUser extends Controller
 
     function readAntiSuap()
     {
-        $antiSuap = TataKelola::where('category', 'antiSuapAntiKorupsi')->get();
+        $antiSuap = TataKelola::where('category', 'antiSuap')->get();
         return response()->json([
             'antiSuap' => $antiSuap
         ], 200);

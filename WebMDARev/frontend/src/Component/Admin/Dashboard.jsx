@@ -18,6 +18,7 @@ import {
     Tooltip,
     Legend
 } from 'chart.js';
+import Swal from 'sweetalert2';
 
 ChartJS.register(
     CategoryScale,
@@ -45,12 +46,21 @@ function Dashboard() {
     const API_BASE_URL = 'http://127.0.0.1:8000/api';
 
     const getDashboardData = async () => {
+        Swal.fire({
+            title: 'Memuat data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             const res = await axios.get(`${API_BASE_URL}/admin/dashboard`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
             });
+            Swal.close()
             setLaporanList(res.data.laporan);
             setBeritaList(res.data.berita);
             setInstagramList(res.data.instagram);
@@ -61,8 +71,18 @@ function Dashboard() {
             setBisnisList(res.data.bisnis);
             setCarouselList(res.data.carousel);
             setGaleriList(res.data.galeri);
+            Swal.fire({
+                icon: 'success',
+                title: 'Data berhasil dimuat!',
+                showConfirmButton: false,
+                timer: 1500, // auto close dalam 1,5 detik
+            });
         } catch (error) {
-            handleUnauthorized(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
 

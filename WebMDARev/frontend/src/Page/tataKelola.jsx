@@ -156,7 +156,11 @@ function TataKelola() {
                                 </div>
                             ))
                         ) : (
-                            <p>Tidak ada data.</p>
+                            <div className="row">
+                                <div className="col">
+
+                                </div>
+                            </div>
                         )}
 
 
