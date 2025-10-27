@@ -5,6 +5,7 @@ import axios from "axios";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { error } from "jquery";
+import Swal from "sweetalert2";
 
 function AdminKarir() {
     const [karirList, setKarirList] = useState([]);
@@ -32,19 +33,36 @@ function AdminKarir() {
         fetchKarir();
     }, []);
 
-    const fetchKarir = async () => {
+    const fetchKarir = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Loading...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
+
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/admin/karir", {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                headers: { Authorization: `Bearer ${token}` },
             });
+
             setKarirList(res.data.karir);
         } catch (err) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: err.response?.data?.message || err.message,
+            });
+        } finally {
+            if (showLoading) Swal.close();
         }
     };
 
+    // === Modal Handlers ===
     const handleShowModal = (item = null) => {
         if (item) {
             setEditMode(true);
@@ -65,50 +83,104 @@ function AdminKarir() {
         setShowModal(true);
     };
 
-    const handleCloseModal = () => {
-        setShowModal(false);
-    };
+    const handleCloseModal = () => setShowModal(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // === Submit Data ===
     const handleSubmit = async () => {
+        Swal.fire({
+            title: 'Loading...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
         try {
             if (editMode) {
-                await axios.post(`http://127.0.0.1:8000/api/admin/karir/${currentUuid}`, formData, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                await axios.post(
+                    `http://127.0.0.1:8000/api/admin/karir/${currentUuid}`,
+                    formData,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
             } else {
-                await axios.post("http://127.0.0.1:8000/api/admin/karir", formData, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
+                await axios.post(
+                    "http://127.0.0.1:8000/api/admin/karir",
+                    formData,
+                    { headers: { Authorization: `Bearer ${token}` } }
+                );
             }
-            fetchKarir();
+
+            // Tunggu data diperbarui
+            await fetchKarir(false);
+            Swal.close(); // Tutup loading
             handleCloseModal();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil disimpan.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
+
         } catch (err) {
-            alert(error);
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: err.response?.data?.message || err.message,
+            });
         }
     };
-
+    // === Delete Data ===
     const handleDelete = async (uuid) => {
-        if (!window.confirm("Yakin ingin menghapus data ini?")) return;
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
         try {
             await axios.delete(`http://127.0.0.1:8000/api/admin/karir/delete/${uuid}`, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                headers: { Authorization: `Bearer ${token}` },
             });
-            fetchKarir();
+            await fetchKarir(false);
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
+
         } catch (err) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: err.response?.data?.message || err.message,
+            });
         }
     };
-
     return (
         <div className="d-flex flex-column flex-md-row">
             <div style={{ width: '260px', flexShrink: 0 }} className="flex-grow-1 flex-md-grow-0">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import NavSide from "./navSide";
 import { useTranslation } from "react-i18next";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 
 
@@ -34,7 +35,17 @@ function Carousel() {
 
 
 
-    const getCarouselData = async () => {
+    const getCarouselData = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/admin/carousel/', {
                 headers: {
@@ -42,9 +53,14 @@ function Carousel() {
                 }
             });
             setImageCarouselList(res.data.carousel);
-
         } catch (error) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
+        } finally {
+            if (showLoading) Swal.close();
         }
     }
 
@@ -57,12 +73,6 @@ function Carousel() {
 
     const createCarouselData = async (e) => {
         e.preventDefault();
-
-        if (!imageCarousel) {
-            alert("Pilih file terlebih dahulu");
-            return;
-        }
-
         const formData = new FormData();
         formData.append("text_carousel_id", judulId);
         formData.append("body_text_id", bodyId);
@@ -71,6 +81,14 @@ function Carousel() {
         formData.append("image_carousel", imageCarousel);
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post("http://127.0.0.1:8000/api/admin/carousel", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -84,29 +102,66 @@ function Carousel() {
             setBodyId("");
             setJudulEn("");
             setBodyEn("");
-            alert('Success');
             getCarouselData();
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data tata kelola berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (error) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
     };
 
     const deleteCarouselData = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             await axios.delete(`http://127.0.0.1:8000/api/admin/carousel/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getCarouselData();
-            alert('Success')
+
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
+            getCarouselData(false);
         } catch (error) {
-            if (error.response && error.response.data) {
-                console.log(error.response.data.errors);
-                alert(JSON.stringify(error.response.data.errors));
-            } else {
-                alert("Terjadi kesalahan lain");
-            }
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
 
@@ -122,6 +177,14 @@ function Carousel() {
         }
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post(`http://127.0.0.1:8000/api/admin/carousel/${editId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -131,15 +194,22 @@ function Carousel() {
             setEditImg(null);
             setEditText({ text_carousel_id: '', body_text_id: '', text_carousel_en: '', body_text_en: '' });
             setEditModal(false);
-            getCarouselData();
-            alert('Success');
+            Swal.close();
+
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data alamat berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+            getCarouselData(false);
         } catch (error) {
-            if (error.response && error.response.data) {
-                console.error(error.response.data);
-                alert(JSON.stringify(error.response.data));
-            } else {
-                alert("Terjadi kesalahan saat mengedit");
-            }
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
 

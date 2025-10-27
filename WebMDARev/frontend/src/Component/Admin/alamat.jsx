@@ -33,22 +33,22 @@ function Alamat() {
 
 
 
-    const getAlamatData = async () => {
-        Swal.fire({
-            title: 'Loading...',
-            text: 'Harap tunggu sebentar',
-            allowOutsideClick: false,
-            didOpen: () => {
-                Swal.showLoading();
-            },
-        });
+    const getAlamatData = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
+
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/admin/maps', {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+                headers: { Authorization: `Bearer ${token}` }
             });
-            Swal.close();
             setAlamatList(res.data.maps);
         } catch (error) {
             Swal.fire({
@@ -56,8 +56,10 @@ function Alamat() {
                 title: 'Gagal memuat data',
                 text: error.response?.data?.message || error.message,
             });
+        } finally {
+            if (showLoading) Swal.close();
         }
-    }
+    };
 
 
     const createAlamat = async (e) => {
@@ -84,6 +86,7 @@ function Alamat() {
             setNamaAlamat_Id("");
             setNamaAlamat_en("");
             setLinkAlamat("");
+            getAlamatData(false);
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
@@ -104,23 +107,62 @@ function Alamat() {
 
     const updateAlamat = async (e) => {
         e.preventDefault();
+
         try {
-            await axios.post(`http://127.0.0.1:8000/api/admin/maps/${editId}`, {
-                link_alamat: editLinkAlamat,
-                nama_alamat_id: editNamaAlamat.nama_alamat_id,
-                nama_alamat_en: editNamaAlamat.nama_alamat_en,
-            }, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+            // 1️⃣ Tampilkan loading awal
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
             });
+
+            // 2️⃣ Kirim request ke backend
+            await axios.post(
+                `http://127.0.0.1:8000/api/admin/maps/${editId}`,
+                {
+                    link_alamat: editLinkAlamat,
+                    nama_alamat_id: editNamaAlamat.nama_alamat_id,
+                    nama_alamat_en: editNamaAlamat.nama_alamat_en,
+                },
+                {
+                    headers: {
+                        Authorization: `Bearer ${token}`,
+                        "Content-Type": "application/json",
+                        Accept: "application/json",
+                    },
+                }
+            );
+
+            // 3️⃣ Tutup modal edit terlebih dahulu
             setEditModal(false);
-            getAlamatData();
-            alert('Success');
-        } catch (error) {
-            alert(error);
+
+            // 4️⃣ Tutup loading dan tampilkan pesan sukses
+            Swal.close();
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data alamat berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+
+            // 5️⃣ Baru ambil ulang data TANPA loading Swal (supaya tidak tumpang tindih)
+            await getAlamatData(false);
+
+        } catch (err) {
+            // 6️⃣ Tampilkan error alert
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: err.response?.data?.message || err.message,
+            });
         }
-    }
+    };
+
+
 
     const openEditAlamatModal = (item) => {
         setEditModal(true);
@@ -134,15 +176,46 @@ function Alamat() {
 
 
     const deleteAlamat = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             await axios.delete(`http://127.0.0.1:8000/api/admin/maps/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getAlamatData();
+            await getAlamatData(false);
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
         } catch (error) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
 

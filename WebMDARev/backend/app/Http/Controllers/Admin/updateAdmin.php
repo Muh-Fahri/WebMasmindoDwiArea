@@ -245,7 +245,7 @@ class updateAdmin extends Controller
                 'nullable',
                 'url',
                 'max:255',
-                'regex:/^https?:\/\/(www\.)?google\.[a-z.]+\/maps/'
+                'regex:/^https?:\/\/(www\.)?(google\.[a-z.]+|maps\.app\.goo\.gl)/'
             ],
         ]);
 
@@ -259,9 +259,9 @@ class updateAdmin extends Controller
         $maps = Alamat::where('uuid', $uuid)->firstOrFail();
 
         $maps->update([
-            "nama_alamat_id" => $request->nama_alamat_id,
-            "nama_alamat_en" => $request->nama_alamat_en,
-            "link_alamat" => $request->link_alamat
+            "nama_alamat_id" => $request->filled('nama_alamat_id') ? $request->nama_alamat_id : $maps->nama_alamt_id,
+            "nama_alamat_en" => $request->filled('nama_alamat_en') ? $request->nama_alamat_en : $maps->nama_alamat_en,
+            "link_alamat" => $request->filled('link_alamat') ? $request->link_alamat : $maps->link_alamat,
         ]);
 
         return response()->json([
@@ -422,7 +422,7 @@ class updateAdmin extends Controller
             $pdf_name = $tataKelola->pdf;
         }
         $tataKelola->update([
-            'deskripsiHalaman' => $request->filled('category')         ? $request->category : $tataKelola->category,
+            'category'         => $request->filled('category')         ? $request->category : $tataKelola->category,
             'deskripKebijakan' => $request->filled('deskripKebijakan') ? $request->deskripKebijakan : $tataKelola->deskripKebijakan,
             'fotoSampul'       => $nama_image,
             'pdf'              => $pdf_name,

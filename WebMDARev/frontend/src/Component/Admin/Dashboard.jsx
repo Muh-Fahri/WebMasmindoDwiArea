@@ -71,12 +71,6 @@ function Dashboard() {
             setBisnisList(res.data.bisnis);
             setCarouselList(res.data.carousel);
             setGaleriList(res.data.galeri);
-            Swal.fire({
-                icon: 'success',
-                title: 'Data berhasil dimuat!',
-                showConfirmButton: false,
-                timer: 1500, // auto close dalam 1,5 detik
-            });
         } catch (error) {
             Swal.fire({
                 icon: 'error',
