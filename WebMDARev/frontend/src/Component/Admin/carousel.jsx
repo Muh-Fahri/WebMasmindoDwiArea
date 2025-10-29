@@ -102,7 +102,7 @@ function Carousel() {
             setBodyId("");
             setJudulEn("");
             setBodyEn("");
-            getCarouselData();
+            getCarouselData(false);
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
@@ -194,8 +194,8 @@ function Carousel() {
             setEditImg(null);
             setEditText({ text_carousel_id: '', body_text_id: '', text_carousel_en: '', body_text_en: '' });
             setEditModal(false);
+            getCarouselData(false);
             Swal.close();
-
             await Swal.fire({
                 icon: "success",
                 title: "Berhasil!",
@@ -203,7 +203,7 @@ function Carousel() {
                 showConfirmButton: false,
                 timer: 1500,
             });
-            getCarouselData(false);
+
         } catch (error) {
             Swal.fire({
                 icon: "error",

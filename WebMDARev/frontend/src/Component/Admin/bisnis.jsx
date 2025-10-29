@@ -8,6 +8,7 @@ import { useTranslation } from "react-i18next";
 import DOMPurify from 'dompurify';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Swal from "sweetalert2";
 
 
 function Bisnis() {
@@ -37,7 +38,21 @@ function Bisnis() {
             setNotification({ show: false, message: "", type: "" });
         }, 3000);
     };
-    const getBisnisData = async () => {
+    useEffect(() => {
+        getBisnisData();
+    }, []);
+    const getBisnisData = async (showLoading = true) => {
+
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/admin/bisnis', {
                 headers: {
@@ -51,23 +66,35 @@ function Bisnis() {
                 setDisplayedBisnis(null);
             }
         } catch (error) {
-            handleUnauthorized(error, navigate);
-            showNotification('Gagal memuat data bisnis.', 'error');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
+        } finally {
+            if (showLoading) Swal.close();
         }
     };
 
-    useEffect(() => {
-        getBisnisData();
-    }, []);
+
     const sanitizedDisplayedDescriptionId = displayedBisnis
         ? DOMPurify.sanitize(displayedBisnis.deskripsi_bisnis_id || '')
         : '';
     const sanitizedDisplayedDescriptionEn = displayedBisnis
         ? DOMPurify.sanitize(displayedBisnis.deskripsi_bisnis_en || '')
         : '';
+
     const addBisnisPage = async (e) => {
         e.preventDefault();
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post("http://127.0.0.1:8000/api/admin/bisnis", {
                 link_video: linkYt,
                 deskripsi_bisnis_id: deskrip_id,
@@ -80,36 +107,71 @@ function Bisnis() {
             setLinkYt("");
             setDeskrip_id("");
             setDeskrip_en("");
-            showNotification('Berhasil Menginput Data', 'success');
-            getBisnisData();
+            await getBisnisData(false);
+            Swal.close();
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data alamat berhasil dibuat.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         } catch (error) {
-            showNotification('Gagal Menambahkan Data', 'error');
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
+    const confirmDeleteAction = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
 
-    const handleDeleteClick = (uuid) => {
-        setItemToDelete(uuid);
-        setConfirmDeleteModal(true);
-    };
+        if (!confirmResult.isConfirmed) return;
 
-    const confirmDeleteAction = async () => {
-        setConfirmDeleteModal(false);
-        if (!itemToDelete) return;
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
 
         try {
-            await axios.delete(`http://127.0.0.1:8000/api/admin/bisnis/${itemToDelete}`, {
+            await axios.delete(`http://127.0.0.1:8000/api/admin/bisnis/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getBisnisData();
-            showNotification('Berhasil Menghapus Data', 'success');
-            setItemToDelete(null);
+
+            await getBisnisData(false);
+            Swal.close();
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data bisnis berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
         } catch (error) {
-            showNotification('Gagal Menghapus Data', 'error');
-            console.error('Error deleting data:', error);
+            Swal.close();
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
+
     const openEditModal = (bisnisItem) => {
         setEditModal(true);
         setEditId(bisnisItem.uuid);
@@ -121,6 +183,15 @@ function Bisnis() {
     const handleEditSubmit = async (e) => {
         e.preventDefault();
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
             await axios.post(`http://127.0.0.1:8000/api/admin/bisnis/${editId}`, {
                 link_video: editLink,
                 deskripsi_bisnis_id: editDeskrip_id,
@@ -131,8 +202,15 @@ function Bisnis() {
                 }
             });
             setEditModal(false);
-            getBisnisData();
-            showNotification('Data berhasil diperbarui', 'success');
+            getBisnisData(false);
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data alamat berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+
         } catch (error) {
             showNotification('Gagal mengedit data', 'error');
             console.error('Error editing data:', error);
@@ -266,11 +344,12 @@ function Bisnis() {
 
                                                                     <button
                                                                         className="btn btn-danger btn-sm d-flex align-items-center justify-content-center gap-1"
-                                                                        onClick={() => handleDeleteClick(bisnisItem.uuid)}
+                                                                        onClick={() => confirmDeleteAction(bisnisItem.uuid)}
                                                                     >
                                                                         <span className="d-none d-md-inline">{t('delete_button')}</span>
                                                                         <i className="fas fa-trash d-md-none"></i>
                                                                     </button>
+
                                                                 </div>
                                                             </td>
                                                         </tr>
@@ -360,30 +439,6 @@ function Bisnis() {
                         </div>
                     )}
                 </section>
-                {confirmDeleteModal && (
-                    <div className="modal show d-block" style={{ backgroundColor: 'rgba(0,0,0,0.5)' }} tabIndex="-1" role="dialog">
-                        <div className="modal-dialog" role="document">
-                            <div className="modal-content">
-                                <div className="modal-header">
-                                    <h5 className="modal-title">{t('confirm_delete_title')}</h5>
-                                    <button type="button" className="btn-close" onClick={() => setConfirmDeleteModal(false)} aria-label="Close">
-                                    </button>
-                                </div>
-                                <div className="modal-body">
-                                    <p>{t('confirm_delete_message')}</p>
-                                </div>
-                                <div className="modal-footer">
-                                    <button type="button" className="btn btn-secondary" onClick={() => setConfirmDeleteModal(false)}>
-                                        {t('admin_cancel_button')}
-                                    </button>
-                                    <button type="button" className="btn btn-danger" onClick={confirmDeleteAction}>
-                                        {t('admin_delete_button')}
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                )}
             </div>
         </div >
     )

@@ -7,6 +7,7 @@ import { useTranslation } from "react-i18next";
 import DOMPurify from 'dompurify';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Swal from "sweetalert2";
 
 
 
@@ -30,7 +31,17 @@ function Berita() {
 
 
 
-    const getBeritaData = async () => {
+    const getBeritaData = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/admin/berita/', {
                 headers: {
@@ -39,10 +50,15 @@ function Berita() {
             });
             setBeritaList(response.data.berita);
         } catch (error) {
-            handleUnauthorized(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
+        } finally {
+            if (showLoading) Swal.close();
         }
     }
-
     useEffect(() => {
         getBeritaData();
     }, []);
@@ -57,6 +73,14 @@ function Berita() {
         formData.append('image_berita', imgBerita);
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post("http://127.0.0.1:8000/api/admin/berita", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -68,9 +92,14 @@ function Berita() {
             setDeskripBerita("");
             setDeskripBeritaEn("");
             setImgBerita("");
-
-            getBeritaData();
-            alert("Berhasil Menambahkan Data");
+            await getBeritaData(false);
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data tata kelola berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (error) {
             alert("Gagal Menambahkan Data");
         }

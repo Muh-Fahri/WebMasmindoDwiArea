@@ -1,12 +1,21 @@
 import React, { useEffect, useState } from "react";
 import NavSide from "./navSide";
 import axios from "axios";
+import Swal from "sweetalert2";
 
 function AdminKontak() {
     const Token = localStorage.getItem('token');
     const [kontakList, setKontakList] = useState([]);
 
     const getKontakData = async () => {
+        Swal.fire({
+            title: 'Memuat data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             const response = await axios.get('http://127.0.0.1:8000/api/admin/kontak/', {
                 headers: {
@@ -14,8 +23,13 @@ function AdminKontak() {
                 }
             });
             setKontakList(response.data.kontak);
+            Swal.close();
         } catch (error) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
 
