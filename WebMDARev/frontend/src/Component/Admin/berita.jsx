@@ -119,6 +119,14 @@ function Berita() {
         }
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post(`http://127.0.0.1:8000/api/admin/berita/${editId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -129,29 +137,67 @@ function Berita() {
             setEditDeskrip({ deskripsi_berita_id: '', deskripsi_berita_en: '' });
             setEditImg(null);
             setEditModal(false);
-
-            // Refresh data
-            await getBeritaData();
-
-            alert('Berita berhasil diubah');
+            await getBeritaData(false);
+            Swal.close();
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data alamat berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         } catch (error) {
-            alert('Gagal mengubah data');
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
 
 
 
     const deleteBeritaData = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+
         try {
             await axios.delete(`http://127.0.0.1:8000/api/admin/berita/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getBeritaData();
-            alert('Berhasil Menghapus Data');
+            await getBeritaData(false);
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
         } catch (error) {
-            alert('Gagal Menghapus Data');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
 

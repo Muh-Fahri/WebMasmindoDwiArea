@@ -50,11 +50,11 @@ class updateAdmin extends Controller
     function editBerita(Request $request, $uuid)
     {
         $request->validate([
-            'judul_berita_id' => 'required|string|max:255',
+            'judul_berita_id' => 'nullable|string|max:255',
             'judul_berita_en' => 'nullable|string|max:255',
-            'deskripsi_berita_id' => 'required|string',
+            'deskripsi_berita_id' => 'nullable|string',
             'deskripsi_berita_en' => 'nullable|string',
-            'image_berita' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+            'image_berita' => 'nullable|image|mimes:jpeg,png,jpg,webp|max:2048',
         ]);
 
         $berita = BeritaTerkini::where('uuid', $uuid)->firstOrFail();

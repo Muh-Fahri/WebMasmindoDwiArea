@@ -2,14 +2,12 @@ import React, { useState, useEffect } from "react";
 import NavSide from "./navSide";
 import axios from "axios";
 import moment from "moment";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPencil, faTrash } from "@fortawesome/free-solid-svg-icons";
 import NoData from "../Error/NoData";
-import handleUnauthorized from "./unouthorized";
 import { useTranslation } from "react-i18next";
 import DOMPurify from 'dompurify';
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
+import Swal from "sweetalert2";
 
 
 
@@ -41,7 +39,17 @@ function Lingkungan() {
     const [editDeskrEn, setEditDeskrEn] = useState("");
 
 
-    const getDeskripData = async () => {
+    const getDeskripData = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
         try {
             const desLing = await axios.get("http://127.0.0.1:8000/api/admin/esg/lingkungan/deskripLingkungan/", {
                 headers: {
@@ -50,7 +58,13 @@ function Lingkungan() {
             });
             setDeskripList(desLing.data.deskrip);
         } catch (error) {
-            handleUnauthorized(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
+        } finally {
+            if (showLoading) Swal.close();
         }
     }
     const getImgLingData = async () => {
@@ -72,6 +86,14 @@ function Lingkungan() {
         formData.append('image_lingkungan', imgLing);
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post(`http://127.0.0.1:8000/api/admin/esg/lingkungan/imgLingkungan/${editId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -79,12 +101,22 @@ function Lingkungan() {
                 },
             });
             setImgLing(null);
-            alert('Data Dokumentasi Berhasil diubah');
             setEditDokumentasiModal(false);
-            getImgLingData();
+            await getImgLingData(false);
+            Swal.close();
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data alamat berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         } catch (error) {
-            console.error(error.response?.data || error.message);
-            alert('Gagal mengubah data');
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
     const opendEditModal = (dok) => {
@@ -107,6 +139,14 @@ function Lingkungan() {
     const editDeskData = async (e) => {
         e.preventDefault();
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.put(`http://127.0.0.1:8000/api/admin/esg/lingkungan/deskripLingkungan/${editId}`, {
                 deskripsi_halaman_id: editDeskrId,
                 deskripsi_halaman_en: editDeskrEn
@@ -116,16 +156,35 @@ function Lingkungan() {
                 }
             });
             setEditDeskripsiModal(false);
-            getDeskripData();
-            alert('Data Berhasil Diperbarui');
+            await getDeskripData(false);
+            Swal.close();
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data alamat berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         } catch (error) {
-            alert('Gagal Mengedit Data');
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
 
     const addDeskData = async (e) => {
         e.preventDefault();
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post('http://127.0.0.1:8000/api/admin/esg/lingkungan/deskripLingkungan', {
                 deskripsi_halaman_id: deskripsi.deskripsi_halaman_id,
                 deskripsi_halaman_en: deskripsi.deskripsi_halaman_en,
@@ -136,10 +195,21 @@ function Lingkungan() {
             });
 
             setDeskripsiHalaman({ deskripsi_halaman_id: "", deskripsi_halaman_en: "" });
-            alert('Berhasil Menginput Data');
-            getDeskripData();
+            await getDeskripData(false);
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (error) {
-            alert('Gagal Menginput Data');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
     };
 
@@ -150,44 +220,123 @@ function Lingkungan() {
         formData.append('image_lingkungan', imgLing);
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post("http://127.0.0.1:8000/api/admin/esg/lingkungan/imgLingkungan", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 }
             });
             setImgLing("");
-            alert('Berhasil Menambahkan Data');
-            getImgLingData();
+            await getImgLingData();
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data tata kelola berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (error) {
-            alert('Gagal Menambahkan Data');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
     };
 
     const deleteDeskripData = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             await axios.delete(`http://127.0.0.1:8000/api/admin/esg/lingkungan/deskripLingkungan/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getDeskripData();
-            alert('Berhasil Menghapus Data');
+            await getDeskripData(false);
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
         } catch (error) {
-            alert('Gagal Menghapus  Data');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
 
     const deleteDokumentasi = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             await axios.delete(`http://127.0.0.1:8000/api/admin/esg/lingkungan/imgLingkungan/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getImgLingData();
-            alert('Berhasil Menghapus Data');
+            await getImgLingData(false);
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
         } catch (error) {
-            alert('Gagal Menghapus Data')
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
     return (
@@ -347,27 +496,42 @@ function Lingkungan() {
                                                 onClick={() => setEditDeskripsiModal(false)}
                                             ></button>
                                         </div>
+
                                         <div className="modal-body">
+                                            {/* Deskripsi Bahasa Indonesia */}
                                             <div className="mb-3">
                                                 <label className="form-label">{t('page_description_id_label')}</label>
-                                                <textarea
-                                                    className="form-control"
-                                                    value={editDeskrId}
-                                                    onChange={(e) => setEditDeskrId(e.target.value)}
-                                                    rows="6"
-                                                ></textarea>
+                                                <CKEditor
+                                                    editor={ClassicEditor}
+                                                    data={editDeskrId || ""}
+                                                    onChange={(event, editor) => {
+                                                        const data = editor.getData();
+                                                        setEditDeskrId(data);
+                                                    }}
+                                                />
                                             </div>
+
+                                            {/* Deskripsi Bahasa Inggris */}
                                             <div className="mb-3">
                                                 <label className="form-label">{t('page_description_en_label')}</label>
-                                                <textarea
-                                                    className="form-control"
-                                                    value={editDeskrEn}
-                                                    onChange={(e) => setEditDeskrEn(e.target.value)}
-                                                    rows="6"
-                                                ></textarea>
+                                                <CKEditor
+                                                    editor={ClassicEditor}
+                                                    data={editDeskrEn || ""}
+                                                    onChange={(event, editor) => {
+                                                        const data = editor.getData();
+                                                        setEditDeskrEn(data);
+                                                    }}
+                                                />
                                             </div>
+
                                             <div className="mb-3">
-                                                <button className="btn btn-sm btn-primary">{t('button_save_changes')}</button>
+                                                <button
+                                                    type="submit"
+                                                    className="btn btn-sm text-white"
+                                                    style={{ backgroundColor: "#F16022" }}
+                                                >
+                                                    {t('button_save_changes')}
+                                                </button>
                                             </div>
                                         </div>
                                     </form>
