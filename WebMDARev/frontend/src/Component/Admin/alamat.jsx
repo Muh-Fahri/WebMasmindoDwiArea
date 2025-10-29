@@ -90,7 +90,7 @@ function Alamat() {
             Swal.fire({
                 icon: 'success',
                 title: 'Berhasil!',
-                text: 'Data tata kelola berhasil ditambahkan.',
+                text: 'Data berhasil ditambahkan.',
                 showConfirmButton: false,
                 timer: 1800
             });

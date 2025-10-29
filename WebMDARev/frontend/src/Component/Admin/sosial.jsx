@@ -4,6 +4,7 @@ import axios from "axios";
 import moment from "moment";
 import NoData from "../Error/NoData";
 import handleUnauthorized from "./unouthorized";
+import Swal from "sweetalert2";
 
 function Sosial() {
     const [sosialList, setSosialList] = useState([]);
@@ -19,7 +20,17 @@ function Sosial() {
         getSosialData();
     }, []);
 
-    const getSosialData = async () => {
+    const getSosialData = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
         try {
             const response = await axios.get("http://127.0.0.1:8000/api/admin/esg/sosial", {
                 headers: {
@@ -28,7 +39,13 @@ function Sosial() {
             });
             setSosialList(response.data.sosial);
         } catch (error) {
-            handleUnauthorized(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
+        } finally {
+            if (showLoading) Swal.close();
         }
     }
 
@@ -39,6 +56,14 @@ function Sosial() {
         formData.append('category', kategori);
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post("http://127.0.0.1:8000/api/admin/esg/sosial", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -46,10 +71,21 @@ function Sosial() {
             });
             setImageSosial("");
             setKategori("");
-            getSosialData();
-            alert('Berhasil Membuat Data');
+            await getSosialData(false);
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (error) {
-            alert("Gagal Membuat Data");
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
     }
 
@@ -68,6 +104,14 @@ function Sosial() {
         }
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post(`http://127.0.0.1:8000/api/admin/esg/sosial/${editId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -77,10 +121,22 @@ function Sosial() {
             setEditImg(null);
             setEditKategori("")
             openEditSosialModal(false);
-            getSosialData();
-            alert('Berita Berhasil diubah');
+            await getSosialData(false);
+            Swal.close();
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+
         } catch (error) {
-            alert('Gagal Mengubah Data');
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
 
@@ -90,16 +146,46 @@ function Sosial() {
     };
 
     const deleteSosialData = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             await axios.delete(`http://127.0.0.1:8000/api/admin/esg/sosial/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getSosialData();
-            alert('Berhasil Menghapus Data');
+            await getSosialData(false);
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
         } catch (error) {
-            alert("Gagal Menghapus Data");
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
 

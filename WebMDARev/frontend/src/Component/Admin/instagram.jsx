@@ -5,6 +5,7 @@ import EmbedInstagram from "./embedIg";
 import NoData from "../Error/NoData";
 import handleUnauthorized from "./unouthorized";
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 
 function Instagram() {
     const [instagramList, setInstagramList] = useState([]);
@@ -31,6 +32,14 @@ function Instagram() {
     const createInstagramData = async (e) => {
         e.preventDefault();
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post("http://127.0.0.1:8000/api/admin/instagram", {
                 linkInstagram: linkIg
             }, {
@@ -39,16 +48,35 @@ function Instagram() {
                 }
             });
             setLinkIg("");
-            getInstagramData();
-            alert("Berhasil Menambahkan Data");
+            await getInstagramData(false);
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (error) {
-            alert("Error");
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
     };
 
-    const getInstagramData = async () => {
-        setLoading(true);
-        setError(null);
+    const getInstagramData = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/admin/instagram", {
                 headers: {
@@ -56,9 +84,14 @@ function Instagram() {
                 }
             });
             setInstagramList(res.data.instagram);
-            setLoading(false);
         } catch (error) {
-            handleUnauthorized(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
+        } finally {
+            if (showLoading) Swal.close();
         }
     };
 
@@ -68,6 +101,14 @@ function Instagram() {
         formData.append('linkInstagram', modlLinkIg);
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post(`http://127.0.0.1:8000/api/admin/instagram/${editId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -77,14 +118,22 @@ function Instagram() {
 
             setModlLinkIg("");
             setEditIgModal(false);
-            getInstagramData();
-            alert('Edit Data Sukses');
+            await getInstagramData(false);
+            Swal.close();
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
+
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                handleUnauthorized();
-            } else {
-                alert('Gagal Mengubah Data');
-            }
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
 
@@ -95,20 +144,46 @@ function Instagram() {
     }
 
     const deleteInstagramData = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             await axios.delete(`http://127.0.0.1:8000/api/admin/instagram/delete/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getInstagramData();
-            alert('Berhasil Menghapus Data');
+            await getInstagramData(false);
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
         } catch (error) {
-            if (error.response && error.response.status === 401) {
-                handleUnauthorized();
-            } else {
-                alert('Gagal Menghapus Data');
-            }
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
     return (

@@ -4,6 +4,7 @@ import axios from "axios";
 import { CKEditor } from '@ckeditor/ckeditor5-react';
 import ClassicEditor from '@ckeditor/ckeditor5-build-classic';
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 
 function Galeri() {
 
@@ -24,7 +25,17 @@ function Galeri() {
     const [edit_img_galeri, set_edit_img_galeri] = useState(null);
 
 
-    const getGaleriData = async () => {
+    const getGaleriData = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/admin/dokumentasi', {
                 headers: {
@@ -34,7 +45,13 @@ function Galeri() {
             setGaleriList(res.data.galeri);
             getGaleriData();
         } catch (error) {
-            alert('Opps Server Problem');
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
+        } finally {
+            if (showLoading) Swal.close();
         }
     }
 
@@ -47,16 +64,37 @@ function Galeri() {
         formData.append('foto_galeri', img_galeri);
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post('http://127.0.0.1:8000/api/admin/dokumentasi', formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
+            await getGaleriData(false)
             set_deskripsi_en("");
             set_deskripsi_id("");
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (error) {
-            alert("Gagal Menambahkan Data");
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
     }
 
@@ -71,6 +109,15 @@ function Galeri() {
         }
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
             await axios.post(`http://127.0.0.1:8000/api/admin/dokumentasi/${editId}`, formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -80,9 +127,21 @@ function Galeri() {
             set_edit_img_galeri(null);
             setEditDeskrip({ deskripsi_id: '', deskripsi_en: '' });
             setEditModal(false);
-            getGaleriData();
+            await getGaleriData(false);
+            Swal.close();
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         } catch (error) {
-            alert('Gagal mengubah data');
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: error.response?.data?.message || error.message,
+            });
         }
     }
 

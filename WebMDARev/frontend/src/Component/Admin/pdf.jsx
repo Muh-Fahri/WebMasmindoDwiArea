@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import NavSide from "./navSide";
-import handleUnauthorized from "./unouthorized";
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 
 function PDF() {
     const [pdfList, setPdfList] = useState([]);
@@ -11,7 +11,24 @@ function PDF() {
 
     const [tahunList, setTahunList] = useState("");
     const fileInputRef = useRef(null);
-    const getPdfData = async () => {
+    useEffect(() => {
+        getPdfData();
+    }, [token]);
+
+
+
+
+    const getPdfData = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/admin/pdf/", {
                 headers: {
@@ -20,20 +37,32 @@ function PDF() {
             });
             setPdfList(res.data.pdf);
         } catch (error) {
-            console.error("Error fetching PDF data:", error);
-            handleUnauthorized(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
+        } finally {
+            if (showLoading) Swal.close();
         }
     };
-    useEffect(() => {
-        getPdfData();
-    }, [token]);
+
     const formatTanggal = (dateString) => {
         if (!dateString) return '';
         const options = { year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit' };
         return new Date(dateString).toLocaleDateString(i18n.language, options);
     };
+
     const downloadPdf = async (storedName, originalName) => {
         try {
+            Swal.fire({
+                title: 'Sedang Mendownload PDF...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             const response = await axios.get(`http://localhost:8000/api/admin/pdf/download_pdf/${encodeURIComponent(storedName)}`, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -48,9 +77,19 @@ function PDF() {
             link.click();
             link.remove();
             window.URL.revokeObjectURL(url);
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'PDF berhasil didownload.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (error) {
-            console.error('Download error:', error);
-            alert(t('download_error_message'));
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal mendownload PDF',
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
     const createPdfData = async (e) => {
@@ -67,41 +106,82 @@ function PDF() {
         formData.append('pdf', file);
 
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post("http://127.0.0.1:8000/api/admin/pdf", formData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            getPdfData();
+            await getPdfData(false);
             setTahunList("");
             if (fileInputRef.current) {
                 fileInputRef.current.value = "";
             }
-            alert(t('add_pdf_success'));
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (error) {
-            console.error("Upload error:", error);
-            alert(t('add_pdf_error'));
-            handleUnauthorized(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
     };
     const deletePdfData = async (uuid) => {
-        if (!window.confirm(t('confirm_delete_pdf'))) {
-            return;
-        }
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
 
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             await axios.delete(`http://127.0.0.1:8000/api/admin/pdf/delete/${uuid}`, {
                 headers: {
                     Authorization: `Bearer ${token}`
                 }
             });
-            getPdfData();
-            alert(t('delete_pdf_success'));
+            await getPdfData(false);
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
         } catch (error) {
-            console.error('Delete error:', error);
-            alert(t('delete_pdf_error'));
-            handleUnauthorized(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
 

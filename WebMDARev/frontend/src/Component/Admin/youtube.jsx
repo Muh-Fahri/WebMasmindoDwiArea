@@ -3,6 +3,7 @@ import axios from "axios";
 import NavSide from "./navSide";
 import handleUnauthorized from "./unouthorized";
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 
 function Youtube() {
     const [listYt, setListYt] = useState([]);
@@ -19,9 +20,17 @@ function Youtube() {
         getYtData();
     }, [token]);
 
-    const getYtData = async () => {
-        setLoading(true);
-        setError(null);
+    const getYtData = async (showLoading = true) => {
+        if (showLoading) {
+            Swal.fire({
+                title: 'Memuat data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+        }
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/admin/youtube", {
                 headers: {
@@ -30,11 +39,13 @@ function Youtube() {
             });
             setListYt(res.data.youtube);
         } catch (err) {
-            console.error("Error fetching YouTube data:", err);
-            setError(err);
-            handleUnauthorized(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.response?.data?.message || error.message,
+            });
         } finally {
-            setLoading(false);
+            if (showLoading) Swal.close();
         }
     };
 
@@ -45,6 +56,14 @@ function Youtube() {
             return;
         }
         try {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
             await axios.post("http://127.0.0.1:8000/api/admin/youtube", { linkYoutube: createLinkYt }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
@@ -52,12 +71,21 @@ function Youtube() {
                 }
             });
             setCreateLinkYt("");
-            getYtData();
-            alert(t('add_youtube_success'));
+            await getYtData(false);
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data berhasil ditambahkan.',
+                showConfirmButton: false,
+                timer: 1800
+            });
         } catch (err) {
-            console.error("Error creating YouTube data:", err);
-            alert(t('add_youtube_error'));
-            handleUnauthorized(err);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menyimpan data!',
+                text: error.response?.data?.message || 'Terjadi kesalahan saat menyimpan data.',
+                confirmButtonColor: '#d33',
+            });
         }
     };
 
@@ -74,37 +102,79 @@ function Youtube() {
             return;
         }
         try {
-            await axios.put(`http://127.0.0.1:8000/api/admin/youtube/update/${editId}`, { linkYoutube: editLinkYt }, {
+            Swal.fire({
+                title: 'Menyimpan data...',
+                text: 'Harap tunggu sebentar',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+            await axios.post(`http://127.0.0.1:8000/api/admin/youtube/${editId}`, { linkYoutube: editLinkYt }, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                     'Content-Type': 'application/json'
                 }
             });
             setEditYtModal(false);
-            getYtData();
-            alert(t('update_youtube_success'));
+            await getYtData(false);
+            await Swal.fire({
+                icon: "success",
+                title: "Berhasil!",
+                text: "Data berhasil diperbarui.",
+                showConfirmButton: false,
+                timer: 1500,
+            });
         } catch (err) {
-            console.error("Error updating YouTube data:", err);
-            alert(t('update_youtube_error'));
-            handleUnauthorized(err);
+            Swal.fire({
+                icon: "error",
+                title: "Gagal memperbarui data",
+                text: err.response?.data?.message || err.message,
+            });
         }
     };
 
     const deleteDataYt = async (uuid) => {
-        if (window.confirm(t('delete_youtube_confirm'))) {
-            try {
-                await axios.delete(`http://127.0.0.1:8000/api/admin/youtube/delete/${uuid}`, {
-                    headers: {
-                        Authorization: `Bearer ${token}`
-                    }
-                });
-                getYtData();
-                alert(t('delete_youtube_success'));
-            } catch (err) {
-                console.error("Error deleting YouTube data:", err);
-                alert(t('delete_youtube_error'));
-                handleUnauthorized(err);
-            }
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+        try {
+            await axios.delete(`http://127.0.0.1:8000/api/admin/youtube/delete/${uuid}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            await getYtData(false);
+            Swal.close()
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
+        } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
         }
     };
 

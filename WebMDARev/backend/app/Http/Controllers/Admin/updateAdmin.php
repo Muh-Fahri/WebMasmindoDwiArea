@@ -135,7 +135,7 @@ class updateAdmin extends Controller
     function updateSosial(Request $request, $uuid)
     {
         $request->validate([
-            'imageSosial' => 'required|image|mimes:jpg,jpeg,png,webp|max:2048',
+            'imageSosial' => 'nullable|image|mimes:jpg,jpeg,png,webp|max:2048',
             'category' => 'nullable|in:pendidikan,kesehatan,pengembanganMasyarakat,infrastruktur,pemberdayaan'
         ]);
         $sosial = Sosial::where('uuid', $uuid)->firstOrFail();

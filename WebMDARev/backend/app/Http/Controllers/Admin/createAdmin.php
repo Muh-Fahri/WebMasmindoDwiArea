@@ -225,7 +225,7 @@ class createAdmin extends Controller
         $request->validate([
             "foto_galeri" => "required|image|mimes:jpg,jpeg,png,webp|max:10240",
             "deskrip_id" => "required|string|max:255",
-            "deskrip_en" => "nullable|string|max:255"
+            "deskrip_en" => "required|string|max:255"
         ]);
 
 
