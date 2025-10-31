@@ -111,7 +111,7 @@ function Home() {
     const getAllData = async () => {
         Swal.fire({
             title: 'Memuat data...',
-            text: 'Harap tunggu sebentar, sedang mengambil semua informasi.',
+            text: 'Harap tunggu sebentar',
             allowOutsideClick: false,
             didOpen: () => {
                 Swal.showLoading();
@@ -133,16 +133,7 @@ function Home() {
 
             // Tutup loading
             Swal.close();
-
             // Tampilkan notifikasi sukses
-            Swal.fire({
-                icon: 'success',
-                title: 'Data berhasil dimuat!',
-                text: `Berhasil memuat ${beritaRes.data.berita.length} berita dan ${bisnisRes.data.bisnisUser.length} bisnis.`,
-                showConfirmButton: false,
-                timer: 1500,
-            });
-
         } catch (error) {
             Swal.fire({
                 icon: 'error',

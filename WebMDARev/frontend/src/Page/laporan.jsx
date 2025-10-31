@@ -2,33 +2,45 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import AOS from "aos";
 import { useTranslation } from "react-i18next";
-
+import Swal from "sweetalert2";
 
 function Laporan() {
 
     const [laporanList, setLaporanList] = useState([]);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
 
     useEffect(() => {
         getLaporan();
-        AOS.init({
-            duration: 1000,
-        })
+        AOS.init({ duration: 1000 });
     }, []);
 
     const getLaporan = async () => {
         try {
+            // 🔥 Tampilkan loading Swal khusus untuk Laporan
+            Swal.fire({
+                title: "Memuat data...",
+                text: "Harap tunggu sebentar",
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                },
+            });
+
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/laporan");
             setLaporanList(res.data.laporan);
-            getLaporan();
+
         } catch (error) {
-            alert("Oops Terjadi suatu kesalahan pada server");
+            Swal.fire({
+                icon: "error",
+                title: "Gagal Memuat Data",
+                text: "Terjadi kesalahan pada server.",
+            });
+        } finally {
+            // ✅ Tutup loading Swal setelah data selesai (sukses/gagal)
+            Swal.close();
         }
-    }
-
-
-
-
+    };
 
     return (
         <div>
@@ -100,12 +112,13 @@ function Laporan() {
                             <h3 className="text-uppercase fw-bold" style={{ color: '#115258' }}>
                                 {t('sustainability_report')}
                             </h3>
-                            <h5>{t('data_empty')}</h5>
+                            <h5></h5>
                         </div>
                     )}
                 </div>
             </section>
         </div>
-    )
+    );
 }
+
 export default Laporan;

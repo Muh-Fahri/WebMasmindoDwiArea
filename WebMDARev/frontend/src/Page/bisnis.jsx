@@ -6,12 +6,12 @@ import AOS from 'aos';
 import 'aos/dist/aos.css';
 import { useTranslation } from 'react-i18next';
 import DOMPurify from 'dompurify';
+import Swal from "sweetalert2";
 
 function Bisnis() {
     const { t, i18n } = useTranslation();
 
     const [bisnisList, setBisnisList] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         getBisnisData();
@@ -21,15 +21,24 @@ function Bisnis() {
     }, []);
 
     const getBisnisData = async () => {
+        Swal.fire({
+            title: 'Memuat data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
-            setIsLoading(true);
             const res = await axios.get("http://127.0.0.1:8000/api/user/bisnis");
             setBisnisList(res.data.bisnisUser);
+            Swal.close();
         } catch (error) {
-            alert(t('error_display'));
-            setBisnisList([]);
-        } finally {
-            setIsLoading(false);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.message,
+            });
         }
     }
     return (
@@ -108,13 +117,11 @@ function Bisnis() {
                 </div>
             )}
             <section>
-                <div className="container px-md-5 px-3 mt-5" data-aos="fade-down" >
+                <div className="container px-md-5 px-3 mt-5" data-aos="fade-down">
                     <div className="row mt-4">
-                        {isLoading ? (
-                            <div className="col text-center py-5"></div>
-                        ) : bisnisList && bisnisList.length > 0 ? (
+                        {bisnisList && bisnisList.length > 0 ? (
                             <div className="col p-5 px-md-5 px-3">
-                                {bisnisList.map((bisnis) => (
+                                {bisnisList.map((bisnis) =>
                                     bisnis.link_video ? (
                                         <div key={bisnis.uuid} className="responsive-iframe-container">
                                             <iframe
@@ -126,7 +133,7 @@ function Bisnis() {
                                             ></iframe>
                                         </div>
                                     ) : null
-                                ))}
+                                )}
                             </div>
                         ) : (
                             <div className="col text-center">

@@ -1,11 +1,9 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import NavbarHijau from "../Component/navbarHijau";
-import { data, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import Footer from "./fotter";
 import axios from "axios";
-import NoData from "../Component/Error/NoData";
 import Laporan from "./laporan";
-import { duration } from "moment";
 import AOS from "aos";
 import { useTranslation } from "react-i18next";
 
@@ -16,9 +14,6 @@ function Sosial() {
     const [infraList, setInfraList] = useState([]);
     const [pemberdayaanList, setPemberdayaanList] = useState([]);
     const { t, i18n } = useTranslation();
-
-    const [loading, setLoading] = useState(false)
-    const [error, setError] = useState(null)
 
     useEffect(() => {
         getMasyarakatData();
@@ -33,8 +28,6 @@ function Sosial() {
 
 
     const getMasyarakatData = async () => {
-        setLoading(true);
-        setError(null)
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/sosial/pengembanganMasyarakat");
             setMasyarakatList(res.data.sosialMasyarakat);

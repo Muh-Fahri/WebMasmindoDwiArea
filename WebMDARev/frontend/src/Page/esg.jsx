@@ -15,7 +15,7 @@ function ESG() {
     const [deskripLingkunganList, setDeskripLingkunganList] = useState([]);
     const [imgLingList, setImgLingList] = useState([]);
     const [isLoadingDeskripLingkungan, setIsLoadingDeskripLingkungan] = useState(true); // <--- TAMBAHKAN INI
-    const [isLoadingImgLing, setIsLoadingImgLing] = useState(true);
+    // const [isLoadingImgLing, setIsLoadingImgLing] = useState(true);
     const { t, i18n } = useTranslation();
 
     useEffect(() => {
@@ -26,13 +26,10 @@ function ESG() {
         });
     }, []);
     const getdeskripLingkungan = async () => {
-        console.log("getdeskripLingkungan: Memulai fetch...");
-        setIsLoadingDeskripLingkungan(true);
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/lingkungan/deskripLingkungan");
             setDeskripLingkunganList(res.data.deskripLingkunan);
         } catch (error) {
-            console.error("Error Pada Pengambilan Data Deskripsi Lingkungan:", error);
             alert(t("error_fetch_description"));
             setDeskripLingkunganList([]);
         } finally {
@@ -42,14 +39,11 @@ function ESG() {
     }
     const getImgLingData = async () => {
         try {
-            setIsLoadingImgLing(true);
             const res = await axios.get("http://127.0.0.1:8000/api/user/esg/lingkungan/imgLingkungan");
             setImgLingList(res.data.imgLing);
         } catch (error) {
             alert(t("error_fetch_images"));
             setImgLingList([]);
-        } finally {
-            setIsLoadingImgLing(false);
         }
     }
 
@@ -118,54 +112,43 @@ function ESG() {
                         </div>
                     </div>
                     <div className="row">
-                        {isLoadingDeskripLingkungan ? (
-                            <div className="col-12 text-center py-5">
-                                <h5>{t('loading_data')}</h5>
-                                <div className="spinner-border text-primary" role="status">
-                                    <span className="visually-hidden">Loading...</span>
-                                </div>
-                            </div>
-                        ) : (
+                        {deskripLingkunganList.length > 0 ? (
                             <>
-                                {deskripLingkunganList.length > 0 ? (
-                                    <>
-                                        <div className="col-auto">
-                                            <div className="row d-flex justify-content-center p-5">
-                                                <div className="col-md-5" data-aos="fade-right">
-                                                    <h1 className="display-5 fw-bold">
-                                                        <span style={{ color: '#F16022' }}>{t('environmental_policy_title_part1')}</span>{' '}
-                                                        <span style={{ color: '#115258' }}>{t('environmental_policy_title_part2')}</span>
-                                                    </h1>
-                                                </div>
-                                            </div>
+                                <div className="col-auto">
+                                    <div className="row d-flex justify-content-center p-5">
+                                        <div className="col-md-5" data-aos="fade-right">
+                                            <h1 className="display-5 fw-bold">
+                                                <span style={{ color: '#F16022' }}>{t('environmental_policy_title_part1')}</span>{' '}
+                                                <span style={{ color: '#115258' }}>{t('environmental_policy_title_part2')}</span>
+                                            </h1>
                                         </div>
-
-                                        <div className="col-auto d-none d-sm-block">
-                                            <div className="garis-esg"></div>
-                                        </div>
-
-                                        <div className="col" data-aos="fade-down">
-                                            {deskripLingkunganList.map((deskripLing) => (
-                                                <div className="col" key={deskripLing.uuid}>
-                                                    <p
-                                                        style={{ whiteSpace: 'pre-line' }}
-                                                        className="deskripsi-lingkungan"
-                                                        dangerouslySetInnerHTML={{
-                                                            __html: i18n.language === 'id'
-                                                                ? DOMPurify.sanitize(deskripLing.deskripsi_halaman_id)
-                                                                : DOMPurify.sanitize(deskripLing.deskripsi_halaman_en)
-                                                        }}
-                                                    />
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </>
-                                ) : (
-                                    <div className="col-12 text-center py-5">
-                                        <h5 className="text-muted">{t('data_empty')}</h5>
                                     </div>
-                                )}
+                                </div>
+
+                                <div className="col-auto d-none d-sm-block">
+                                    <div className="garis-esg"></div>
+                                </div>
+
+                                <div className="col" data-aos="fade-down">
+                                    {deskripLingkunganList.map((deskripLing) => (
+                                        <div className="col" key={deskripLing.uuid}>
+                                            <p
+                                                style={{ whiteSpace: 'pre-line' }}
+                                                className="deskripsi-lingkungan"
+                                                dangerouslySetInnerHTML={{
+                                                    __html: i18n.language === 'id'
+                                                        ? DOMPurify.sanitize(deskripLing.deskripsi_halaman_id)
+                                                        : DOMPurify.sanitize(deskripLing.deskripsi_halaman_en)
+                                                }}
+                                            />
+                                        </div>
+                                    ))}
+                                </div>
                             </>
+                        ) : (
+                            <div className="col-12 text-center py-5">
+                                <h5 className="text-muted"></h5>
+                            </div>
                         )}
                     </div>
                 </div>
