@@ -69,17 +69,6 @@ function AdminTataKelola() {
         e.preventDefault();
 
         const file = fileInputPdf.current.files[0];
-
-        if (!file) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'File PDF belum dipilih!',
-                text: 'Silahkan masukkan file PDF sebelum menyimpan data.',
-                confirmButtonColor: '#3085d6',
-            });
-            return;
-        }
-
         const formData = new FormData();
         formData.append('deskripKebijakan', desKebijakan);
         formData.append('fotoSampul', imgTataKelola);
@@ -181,6 +170,50 @@ function AdminTataKelola() {
         }
     };
 
+    const deleteTakel = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data ini akan dihapus secara permanen!',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal',
+        });
+
+        if (!confirmResult.isConfirmed) return;
+
+        Swal.fire({
+            title: 'Menghapus data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
+        try {
+            await axios.delete(`http://127.0.0.1:8000/api/admin/tataKelola/delete/${uuid}`, {
+                headers: {
+                    Authorization: `Bearer ${Token}`
+                }
+            });
+            await getTataKelolaData(false);
+            Swal.close();
+            Swal.fire({
+                icon: 'success',
+                title: 'Berhasil!',
+                text: 'Data karir berhasil dihapus.',
+                showConfirmButton: false,
+                timer: 1800,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data!',
+                text: error.response?.data?.message || error.message,
+            });
+        }
+    }
+
 
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -257,7 +290,7 @@ function AdminTataKelola() {
 
                                     <div className="mb-3">
                                         <p>Masukkan file PDF (Jika ada)</p>
-                                        <input type="file" className="form-control" ref={fileInputPdf} accept=".pdf" required />
+                                        <input type="file" className="form-control" ref={fileInputPdf} accept=".pdf" />
                                     </div>
 
                                     <div className="mb-3">
@@ -463,7 +496,7 @@ function AdminTataKelola() {
                                                             <div className="row">
                                                                 <div className="col d-flex gap-3">
                                                                     <button className="btn btn-warning" onClick={() => openEditModal(data)}>Edit</button>
-                                                                    <a href="" className="btn btn-sm btn-danger">Delete</a>
+                                                                    <button className="btn btn-danger btn-sm" onClick={() => deleteTakel(data.uuid)}>Delete</button>
                                                                 </div>
                                                             </div>
                                                         </td>

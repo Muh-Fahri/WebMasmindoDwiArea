@@ -46,7 +46,7 @@ function Bisnis() {
             <NavbarProject />
             <section>
                 <div className="bg-bisnis d-flex align-items-center">
-                    <div className="container-fluid p-5" data-aos="fade-right">
+                    <div className="container p-5" data-aos="fade-right">
                         <div className="row">
                             <div className="col-12 col-md-5">
                                 <h1 className="fw-bold text-break"

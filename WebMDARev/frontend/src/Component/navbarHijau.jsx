@@ -15,7 +15,7 @@ function NavbarHijau() {
         try {
             // 🔹 Tampilkan loading
             Swal.fire({
-                title: "Mengambil data cuaca...",
+                title: "Memuat data...",
                 text: "Harap tunggu sebentar.",
                 allowOutsideClick: false,
                 didOpen: () => {

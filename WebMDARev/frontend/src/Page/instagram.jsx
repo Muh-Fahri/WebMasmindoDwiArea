@@ -5,6 +5,7 @@ import EmbedInstagram from "../Component/Admin/embedIg";
 import Aos from "aos";
 import { useTranslation } from "react-i18next";
 import Footer from "./fotter";
+import Swal from "sweetalert2";
 
 
 
@@ -15,12 +16,23 @@ function Instagram() {
 
 
     const getInstagramData = async () => {
+        Swal.fire({
+            title: 'Memuat data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             const res = await axios.get("http://127.0.0.1:8000/api/user/berita/instagram");
             setInstagramList(res.data.instagram);
-            getInstagramData();
         } catch (error) {
-            alert("Gagal Mengambil Data");
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.message,
+            });
         }
     }
 
@@ -71,7 +83,7 @@ function Instagram() {
                                         </div>
                                     ))
                                 ) : (
-                                    <p className="text-muted">{t('data_empty')}</p>
+                                    <p className="text-muted"></p>
                                 )
                             }
                         </div>

@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import NavbarHijau from "../Component/navbarHijau";
 import Laporan from "./laporan";
 import { NavLink } from "react-router-dom";
-import DOMPurify from 'dompurify';
 import { useTranslation } from "react-i18next";
 import Footer from "./fotter";
 import axios from "axios";
-import { data } from "jquery";
+import Swal from "sweetalert2";
+
 
 
 
@@ -16,48 +16,45 @@ function TataKelola() {
     const [keberagamanList, setKeberagaman] = useState([]);
     const [antiSuapList, setAntiSuap] = useState([]);
 
-    const getDataKodeEtik = async () => {
-        try {
-            const res = await axios.get('http://127.0.0.1:8000/api/user/tataKelola/kodeEtik');
-            setKodeEtik(res.data.kodeEtik);
-        } catch (error) {
-            alert(error);
-        }
-    }
 
-    const getDataKebijakanPelapor = async () => {
-        try {
-            const res = await axios.get('http://127.0.0.1:8000/api/user/tataKelola/kebijakanPelapor');
-            setKebijakanPelapor(res.data.kebijakanPelapor);
-        } catch (error) {
-            alert(error);
-        }
-    }
 
-    const getDataKebijakanKeberagaman = async () => {
+    const getAllDataTataKelola = async () => {
+        Swal.fire({
+            title: 'Memuat data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
-            const res = await axios.get('http://127.0.0.1:8000/api/user/tataKelola/kebijakanKeberagaman');
-            setKeberagaman(res.data.keberagaman);
+            const [kebPelaporRes, kodeEtikRes, keberagamanRes, antiSuapRes] = await Promise.all([
+                axios.get('http://127.0.0.1:8000/api/user/tataKelola/kebijakanPelapor'),
+                axios.get('http://127.0.0.1:8000/api/user/tataKelola/kodeEtik'),
+                axios.get('http://127.0.0.1:8000/api/user/tataKelola/kebijakanKeberagaman'),
+                axios.get('http://127.0.0.1:8000/api/user/tataKelola/antiSuap'),
+            ]);
+            setKebijakanPelapor(kebPelaporRes.data.kebijakanPelapor);
+            setKodeEtik(kodeEtikRes.data.kodeEtik);
+            setKeberagaman(keberagamanRes.data.keberagaman);
+            setAntiSuap(antiSuapRes.data.antiSuap);
+            Swal.close();
         } catch (error) {
-
-        }
-    }
-
-    const getDataAntiSuap = async () => {
-        try {
-            const res = await axios.get('http://127.0.0.1:8000/api/user/tataKelola/antiSuap');
-            setAntiSuap(res.data.antiSuap);
-        } catch (error) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.message,
+            });
+            setAntiSuap([]);
+            setKeberagaman([]);
+            setKebijakanPelapor([]);
+            setKodeEtik([]);
         }
     }
 
 
     useEffect(() => {
-        getDataKodeEtik();
-        getDataKebijakanPelapor();
-        getDataKebijakanKeberagaman();
-        getDataAntiSuap();
+        getAllDataTataKelola();
     }, [])
 
     const { t, i18n } = useTranslation();
@@ -114,7 +111,7 @@ function TataKelola() {
                                 <img
                                     className="img-fluid rounded-5 w-100"
                                     style={{ maxHeight: "50vh", objectFit: 'cover' }}
-                                    src="/Image/Background/CampAwakMasJPEG.jpg"
+                                    src="/Image/Background/bg-mda.jpg"
                                     alt=""
                                 />
                             </div>
@@ -143,7 +140,10 @@ function TataKelola() {
                                         <h1 className="fw-bold" style={{ color: "#F16022" }}>
                                             {item.category === 'kodeEtik' ? 'Kode Etik' : item.category}
                                         </h1>
-                                        <p>{item.deskripKebijakan}</p>
+                                        <p
+                                            dangerouslySetInnerHTML={{ __html: item.deskripKebijakan }}
+                                        />
+
                                         <a
                                             href={`http://127.0.0.1:8000/TataKelola/pdf/${item.pdf}`}
                                             className="btn btn-secondary rounded-5 border-0 shadow-none"
@@ -192,7 +192,11 @@ function TataKelola() {
                                         <h1 className="fw-bold" style={{ color: "#F16022" }}>
                                             Kebijakan Pelapor
                                         </h1>
-                                        <p>{lapor.deskripKebijakan}</p>
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: lapor.deskripKebijakan
+                                            }}
+                                        />
                                         <a href={`http://127.0.0.1:8000/TataKelola/pdf/${lapor.pdf}`} className="btn btn-secondary rounded-5 shadow-none border-0" style={{ backgroundColor: '#F16022' }}>
                                             Lihat PDF
                                         </a>
@@ -232,7 +236,11 @@ function TataKelola() {
                                         <h1 className="fw-bold" style={{ color: "#F16022" }}>
                                             Kebijakan Keberagaman
                                         </h1>
-                                        <p>{keberagaman.deskripKebijakan}</p>
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: keberagaman.deskripKebijakan
+                                            }}
+                                        />
                                         <a href={`http://127.0.0.1:8000/TataKelola/pdf/${keberagaman.pdf}`} className="btn btn-secondary rounded-5 shadow-none border-0" style={{ backgroundColor: '#F16022' }}>
                                             Lihat PDF
                                         </a>
@@ -274,7 +282,11 @@ function TataKelola() {
                                         <h1 className="fw-bold" style={{ color: "#F16022" }}>
                                             Kebijakan Anti Suap dan Anti Korupsi
                                         </h1>
-                                        <p>{antiSuap.deskripKebijakan}</p>
+                                        <p
+                                            dangerouslySetInnerHTML={{
+                                                __html: antiSuap.deskripKebijakan
+                                            }}
+                                        />
                                         <a href={`http://127.0.0.1:8000/TataKelola/pdf/${antiSuap.pdf}`} className="btn btn-secondary rounded-5 shadow-none border-0" style={{ backgroundColor: '#F16022' }}>
                                             Lihat PDF
                                         </a>

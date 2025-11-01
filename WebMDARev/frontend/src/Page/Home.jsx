@@ -528,7 +528,47 @@ function Home() {
                 </div>
             </section>
             <section>
-                <div className="bg-bawah d-flex justify-content-center align-items-center" style={{ height: '70vh' }}>
+                <div className="container-fluid">
+                    <div className="container">
+                        <div className="row">
+                            <div className="col">
+                                <h2 className="text-uppercase" style={{ color: '#00492F' }}>Informasi Saham</h2> <br />
+                                <p className="text-secondary text-justify mt-4 leading-relaxed">
+                                    <strong>Indika Energy Tbk (INDY)</strong> adalah salah satu perusahaan energi terintegrasi terbesar di Indonesia.
+                                    Didirikan pada tahun 2000, Indika Energy berfokus pada sektor pertambangan batubara, jasa energi, logistik, dan
+                                    infrastruktur pendukung. Dalam beberapa tahun terakhir, perusahaan ini juga aktif melakukan diversifikasi ke bidang
+                                    energi terbarukan dan solusi berkelanjutan sebagai bagian dari transformasi menuju bisnis yang lebih hijau.
+                                    <br /><br />
+                                    Halaman ini menampilkan pergerakan harga saham <strong>INDY</strong> secara real-time, termasuk perubahan harian
+                                    dan grafik performa melalui <strong>TradingView</strong>. Investor dan masyarakat dapat memantau perkembangan
+                                    harga saham untuk mendapatkan gambaran mengenai kondisi pasar dan kinerja perusahaan.
+                                </p>
+                                <br />
+                            </div>
+                        </div>
+                    </div>
+                    <div className="row">
+                        <div className="col">
+                            <div className="tradingview-widget-container">
+                                <iframe
+                                    src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_12345&symbol=IDX:INDY&interval=1D&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&theme=light&style=1&timezone=Asia%2FJakarta&withdateranges=1&hideideas=1"
+                                    width="100%"
+                                    height="800"
+                                    frameBorder="0"
+                                    allowtransparency="true"
+                                    scrolling="yes"
+                                    title="TradingView INDY"
+                                ></iframe>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <section>
+                <div
+                    className="bg-bawah d-flex justify-content-center align-items-center"
+                    style={{ height: '70vh' }}
+                >
                     <div className="container text-center" data-aos="zoom-in-up">
                         <div className="row">
                             <div className="col">
@@ -540,8 +580,11 @@ function Home() {
                                 </p>
                                 <a href="/karir">
                                     <button
-                                        className="btn rounded-5 fw-bold shadow-none fs-6 fs-md-3 mt-4 px-4 py-2 text-white"
-                                        style={{ backgroundColor: "#F16022" }}
+                                        className="btn text-uppercase rounded-0 fw-bold shadow fs-6 mt-4 px-4 py-2 text-white w-100 w-sm-auto"
+                                        style={{
+                                            backgroundColor: "#F16022",
+                                            maxWidth: "500px",
+                                        }}
                                     >
                                         {t('career_button')}
                                     </button>

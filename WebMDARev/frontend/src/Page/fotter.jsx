@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import DOMPurify from 'dompurify';
 import { useTranslation } from "react-i18next";
+import Swal from "sweetalert2";
 
 
 
@@ -14,12 +15,23 @@ function Footer() {
 
 
     const getAlamatData = async () => {
+        Swal.fire({
+            title: 'Memuat data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/user/maps');
             setAlamatData(res.data.maps);
-            getAlamatData();
         } catch (error) {
-            alert(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.message,
+            });
         }
 
     };

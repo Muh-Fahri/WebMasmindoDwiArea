@@ -99,7 +99,7 @@ function ESG() {
                             <img
                                 className="img-fluid rounded-5 w-100"
                                 style={{ maxHeight: "50vh", objectFit: 'cover' }}
-                                src="/Image/Background/CampAwakMasJPEG.jpg"
+                                src="/Image/Background/bg-mda.jpg"
                                 alt=""
                             />
                         </div>

@@ -9,11 +9,8 @@ import DOMPurify from 'dompurify';
 function GaleriUser() {
     const [t, i18n] = useTranslation();
     const [galeriList, setGaleriList] = useState([]);
-    const [selectedCaption, setSelectedCaption] = useState("");
     const [selectedData, setSelectedData] = useState(null);
-    const [isLoading, setIsLoading] = useState(true);
     const getGaleriData = async () => {
-        setIsLoading(true);
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/user/dokumentasi');
             setGaleriList(res.data.galeri);
@@ -21,8 +18,6 @@ function GaleriUser() {
             console.error('Error fetching gallery data:', error);
             alert('Server Error: Gagal mengambil data galeri.');
             setGaleriList([]);
-        } finally {
-            setIsLoading(false);
         }
     }
     useEffect(() => {
@@ -66,14 +61,7 @@ function GaleriUser() {
                             </div>
                         </div>
                         <div className="col-12 col-md-8">
-                            {isLoading ? (
-                                <div className="text-center py-5">
-                                    <div className="spinner-border text-primary" role="status">
-                                        <span className="visually-hidden">Loading...</span>
-                                    </div>
-                                    <p className="mt-2 text-muted">Memuat data galeri...</p>
-                                </div>
-                            ) : galeriList.length > 0 ? (
+                            {galeriList.length > 0 ? (
                                 <div className="row">
                                     <div className="col-12 col-md-7 mb-4 p-0">
                                         <div className="position-relative foto-utama-galeri-hp" style={{ width: '100%', height: '500px' }}>

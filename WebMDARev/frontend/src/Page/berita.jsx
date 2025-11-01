@@ -7,6 +7,7 @@ import { faCircleArrowRight } from '@fortawesome/free-solid-svg-icons'
 import Aos from "aos";
 import { useTranslation } from "react-i18next";
 import Footer from "./fotter";
+import Swal from "sweetalert2";
 
 
 function Berita() {
@@ -28,9 +29,15 @@ function Berita() {
 
 
     const getBeritaData = async (keyword = "") => {
-        setIsLoading(true);
+        Swal.fire({
+            title: 'Memuat data...',
+            text: 'Harap tunggu sebentar',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        });
         setMessage("");
-
         const trimmedKeyword = keyword.trim();
         let url = "";
         if (trimmedKeyword === "") {
@@ -63,14 +70,11 @@ function Berita() {
             }
 
         } catch (error) {
-            console.error("Error fetching data:", error);
-            setBeritaList([]);
-            setMessage(t('news_fetch_error'));
-            if (error.response && error.response.status === 404) {
-                setMessage('No Data');
-            }
-        } finally {
-            setIsLoading(false);
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal memuat data',
+                text: error.message,
+            });
         }
     };
     useEffect(() => {
@@ -131,56 +135,52 @@ function Berita() {
                             </div>
                             <div className="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
                                 {
-                                    isLoading ? (
-                                        <div className="col text-center">{t('news_loading')}</div>
-                                    ) : (
-                                        beritaList.length > 0 ? (
-                                            beritaList.map((berita) => (
-                                                <div key={berita.uuid} className="col d-flex justify-content-center">
+                                    beritaList.length > 0 ? (
+                                        beritaList.map((berita) => (
+                                            <div key={berita.uuid} className="col d-flex justify-content-center">
+                                                <div
+                                                    className="card rounded-5 overflow-hidden position-relative card-berita"
+                                                    style={{ width: "100%", maxWidth: "500px", height: "500px" }}
+                                                >
                                                     <div
-                                                        className="card rounded-5 overflow-hidden position-relative card-berita"
-                                                        style={{ width: "100%", maxWidth: "500px", height: "500px" }}
-                                                    >
-                                                        <div
-                                                            className="img-berita"
-                                                            style={{
-                                                                backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url(http://127.0.0.1:8000/Berita/${encodeURIComponent(berita.image_berita)})`,
-                                                                backgroundSize: "cover",
-                                                                backgroundPosition: "center",
-                                                                width: "100%",
-                                                                height: "100%",
-                                                            }}
-                                                        ></div>
+                                                        className="img-berita"
+                                                        style={{
+                                                            backgroundImage: `linear-gradient(to bottom, rgba(0,0,0,0.5), rgba(0,0,0,0.9)), url(http://127.0.0.1:8000/Berita/${encodeURIComponent(berita.image_berita)})`,
+                                                            backgroundSize: "cover",
+                                                            backgroundPosition: "center",
+                                                            width: "100%",
+                                                            height: "100%",
+                                                        }}
+                                                    ></div>
 
-                                                        <div
-                                                            className="position-absolute bottom-0 w-100 p-4"
-                                                            style={{ color: 'white' }}
-                                                        >
-                                                            <p className="mb-1">
-                                                                {new Date(berita.created_at).toLocaleDateString(i18n.language, {
-                                                                    weekday: "long",
-                                                                    day: "numeric",
-                                                                    month: "long",
-                                                                    year: "numeric"
-                                                                })}
-                                                            </p>
-                                                            <h5 className="fw-bold mb-2">
-                                                                {i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}
-                                                            </h5>
-                                                            <div className="d-flex justify-content-center">
-                                                                <Link to={`/berita/selengkapnya/${berita.uuid}`} className="text-white display-5 text-decoration-none">
-                                                                    <FontAwesomeIcon icon={faCircleArrowRight} />
-                                                                </Link>
-                                                            </div>
+                                                    <div
+                                                        className="position-absolute bottom-0 w-100 p-4"
+                                                        style={{ color: 'white' }}
+                                                    >
+                                                        <p className="mb-1">
+                                                            {new Date(berita.created_at).toLocaleDateString(i18n.language, {
+                                                                weekday: "long",
+                                                                day: "numeric",
+                                                                month: "long",
+                                                                year: "numeric"
+                                                            })}
+                                                        </p>
+                                                        <h5 className="fw-bold mb-2">
+                                                            {i18n.language === 'id' ? berita.judul_berita_id : berita.judul_berita_en}
+                                                        </h5>
+                                                        <div className="d-flex justify-content-center">
+                                                            <Link to={`/berita/selengkapnya/${berita.uuid}`} className="text-white display-5 text-decoration-none">
+                                                                <FontAwesomeIcon icon={faCircleArrowRight} />
+                                                            </Link>
                                                         </div>
                                                     </div>
                                                 </div>
-                                            ))
-                                        ) : (
-                                            <div className="col d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
-                                                <p className="text-center text-muted">{message || t('no_data')}</p>
                                             </div>
-                                        )
+                                        ))
+                                    ) : (
+                                        <div className="col d-flex justify-content-center align-items-center" style={{ minHeight: '300px' }}>
+                                            <p className="text-center text-muted"></p>
+                                        </div>
                                     )
                                 }
                             </div>
