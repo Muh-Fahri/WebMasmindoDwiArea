@@ -532,7 +532,7 @@ function Home() {
                     <div className="container">
                         <div className="row">
                             <div className="col">
-                                <h2 className="text-uppercase" style={{ color: '#00492F' }}>Informasi Saham</h2> <br />
+                                <h2 className="text-uppercase fw-bold" style={{ color: '#00492F' }}>Informasi Saham</h2> <br />
                                 <p className="text-secondary text-justify mt-4 leading-relaxed">
                                     <strong>Indika Energy Tbk (INDY)</strong> adalah salah satu perusahaan energi terintegrasi terbesar di Indonesia.
                                     Didirikan pada tahun 2000, Indika Energy berfokus pada sektor pertambangan batubara, jasa energi, logistik, dan
