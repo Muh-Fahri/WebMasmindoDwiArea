@@ -50,6 +50,7 @@ Route::get('/user/webGis', [readUser::class, 'readGis']);
 
 
 
+
 Route::post('/admin/weather', [createAdmin::class, 'createWeather']);
 
 
@@ -152,4 +153,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     // Maps
     Route::get('/admin/mapGis', [readAdmin::class, 'readGis']);
     Route::post('/admin/mapGis', [createAdmin::class, 'createGisMap']);
+    Route::delete('/admin/mapGis/delete/{uuid}', [deleteAdmin::class, 'deleteGis']);
+
+    // gis
+
 });

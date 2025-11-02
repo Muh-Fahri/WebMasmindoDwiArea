@@ -17,6 +17,7 @@ use App\Models\Carousel;
 use App\Models\Galeri;
 use App\Models\Karir;
 use App\Models\Kontak;
+use App\Models\Maps;
 use App\Models\TataKelola;
 use Illuminate\Support\Facades\File;
 
@@ -206,6 +207,16 @@ class deleteAdmin extends Controller
         $tataKelola->delete();
         return response()->json([
             'tataKelola' => $tataKelola
+        ], 200);
+    }
+
+    function deleteGis(Request $request, $uuid)
+    {
+        $gis = Maps::where('uuid', $uuid);
+        $gis->delete();
+
+        return response()->json([
+            'msg' => 'Data berhasil di hapus'
         ], 200);
     }
 }

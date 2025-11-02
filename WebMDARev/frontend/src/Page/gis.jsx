@@ -1,8 +1,33 @@
-import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
+import { MapContainer, TileLayer, GeoJSON, useMap } from "react-leaflet";
 import { useEffect, useState } from "react";
-import NavbarHijau from "../Component/navbarHijau";
+import L from "leaflet";
 import { useTranslation } from "react-i18next";
-import NavSide from "../Component/Admin/navSide";
+
+function FitToLayer({ layers, activeLayers }) {
+    const map = useMap();
+
+    useEffect(() => {
+        if (!map) return;
+
+        if (activeLayers.length === 0) {
+            map.setView([-2.5, 118], 5);
+            return;
+        }
+
+        const activeGeoJSONs = layers
+            .filter((l) => activeLayers.includes(l.nama_layer))
+            .map((l) => l.geojson_data);
+
+        if (activeGeoJSONs.length > 0) {
+            const group = L.featureGroup(
+                activeGeoJSONs.map((geojson) => L.geoJSON(geojson))
+            );
+            map.fitBounds(group.getBounds(), { padding: [20, 20] });
+        }
+    }, [layers, activeLayers, map]);
+
+    return null;
+}
 
 function WebGIS() {
     const [layers, setLayers] = useState([]);
@@ -44,97 +69,111 @@ function WebGIS() {
     };
 
     return (
-        <>
-            <div className="d-flex" style={{ height: "100vh" }}>
-                {/* Sidebar */}
+        <div className="container-fluid p-0" style={{ height: "100vh" }}>
+            {/* NAVBAR */}
+            <nav
+                className="navbar bg-light"
+                style={{
+                    // backgroundColor: "#115258",
+                    position: "fixed",
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    zIndex: 1000,
+                    height: "56px",
+                }}
+            >
+                <div className="container-fluid">
+                    {/* Tombol toggle sidebar di layar kecil */}
+                    <button
+                        className="btn btn-outline-light d-md-none"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#sidebar"
+                    >
+                        <i className="bi bi-list"></i>
+                    </button>
+
+                    <div className="container">
+                        <div className="row">
+                            <div className="col">
+                                <span className="navbar-brand mx-auto fw-semibold text-uppercase">
+                                    WebGIS Tambang Awak Mas
+                                </span>
+                            </div>
+                            <div className="col">
+                                <input type="text" style={{ border: 'gray solid 2px' }} className="form-control rounded-5" placeholder="Cari nama layer" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+
+            {/* KONTEN UTAMA */}
+            <div className="row g-0" style={{ height: "100vh", paddingTop: "56px" }}>
+                {/* SIDEBAR */}
                 <div
+                    className="col-12 col-md-3 col-lg-2 text-light p-3 collapse d-md-block"
+                    id="sidebar"
                     style={{
-                        width: "300px",
                         backgroundColor: "#115258",
-                        padding: "15px",
-                        boxShadow: "2px 0 5px rgba(0,0,0,0.1)",
                         overflowY: "auto",
+                        height: "calc(100vh - 56px)",
+                        position: "fixed",
+                        top: "56px",
+                        left: 0,
+                        zIndex: 999,
                     }}
                 >
-                    <img
-                        src="/Image/AwakMasLogo.png"
-                        alt="Logo"
-                        style={{
-                            width: "200px",
-                            height: "200px",
-                            objectFit: "contain",
-                            display: "block",
-                            marginBottom: "10px",
-                        }}
-                    />
-
-                    {/* Checkbox Layer */}
-                    <div className="card" style={{ backgroundColor: "#e2e2e2ff" }}>
+                    {/* Card Layer */}
+                    <div className="card bg-light mb-3">
                         <div className="card-body">
-                            {/* Judul bisa diklik untuk membuka/menutup daftar layer */}
                             <h5
                                 className="text-secondary text-uppercase d-flex justify-content-between align-items-center"
-                                style={{ cursor: "pointer" }}
                                 data-bs-toggle="collapse"
                                 data-bs-target="#layerListCollapse"
-                                aria-expanded="true"
+                                style={{ cursor: "pointer" }}
                             >
                                 Tampilkan Layer
                                 <i className="bi bi-chevron-down"></i>
                             </h5>
 
-                            {/* Daftar layer yang bisa di-collapse */}
                             <div className="collapse show" id="layerListCollapse">
                                 {layers.map((layer, i) => (
-                                    <label
-                                        key={i}
-                                        style={{
-                                            display: "flex",
-                                            alignItems: "center",
-                                            cursor: "pointer",
-                                            fontSize: "16px",
-                                            fontWeight: "500",
-                                            marginTop: "10px",
-                                            userSelect: "none",
-                                            color: "white",
-                                        }}
-                                    >
+                                    <div className="form-check mt-2" key={i}>
                                         <input
+                                            className="form-check-input"
                                             type="checkbox"
+                                            id={`layer-${i}`}
                                             checked={activeLayers.includes(layer.nama_layer)}
                                             onChange={() => toggleLayer(layer.nama_layer)}
                                             style={{
-                                                appearance: "none",
-                                                width: "22px",
-                                                height: "22px",
-                                                border: "4px solid #F16022",
-                                                borderRadius: "6px",
-                                                marginRight: "10px",
+                                                width: "1.2rem",
+                                                height: "1.2rem",
                                                 cursor: "pointer",
-                                                backgroundColor: activeLayers.includes(layer.nama_layer)
-                                                    ? "#115258"
-                                                    : "transparent",
-                                                transition: "all 0.2s ease",
-                                                position: "relative",
+                                                accentColor: "#F16022",
                                             }}
                                         />
-                                        <span className="text-secondary">{layer.nama_layer}</span>
-                                    </label>
+                                        <label
+                                            className="form-check-label ms-2 text-dark"
+                                            htmlFor={`layer-${i}`}
+                                        >
+                                            {layer.nama_layer}
+                                        </label>
+                                    </div>
                                 ))}
                             </div>
                         </div>
                     </div>
 
-
-                    {/* Selected Feature Info */}
-                    <div className="card mt-3" style={{ backgroundColor: "#e2e2e2ff" }}>
+                    {/* Card Informasi */}
+                    <div className="card bg-light">
                         <div className="card-body">
                             <h5
                                 className="text-secondary text-uppercase d-flex justify-content-between align-items-center"
-                                style={{ cursor: "pointer" }}
                                 data-bs-toggle="collapse"
                                 data-bs-target="#infoLayerCollapse"
-                                aria-expanded="true"
+                                style={{ cursor: "pointer" }}
                             >
                                 Informasi Layer
                                 <i className="bi bi-chevron-down"></i>
@@ -142,7 +181,7 @@ function WebGIS() {
 
                             <div className="collapse show" id="infoLayerCollapse">
                                 {selectedFeature ? (
-                                    <ul style={{ color: "black", paddingLeft: "15px", marginTop: "10px" }}>
+                                    <ul className="mt-2 text-dark">
                                         {Object.entries(selectedFeature).map(([key, value]) => (
                                             <li key={key}>
                                                 <b>{key}</b>: {value === null ? "-" : value.toString()}
@@ -157,19 +196,20 @@ function WebGIS() {
                             </div>
                         </div>
                     </div>
-
                 </div>
 
-                {/* Map */}
-                <div style={{ flex: 1, position: "relative" }}>
+                {/* MAP AREA */}
+                <div
+                    className="col-12 col-md-9 col-lg-10 offset-md-3 offset-lg-2 p-0"
+                    style={{
+                        height: "calc(100vh - 56px)",
+                    }}
+                >
                     <MapContainer
-                        center={[-3.36, 120.11]}
-                        zoom={18}
+                        center={[-2.5, 118]}
+                        zoom={5}
                         style={{ height: "100%", width: "100%" }}
                         scrollWheelZoom={false}
-                        doubleClickZoom={false}
-                        touchZoom={false}
-                        zoomControl={true}
                     >
                         <TileLayer
                             url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
@@ -186,19 +226,19 @@ function WebGIS() {
                                     style={styleFeature}
                                     onEachFeature={(feature, layerEl) => {
                                         const props = feature.properties;
-
-                                        // klik feature → tampilkan info di sidebar
                                         layerEl.on("click", () => {
                                             setSelectedFeature(props);
                                         });
                                     }}
                                 />
                             ))}
-                    </MapContainer>
 
+                        <FitToLayer layers={layers} activeLayers={activeLayers} />
+                    </MapContainer>
                 </div>
             </div>
-        </>
+        </div>
+
     );
 }
 
