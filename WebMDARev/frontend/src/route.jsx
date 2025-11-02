@@ -19,6 +19,7 @@ import DetailProfesi from "./Page/detailProfesi";
 import Magang from "./Page/magang";
 import Kontak from "./Page/kontak";
 import TataKelola from "./Page/tataKelola";
+import WebGIS from "./Page/gis";
 
 function AppRouter() {
     return (
@@ -47,6 +48,7 @@ function AppRouter() {
                     <Route path="karir/detail/:uuid" element={<DetailProfesi />} />
                     <Route path="kontak" element={<Kontak />} />
                     <Route path="tata-kelola" element={<TataKelola />} />
+                    <Route path='peta' element={<WebGIS />} />
                 </Routes>
             </Router>
         </div>

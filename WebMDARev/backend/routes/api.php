@@ -43,6 +43,9 @@ Route::get('/user/tataKelola/kebijakanKeberagaman', [readUser::class, 'readKebij
 Route::get('/user/tataKelola/antiSuap', [readUser::class, 'readAntiSuap']);
 Route::get('/user/tataKelola/kodeEtik', [readUser::class, 'readKodeEtik']);
 
+// gis
+Route::get('/user/webGis', [readUser::class, 'readGis']);
+
 
 
 
@@ -145,4 +148,8 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::get('/admin/tataKelola', [readAdmin::class, 'readTataKelola']);
     Route::post('/admin/tataKelola/{uuid}', [updateAdmin::class, 'updateTataKelola']);
     Route::delete('/admin/tataKelola/delete/{uuid}', [deleteAdmin::class, 'deleteTataKelola']);
+
+    // Maps
+    Route::get('/admin/mapGis', [readAdmin::class, 'readGis']);
+    Route::post('/admin/mapGis', [createAdmin::class, 'createGisMap']);
 });

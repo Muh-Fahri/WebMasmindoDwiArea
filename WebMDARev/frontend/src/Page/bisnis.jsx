@@ -7,6 +7,7 @@ import 'aos/dist/aos.css';
 import { useTranslation } from 'react-i18next';
 import DOMPurify from 'dompurify';
 import Swal from "sweetalert2";
+import WebGIS from "./gis";
 
 function Bisnis() {
     const { t, i18n } = useTranslation();
@@ -143,6 +144,15 @@ function Bisnis() {
                     </div>
                 </div>
             </section>
+            <section className="my-5">
+                <div className="container">
+                    <h3 className="mb-3">Peta Lokasi Tambang</h3>
+                    <div style={{ height: "600px", width: "100%", borderRadius: "15px", overflow: "hidden" }}>
+                        <WebGIS />
+                    </div>
+                </div>
+            </section>
+
             <section>
                 <Footer />
             </section>

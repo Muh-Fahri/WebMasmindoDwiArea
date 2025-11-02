@@ -121,6 +121,9 @@ function Berita() {
                                 <li>
                                     <a href="/dokumentasi" className="fs-1 text-black text-decoration-none">{t('documentation_title')}</a>
                                 </li>
+                                <li>
+                                    <a href="/peta" className="fs-1 text-black text-decoration-none">Peta lokasi</a>
+                                </li>
                             </ul>
                         </div>
                         <div className="col">

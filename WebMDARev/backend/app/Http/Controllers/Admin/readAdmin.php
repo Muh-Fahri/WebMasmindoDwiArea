@@ -18,6 +18,7 @@ use App\Models\Carousel;
 use App\Models\Galeri;
 use App\Models\Karir;
 use App\Models\Kontak;
+use App\Models\Maps;
 use App\Models\TataKelola;
 
 class readAdmin extends Controller
@@ -249,6 +250,14 @@ class readAdmin extends Controller
         $tataKelola = TataKelola::all();
         return response()->json([
             'tataKelola' => $tataKelola,
+        ], 200);
+    }
+
+    function readGis()
+    {
+        $maps = Maps::all();
+        return response()->json([
+            'maps' => $maps
         ], 200);
     }
 }

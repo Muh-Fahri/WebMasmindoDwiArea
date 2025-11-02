@@ -2,25 +2,28 @@
 
 namespace App\Http\Controllers\Admin;
 
+use ZipArchive;
 use App\Models\PDF;
+use App\Models\Karir;
 use App\Models\Alamat;
 use App\Models\Bisnis;
 use App\Models\Galeri;
+use App\Models\Kontak;
 use App\Models\Sosial;
 use App\Models\Weather;
 use App\Models\Youtube;
+use App\Models\Carousel;
 use App\Models\Instagram;
 use App\Models\Lingkungan;
+use App\Models\TataKelola;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
 use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
-use App\Models\Carousel;
-use App\Models\Karir;
-use App\Models\Kontak;
-use App\Models\TataKelola;
+use App\Models\Maps;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
 
@@ -504,5 +507,23 @@ class createAdmin extends Controller
         return response()->json([
             'tataKelola' => $tataKelola,
         ], 200);
+    }
+
+    function createGisMap(Request $request)
+    {
+        $request->validate([
+            'nama_layer' => 'required',
+            'geojson' => 'required',
+        ]);
+
+        $map = Maps::create([
+            'uuid' => Str::uuid(),
+            'nama_layer' => $request->nama_layer,
+            'geojson' => $request->geojson,
+        ]);
+
+        return response()->json([
+            'maps' => $map
+        ], 201);
     }
 }

@@ -17,6 +17,7 @@ use Illuminate\Http\Request;
 use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
+use App\Models\Maps;
 use Illuminate\Support\Facades\Validator;
 
 class readUser extends Controller
@@ -251,6 +252,14 @@ class readUser extends Controller
         $antiSuap = TataKelola::where('category', 'antiSuap')->get();
         return response()->json([
             'antiSuap' => $antiSuap
+        ], 200);
+    }
+
+    function readGis()
+    {
+        $gis = Maps::all();
+        return response()->json([
+            'gis' => $gis
         ], 200);
     }
 }
