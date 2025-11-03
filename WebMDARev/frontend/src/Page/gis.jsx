@@ -3,16 +3,12 @@ import { useEffect, useState } from "react";
 import L from "leaflet";
 import { useTranslation } from "react-i18next";
 
+// 🔹 Komponen untuk zoom otomatis ke layer aktif
 function FitToLayer({ layers, activeLayers }) {
     const map = useMap();
 
     useEffect(() => {
-        if (!map) return;
-
-        if (activeLayers.length === 0) {
-            map.setView([-2.5, 118], 5);
-            return;
-        }
+        if (!map || activeLayers.length === 0) return;
 
         const activeGeoJSONs = layers
             .filter((l) => activeLayers.includes(l.nama_layer))
@@ -29,11 +25,52 @@ function FitToLayer({ layers, activeLayers }) {
     return null;
 }
 
+// 🔹 Komponen Basemap Switcher — ini yang mengatur layer dasar
+function BasemapSwitcher({ basemap }) {
+    const map = useMap();
+
+    useEffect(() => {
+        let tileLayer;
+
+        if (basemap === "satellite") {
+            tileLayer = L.tileLayer(
+                "https://{s}.google.com/vt/lyrs=s&x={x}&y={y}&z={z}",
+                {
+                    maxZoom: 20,
+                    subdomains: ["mt0", "mt1", "mt2", "mt3"],
+                    attribution: "&copy; Google Satellite",
+                }
+            );
+        } else if (basemap === "none") {
+            // 🔹 Basemap kosong (warna putih)
+            const pane = map.getPane("tilePane");
+            if (pane) pane.style.background = "#ffffff"; // putih polos
+            tileLayer = null;
+        } else {
+            tileLayer = L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
+                maxZoom: 19,
+                attribution: "&copy; OpenStreetMap",
+            });
+        }
+
+        if (tileLayer) tileLayer.addTo(map);
+
+        return () => {
+            if (tileLayer) map.removeLayer(tileLayer);
+            const pane = map.getPane("tilePane");
+            if (pane) pane.style.background = ""; // reset kalau ganti basemap
+        };
+    }, [basemap, map]);
+
+    return null;
+}
+
 function WebGIS() {
     const [layers, setLayers] = useState([]);
     const [activeLayers, setActiveLayers] = useState([]);
     const [selectedFeature, setSelectedFeature] = useState(null);
-    const { t, i18n } = useTranslation();
+    const { t } = useTranslation();
+    const [basemap, setBasemap] = useState("normal");
 
     useEffect(() => {
         fetch("http://127.0.0.1:8000/api/user/webGis")
@@ -51,6 +88,7 @@ function WebGIS() {
             .catch((err) => console.error("Gagal memuat data GIS:", err));
     }, []);
 
+    // Toggle layer aktif/nonaktif
     const toggleLayer = (layerName) => {
         setActiveLayers((prev) =>
             prev.includes(layerName)
@@ -59,22 +97,12 @@ function WebGIS() {
         );
     };
 
-    const styleFeature = (feature) => {
-        const warna = feature.properties?.warna || "#00aaff";
-        return {
-            color: warna,
-            weight: 2,
-            fillOpacity: 0.4,
-        };
-    };
-
     return (
         <div className="container-fluid p-0" style={{ height: "100vh" }}>
             {/* NAVBAR */}
             <nav
                 className="navbar bg-light"
                 style={{
-                    // backgroundColor: "#115258",
                     position: "fixed",
                     top: 0,
                     left: 0,
@@ -84,32 +112,27 @@ function WebGIS() {
                 }}
             >
                 <div className="container-fluid">
-                    {/* Tombol toggle sidebar di layar kecil */}
-                    <button
-                        className="btn btn-outline-light d-md-none"
-                        type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target="#sidebar"
-                    >
-                        <i className="bi bi-list"></i>
-                    </button>
-
                     <div className="container">
-                        <div className="row">
+                        <div className="row align-items-center">
                             <div className="col">
                                 <span className="navbar-brand mx-auto fw-semibold text-uppercase">
                                     WebGIS Tambang Awak Mas
                                 </span>
                             </div>
                             <div className="col">
-                                <input type="text" style={{ border: 'gray solid 2px' }} className="form-control rounded-5" placeholder="Cari nama layer" />
+                                <input
+                                    type="text"
+                                    style={{ border: "gray solid 2px" }}
+                                    className="form-control rounded-5"
+                                    placeholder="Cari nama layer"
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
             </nav>
 
-            {/* KONTEN UTAMA */}
+            {/* KONTEN */}
             <div className="row g-0" style={{ height: "100vh", paddingTop: "56px" }}>
                 {/* SIDEBAR */}
                 <div
@@ -139,6 +162,7 @@ function WebGIS() {
                             </h5>
 
                             <div className="collapse show" id="layerListCollapse">
+                                {/* 🔹 Checkbox untuk Layer GeoJSON */}
                                 {layers.map((layer, i) => (
                                     <div className="form-check mt-2" key={i}>
                                         <input
@@ -162,6 +186,81 @@ function WebGIS() {
                                         </label>
                                     </div>
                                 ))}
+
+                                <hr />
+
+                                {/* 🔹 Radio Button untuk Basemap */}
+                                <div className="mt-2">
+                                    <label className="fw-bold text-secondary">
+                                        Pilih Peta Dasar:
+                                    </label>
+
+                                    <div className="form-check mt-2">
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="basemap"
+                                            id="normalMap"
+                                            value="normal"
+                                            checked={basemap === "normal"}
+                                            onChange={(e) => setBasemap(e.target.value)}
+                                            style={{
+                                                cursor: "pointer",
+                                                accentColor: "#F16022",
+                                            }}
+                                        />
+                                        <label
+                                            className="form-check-label ms-2"
+                                            htmlFor="normalMap"
+                                        >
+                                            Peta Biasa
+                                        </label>
+                                    </div>
+
+                                    <div className="form-check mt-2">
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="basemap"
+                                            id="satelliteMap"
+                                            value="satellite"
+                                            checked={basemap === "satellite"}
+                                            onChange={(e) => setBasemap(e.target.value)}
+                                            style={{
+                                                cursor: "pointer",
+                                                accentColor: "#F16022",
+                                            }}
+                                        />
+                                        <label
+                                            className="form-check-label ms-2"
+                                            htmlFor="satelliteMap"
+                                        >
+                                            Google Satellite
+                                        </label>
+                                    </div>
+
+                                    <div className="form-check mt-2">
+                                        <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="basemap"
+                                            id="noneMap"
+                                            value="none"
+                                            checked={basemap === "none"}
+                                            onChange={(e) => setBasemap(e.target.value)}
+                                            style={{
+                                                cursor: "pointer",
+                                                accentColor: "#F16022",
+                                            }}
+                                        />
+                                        <label
+                                            className="form-check-label ms-2"
+                                            htmlFor="noneMap"
+                                        >
+                                            Tanpa Peta Dasar
+                                        </label>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -184,7 +283,7 @@ function WebGIS() {
                                     <ul className="mt-2 text-dark">
                                         {Object.entries(selectedFeature).map(([key, value]) => (
                                             <li key={key}>
-                                                <b>{key}</b>: {value === null ? "-" : value.toString()}
+                                                <b>{key}</b>: {value ?? "-"}
                                             </li>
                                         ))}
                                     </ul>
@@ -206,28 +305,67 @@ function WebGIS() {
                     }}
                 >
                     <MapContainer
-                        center={[-2.5, 118]}
-                        zoom={5}
+                        center={[-2.65, 120.45]}
+                        zoom={12}
                         style={{ height: "100%", width: "100%" }}
-                        scrollWheelZoom={false}
+                        scrollWheelZoom={true}
                     >
-                        <TileLayer
-                            url="https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}"
-                            attribution="&copy; Google"
-                            maxZoom={20}
-                        />
+                        {/* Basemap otomatis berubah sesuai pilihan */}
+                        <BasemapSwitcher basemap={basemap} />
 
+                        {/* Layer GeoJSON */}
                         {layers
                             .filter((l) => activeLayers.includes(l.nama_layer))
-                            .map((layer, i) => (
+                            .map((layer) => (
                                 <GeoJSON
-                                    key={i}
+                                    key={layer.id}
                                     data={layer.geojson_data}
-                                    style={styleFeature}
+                                    interactive={true}
+                                    style={(feature) => {
+                                        const type = feature?.geometry?.type || "";
+                                        const props = feature?.properties || {};
+
+                                        const strokeColor = props?.stroke || props?.fill || "#3388ff";
+                                        const strokeWidth = props?.["stroke-width"] ?? 1;
+                                        const strokeOpacity = props?.["stroke-opacity"] ?? 1;
+
+                                        const fillColor = props?.fill || "rgba(0,0,0,0)";
+                                        const fillOpacity =
+                                            props?.fillOpacity ??
+                                            (type.includes("Polygon") ? 0.4 : 0);
+
+                                        return {
+                                            color: strokeColor,
+                                            weight: strokeWidth,
+                                            opacity: strokeOpacity,
+                                            fillColor,
+                                            fillOpacity,
+                                        };
+                                    }}
                                     onEachFeature={(feature, layerEl) => {
                                         const props = feature.properties;
+
+                                        layerEl.getElement()?.setAttribute(
+                                            "style",
+                                            "cursor: pointer;"
+                                        );
+
                                         layerEl.on("click", () => {
                                             setSelectedFeature(props);
+                                        });
+
+                                        layerEl.on("mouseover", () => {
+                                            layerEl.setStyle({
+                                                weight:
+                                                    (feature?.properties?.["stroke-width"] ?? 2) + 1,
+                                            });
+                                        });
+
+                                        layerEl.on("mouseout", () => {
+                                            layerEl.setStyle({
+                                                weight:
+                                                    feature?.properties?.["stroke-width"] ?? 2,
+                                            });
                                         });
                                     }}
                                 />
@@ -238,7 +376,6 @@ function WebGIS() {
                 </div>
             </div>
         </div>
-
     );
 }
 
