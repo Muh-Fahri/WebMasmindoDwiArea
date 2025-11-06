@@ -144,15 +144,6 @@ function Bisnis() {
                     </div>
                 </div>
             </section>
-            <section className="my-5">
-                <div className="container">
-                    <h3 className="mb-3">Peta Lokasi Tambang</h3>
-                    <div style={{ height: "600px", width: "100%", borderRadius: "15px", overflow: "hidden" }}>
-                        <WebGIS />
-                    </div>
-                </div>
-            </section>
-
             <section>
                 <Footer />
             </section>

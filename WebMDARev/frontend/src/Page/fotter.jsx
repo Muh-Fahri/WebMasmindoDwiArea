@@ -26,6 +26,7 @@ function Footer() {
         try {
             const res = await axios.get('http://127.0.0.1:8000/api/user/maps');
             setAlamatData(res.data.maps);
+            Swal.close();
         } catch (error) {
             Swal.fire({
                 icon: 'error',

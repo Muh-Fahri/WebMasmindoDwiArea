@@ -6,7 +6,7 @@
 
 .bg-login {
     backdrop-filter: blur(2px);
-    background: linear-gradient(to right, rgba(0, 0, 0, 0.651), rgba(0, 0, 0, 0.651), rgba(0, 0, 0, 0.651)), url('/public/Image/Background/CampAwakMasJPEG.jpg');
+    background: linear-gradient(to right, rgba(0, 0, 0, 0.651), rgba(0, 0, 0, 0.651), rgba(0, 0, 0, 0.651)), url('/public/Image/Background/bg-truck.jpg');
     height: 100vh;
     background-size: cover;
     background-position: center;

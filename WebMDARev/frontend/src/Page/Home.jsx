@@ -528,43 +528,6 @@ function Home() {
                 </div>
             </section>
             <section>
-                <div className="container-fluid">
-                    <div className="container">
-                        <div className="row">
-                            <div className="col">
-                                <h2 className="text-uppercase fw-bold" style={{ color: '#00492F' }}>Informasi Saham</h2> <br />
-                                <p className="text-secondary text-justify mt-4 leading-relaxed">
-                                    <strong>Indika Energy Tbk (INDY)</strong> adalah salah satu perusahaan energi terintegrasi terbesar di Indonesia.
-                                    Didirikan pada tahun 2000, Indika Energy berfokus pada sektor pertambangan batubara, jasa energi, logistik, dan
-                                    infrastruktur pendukung. Dalam beberapa tahun terakhir, perusahaan ini juga aktif melakukan diversifikasi ke bidang
-                                    energi terbarukan dan solusi berkelanjutan sebagai bagian dari transformasi menuju bisnis yang lebih hijau.
-                                    <br /><br />
-                                    Halaman ini menampilkan pergerakan harga saham <strong>INDY</strong> secara real-time, termasuk perubahan harian
-                                    dan grafik performa melalui <strong>TradingView</strong>. Investor dan masyarakat dapat memantau perkembangan
-                                    harga saham untuk mendapatkan gambaran mengenai kondisi pasar dan kinerja perusahaan.
-                                </p>
-                                <br />
-                            </div>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="col">
-                            <div className="tradingview-widget-container">
-                                <iframe
-                                    src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_12345&symbol=IDX:INDY&interval=1D&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&theme=light&style=1&timezone=Asia%2FJakarta&withdateranges=1&hideideas=1"
-                                    width="100%"
-                                    height="800"
-                                    frameBorder="0"
-                                    allowtransparency="true"
-                                    scrolling="yes"
-                                    title="TradingView INDY"
-                                ></iframe>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-            <section>
                 <div
                     className="bg-bawah d-flex justify-content-center align-items-center"
                     style={{ height: '70vh' }}
@@ -598,7 +561,6 @@ function Home() {
                 <Footer />
             </section>
         </div >
-
     );
 }
 
