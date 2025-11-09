@@ -297,5 +297,15 @@
     "internship_program": "Program Magang",
     "no_data_magang": "Belum Ada Lowongan",
     "data_empty": "Data Kosong",
-    "karir_navside": "Karir"
+    "karir_navside": "Karir",
+    "Badai_Petir": "Badai Petir",
+    "Gerimis": "Gerimis",
+    "Hujan": "Hujan",
+    "Kabut": "Kabut",
+    "Cerah": "Cerah",
+    "Berawan": "Berawan",
+    "Mendung": "Mendung",
+    "tidak_diketahui": "Tidak Diketahui",
+    "nav_petalokasi": "Peta Lokasi",
+    "lihatpdfButton": "Lihat PDF"
 }

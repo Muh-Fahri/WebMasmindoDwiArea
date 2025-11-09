@@ -4,7 +4,9 @@ namespace App\Http\Controllers\Admin;
 
 use ZipArchive;
 use App\Models\PDF;
+use App\Models\Maps;
 use App\Models\Karir;
+use App\Models\Layer;
 use App\Models\Alamat;
 use App\Models\Bisnis;
 use App\Models\Galeri;
@@ -22,7 +24,6 @@ use App\Models\BeritaTerkini;
 use App\Models\ImageLingkungan;
 use App\Models\DeskripLingkungan;
 use App\Http\Controllers\Controller;
-use App\Models\Maps;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Validator;
@@ -512,18 +513,54 @@ class createAdmin extends Controller
     function createGisMap(Request $request)
     {
         $request->validate([
-            'nama_layer' => 'required',
-            'geojson' => 'required',
+            'nama_peta'    => 'required|string|max:255',
+            'deskrip_peta' => 'required|string',
+            'nama_layer'   => 'required|string|max:255',
+            'geojson'      => 'required',
         ]);
 
+        // 1️⃣ Buat peta baru
         $map = Maps::create([
-            'uuid' => Str::uuid(),
+            'uuid'         => Str::uuid(),
+            'nama_peta'    => $request->nama_peta,
+            'deskrip_peta' => $request->deskrip_peta,
+        ]);
+
+        // 2️⃣ Tambahkan layer pertama
+        $layer = Layer::create([
+            'map_id'      => $map->id,
+            'nama_layer'  => $request->nama_layer,
+            'geojson'     => $request->geojson,
+        ]);
+
+        $map->load('layers');
+
+        return response()->json([
+            'message' => 'Peta dan layer pertama berhasil dibuat.',
+            'data'    => $map
+        ], 201);
+    }
+
+    function createLayer(Request $request, $map_id)
+    {
+        $request->validate([
+            'nama_layer' => 'required|string|max:255',
+            'geojson'    => 'required',
+        ]);
+
+        // 1️⃣ Pastikan peta yang dimaksud ada
+        $map = Maps::findOrFail($map_id);
+
+        // 2️⃣ Buat layer baru yang terhubung ke peta ini
+        $layer = Layer::create([
+            'map_id'     => $map->id,
             'nama_layer' => $request->nama_layer,
-            'geojson' => $request->geojson,
+            'geojson'    => $request->geojson,
         ]);
 
         return response()->json([
-            'maps' => $map
+            'message' => 'Layer baru berhasil ditambahkan ke peta ' . $map->nama_peta,
+            'data'    => $layer,
         ], 201);
     }
 }

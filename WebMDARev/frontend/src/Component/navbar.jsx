@@ -47,21 +47,21 @@ function Navbar() {
 
     const getWeatherCondition = (id) => {
         if (id >= 200 && id <= 232) {
-            return { label: "Badai Petir" };
+            return { label: t('Badai_Petir') };
         } else if (id >= 300 && id <= 321) {
-            return { label: "Gerimis" };
+            return { label: t('"Gerimis"') };
         } else if (id >= 500 && id <= 531) {
-            return { label: "Hujan" };
+            return { label: t("Hujan") };
         } else if (id >= 701 && id <= 781) {
-            return { label: "Kabut" };
+            return { label: t("Kabut") };
         } else if (id === 800) {
-            return { label: "Cerah" };
+            return { label: t("Cerah") };
         } else if (id === 801 || id === 802) {
-            return { label: "Berawan" };
+            return { label: t("Berawan") };
         } else if (id === 803 || id === 804) {
-            return { label: "Mendung" };
+            return { label: t("Mendung") };
         } else {
-            return { label: "Tidak Diketahui" };
+            return { label: "tidak_diketahui" };
         }
     };
 
@@ -177,12 +177,12 @@ function Navbar() {
                                     </li>
                                     <li className="nav-item">
                                         <NavLink
-                                            to="/kontak"
+                                            to="/peta"
                                             className={({ isActive }) =>
                                                 "nav-link nav-a" + (isActive ? " nav-hijau-actv" : "")
                                             }
                                         >
-                                            <h5 className="display-5 fw-medium fs-5 navbar-hijau">{t('contact')}</h5>
+                                            <h5 className="display-5 fw-medium fs-5 navbar-hijau">{t('nav_petalokasi')}</h5>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item d-flex flex-row gap-2 mt-3 mt-md-0">

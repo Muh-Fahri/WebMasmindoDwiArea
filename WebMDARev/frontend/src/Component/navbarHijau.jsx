@@ -41,14 +41,23 @@ function NavbarHijau() {
     };
 
     const getWeatherCondition = (id) => {
-        if (id >= 200 && id <= 232) return { label: "Badai Petir" };
-        if (id >= 300 && id <= 321) return { label: "Gerimis" };
-        if (id >= 500 && id <= 531) return { label: "Hujan" };
-        if (id >= 701 && id <= 781) return { label: "Kabut" };
-        if (id === 800) return { label: "Cerah" };
-        if (id === 801 || id === 802) return { label: "Berawan" };
-        if (id === 803 || id === 804) return { label: "Mendung" };
-        return { label: "Tidak Diketahui" };
+        if (id >= 200 && id <= 232) {
+            return { label: t('Badai_Petir') };
+        } else if (id >= 300 && id <= 321) {
+            return { label: t('"Gerimis"') };
+        } else if (id >= 500 && id <= 531) {
+            return { label: t("Hujan") };
+        } else if (id >= 701 && id <= 781) {
+            return { label: t("Kabut") };
+        } else if (id === 800) {
+            return { label: t("Cerah") };
+        } else if (id === 801 || id === 802) {
+            return { label: t("Berawan") };
+        } else if (id === 803 || id === 804) {
+            return { label: t("Mendung") };
+        } else {
+            return { label: "tidak_diketahui" };
+        }
     };
 
     useEffect(() => {
@@ -219,12 +228,12 @@ function NavbarHijau() {
                                     </li>
                                     <li className="nav-item">
                                         <NavLink
-                                            to="/kontak"
+                                            to="/peta"
                                             className={({ isActive }) =>
                                                 "nav-link text-white" + (isActive ? " nav-hijau-actv" : "")
                                             }
                                         >
-                                            <h5 className="display-5 fw-medium fs-5">{t("contact")}</h5>
+                                            <h5 className="display-5 fw-medium fs-5">{t('nav_petalokasi')}</h5>
                                         </NavLink>
                                     </li>
                                     <li className="nav-item">

@@ -297,5 +297,15 @@
     "internship_program": "Internship Program",
     "no_data_magang": "There are no vacancies yet",
     "data_empty": "Data empty",
-    "karir_navside": "Career"
+    "karir_navside": "Career",
+    "Badai_Petir": "Thunderstorm",
+    "Gerimis": "Drizzling",
+    "Hujan": "Rain",
+    "Kabut": "Fog",
+    "Cerah": "Bright",
+    "Berawan": "Cloudiness",
+    "Mendung": "Overcast",
+    "tidak_diketahui": "Unknown",
+    "nav_petalokasi": "Location Map",
+    "lihat_pdfButton": "View PDF"
 }

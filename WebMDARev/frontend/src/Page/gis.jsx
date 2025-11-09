@@ -10,20 +10,35 @@ function FitToLayer({ layers, activeLayers }) {
     useEffect(() => {
         if (!map || activeLayers.length === 0) return;
 
+        // Ambil semua GeoJSON dari layer aktif
         const activeGeoJSONs = layers
-            .filter((l) => activeLayers.includes(l.nama_layer))
-            .map((l) => l.geojson_data);
+            .flatMap((mapItem) =>
+                mapItem.layers.filter((l) =>
+                    activeLayers.includes(l.nama_layer)
+                )
+            )
+            .map((l) => l.geojson_data)
+            .filter(Boolean);
 
-        if (activeGeoJSONs.length > 0) {
-            const group = L.featureGroup(
-                activeGeoJSONs.map((geojson) => L.geoJSON(geojson))
-            );
-            map.fitBounds(group.getBounds(), { padding: [20, 20] });
+        if (activeGeoJSONs.length === 0) return;
+
+        const group = L.featureGroup(
+            activeGeoJSONs.map((geojson) => L.geoJSON(geojson))
+        );
+
+        const bounds = group.getBounds();
+
+        if (bounds.isValid()) {
+            map.fitBounds(bounds, {
+                padding: [80, 80], // sedikit ruang di tepi
+                maxZoom: 17        // zoom maksimum, masih kelihatan detail tapi tidak terlalu dekat
+            });
         }
-    }, [layers, activeLayers, map]);
+    }, [activeLayers, layers, map]);
 
     return null;
 }
+
 
 // 🔹 Komponen Basemap Switcher — ini yang mengatur layer dasar
 function BasemapSwitcher({ basemap }) {
@@ -76,16 +91,28 @@ function WebGIS() {
         fetch("http://127.0.0.1:8000/api/user/webGis")
             .then((res) => res.json())
             .then((data) => {
-                const rawLayers = data.gis || [];
-                const parsedLayers = rawLayers.map((layer) => ({
-                    id: layer.id,
-                    nama_layer: layer.nama_layer,
-                    geojson_data: JSON.parse(layer.geojson),
+                if (!data.gis) return;
+
+                // Struktur data: [{nama_peta, layers: [...]}, ...]
+                const groupedMaps = data.gis.map((map) => ({
+                    id: map.id,
+                    nama_peta: map.nama_peta,
+                    deskrip_peta: map.deskrip_peta,
+                    layers: map.layers.map((layer) => ({
+                        id: layer.id,
+                        nama_layer: layer.nama_layer,
+                        geojson_data: JSON.parse(layer.geojson),
+                    })),
                 }));
-                setLayers(parsedLayers);
-                setActiveLayers(parsedLayers.map((l) => l.nama_layer));
-            })
-            .catch((err) => console.error("Gagal memuat data GIS:", err));
+
+                setLayers(groupedMaps);
+
+                // Aktifkan semua layer di awal
+                const allLayerNames = groupedMaps.flatMap((m) =>
+                    m.layers.map((l) => l.nama_layer)
+                );
+                setActiveLayers(allLayerNames);
+            });
     }, []);
 
     // Toggle layer aktif/nonaktif
@@ -149,47 +176,57 @@ function WebGIS() {
                     }}
                 >
                     {/* Card Layer */}
+                    {/* Card Layer */}
                     <div className="card bg-light mb-3">
                         <div className="card-body">
+                            {/* Header Card - Klik untuk buka/tutup */}
                             <h5
                                 className="text-secondary text-uppercase d-flex justify-content-between align-items-center"
                                 data-bs-toggle="collapse"
-                                data-bs-target="#layerListCollapse"
+                                data-bs-target="#collapseLayerCard"
                                 style={{ cursor: "pointer" }}
                             >
                                 Tampilkan Layer
                                 <i className="bi bi-chevron-down"></i>
                             </h5>
 
-                            <div className="collapse show" id="layerListCollapse">
-                                {/* 🔹 Checkbox untuk Layer GeoJSON */}
-                                {layers.map((layer, i) => (
-                                    <div className="form-check mt-2" key={i}>
-                                        <input
-                                            className="form-check-input"
-                                            type="checkbox"
-                                            id={`layer-${i}`}
-                                            checked={activeLayers.includes(layer.nama_layer)}
-                                            onChange={() => toggleLayer(layer.nama_layer)}
-                                            style={{
-                                                width: "1.2rem",
-                                                height: "1.2rem",
-                                                cursor: "pointer",
-                                                accentColor: "#F16022",
-                                            }}
-                                        />
-                                        <label
-                                            className="form-check-label ms-2 text-dark"
-                                            htmlFor={`layer-${i}`}
-                                        >
-                                            {layer.nama_layer}
-                                        </label>
+                            {/* Isi Card - Collapse Bootstrap */}
+                            <div className="collapse show" id="collapseLayerCard">
+                                {layers.map((mapItem, mapIndex) => (
+                                    <div key={mapIndex} className="mb-3 mt-3">
+                                        <h6 className="fw-bold text-dark border-bottom pb-1">
+                                            {mapItem.nama_peta}
+                                        </h6>
+
+                                        {mapItem.layers.map((layer, layerIndex) => (
+                                            <div className="form-check mt-2" key={layerIndex}>
+                                                <input
+                                                    className="form-check-input"
+                                                    type="checkbox"
+                                                    id={`layer-${mapIndex}-${layerIndex}`}
+                                                    checked={activeLayers.includes(layer.nama_layer)}
+                                                    onChange={() => toggleLayer(layer.nama_layer)}
+                                                    style={{
+                                                        width: "1.2rem",
+                                                        height: "1.2rem",
+                                                        cursor: "pointer",
+                                                        accentColor: "#F16022",
+                                                    }}
+                                                />
+                                                <label
+                                                    className="form-check-label ms-2 text-dark"
+                                                    htmlFor={`layer-${mapIndex}-${layerIndex}`}
+                                                >
+                                                    {layer.nama_layer}
+                                                </label>
+                                            </div>
+                                        ))}
                                     </div>
                                 ))}
 
                                 <hr />
 
-                                {/* 🔹 Radio Button untuk Basemap */}
+                                {/* 🔹 Pilihan Peta Dasar */}
                                 <div className="mt-2">
                                     <label className="fw-bold text-secondary">
                                         Pilih Peta Dasar:
@@ -265,6 +302,7 @@ function WebGIS() {
                         </div>
                     </div>
 
+
                     {/* Card Informasi */}
                     <div className="card bg-light">
                         <div className="card-body">
@@ -314,62 +352,62 @@ function WebGIS() {
                         <BasemapSwitcher basemap={basemap} />
 
                         {/* Layer GeoJSON */}
-                        {layers
-                            .filter((l) => activeLayers.includes(l.nama_layer))
-                            .map((layer) => (
-                                <GeoJSON
-                                    key={layer.id}
-                                    data={layer.geojson_data}
-                                    interactive={true}
-                                    style={(feature) => {
-                                        const type = feature?.geometry?.type || "";
-                                        const props = feature?.properties || {};
+                        {layers.flatMap((mapItem) =>
+                            mapItem.layers
+                                .filter((l) => activeLayers.includes(l.nama_layer))
+                                .map((layer) => (
+                                    <GeoJSON
+                                        key={layer.id}
+                                        data={layer.geojson_data}
+                                        interactive={true}
+                                        style={(feature) => {
+                                            const type = feature?.geometry?.type || "";
+                                            const props = feature?.properties || {};
 
-                                        const strokeColor = props?.stroke || props?.fill || "#3388ff";
-                                        const strokeWidth = props?.["stroke-width"] ?? 1;
-                                        const strokeOpacity = props?.["stroke-opacity"] ?? 1;
+                                            const strokeColor = props?.stroke || props?.fill || "#3388ff";
+                                            const strokeWidth = props?.["stroke-width"] ?? 1;
+                                            const strokeOpacity = props?.["stroke-opacity"] ?? 1;
 
-                                        const fillColor = props?.fill || "rgba(0,0,0,0)";
-                                        const fillOpacity =
-                                            props?.fillOpacity ??
-                                            (type.includes("Polygon") ? 0.4 : 0);
+                                            const fillColor = props?.fill || "rgba(0,0,0,0)";
+                                            const fillOpacity =
+                                                props?.fillOpacity ?? (type.includes("Polygon") ? 0.4 : 0);
 
-                                        return {
-                                            color: strokeColor,
-                                            weight: strokeWidth,
-                                            opacity: strokeOpacity,
-                                            fillColor,
-                                            fillOpacity,
-                                        };
-                                    }}
-                                    onEachFeature={(feature, layerEl) => {
-                                        const props = feature.properties;
+                                            return {
+                                                color: strokeColor,
+                                                weight: strokeWidth,
+                                                opacity: strokeOpacity,
+                                                fillColor,
+                                                fillOpacity,
+                                            };
+                                        }}
+                                        onEachFeature={(feature, layerEl) => {
+                                            const props = feature.properties;
 
-                                        layerEl.getElement()?.setAttribute(
-                                            "style",
-                                            "cursor: pointer;"
-                                        );
+                                            layerEl.getElement()?.setAttribute(
+                                                "style",
+                                                "cursor: pointer;"
+                                            );
 
-                                        layerEl.on("click", () => {
-                                            setSelectedFeature(props);
-                                        });
-
-                                        layerEl.on("mouseover", () => {
-                                            layerEl.setStyle({
-                                                weight:
-                                                    (feature?.properties?.["stroke-width"] ?? 2) + 1,
+                                            layerEl.on("click", () => {
+                                                setSelectedFeature(props);
                                             });
-                                        });
 
-                                        layerEl.on("mouseout", () => {
-                                            layerEl.setStyle({
-                                                weight:
-                                                    feature?.properties?.["stroke-width"] ?? 2,
+                                            layerEl.on("mouseover", () => {
+                                                layerEl.setStyle({
+                                                    weight:
+                                                        (feature?.properties?.["stroke-width"] ?? 2) + 1,
+                                                });
                                             });
-                                        });
-                                    }}
-                                />
-                            ))}
+
+                                            layerEl.on("mouseout", () => {
+                                                layerEl.setStyle({
+                                                    weight: feature?.properties?.["stroke-width"] ?? 2,
+                                                });
+                                            });
+                                        }}
+                                    />
+                                ))
+                        )}
 
                         <FitToLayer layers={layers} activeLayers={activeLayers} />
                     </MapContainer>

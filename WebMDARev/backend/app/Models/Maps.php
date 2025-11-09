@@ -9,8 +9,8 @@ class Maps extends Model
 {
     protected $fillable = [
         'uuid',
-        'nama_layer',
-        'geojson'
+        'nama_peta',
+        'deskrip_peta'
     ];
 
     protected static function boot()
@@ -21,5 +21,10 @@ class Maps extends Model
                 $model->uuid = (string) Str::uuid();
             }
         });
+    }
+
+    function layers()
+    {
+        return $this->hasMany(Layer::class, 'map_id');
     }
 }

@@ -155,6 +155,6 @@ Route::middleware(['auth:sanctum', 'admin'])->group(function () {
     Route::post('/admin/mapGis', [createAdmin::class, 'createGisMap']);
     Route::delete('/admin/mapGis/delete/{uuid}', [deleteAdmin::class, 'deleteGis']);
 
-    // gis
-
+    // layer
+    Route::post('/admin/gisLayer/{map_id}', [createAdmin::class, 'createLayer']);
 });

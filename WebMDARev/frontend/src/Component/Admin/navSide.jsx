@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Link, NavLink } from 'react-router-dom';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faHouse, faChartBar, faNewspaper, faTree, faMapMarkerAlt, faImages, faUserPlus } from '@fortawesome/free-solid-svg-icons';
+import { faHouse, faChartBar, faNewspaper, faTree, faMapMarkerAlt, faImages, faUserPlus, faMap } from '@fortawesome/free-solid-svg-icons';
 import { useTranslation } from 'react-i18next';
 
 function NavSide() {
@@ -69,6 +69,11 @@ function NavSide() {
                             </NavLink>
                         </li>
                         <li>
+                            <NavLink to="/admin/gis" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                                <FontAwesomeIcon icon={faMap} /> Peta
+                            </NavLink>
+                        </li>
+                        <li>
                             <span className="text-white text-decoration-none d-block py-2 px-3">
                                 <FontAwesomeIcon icon={faTree} /> {t('esg')}
                             </span>
@@ -91,11 +96,6 @@ function NavSide() {
                                 <li>
                                     <NavLink to="/admin/laporan_keberlanjutan" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
                                         ▸ {t('sustainability_report_sidebar')}
-                                    </NavLink>
-                                </li>
-                                <li>
-                                    <NavLink to="/admin/gis" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
-                                        ▸ Peta
                                     </NavLink>
                                 </li>
                             </ul>

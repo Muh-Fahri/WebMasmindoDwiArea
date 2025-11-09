@@ -210,13 +210,22 @@ class deleteAdmin extends Controller
         ], 200);
     }
 
-    function deleteGis(Request $request, $uuid)
+    function deleteGis($uuid)
     {
-        $gis = Maps::where('uuid', $uuid);
-        $gis->delete();
+        $map = Maps::with('layers')->where('uuid', $uuid)->first();
+        if (!$map) {
+            return response()->json([
+                'message' => 'Data peta tidak ditemukan.'
+            ], 404);
+        }
+        foreach ($map->layers as $layer) {
+            $layer->delete();
+        }
+        $map->delete();
 
         return response()->json([
-            'msg' => 'Data berhasil di hapus'
+            'message' => 'Data peta dan layer terkait berhasil dihapus.',
+            'deleted_uuid' => $uuid
         ], 200);
     }
 }

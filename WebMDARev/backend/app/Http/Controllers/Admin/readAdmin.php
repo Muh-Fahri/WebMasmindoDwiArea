@@ -255,8 +255,9 @@ class readAdmin extends Controller
 
     function readGis()
     {
-        $maps = Maps::all();
+        $maps = Maps::with('layers')->get();
         return response()->json([
+            'message' => 'Data peta dan layer berhasil diambil.',
             'maps' => $maps
         ], 200);
     }

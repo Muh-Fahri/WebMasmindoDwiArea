@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::create('maps', function (Blueprint $table) {
             $table->id();
             $table->uuid('uuid');
-            $table->string('nama_layer');
-            $table->longText('geojson');
+            $table->string('nama_peta');
+            $table->text('deskrip_peta');
             $table->timestamps();
         });
     }

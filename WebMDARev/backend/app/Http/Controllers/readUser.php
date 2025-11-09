@@ -257,7 +257,9 @@ class readUser extends Controller
 
     function readGis()
     {
-        $gis = Maps::all();
+        // Ambil semua peta + relasi layer-nya
+        $gis = Maps::with('layers')->get();
+
         return response()->json([
             'gis' => $gis
         ], 200);

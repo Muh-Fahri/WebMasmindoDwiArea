@@ -37,9 +37,11 @@ function Berita() {
                 Swal.showLoading();
             },
         });
+
         setMessage("");
         const trimmedKeyword = keyword.trim();
         let url = "";
+
         if (trimmedKeyword === "") {
             url = "http://127.0.0.1:8000/api/user/berita";
         } else {
@@ -60,7 +62,12 @@ function Berita() {
                 resultsEn.forEach(item => uniqueBeritaMap.set(item.uuid, item));
                 processedBerita = Array.from(uniqueBeritaMap.values());
             }
+
             setBeritaList(processedBerita);
+
+            // ✅ Tutup Swal loading setelah data selesai
+            Swal.close();
+
             if (processedBerita.length === 0 && trimmedKeyword !== "") {
                 setMessage(t('news_no_results'));
             } else if (processedBerita.length === 0 && trimmedKeyword === "") {
@@ -77,10 +84,7 @@ function Berita() {
             });
         }
     };
-    useEffect(() => {
 
-        getBeritaData();
-    }, []);
 
 
     const handleSearchChange = (e) => {
@@ -121,9 +125,7 @@ function Berita() {
                                 <li>
                                     <a href="/dokumentasi" className="fs-1 text-black text-decoration-none">{t('documentation_title')}</a>
                                 </li>
-                                <li>
-                                    <a href="/peta" className="fs-1 text-black text-decoration-none">Peta lokasi</a>
-                                </li>
+
                             </ul>
                         </div>
                         <div className="col">

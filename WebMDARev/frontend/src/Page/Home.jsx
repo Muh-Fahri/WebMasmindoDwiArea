@@ -378,7 +378,7 @@ function Home() {
                                                     to={`/berita/selengkapnya/${berita.uuid}`}
                                                     className="text-secondary fw-bold text-decoration-none"
                                                 >
-                                                    Lebih Lanjut
+                                                    {t('bisnis_kami_btn')}
                                                 </Link>
                                             </div>
                                         </div>
@@ -514,7 +514,7 @@ function Home() {
                                             <h1 className="text-white fw-bold fs-4 fs-md-2">
                                                 {t('governance_title')}
                                             </h1>
-                                            <Link className="text-decoration-none">
+                                            <Link className="text-decoration-none" to={'tata-kelola'}>
                                                 <h4 className="text-secondary fw-light text-white fs-6 fs-md-5">
                                                     {t('read_more')}
                                                 </h4>

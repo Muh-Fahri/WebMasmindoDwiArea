@@ -150,7 +150,7 @@ function TataKelola() {
                                             target="_blank"
                                             style={{ backgroundColor: '#F16022' }}
                                         >
-                                            Lihat PDF
+                                            {t('lihat_pdfButton')}
                                         </a>
                                     </div>
                                 </div>
