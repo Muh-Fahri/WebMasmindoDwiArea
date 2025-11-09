@@ -93,6 +93,11 @@ function NavSide() {
                                         ▸ {t('sustainability_report_sidebar')}
                                     </NavLink>
                                 </li>
+                                <li>
+                                    <NavLink to="/admin/gis" className={({ isActive }) => "text-white text-decoration-none d-block py-1 px-3" + (isActive ? " sidebar-active-link" : " hover-bg")}>
+                                        ▸ Peta
+                                    </NavLink>
+                                </li>
                             </ul>
                         </li>
                         <li>

@@ -47,14 +47,6 @@ function AdminTataKelola() {
             });
             Swal.close();
             setTataKelola(res.data.tataKelola);
-
-            // Tampilkan notifikasi sukses
-            // Swal.fire({
-            //     icon: 'success',
-            //     title: 'Data berhasil dimuat!',
-            //     showConfirmButton: false,
-            //     timer: 1500, // auto close dalam 1,5 detik
-            // });
         } catch (error) {
             Swal.fire({
                 icon: 'error',

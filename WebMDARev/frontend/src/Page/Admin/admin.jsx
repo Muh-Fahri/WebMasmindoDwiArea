@@ -14,6 +14,7 @@ import Carousel from "../../Component/Admin/carousel";
 import AdminKarir from "../../Component/Admin/adminKarir";
 import AdminKontak from "../../Component/Admin/adminKontak";
 import AdminTataKelola from "../../Component/Admin/adminTataKelola";
+import AdminGis from "../../Component/Admin/adminGis";
 
 
 
@@ -35,6 +36,7 @@ function AdminPage() {
                 <Route path='karir' element={<AdminKarir />} />
                 <Route path="kontak" element={<AdminKontak />} />
                 <Route path="esg/tata-kelola" element={<AdminTataKelola />} />
+                <Route path="gis" element={<AdminGis />} />
 
             </Routes>
         </div>

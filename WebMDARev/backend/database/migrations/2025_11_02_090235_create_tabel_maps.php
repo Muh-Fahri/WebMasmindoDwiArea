@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('uuid');
             $table->string('nama_layer');
-            $table->longText('geojson'); // simpan data GeoJSON-nya
+            $table->longText('geojson');
             $table->timestamps();
         });
     }
