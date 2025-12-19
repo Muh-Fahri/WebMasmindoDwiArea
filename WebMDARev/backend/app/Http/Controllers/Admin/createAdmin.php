@@ -518,15 +518,11 @@ class createAdmin extends Controller
             'nama_layer'   => 'required|string|max:255',
             'geojson'      => 'required',
         ]);
-
-        // 1️⃣ Buat peta baru
         $map = Maps::create([
             'uuid'         => Str::uuid(),
             'nama_peta'    => $request->nama_peta,
             'deskrip_peta' => $request->deskrip_peta,
         ]);
-
-        // 2️⃣ Tambahkan layer pertama
         $layer = Layer::create([
             'map_id'      => $map->id,
             'nama_layer'  => $request->nama_layer,
@@ -547,11 +543,7 @@ class createAdmin extends Controller
             'nama_layer' => 'required|string|max:255',
             'geojson'    => 'required',
         ]);
-
-        // 1️⃣ Pastikan peta yang dimaksud ada
         $map = Maps::findOrFail($map_id);
-
-        // 2️⃣ Buat layer baru yang terhubung ke peta ini
         $layer = Layer::create([
             'map_id'     => $map->id,
             'nama_layer' => $request->nama_layer,
@@ -564,3 +556,4 @@ class createAdmin extends Controller
         ], 201);
     }
 }
+// testing
