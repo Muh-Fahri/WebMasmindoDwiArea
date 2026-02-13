@@ -1,0 +1,2 @@
+===================[Mda gis Map=====================
+stroke = nama variabel tiap tabel untuk menampilkan warna pada file Geojson

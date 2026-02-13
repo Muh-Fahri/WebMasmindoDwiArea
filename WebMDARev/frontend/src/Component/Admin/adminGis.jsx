@@ -5,6 +5,7 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import NavSide from "./navSide";
 import Swal from "sweetalert2";
+import { data } from "jquery";
 
 function FitToActiveLayers({ layers }) {
     const map = useMap();
@@ -65,9 +66,7 @@ function AdminGis() {
         }
     };
 
-    useEffect(() => {
-        getDataGis();
-    }, []);
+
 
     const handleToggleLayer = (mapId, layerId) => {
         setActiveLayers((prev) => {
@@ -127,6 +126,55 @@ function AdminGis() {
             Swal.fire("Gagal", "Tidak dapat menambahkan layer", "error");
         }
     };
+
+
+    const deleteGisData = async (uuid) => {
+        const confirmResult = await Swal.fire({
+            title: 'Apakah Anda yakin?',
+            text: 'Data anda akan dihapuspermanen',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, hapus',
+            cancelButtonText: 'Batal'
+        });
+
+        if (!confirmResult.isConfirmed) return;
+        Swal.fire({
+            title: 'Menghapus data...',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            },
+        })
+        try {
+            await axios.delete(`http://127.0.0.1:8000/api/admin/mapGis/delete/${uuid}`, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            await getDataGis(false);
+            Swal.close();
+            Swal.fire({
+                icon: "success",
+                title: 'berhasil',
+                text: 'Data GIS anda telah berhasil dihapus',
+                showConfirmButton: false,
+                timer: 1800,
+            });
+        } catch (error) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Gagal menghapus data',
+                text: error.response?.data?.message || error.message,
+
+            });
+            // console.log(error);
+        }
+    }
+
+    useEffect(() => {
+        getDataGis();
+    }, []);
 
     return (
         <div className="d-flex flex-column flex-md-row">
@@ -272,6 +320,7 @@ function AdminGis() {
                                         <th>Nama Peta</th>
                                         <th>Layer</th>
                                         <th>Preview</th>
+                                        <th>Aksi</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -360,6 +409,10 @@ function AdminGis() {
                                                         </MapContainer>
                                                     </div>
                                                 </td>
+                                                <td>
+                                                    <button className="btn btn-danger btn-sm rounded-pill" onClick={() => deleteGisData(item.uuid)}>Delete</button>
+                                                </td>
+
                                             </tr>
                                         ))
                                     )}

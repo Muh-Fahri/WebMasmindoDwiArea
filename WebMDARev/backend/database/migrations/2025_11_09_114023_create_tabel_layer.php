@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('layer', function (Blueprint $table) {
             $table->id();
             $table->string('nama_layer');
-            $table->text('geojson');
+            $table->longText('geojson');
             $table->unsignedBigInteger('map_id');
             $table->timestamps();
 
