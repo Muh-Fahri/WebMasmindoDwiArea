@@ -143,7 +143,7 @@ function WebGIS() {
                         <div className="row align-items-center">
                             <div className="col">
                                 <span className="navbar-brand mx-auto fw-semibold text-uppercase">
-                                    WebGIS Tambang Awak Mas
+                                    Informasi Spasial
                                 </span>
                             </div>
                             <div className="col">
