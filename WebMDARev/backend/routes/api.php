@@ -23,7 +23,6 @@ Route::get('/user/esg/sosial/pendidikan', [readUser::class, 'readSosialPendidika
 Route::get('/user/esg/sosial/kesehatan', [readUser::class, 'readSosialKesehatan']);
 Route::get('/user/esg/sosial/pemberdayaan', [readUser::class, 'readSosialPemberdayaan']);
 Route::get('/user/berita/selengkapnya/{uuid}', [readUser::class, 'beritaSelengkapnya']);
-Route::get('/user/berita/instagram', [readUser::class, 'readInstagram']);
 Route::get('/user/berita/youtube', [readUser::class, 'readYoutube']);
 Route::get('lihat_user', [AuthController::class, 'readLogin']);
 Route::get('/user/esg/laporan', [readUser::class, 'readLaporan']);
